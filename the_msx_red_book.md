@@ -59,8 +59,7 @@ The 8255 PPI is a general purpose parallel interface device configured as three 
 
 ##<a name="ppiporta"></a>PPI Port A (I/O Port A8H)
 
-<a name="figure1"></a>
-<img src="https://github.com/oraculo666/the_msx_red_book/raw/master/images/CH01F01.svg">
+<a name="figure1"></a>![](images/CH01F01.svg)
 
 **Figure 1:** Primary Slot Register
 
@@ -82,8 +81,7 @@ A typical UK machine will have one Primary Slot containing the MSX ROM, one cont
 
 System memory can be increased to a theoretical maximum of sixteen 64 KB areas by using expander interfaces. An expander plugs into any Primary Slot to provide four 64 KB Secondary Slots, numbered 0 to 3, instead of one primary one. Each expander has its own local hardware, called a Secondary Slot Register, to select which of the Secondary Slots should appear in the Primary Slot. As before pages can be selected from different Secondary Slots.
 
-<a name="figure2"></a>
-<img src="https://github.com/oraculo666/the_msx_red_book/raw/master/images/CH01F02.svg">
+<a name="figure2"></a>![](images/CH1F02.svg)
 
 **Figure 2:** Secondary Slot Register
 
