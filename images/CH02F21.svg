@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="325px" height="145px"
+version="1.1"
+baseProfile="full"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:ev="http://www.w3.org/2001/xml-events">
+<g transform="translate(10,10)">
+    <g fill="none" stroke="black">
+        <rect x="0" y="0" width="125" height="125"/>
+        <rect x="180" y="0" width="125" height="125"/>
+        <path d="M242,0 v125"/>
+        <path d="M180,62 h125"/>
+    </g>
+    <g transform="translate(7,15)">
+        <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="start">
+            <text x="0" y="0" >A</text>
+            <text x="15" y="0" >A</text>
+            <text x="30" y="0" >A</text>
+            <text x="45" y="0" >A</text>
+            <text x="60" y="0" >B</text>
+            <text x="75" y="0" >B</text>
+            <text x="90" y="0" >B</text>
+            <text x="105" y="0" >B</text>
+
+            <text x="0" y="15" >C</text>
+            <text x="15" y="15" >C</text>
+            <text x="30" y="15" >C</text>
+            <text x="45" y="15" >C</text>
+            <text x="60" y="15" >D</text>
+            <text x="75" y="15" >D</text>
+            <text x="90" y="15" >D</text>
+            <text x="105" y="15" >D</text>
+
+            <text x="125" y="0" >Byte 0</text>
+            <text x="125" y="15" >Byte 1</text>
+
+            <text x="201" y="20" >A</text>
+            <text x="264" y="20" >B</text>
+            <text x="201" y="83" >C</text>
+            <text x="264" y="83" >D</text>
+        </g>
+    </g>
+</g>
+</svg>

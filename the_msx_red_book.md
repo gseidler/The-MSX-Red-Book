@@ -59,7 +59,7 @@ The 8255 PPI is a general purpose parallel interface device configured as three 
 
 ##<a name="ppiporta"></a>PPI Port A (I/O Port A8H)
 
-<a name="figure1"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F01.svg">
+<a name="figure1"></a>![][CH01F01]
 
 **Figure 1:** Primary Slot Register
 
@@ -81,7 +81,7 @@ A typical UK machine will have one Primary Slot containing the MSX ROM, one cont
 
 System memory can be increased to a theoretical maximum of sixteen 64 KB areas by using expander interfaces. An expander plugs into any Primary Slot to provide four 64 KB Secondary Slots, numbered 0 to 3, instead of one primary one. Each expander has its own local hardware, called a Secondary Slot Register, to select which of the Secondary Slots should appear in the Primary Slot. As before pages can be selected from different Secondary Slots.
 
-<a name="figure2"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F02.svg">
+<a name="figure2">![][CH01F02]
 
 **Figure 2:** Secondary Slot Register
 
@@ -101,7 +101,7 @@ The BASIC Interpreter can also execute a BASIC program ROM detected in page 2 (8
 
 ##<a name="ppiportb"></a>PPI Port B (I/O Port A9H)
 
-<a name="figure3"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F03.svg">
+<a name="figure3"></a>![][CH01F03]
 
 **Figure 3**
 
@@ -109,7 +109,7 @@ This input port is used to read the eight bits of column data from the currently
 
 ##<a name="ppiportc"></a>PPI Port C (I/O Port AAH)
 
-<a name="figure4"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F04.svg">
+<a name="figure4"></a>![][CH01F04]
 
 **Figure 4**
 
@@ -127,7 +127,7 @@ Note that there are standard routines in the ROM BIOS to access all of the funct
 
 ##<a name="ppimodeport"></a>PPI Mode Port (I/O Port ABH)
 
-<a name="figure5"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F05.svg">
+<a name="figure5"></a>![][CH01F05]
 
 **Figure 5:** PPI Mode Selection
 
@@ -147,7 +147,7 @@ The B Dir bit determines the direction of Port B: 0=Output, 1=Input (MSX).
 
 The C Dir bit determines the direction of the lower four bits only of Port C: 0=Output (MSX), 1=Input
 
-<a name="figure6"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F06.svg">
+<a name="figure6"></a>![][CH01F06]
 
 **Figure 6:** PPI Bit Set/Reset
 
@@ -173,14 +173,9 @@ The Command Port is used for three purposes:
 
 The Data Port address register must be set up in different ways depending on whether the subsequent access is to be a read or a write. The address register can be set to any value from 0000H to 3FFFH by first writing the LSB (Least Significant Byte) and then the MSB (Most Significant Byte) to the [Command Port](#commandport). Bits 6 and 7 of the MSB are used by the VDP to determine whether the address register is being set up for subsequent reads or writes as follows:
 
-    +-----------------------------+
-    ¦ Read  ¦ xxxxxxxx ¦ 00xxxxxx ¦
-    +-----------------------------+
-    +-----------------------------+
-    ¦ Write ¦ xxxxxxxx ¦ 01xxxxxx ¦
-    +-----------------------------+
+<a name="figure7"></a>![][CH02F07]
 
-<a name="figure7"></a>**Figure 7:** VDP Address Setup
+**Figure 7:** VDP Address Setup
 
 It is important that no other accesses are made to the VDP in between writing the LSB and the MSB as this will upset its synchronization. The MSX ROM interrupt handler is continuously reading the [VDP Status Register](#vdpstatusregister) as a background task so interrupts should be disabled as necessary.
 
@@ -188,13 +183,9 @@ It is important that no other accesses are made to the VDP in between writing th
 
 Reading the Command Port will input the contents of the VDP Status Register. This contains various flags as below:
 
-      7    6    5    4    3    2    1    0
-    +--------------------------------------+
-    ¦ F  ¦ 5S ¦ C  ¦  Fifth Sprite Number  ¦
-    ¦Flag¦Flag¦Flag¦                       ¦
-    +--------------------------------------+
+<a name="figure8"></a>![][CH02F08]
 
-<a name="figure8"></a>**Figure 8:** VDP Status Register
+**Figure 8:** VDP Status Register
 
 The Fifth Sprite Number bits contain the number (0 to 31) of the sprite triggering the Fifth Sprite Flag.
 
@@ -210,12 +201,9 @@ The VDP has eight write-only registers, numbered 0 to 7, which control its gener
 
 ##<a name="moderegister0"></a>Mode Register 0
 
-      7   6   5   4   3   2   1   0
-    +-------------------------------+
-    ¦ 0 ¦ 0 ¦ 0 ¦ 0 ¦ 0 ¦ 0 ¦M3 ¦EV ¦
-    +-------------------------------+
+<a name="figure9"></a>![][CH02F09]
 
-<a name="figure9"></a>**Figure 9**
+**Figure 9**
 
 The External VDP bit determines whether external VDP input is to be enabled or disabled: 0=Disabled, 1=Enabled.
 
@@ -223,12 +211,9 @@ The M3 bit is one of the three VDP mode selection bits, see [Mode Register 1](#m
 
 ##<a name="moderegister1"></a>Mode Register 1
 
-       7      6      5      4      3      2      1      0
-    +-------------------------------------------------------+
-    ¦4/16K ¦Blank ¦  IE  ¦  M1  ¦  M2  ¦  0   ¦ Size ¦ Mag  ¦
-    +-------------------------------------------------------+
+<a name="figure10"></a>![][CH02F10]
 
-<a name="figure10"></a>**Figure 10**
+**Figure 10**
 
 The Magnification bit determines whether sprites will be normal or doubled in size: 0=Normal, 1=Doubled.
 
@@ -250,68 +235,50 @@ The 4/16K bit alters the VDP VRAM addressing characteristics to suit either 4 KB
 
 ##<a name="moderegister2"></a>Mode Register 2
 
-      7    6    5    4    3    2    1    0
-    +---------------------------------------+
-    ¦ 0  ¦ 0  ¦ 0  ¦ 0  ¦  Name Table Base  ¦
-    +---------------------------------------+
+<a name="figure11"></a>![][CH02F11]
 
-<a name="figure11"></a>**Figure 11**
+**Figure 11**
 
 Mode Register 2 defines the starting address of the Name Table in the VDP VRAM. The four available bits only specify positions 00BB BB00 0000 0000 of the full address so register contents of 0FH would result in a base address of 3C00H.
 
 
 ##<a name="moderegister3"></a>Mode Register 3
 
-     7  6  5  4  3  2  1  0
-    +----------------------+
-    ¦  Colour Table Base   ¦
-    +----------------------+
+<a name="figure12"></a>![][CH02F12]
 
-<a name="figure12"></a>**Figure 12**
+**Figure 12**
 
 Mode Register 3 defines the starting address of the Colour Table in the VDP VRAM. The eight available bits only specify positions 00BB BBBB BB00 0000 of the full address so register contents of FFH would result in a base address of 3FC0H. In [Graphics Mode](#graphicsmode) only bit 7 is effective thus offering a base of 0000H or 2000H. Bits 0 to 6 must be 1.
 
 ##<a name="moderegister4"></a>Mode Register 4
 
-       7     6     5     4     3     2     1     0
-    +-----------------------------------------------+
-    ¦  0  ¦  0  ¦  0  ¦  0  ¦  0  ¦Character Pattern¦
-    +-----------------------------------------------+
+<a name="figure13"></a>![][CH02F13]
 
-<a name="figure13"></a>**Figure 13**
+**Figure 13**
 
 Mode Register 4 defines the starting address of the Character Pattern Table in the VDP VRAM. The three available bits only specify positions 00BB B000 0000 0000 of the full address so register contents of 07H would result in a base address of 3800H. In [Graphics Mode](#graphicsmode) only bit 2 is effective thus offering a base of 0000H or 2000H. Bits 0 and 1 must be 1.
 
 ##<a name="moderegister5"></a>Mode Register 5
 
-      7   6   5   4   3   2   1   0
-    +-------------------------------+
-    ¦ 0 ¦   Sprite Attribute base   ¦
-    +-------------------------------+
+<a name="figure14"></a>![][CH02F14]
 
-<a name="figure14"></a>**Figure 14**
+**Figure 14**
 
 Mode Register 5 defines the starting address of the Sprite Attribute Table in the VDP VRAM. The seven available bits only specify positions 00BB BBBB B000 0000 of the full address so register contents of 7FH would result in a base address of 3F80H.
 
 ##<a name="moderegister6"></a>Mode Register 6
 
-      7    6    5    4    3    2    1    0
-    +---------------------------------------+
-    ¦ 0  ¦ 0  ¦ 0  ¦ 0  ¦ 0  ¦Sprite Pattern¦
-    +---------------------------------------+
+<a name="figure15"></a>![][CH02F15]
 
-<a name="figure15"></a>**Figure 15**
+**Figure 15**
 
 Mode Register 6 defines the starting address of the Sprite Pattern Table in the VDP VRAM. The three available bits only specify positions 00BB B000 0000 0000 of the full address so register contents of 07H would result in a base address of 3800H.
 
 ##<a name="moderegister7"></a>Mode Register 7
 
-      7    6    5    4    3    2    1    0
-    +---------------------------------------+
-    ¦   Text Colour 1   ¦   Border Colour   ¦
-    +---------------------------------------+
+<a name="figure16"></a>![][CH02F16]
 
-<a name="figure16"></a>**Figure 16**
+**Figure 16**
 
 The Border Colour bits determine the colour of the region surrounding the active video area in all four VDP modes. They also determine the colour of all 0 pixels on the screen in [40x24 Text Mode](#40x24textmode). Note that the border region actually extends across the entire screen but will only become visible in the active area if the overlying pixel is transparent.
 
@@ -338,50 +305,15 @@ Note that the VDP has no hardware cursor facility, if one is required it must be
 
 The Name Table occupies 960 bytes of VRAM from 0000H to 03BFH:
 
-              0123456789012345678901234567890123456789
-        0000H +---------------------------------------+  0
-        0028H ++++++++++++++++++++++++++++++++++++++++¦  1
-        0050H ++++++++++++++++++++++++++++++++++++++++¦  2
-        0078H ++++++++++++++++++++++++++++++++++++++++¦  3
-        00A0H ++++++++++++++++++++++++++++++++++++++++¦  4
-        00C8H ++++++++++++++++++++++++++++++++++++++++¦  5
-        00F0H ++++++++++++++++++++++++++++++++++++++++¦  6
-        0118H ++++++++++++++++++++++++++++++++++++++++¦  7
-        0140H ++++++++++++++++++++++++++++++++++++++++¦  8
-        0168H ++++++++++++++++++++++++++++++++++++++++¦  9
-        0190H ++++++++++++++++++++++++++++++++++++++++¦ 10
-        01B8H ++++++++++++++++++++++++++++++++++++++++¦ 11
-        01E0H ++++++++++++++++++++++++++++++++++++++++¦ 12
-        0208H ++++++++++++++++++++++++++++++++++++++++¦ 13
-        0230H ++++++++++++++++++++++++++++++++++++++++¦ 14
-        0258H ++++++++++++++++++++++++++++++++++++++++¦ 15
-        0280H ++++++++++++++++++++++++++++++++++++++++¦ 16
-        02A8H ++++++++++++++++++++++++++++++++++++++++¦ 17
-        02D0H ++++++++++++++++++++++++++++++++++++++++¦ 18
-        02F8H ++++++++++++++++++++++++++++++++++++++++¦ 19
-        0320H ++++++++++++++++++++++++++++++++++++++++¦ 20
-        0348H ++++++++++++++++++++++++++++++++++++++++¦ 21
-        0370H ++++++++++++++++++++++++++++++++++++++++¦ 22
-        0398H ++++++++++++++++++++++++++++++++++++++++¦ 23
-              +---------------------------------------+
-              0123456789012345678901234567890123456789
+<a name="figure17"></a>![][CH02F17]
 
-<a name="figure17"></a>**Figure 17:** 40x24 Name Table
+**Figure 17:** 40x24 Name Table
 
 Pattern Table occupies 2 KB of VRAM from 0800H to 0FFFH. Each eight byte block contains the pixel pattern for a character code:
 
-    +---------------+
-    ¦0 0 1 0 0 0 0 0¦ Byte 0
-    ¦0 1 0 1 0 0 0 0¦ Byte 1
-    ¦1 0 0 0 1 0 0 0¦ Byte 2
-    ¦1 0 0 0 1 0 0 0¦ Byte 3
-    ¦1 1 1 1 1 0 0 0¦ Byte 4
-    ¦1 0 0 0 1 0 0 0¦ Byte 5
-    ¦1 0 0 0 1 0 0 0¦ Byte 6
-    ¦0 0 0 0 0 0 0 0¦ Byte 7
-    +---------------+
+<a name="figure18"></a>![][CH02F18]
 
-<a name="figure18"></a>**Figure 18:** Character Pattern Block (No. 65 shown = 'A')
+**Figure 18:** Character Pattern Block (No. 65 shown = 'A')
 
 The first block contains the pattern for character code 0, the second the pattern for character code 1 and so on to character code 255. Note that only the leftmost six pixels are actually displayed in this mode. The colours of the 0 and 1 pixels in this mode are defined by [VDP Mode Register 7](#moderegister7), initially they are blue and white.
 
@@ -389,35 +321,9 @@ The first block contains the pattern for character code 0, the second the patter
 
 The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH. As in [40x24 Text Mode](#40x24textmode) normal operation involves placing character codes in the required position in the table. The "[VPOKE](#vpoke)" statement may be used to attain familiarity with the screen layout:
 
-              01234567890123456789012345678901
-        1800H +-------------------------------+  0
-        1820H ++++++++++++++++++++++++++++++++¦  1
-        1840H ++++++++++++++++++++++++++++++++¦  2
-        1860H ++++++++++++++++++++++++++++++++¦  3
-        1880H ++++++++++++++++++++++++++++++++¦  4
-        18A0H ++++++++++++++++++++++++++++++++¦  5
-        18C0H ++++++++++++++++++++++++++++++++¦  6
-        18E0H ++++++++++++++++++++++++++++++++¦  7
-        1900H ++++++++++++++++++++++++++++++++¦  8
-        1920H ++++++++++++++++++++++++++++++++¦  9
-        1940H ++++++++++++++++++++++++++++++++¦ 10
-        1960H ++++++++++++++++++++++++++++++++¦ 11
-        1980H ++++++++++++++++++++++++++++++++¦ 12
-        19A0H ++++++++++++++++++++++++++++++++¦ 13
-        19C0H ++++++++++++++++++++++++++++++++¦ 14
-        19E0H ++++++++++++++++++++++++++++++++¦ 15
-        1A00H ++++++++++++++++++++++++++++++++¦ 16
-        1A20H ++++++++++++++++++++++++++++++++¦ 17
-        1A40H ++++++++++++++++++++++++++++++++¦ 18
-        1A60H ++++++++++++++++++++++++++++++++¦ 19
-        1A80H ++++++++++++++++++++++++++++++++¦ 20
-        1AA0H ++++++++++++++++++++++++++++++++¦ 21
-        1AC0H ++++++++++++++++++++++++++++++++¦ 22
-        1AE0H ++++++++++++++++++++++++++++++++¦ 23
-              +-------------------------------+
-              01234567890123456789012345678901
+<a name="figure19"></a>![][CH2F19]
 
-<a name="figure19"></a>**Figure 19:** 32x24 Name Table
+**Figure 19:** 32x24 Name Table
 
 The Character Pattern Table occupies 2 KB of VRAM from 0000H to 07FFH. Its structure is the same as in [40x24 Text Mode](#40x24textmode), all eight pixels of an 8x8 pattern are now displayed.
 
@@ -429,35 +335,9 @@ The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH, the same as in [3
 
 The Character Pattern Table occupies 6 KB of VRAM from 0000H to 17FFH. While its structure is the same as in the text modes it does not contain a character set but is initialized to all 0 pixels. The first 2 KB of the Character Pattern Table is addressed by the character codes from the first third of the Name Table, the second 2 KB by the central third of the Name Table and the last 2 KB by the final third of the Name Table.  Because of the sequential pattern in the Name Table the entire Character Pattern Table is read out linearly during a video frame. Setting a point on the screen involves working out where the corresponding bit is in the Character Pattern Table and turning it on. For a BASIC program to convert X,Y coordinates to an address see the [MAPXYC](#mapxyc) standard routine in Chapter 4.
 
-              01234567890123456789012345678901
-        0000H +-------------------------------+  0
-        0100H ++++++++++++++++++++++++++++++++¦  1
-        0200H ++++++++++++++++++++++++++++++++¦  2
-        0300H ++++++++++++++++++++++++++++++++¦  3
-        0400H ++++++++++++++++++++++++++++++++¦  4
-        0500H ++++++++++++++++++++++++++++++++¦  5
-        0600H ++++++++++++++++++++++++++++++++¦  6
-        0700H ++++++++++++++++++++++++++++++++¦  7
-        0800H ++++++++++++++++++++++++++++++++¦  8
-        0900H ++++++++++++++++++++++++++++++++¦  9
-        0A00H ++++++++++++++++++++++++++++++++¦ 10
-        0B00H ++++++++++++++++++++++++++++++++¦ 11
-        0C00H ++++++++++++++++++++++++++++++++¦ 12
-        0D00H ++++++++++++++++++++++++++++++++¦ 13
-        0E00H ++++++++++++++++++++++++++++++++¦ 14
-        0F00H ++++++++++++++++++++++++++++++++¦ 15
-        1000H ++++++++++++++++++++++++++++++++¦ 16
-        1100H ++++++++++++++++++++++++++++++++¦ 17
-        1200H ++++++++++++++++++++++++++++++++¦ 18
-        1300H ++++++++++++++++++++++++++++++++¦ 19
-        1400H ++++++++++++++++++++++++++++++++¦ 20
-        1500H ++++++++++++++++++++++++++++++++¦ 21
-        1600H ++++++++++++++++++++++++++++++++¦ 22
-        1700H ++++++++++++++++++++++++++++++++¦ 23
-              +-------------------------------+
-              01234567890123456789012345678901
+<a name="figure20"></a>![][CH02F20]
 
-<a name="figure20"></a>**Figure 20:** Graphics Character Pattern Table
+**Figure 20:** Graphics Character Pattern Table
 
 The border colour is defined by VDP Mode Register 7 and is initially blue. The Colour Table occupies 6 KB of VRAM from 2000H to 37FFH. There is an exact byte-to-byte mapping from the Character Pattern Table to the Colour Table but, because it takes a whole byte to define the 0 pixel and 1 pixel colours, there is a lower resolution for colours than for pixels. The lower four bits of a Colour Table entry define the colour of all the 0 pixels on the corresponding eight pixel line. The upper four bits define the colour of the 1 pixels. The Colour Table is initialized so that the 0 pixel colour and the 1 pixel colour are blue for the entire table. Because both colours are the same it will be necessary to alter one colour when a bit is set in the Character Pattern Table.
 
@@ -476,17 +356,9 @@ As with [Graphics Mode](#graphicsmode) this is just a character code "driver" pa
 
 The Character Pattern table occupies 1536 bytes of VRAM from 0000H to 05FFH. As in the other modes each character code maps onto an eight byte block in the Character Pattern Table.  Because of the lower resolution in this mode only two bytes of the pattern block are actually needed to define an 8x8 pattern:
 
-    +---------------+           +-------+
-    ¦A A A A B B B B¦ Byte 0    ¦   ¦   ¦
-    ¦C C C C D D D D¦ Byte 1    ¦ A ¦ B ¦
-    ¦...............¦ ......    ¦   ¦   ¦
-    ¦               ¦           +---+---¦
-    ¦               ¦           ¦   ¦   ¦
-    ¦               ¦           ¦ C ¦ D ¦
-    +---------------+           ¦   ¦   ¦
-                                +-------+
+<a name="figure21"></a>![][CH02F21]
 
-<a name="figure21"></a>**Figure 21:** Multicolour Pattern Block
+**Figure 21:** Multicolour Pattern Block
 
 As can be seen from Figure 21 each four bit section of the two byte block contains a colour code and thus defines the colour of a quadrant of the 8x8 pixel pattern. So that the entire eight bytes of the pattern block can be utilized a given character code will use a different two byte section depending upon the character code's screen location (i.e. its position in the Name Table):
 
@@ -497,35 +369,9 @@ As can be seen from Figure 21 each four bit section of the two byte block contai
 
 When the Name Table is filled with the special driver sequence of character codes shown above the Character Pattern Table will be read out linearly during a video frame:
 
-              01234567890123456789012345678901
-        0000H +-------------------------------+  0
-        0002H ++++++++++++++++++++++++++++++++¦  1
-        0004H ++++++++++++++++++++++++++++++++¦  2
-        0006H ++++++++++++++++++++++++++++++++¦  3
-        0100H ++++++++++++++++++++++++++++++++¦  4
-        0102H ++++++++++++++++++++++++++++++++¦  5
-        0104H ++++++++++++++++++++++++++++++++¦  6
-        0106H ++++++++++++++++++++++++++++++++¦  7
-        0200H ++++++++++++++++++++++++++++++++¦  8
-        0202H ++++++++++++++++++++++++++++++++¦  9
-        0204H ++++++++++++++++++++++++++++++++¦ 10
-        0206H ++++++++++++++++++++++++++++++++¦ 11
-        0300H ++++++++++++++++++++++++++++++++¦ 12
-        0302H ++++++++++++++++++++++++++++++++¦ 13
-        0304H ++++++++++++++++++++++++++++++++¦ 14
-        0306H ++++++++++++++++++++++++++++++++¦ 15
-        0400H ++++++++++++++++++++++++++++++++¦ 16
-        0402H ++++++++++++++++++++++++++++++++¦ 17
-        0404H ++++++++++++++++++++++++++++++++¦ 18
-        0406H ++++++++++++++++++++++++++++++++¦ 19
-        0500H ++++++++++++++++++++++++++++++++¦ 20
-        0502H ++++++++++++++++++++++++++++++++¦ 21
-        0504H ++++++++++++++++++++++++++++++++¦ 22
-        0506H ++++++++++++++++++++++++++++++++¦ 23
-              +-------------------------------+
-              01234567890123456789012345678901
+<a name="figure22"></a>![][CH02F22]
 
-<a name="figure22"></a>**Figure 22:** Multicolour Character Pattern Table
+**Figure 22:** Multicolour Character Pattern Table
 
 The border colour is defined by [VDP Mode Register 7](#moderegister7) and is initially blue. There is no separate Colour Table as the colours are defined directly by the contents of the Character Pattern Table, this is initially filled with blue.
 
@@ -535,18 +381,9 @@ The VDP can control thirty-two sprites in all modes except [40x24 Text Mode](#40
 
 The Sprite Attribute Table occupies 128 bytes of VRAM from 1B00H to 1B7FH. The table contains thirty-two four byte blocks, one for each sprite. The first block controls sprite 0 (the "top" sprite), the second controls sprite 1 and so on to sprite 31. The format of each block is as below:
 
-      7   6   5   4   3   2   1   0
-    +-------------------------------+
-    ¦       Vertical Position       ¦ Byte 0
-    +-------------------------------¦
-    ¦      Horizontal Position      ¦ Byte 1
-    +-------------------------------¦
-    ¦        Pattern Number         ¦ Byte 2
-    +-------------------------------¦
-    ¦EC ¦ 0 ¦ 0 ¦ 0 ¦  Colour Code  ¦ Byte 3
-    +-------------------------------+
+<a name="figure23"></a>![][CH02F23]
 
-<a name="figure23"></a>**Figure 23:** Sprite Attribute Block
+**Figure 23:** Sprite Attribute Block
 
 Byte 0 specifies the vertical (Y) coordinate of the top-left pixel of the sprite. The coordinate system runs from -1 (FFH) for the top pixel line on the screen down to 190 (BEH) for the bottom line. Values less than -1 can be used to slide the sprite in from the top of the screen. The exact values needed will obviously depend upon the size of the sprite. Curiously there has been no attempt in MSX BASIC to reconcile this coordinate system with the normal graphics range of Y=0 to 191.  As a consequence a sprite will always be one pixel lower on the screen than the equivalent graphic point. Note that the special vertical coordinate value of 208 (D0H) placed in a sprite attribute block will cause the VDP to ignore all subsequent blocks in the Sprite Attribute Table. Effectively this means that any lower sprites will disappear from the screen.
 
@@ -558,18 +395,31 @@ In Byte 3 the four Colour Code bits define the colour of the 1 pixels in the spr
 
 The Sprite Pattern Table occupies 2 KB of VRAM from 3800H to 3FFFH. It contains two hundred and fifty-six 8x8 pixel patterns, numbered from 0 to 255. If the Size bit in VDP Mode Register 1 is 0, resulting in 8x8 sprites, then each eight byte sprite pattern block is structured in the same way as the character pattern block shown in Figure 18. If the Size bit is 1, resulting in 16x16 sprites, then four eight byte blocks are needed to define the pattern as below:
 
-    +---------+            +-----------+
-    ¦ 8 Bytes ¦            ¦     ¦     ¦
-    ¦ Block A ¦            ¦  A  ¦  C  ¦
-    +---------¦            ¦     ¦     ¦
-    ¦ 8 Bytes ¦            +-----+-----¦
-    ¦ Block B ¦            ¦     ¦     ¦
-    +---------¦            ¦  B  ¦  D  ¦
-    ¦ 8 Bytes ¦            ¦     ¦     ¦
-    ¦ Block C ¦            +-----------+
-    +---------¦
-    ¦ 8 Bytes ¦
-    ¦ Block D ¦
-    +---------+
+<a name="figure24"></a>![][CH02F24]
 
-<a name="figure24"></a>**Figure 24:** 16x16 Sprite Pattern Block
+**Figure 24:** 16x16 Sprite Pattern Block
+
+[CH01F01]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F01.svg
+[CH01F02]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F02.svg
+[CH01F03]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F03.svg
+[CH01F04]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F04.svg
+[CH01F05]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F05.svg
+[CH01F06]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F06.svg
+[CH02F07]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F07.svg
+[CH02F08]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F08.svg
+[CH02F09]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F09.svg
+[CH02F10]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F10.svg
+[CH02F11]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F11.svg
+[CH02F12]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F12.svg
+[CH02F13]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F13.svg
+[CH02F14]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F14.svg
+[CH02F15]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F15.svg
+[CH02F16]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F16.svg
+[CH02F17]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F17.svg
+[CH02F18]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F18.svg
+[CH02F19]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F19.svg
+[CH02F20]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F20.svg
+[CH02F21]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F21.svg
+[CH02F22]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F22.svg
+[CH02F23]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F23.svg
+[CH02F24]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH02F24.svg

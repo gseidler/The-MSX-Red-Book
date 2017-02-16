@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="400px" height="430px"
+version="1.1"
+baseProfile="full"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:ev="http://www.w3.org/2001/xml-events">
+<defs>
+    <g id="sequence">
+        <text x="0" y="0" >0</text>
+        <text x="10" y="0" >1</text>
+        <text x="20" y="0" >2</text>
+        <text x="30" y="0" >3</text>
+        <text x="40" y="0" >4</text>
+        <text x="50" y="0" >5</text>
+        <text x="60" y="0" >6</text>
+        <text x="70" y="0" >7</text>
+        <text x="80" y="0" >8</text>
+        <text x="90" y="0" >9</text>
+    </g>
+</defs>
+<g transform="translate(10,30)">
+    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+        <use xlink:href="#sequence" x="45" y="0"/>
+        <use xlink:href="#sequence" x="145" y="0"/>
+        <use xlink:href="#sequence" x="245" y="0"/>
+        <use xlink:href="#sequence" x="45" y="375"/>
+        <use xlink:href="#sequence" x="145" y="375"/>
+        <use xlink:href="#sequence" x="245" y="375"/>
+        <text x="345" y="0" >0</text>
+        <text x="355" y="0" >1</text>
+        <text x="345" y="375" >0</text>
+        <text x="355" y="375" >1</text>
+        <text x="45" y="-15" >0</text>
+        <text x="145" y="-15" >1</text>
+        <text x="245" y="-15" >2</text>
+        <text x="345" y="-15" >3</text>
+        <text x="45" y="390" >0</text>
+        <text x="145" y="390" >1</text>
+        <text x="245" y="390" >2</text>
+        <text x="345" y="390" >3</text>
+    </g>
+    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="end">
+        <g transform="translate(35,15)">
+            <text x="0" y="0" >0000H</text>
+            <text x="0" y="15" >0002H</text>
+            <text x="0" y="30" >0004H</text>
+            <text x="0" y="45" >0006H</text>
+            <text x="0" y="60" >0100H</text>
+            <text x="0" y="75" >0102H</text>
+            <text x="0" y="90" >0104H</text>
+            <text x="0" y="105" >0106H</text>
+            <text x="0" y="120" >0200H</text>
+            <text x="0" y="135" >0202H</text>
+            <text x="0" y="150" >0204H</text>
+            <text x="0" y="165" >0206H</text>
+            <text x="0" y="180" >0300H</text>
+            <text x="0" y="195" >0302H</text>
+            <text x="0" y="210" >0304H</text>
+            <text x="0" y="225" >0306H</text>
+            <text x="0" y="240" >0400H</text>
+            <text x="0" y="255" >0402H</text>
+            <text x="0" y="270" >0404H</text>
+            <text x="0" y="285" >0406H</text>
+            <text x="0" y="300" >0500H</text>
+            <text x="0" y="315" >0502H</text>
+            <text x="0" y="330" >0504H</text>
+            <text x="0" y="345" >0506H</text>
+        </g>
+        <g transform="translate(378,15)">
+            <text x="0" y="0" >0</text>
+            <text x="0" y="15" >1</text>
+            <text x="0" y="30" >2</text>
+            <text x="0" y="45" >3</text>
+            <text x="0" y="60" >4</text>
+            <text x="0" y="75" >5</text>
+            <text x="0" y="90" >6</text>
+            <text x="0" y="105" >7</text>
+            <text x="0" y="120" >8</text>
+            <text x="0" y="135" >9</text>
+            <text x="0" y="150" >10</text>
+            <text x="0" y="165" >11</text>
+            <text x="0" y="180" >12</text>
+            <text x="0" y="195" >13</text>
+            <text x="0" y="210" >14</text>
+            <text x="0" y="225" >15</text>
+            <text x="0" y="240" >16</text>
+            <text x="0" y="255" >17</text>
+            <text x="0" y="270" >18</text>
+            <text x="0" y="285" >19</text>
+            <text x="0" y="300" >20</text>
+            <text x="0" y="315" >21</text>
+            <text x="0" y="330" >22</text>
+            <text x="0" y="345" >23</text>
+        </g>
+        <g transform="translate(40,3)">
+            <g fill="none" stroke="black">
+                <rect x="0" y="0" width="320px" height="360px"/>
+                <path d="M10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360"/>
+                <path d="M0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320 m0,15 h-320 m0,15 h320"/>
+            </g>
+        </g>
+    </g>
+</g>
+</svg>
