@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="470px" height="535px"
+version="1.1"
+baseProfile="full"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:ev="http://www.w3.org/2001/xml-events">
+<g transform="translate(10,10)">
+    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+        <g transform="translate(25,10)">
+            <text x="0" y="0" >3</text>
+            <text x="50" y="0" >2</text>
+            <text x="100" y="0" >1</text>
+            <text x="150" y="0" >0</text>
+        </g>
+        <g transform="translate(25,45)">
+            <text x="0" y="0" >0</text>
+            <text x="50" y="0" >0</text>
+            <text x="100" y="0" >x</text>
+            <text x="150" y="0" >x</text>
+        </g>
+        <g transform="translate(25,95)">
+            <text x="0" y="0" >0</text>
+            <text x="50" y="0" >1</text>
+            <text x="100" y="0" >x</text>
+            <text x="150" y="0" >x</text>
+        </g>
+        <g transform="translate(25,145)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >0</text>
+            <text x="100" y="0" >0</text>
+            <text x="150" y="0" >0</text>
+        </g>
+        <g transform="translate(25,195)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >0</text>
+            <text x="100" y="0" >0</text>
+            <text x="150" y="0" >1</text>
+        </g>
+        <g transform="translate(25,245)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >0</text>
+            <text x="100" y="0" >1</text>
+            <text x="150" y="0" >0</text>
+        </g>
+        <g transform="translate(25,295)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >0</text>
+            <text x="100" y="0" >1</text>
+            <text x="150" y="0" >1</text>
+        </g>
+        <g transform="translate(25,345)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >1</text>
+            <text x="100" y="0" >0</text>
+            <text x="150" y="0" >0</text>
+        </g>
+        <g transform="translate(25,395)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >1</text>
+            <text x="100" y="0" >0</text>
+            <text x="150" y="0" >1</text>
+        </g>
+        <g transform="translate(25,445)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >1</text>
+            <text x="100" y="0" >1</text>
+            <text x="150" y="0" >0</text>
+        </g>
+        <g transform="translate(25,495)">
+            <text x="0" y="0" >1</text>
+            <text x="50" y="0" >1</text>
+            <text x="100" y="0" >1</text>
+            <text x="150" y="0" >1</text>
+        </g>
+    </g>
+    <g fill="none" stroke="black">
+        <rect x="0" y="15" width="200px" height="500px"/>
+        <path d="M50,15 v500 m50,0 v-500 m50,0 v500"/>
+        <path d="M0,65 h200 m0,50 h-200 m0,50 h200 m0,50 h-200 m0,50 h200 m0,50 h-200 m0,50 h200 m0,50 h-200 m0,50 h200"/>
+    </g>
+    <g transform="translate(250,50)">
+        <g fill="none" stroke="black">
+            <path d="M0,0 v-20 l20,20 h180"/>
+            <path d="M0,50 l20,-20 v20 h180"/>
+            <path d="M0,100 v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20  v-20 l20,20"/>
+            <path d="M0,150 v-20 l20,20 h180"/>
+            <path d="M0,180 l20,20 l20,-20 l20,20 l20,-20 l20,20 l20,-20 l20,20 l20,-20 l20,20 l20,-20"/>
+            <path d="M0,230 l20,20 v-20 h180"/>
+            <path d="M0,300 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20 l20,-20 v20"/>
+            <path d="M0,350 l20,-20 h180"/>
+            <path d="M0,400 l20,-20 l20,20 l20,-20 l20,20 l20,-20 l20,20 l20,-20 l20,20 l20,-20 l20,20"/>
+            <path d="M0,450 l20,-20 v20 h180"/>
+        </g>
+    </g>
+    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+        <text x="350" y="10" >Modulation Envelope</text>
+    </g>
+</g>
+</svg>
