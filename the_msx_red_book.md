@@ -535,3 +535,12 @@ The Kana LED output is unused on UK machines. On Japanese machines it is used to
 [CH02F22]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH02F22.svg
 [CH02F23]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH02F23.svg
 [CH02F24]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH02F24.svg
+[CH03F25]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F25.svg
+[CH03F26]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F26.svg
+[CH03F27]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F27.svg
+[CH03F28]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F28.svg
+[CH03F29]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F29.svg
+[CH03F30]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F30.svg
+[CH03F31]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F31.svg
+[CH03F32]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F32.svg
+[CH03F33]: https://cdn.rawgit.com/oraculo666/the_msx_red_book/b575e527/images/CH03F33.svg
