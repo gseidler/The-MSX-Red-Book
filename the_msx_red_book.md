@@ -417,7 +417,7 @@ This port is used to read any register once it has been selected by the Address 
 
 ##<a name="registers0and1"></a>Registers 0 and 1
 
-<a name="figure25"></a>~[][CH03F25]
+<a name="figure25"></a>![][CH03F25]
 
 **Figure 25**
 
