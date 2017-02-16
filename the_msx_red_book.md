@@ -321,7 +321,7 @@ The first block contains the pattern for character code 0, the second the patter
 
 The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH. As in [40x24 Text Mode](#40x24textmode) normal operation involves placing character codes in the required position in the table. The "[VPOKE](#vpoke)" statement may be used to attain familiarity with the screen layout:
 
-<a name="figure19"></a>![][CH2F19]
+<a name="figure19"></a>![][CH02F19]
 
 **Figure 19:** 32x24 Name Table
 
