@@ -59,8 +59,7 @@ The 8255 PPI is a general purpose parallel interface device configured as three 
 
 ##<a name="ppiporta"></a>PPI Port A (I/O Port A8H)
 
-<a name="figure1"></a>
-<img src="https://dl.dropboxusercontent.com/s/c8y8bxmd45b9qaf/CH01F01.svg?raw=1">
+<a name="figure1"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F01.svg">
 
 **Figure 1:** Primary Slot Register
 
@@ -82,8 +81,7 @@ A typical UK machine will have one Primary Slot containing the MSX ROM, one cont
 
 System memory can be increased to a theoretical maximum of sixteen 64 KB areas by using expander interfaces. An expander plugs into any Primary Slot to provide four 64 KB Secondary Slots, numbered 0 to 3, instead of one primary one. Each expander has its own local hardware, called a Secondary Slot Register, to select which of the Secondary Slots should appear in the Primary Slot. As before pages can be selected from different Secondary Slots.
 
-<a name="figure2"></a>
-<img src="https://dl.dropboxusercontent.com/s/9wdp2oza3hok03u/CH01F02.svg?raw=1">
+<a name="figure2"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F02.svg">
 
 **Figure 2:** Secondary Slot Register
 
@@ -103,24 +101,17 @@ The BASIC Interpreter can also execute a BASIC program ROM detected in page 2 (8
 
 ##<a name="ppiportb"></a>PPI Port B (I/O Port A9H)
 
-      7  6  5  4  3  2  1  0
-    +------------------------+
-    ¦ Keyboard Column Inputs ¦
-    +------------------------+
+<a name="figure3"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F03.svg">
 
-<a name="figure3"></a>**Figure 3**
+**Figure 3**
 
 This input port is used to read the eight bits of column data from the currently selected row of the keyboard. The MSX keyboard is a software scanned eleven row by eight column matrix of normally open switches. Current machines usually only have keys in rows zero to eight. Conversion of key depressions into character codes is performed by the MSX ROM interrupt handler, this process is described in [Chapter 4](#chapter4).
 
 ##<a name="ppiportc"></a>PPI Port C (I/O Port AAH)
 
-       7     6     5     4     3     2     1     0
-    +-----------------------------------------------+
-    ¦ Key ¦ Cap ¦ Cas ¦ Cas ¦  Keyboard Row Select  ¦
-    ¦Click¦ LED ¦ Out ¦Motor¦                       ¦
-    +-----------------------------------------------+
+<a name="figure4"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F04.svg">
 
-<a name="figure4"></a>**Figure 4**
+**Figure 4**
 
 This output port controls a variety of functions. The four Keyboard Row Select bits select which of the eleven keyboard rows, numbered from 0 to 10, is to be read in by PPI Port B.
 
@@ -136,13 +127,9 @@ Note that there are standard routines in the ROM BIOS to access all of the funct
 
 ##<a name="ppimodeport"></a>PPI Mode Port (I/O Port ABH)
 
-       7     6     5     4     3     2     1     0
-    +-----------------------------------------------+
-    ¦  1  ¦    A&C    ¦  A  ¦  C  ¦ B&C ¦  B  ¦  C  ¦
-    ¦     ¦    Mode   ¦ Dir ¦ Dir ¦ Mode¦ Dir ¦ Dir ¦
-    +-----------------------------------------------+
+<a name="figure5"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F05.svg">
 
-<a name="figure5"></a>**Figure 5:** PPI Mode Selection
+**Figure 5:** PPI Mode Selection
 
 This port is used to set the operating mode of the PPI. As the MSX hardware is designed to work in one particular configuration only this port should not be modified under any circumstances. Details are given for completeness only.
 
@@ -160,12 +147,9 @@ The B Dir bit determines the direction of Port B: 0=Output, 1=Input (MSX).
 
 The C Dir bit determines the direction of the lower four bits only of Port C: 0=Output (MSX), 1=Input
 
-       7     6     5     4     3     2     1     0
-    +-----------------------------------------------+
-    ¦  0  ¦    Not used     ¦   Bit Number    ¦ Set ¦
-    +-----------------------------------------------+
+<a name="figure6"></a><img src="https://cdn.rawgit.com/oraculo666/the_msx_red_book/97f807a4/images/CH01F06.svg">
 
-<a name="figure6"></a>**Figure 6:** PPI Bit Set/Reset
+**Figure 6:** PPI Bit Set/Reset
 
 The PPI Mode Port can be used to directly set or reset any bit of Port C when bit 7 is 0. The Bit Number, from 0 to 7, determines which bit is to be affected. Its new value is determined by the Set/Reset bit: 0=Reset, 1=Set. The advantage of this mode is that a single output can be easily modified. As an example the Caps Lock LED may be turned on with the BASIC statement `OUT &HAB,12` and off with the statement `OUT &HAB,13`.
 
