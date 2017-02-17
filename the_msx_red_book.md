@@ -45,6 +45,8 @@
     + [Register 14](#register14)
     + [Register 15](#register15)
 4. [ROM BIOS](#chapter4)
+    + [Data Areas](#dataareas)
+    + [Terminology](#terminology)
 5. [ROM BASIC Interpreter](#chapter5)
 6. [Memory Map](#chapter6)
 7. [Machine Code Programs](#chapter7)
