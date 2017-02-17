@@ -112,7 +112,7 @@ To increase flexibility each 16 KB "page" of the Z80 address space may be select
 
 The first operation performed by the MSX ROM at power-up is to search through each slot for RAM in pages 2 and 3 (8000H to FFFFH). The Primary Slot Register is then set so that the relevant slots are selected thus making the RAM permanently available. The memory configuration of any MSX machine can be determined by displaying the Primary Slot Register setting with the BASIC statement:
 
-`PRINT RIGHT$("0000000"+BIN$(INP(&HA8)),8)`
+    PRINT RIGHT$("0000000"+BIN$(INP(&HA8)),8)
 
 As an example "10100000" would be produced on a Toshiba HX10 where pages 3 and 2 (the RAM) both come from Primary Slot 2 and pages 1 and 0 (the MSX ROM) from Primary Slot 0. The MSX ROM must always be placed in Primary Slot 0 by a manufacturer as this is the slot selected by the hardware at power-up. Other memory devices, RAM and any additional ROM, may be placed in any slot by a manufacturer.
 
@@ -135,7 +135,7 @@ Memory switching is obviously an area demanding extra caution, particularly with
 The BASIC Interpreter itself has four methods of accessing extension ROMs. The first three of these are for use with machine code ROMs placed in page 1 (4000H to 7FFFH), they are:
 
 1. Hooks ([Chapter 6](#chapter6)).
-2. The "[CALL](#call)" statement ([Chapter 5](#chapter5)).
+2. The "`CALL`" statement ([Chapter 5](#chapter5)).
 3. Additional device names ([Chapter 5](#chater5)).
 
 The BASIC Interpreter can also execute a BASIC program ROM detected in page 2 (8000H to BFFFH) during the power-up ROM search. What the BASIC Interpreter cannot do is use any RAM hidden behind other memory devices. This limitation is a reflection of the difficulty in converting an established program to take advantage of newer, more complex machines. A similar situation exists with the version of Microsoft BASIC available on the IBM PC. Out of a 1 MB memory space only 64 KB can be used for program storage.
@@ -360,7 +360,7 @@ The first block contains the pattern for character code 0, the second the patter
 
 ##<a name="32x24textmode"></a>32x24 Text Mode
 
-The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH. As in [40x24 Text Mode](#40x24textmode) normal operation involves placing character codes in the required position in the table. The "[VPOKE](#vpoke)" statement may be used to attain familiarity with the screen layout:
+The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH. As in [40x24 Text Mode](#40x24textmode) normal operation involves placing character codes in the required position in the table. The "`VPOKE`" statement may be used to attain familiarity with the screen layout:
 
 <a name="figure19"></a>![][CH02F19]
 
@@ -1129,9 +1129,9 @@ Standard routine to fill a block of the VDP VRAM with a single data byte. The VR
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to return the VDP to either 40x24 Text Mode or 32x24 Text Mode if it is currently in Graphics Mode or Multicolour Mode. It is used by the BASIC Interpreter Mainloop and by the "INPUT" statement handler. Whenever the INITXT or INIT32 standard routines are used the mode byte, 00H or 01H, is copied into OLDSCR. If the mode is subsequently changed to Graphics Mode or Multicolour Mode, and then has to be returned to one of the two text modes for keyboard input, this routine ensures that it returns to the same one.
+Standard routine to return the VDP to either [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode) if it is currently in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode). It is used by the BASIC Interpreter Mainloop and by the "[INPUT](#input)" statement handler. Whenever the [INITXT](#initxt) or [INIT32](#init32) standard routines are used the mode byte, 00H or 01H, is copied into [OLDSCR](#oldscr). If the mode is subsequently changed to [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), and then has to be returned to one of the two text modes for keyboard input, this routine ensures that it returns to the same one.
 
-SCRMOD is first examined and, if the screen is already in either text mode, the routine simply terminates with no action.  Otherwise the previous text mode is taken from OLDSCR and passed to the CHGMOD standard routine.
+[SCRMOD](#scrmod) is first examined and, if the screen is already in either text mode, the routine simply terminates with no action.  Otherwise the previous text mode is taken from [OLDSCR](#oldscr) and passed to the [CHGMOD](#chgmod) standard routine.
 
 <a name="cls"></a>
 
@@ -1141,7 +1141,7 @@ SCRMOD is first examined and, if the screen is already in either text mode, the 
     Exit...... None
     Modifies.. AF, BC, DE, EI
 
-Standard routine to clear the screen in any mode, it does nothing but call the routine at 0777H. This is actually the "CLS" statement handler and, because this indicates that there is illegal text after the statement, it will simply return if entered with Flag NZ.
+Standard routine to clear the screen in any mode, it does nothing but call the routine at 0777H. This is actually the "`CLS`" statement handler and, because this indicates that there is illegal text after the statement, it will simply return if entered with Flag NZ.
 
 <a name="chgmod"></a>
 
@@ -1151,7 +1151,7 @@ Standard routine to clear the screen in any mode, it does nothing but call the r
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to set a new screen mode. Register A, containing the required screen mode, is tested and control transferred to INITXT, INIT32, INIGRP or INIMLT.
+Standard routine to set a new screen mode. Register A, containing the required screen mode, is tested and control transferred to [INITXT](#initxt), [INIT32](#init32), [INIGRP](#inigrp) or [INIMLT](#inimlt).
 
 <a name="lptout"></a>
 
@@ -1161,7 +1161,7 @@ Standard routine to set a new screen mode. Register A, containing the required s
     Exit...... Flag C if CTRL-STOP termination
     Modifies.. AF
 
-Standard routine to output a character to the line printer via the Centronics Port. The printer status is continually tested, via the LPTSTT standard routine, until the printer becomes free. The character is then written to the Centronics Data Port (I/O port 91H) and the STROBE signal of the Centronics Status Port (I/O port 90H) briefly pulsed low. Note that the BREAKX standard routine is used to test for the CTRL- -STOP key if the printer is busy. If CTRL-STOP is detected a CR code is written to the Centronics Data Port, to flush the printer's line buffer, and the routine terminates with Flag C.
+Standard routine to output a character to the line printer via the Centronics Port. The printer status is continually tested, via the [LPTSTT](#lptstt) standard routine, until the printer becomes free. The character is then written to the Centronics Data Port (I/O port 91H) and the [STROBE](#strobe) signal of the Centronics Status Port (I/O port 90H) briefly pulsed low. Note that the [BREAKX](#breakx) standard routine is used to test for the CTRL-STOP key if the printer is busy. If CTRL-STOP is detected a CR code is written to the Centronics Data Port, to flush the printer's line buffer, and the routine terminates with Flag C.
 
 <a name="lptstt"></a>
 
@@ -1171,7 +1171,7 @@ Standard routine to output a character to the line printer via the Centronics Po
     Exit...... A=0 and Flag Z if printer busy
     Modifies.. AF
 
-Standard routine to test the Centronics Status Port BUSY signal. This just involves reading I/O port 90H and examining the state of bit 1: 0=Ready, 1=Busy.
+Standard routine to test the Centronics Status Port [BUSY](#busy) signal. This just involves reading I/O port 90H and examining the state of bit 1: 0=Ready, 1=Busy.
 
 <a name="posit"></a>
 
@@ -1181,7 +1181,7 @@ Standard routine to test the Centronics Status Port BUSY signal. This just invol
     Exit...... None
     Modifies.. AF, EI
 
-Standard routine to set the cursor coordinates. The row and column coordinates are sent to the OUTDO standard routine as the parameters in an ESC,"Y",Row+1FH, Column+1FH sequence. Note that the BIOS home position has coordinates of 1,1 rather than the 0,0 used by the BASIC Interpreter.
+Standard routine to set the cursor coordinates. The row and column coordinates are sent to the [OUTDO](#outdo) standard routine as the parameters in an ESC,"Y",Row+1FH, Column+1FH sequence. Note that the BIOS home position has coordinates of 1,1 rather than the 0,0 used by the BASIC Interpreter.
 
 <a name="cnvchr"></a>
 
@@ -1191,9 +1191,9 @@ Standard routine to set the cursor coordinates. The row and column coordinates a
     Exit...... Flag Z,NC=Header; Flag NZ,C=Graphic; Flag Z,C=Normal
     Modifies.. AF
 
-Standard routine to test for, and convert if necessary, characters with graphic headers. Characters less than 20H are normally interpreted by the output device drivers as control characters. A character code in this range can be treated as a displayable character by preceding it with a graphic header control code (01H) and adding 40H to its value. For example to directly display character code 0DH, rather than have it interpreted as a carriage return, it is necessary to output the two bytes 01H,4DH. This routine is used by the output device drivers, such as the CHPUT standard routine, to check for such sequences.
+Standard routine to test for, and convert if necessary, characters with graphic headers. Characters less than 20H are normally interpreted by the output device drivers as control characters. A character code in this range can be treated as a displayable character by preceding it with a graphic header control code (01H) and adding 40H to its value. For example to directly display character code 0DH, rather than have it interpreted as a carriage return, it is necessary to output the two bytes 01H,4DH. This routine is used by the output device drivers, such as the [CHPUT](#chput) standard routine, to check for such sequences.
 
-If the character is a graphic header GRPHED is set to 01H and the routine terminates, otherwise GRPHED is zeroed. If the character is outside the range 40H to 5FH it is left unchanged.  If it is inside this range, and GRPHED contains 01H indicating a previous graphic header, it is converted by subtracting 40H.
+If the character is a graphic header [GRPHED](#grphed) is set to 01H and the routine terminates, otherwise [GRPHED](#grphed) is zeroed. If the character is outside the range 40H to 5FH it is left unchanged.  If it is inside this range, and [GRPHED](#grphed) contains 01H indicating a previous graphic header, it is converted by subtracting 40H.
 
 <a name="chput"></a>
 
@@ -1203,170 +1203,175 @@ If the character is a graphic header GRPHED is set to 01H and the routine termin
     Exit...... None
     Modifies.. EI
 
-Standard routine to output a character to the screen in 40x24 Text Mode or 32x24 Text Mode.  SCRMOD is first checked and, if the VDP is in either Graphics Mode or Multicolour Mode, the routine terminates with no action. Otherwise the cursor is removed (0A2EH), the character decoded (08DFH) and then the cursor replaced (09E1H). Finally the cursor column position is placed in TTYPOS, for use by the "PRINT" statement, and the routine terminates.
+Standard routine to output a character to the screen in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode). [SCRMOD](#scrmod) is first checked and, if the VDP is in either [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor is removed (0A2EH), the character decoded (08DFH) and then the cursor replaced (09E1H). Finally the cursor column position is placed in [TTYPOS](#ttypos), for use by the "`PRINT`" statement, and the routine terminates.
 
     Address... 08DFH
 
-This routine is used by the CHPUT standard routine to decode a character and take the appropriate action. The CNVCHR standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise ESCCNT is checked to see if a previous ESC character (1BH) has been received, if so control transfers to the ESC sequence processor (098FH). Otherwise the character is checked to see if it is smaller than 20H, if so control transfers to the control code processor (0914H). The character is then checked to see if it is DEL (7FH), if so control transfers to the delete routine (0AE3H).
+This routine is used by the [CHPUT](#chput) standard routine to decode a character and take the appropriate action. The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise [ESCCNT](#esccnt) is checked to see if a previous ESC character (1BH) has been received, if so control transfers to the ESC sequence processor (098FH). Otherwise the character is checked to see if it is smaller than 20H, if so control transfers to the control code processor (0914H). The character is then checked to see if it is DEL (7FH), if so control transfers to the delete routine (0AE3H).
 
-Assuming the character is displayable the cursor coordinates are taken from CSRY and CSRX and placed in register pair HL, H=Column, L=Row. These are then converted to a physical address in the VDP Name Table and the character placed there (0BE6H).  The cursor column position is then incremented (0A44H) and, assuming the rightmost column has not been exceeded, the routine terminates. Otherwise the row's entry in LINTTB, the line termination table, is zeroed to indicate an extended logical line, the column number is set to 01H and a LF is performed.
+Assuming the character is displayable the cursor coordinates are taken from [CSRY](#csry) and [CSRX](#csrx) and placed in register pair HL, H=Column, L=Row. These are then converted to a physical address in the VDP Name Table and the character placed there (0BE6H).  The cursor column position is then incremented (0A44H) and, assuming the rightmost column has not been exceeded, the routine terminates. Otherwise the row's entry in [LINTTB](#linttb), the line termination table, is zeroed to indicate an extended logical line, the column number is set to 01H and a LF is performed.
 
     Address... 0908H
 
-This routine performs the LF operation for the CHPUT standard routine control code processor. The cursor row is incremented (0A61H) and, assuming the lowest row has not been exceeded, the routine terminates. Otherwise the screen is scrolled upwards and the lowest row erased (0A88H).
+This routine performs the LF operation for the [CHPUT](#chput) standard routine control code processor. The cursor row is incremented (0A61H) and, assuming the lowest row has not been exceeded, the routine terminates. Otherwise the screen is scrolled upwards and the lowest row erased (0A88H).
 
     Address... 0914H
 
-This is the control code processor for the CHPUT standard routine. The table at 092FH is searched for a match with the code and control transferred to the associated address.
+This is the control code processor for the [CHPUT](#chput) standard routine. The table at 092FH is searched for a match with the code and control transferred to the associated address.
 
     Address... 092FH
 
-This table contains the control codes, each with an associated address, recognized by the CHPUT standard routine:
+This table contains the control codes, each with an associated address, recognized by the [CHPUT](#chput) standard routine:
 
-        CODE TO     FUNCTION
-        -------------------------------------------------
-        07H  1113H  BELL, go beep
-        08H  0A4CH  BS, cursor left
-        09H  0A71H  TAB, cursor to next tab position
-        0AH  0908H  LF, cursor down a row
-        0BH  0A7FH  HOME, cursor to home
-        0CH  077EH  FORMFEED, clear screen and home
-        0DH  0A81H  CR, cursor to leftmost column
-        1BH  0989H  ESC, enter escape sequence
-        1CH  0A5BH  RIGHT, cursor right
-        1DH  0A4CH  LEFT, cursor left
-        1EH  0A57H  UP, cursor up
-        1FH  0A61H  DOWN, cursor down.
+|CODE |TO     |FUNCTION
+|:---:|:-----:|--------------------------------
+|07H  |1113H  |BELL, go beep
+|08H  |0A4CH  |BS, cursor left
+|09H  |0A71H  |TAB, cursor to next tab position
+|0AH  |0908H  |LF, cursor down a row
+|0BH  |0A7FH  |HOME, cursor to home
+|0CH  |077EH  |FORMFEED, clear screen and home
+|0DH  |0A81H  |CR, cursor to leftmost column
+|1BH  |0989H  |ESC, enter escape sequence
+|1CH  |0A5BH  |RIGHT, cursor right
+|1DH  |0A4CH  |LEFT, cursor left
+|1EH  |0A57H  |UP, cursor up
+|1FH  |0A61H  |DOWN, cursor down.
+
+<br>
 
     Address... 0953H
 
-This table contains the ESC control codes, each with an associated address, recognized by the CHPUT standard routine:
+This table contains the ESC control codes, each with an associated address, recognized by the [CHPUT](#chput) standard routine:
 
-        CODE TO     FUNCTION
-        -------------------------------------------------
-        6AH  077EH  ESC,"j", clear screen and home
-        45H  077EH  ESC,"E", clear screen and home
-        4BH  0AEEH  ESC,"K", clear to end of line
-        4AH  0B05H  ESC,"J", clear to end of screen
-        6CH  0AECH  ESC,"l", clear line
-        4CH  0AB4H  ESC,"L", insert line
-        4DH  0A85H  ESC,"M", delete line
-        59H  0986H  ESC,"Y", set cursor coordinates
-        41H  0A57H  ESC,"A", cursor up
-        42H  0A61H  ESC,"B", cursor down
-        43H  0A44H  ESC,"C", cursor right
-        44H  0A55H  ESC,"D", cursor left
-        48H  0A7FH  ESC,"H", cursor home
-        78H  0980H  ESC,"x", change cursor
-        79H  0983H  ESC,"y", change cursor
+|CODE |TO     |FUNCTION
+|:---:|:-----:|-------------------------------
+|6AH  |077EH  |ESC,"j", clear screen and home
+|45H  |077EH  |ESC,"E", clear screen and home
+|4BH  |0AEEH  |ESC,"K", clear to end of line
+|4AH  |0B05H  |ESC,"J", clear to end of screen
+|6CH  |0AECH  |ESC,"l", clear line
+|4CH  |0AB4H  |ESC,"L", insert line
+|4DH  |0A85H  |ESC,"M", delete line
+|59H  |0986H  |ESC,"Y", set cursor coordinates
+|41H  |0A57H  |ESC,"A", cursor up
+|42H  |0A61H  |ESC,"B", cursor down
+|43H  |0A44H  |ESC,"C", cursor right
+|44H  |0A55H  |ESC,"D", cursor left
+|48H  |0A7FH  |ESC,"H", cursor home
+|78H  |0980H  |ESC,"x", change cursor
+|79H  |0983H  |ESC,"y", change cursor
+
+<br>
 
     Address... 0980H
 
-This routine performs the ESC,"x" operation for the CHPUT standard routine control code processor. ESCCNT is set to 01H to indicate that the next character received is a parameter.
+This routine performs the ESC,"x" operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to 01H to indicate that the next character received is a parameter.
 
     Address... 0983H
 
-This routine performs the ESC,"y" operation for the CHPUT standard routine control code decoder. ESCCNT is set to 02H to indicate that the next character received is a parameter.
+This routine performs the ESC,"y" operation for the [CHPUT](#chput) standard routine control code decoder. [ESCCNT](#esccnt) is set to 02H to indicate that the next character received is a parameter.
 
     Address... 0986H
 
-This routine performs the ESC",Y" operation for the CHPUT standard routine control code processor. ESCCNT is set to 04H to indicate that the next character received is a parameter.
+This routine performs the ESC",Y" operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to 04H to indicate that the next character received is a parameter.
 
     Address... 0989H
 
-This routine performs the ESC operation for the CHPUT standard routine control code processor. ESCCNT is set to FFH to indicate that the next character received is the second control character.
+This routine performs the ESC operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to FFH to indicate that the next character received is the second control character.
 
     Address... 098FH
 
-This is the CHPUT standard routine ESC sequence processor.  If ESCCNT contains FFH then the character is the second control character and control transfers to the control code processor (0919H) to search the ESC code table at 0953H.
+This is the [CHPUT](#chput) standard routine ESC sequence processor.  If [ESCCNT](#esccnt) contains FFH then the character is the second control character and control transfers to the control code processor (0919H) to search the ESC code table at 0953H.
 
-If ESCCNT contains 01H then the character is the single parameter of the ESC,"x" sequence. If the parameter is "4" (34H) then CSTYLE is set to 00H resulting in a block cursor. If the parameter is "5" (35H) then CSRSW is set to 00H making the cursor normally disabled.
+If [ESCCNT](#esccnt) contains 01H then the character is the single parameter of the ESC,"x" sequence. If the parameter is "4" (34H) then [CSTYLE](#cstyle) is set to 00H resulting in a block cursor. If the parameter is "5" (35H) then [CSRSW](#csrsw) is set to 00H making the cursor normally disabled.
 
-If ESCCNT contains 02H then the character is the single parameter in the ESC,"y" sequence. If the parameter is "4" (34H) then CSTYLE is set to 01H resulting in an underline cursor. If the parameter is "5" (35H) then CSRSW is set to 01H making the cursor normally enabled.
+If [ESCCNT](#esccnt) contains 02H then the character is the single parameter in the ESC,"y" sequence. If the parameter is "4" (34H) then [CSTYLE](#cstyle) is set to 01H resulting in an underline cursor. If the parameter is "5" (35H) then [CSRSW](#csrsw) is set to 01H making the cursor normally enabled.
 
-If ESCCNT contains 04H then the character is the first parameter of the ESC,"Y" sequence and is the row coordinate.  The parameter has 1FH subtracted and is placed in CSRY, ESCCNT is then decremented to 03H.
+If [ESCCNT](#esccnt) contains 04H then the character is the first parameter of the ESC,"Y" sequence and is the row coordinate.  The parameter has 1FH subtracted and is placed in [CSRY](#csry), [ESCCNT](#esccnt) is then decremented to 03H.
 
-If ESCCNT contains 03H then the character is the second parameter of the ESC,"Y" sequence and is the column coordinate.  The parameter has 1FH subtracted and is placed in CSRX.
+If [ESCCNT](#esccnt) contains 03H then the character is the second parameter of the ESC,"Y" sequence and is the column coordinate.  The parameter has 1FH subtracted and is placed in [CSRX](#csrx).
+
 
     Address... 09DAH
 
-This routine is used, by the CHGET standard routine for example, to display the cursor character when it is normally disabled. If CSRSW is non-zero the routine simply terminates with no action, otherwise the cursor is displayed (09E6H).
+This routine is used, by the [CHGET](#chget) standard routine for example, to display the cursor character when it is normally disabled. If [CSRSW](#csrsw) is non-zero the routine simply terminates with no action, otherwise the cursor is displayed (09E6H).
 
     Address... 09E1H
 
-This routine is used, by the CHPUT standard routine for example, to display the cursor character when it is normally enabled. If CSRSW is zero the routine simply terminates with no action. SCRMOD is checked and, if the screen is in Graphics Mode or Multicolour Mode, the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character read from that location (0BD8H) and saved in CURSAV.
+This routine is used, by the [CHPUT](#chput) standard routine for example, to display the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character read from that location (0BD8H) and saved in [CURSAV](#cursav).
 
-The character's eight byte pixel pattern is read from the VDP Character Pattern Table into the LINWRK buffer (0BA5H). The pixel pattern is then inverted, all eight bytes if CSTYLE indicates a block cursor, only the bottom three if CSTYLE indicates an underline cursor. The pixel pattern is copied back to the position for character code 255 in the VDP Character Pattern Table (0BBEH). The character code 255 is then placed at the current cursor location in the VDP Name Table (0BE6H) and the routine terminates.
+The character's eight byte pixel pattern is read from the VDP Character Pattern Table into the [LINWRK](#linwrk) buffer (0BA5H). The pixel pattern is then inverted, all eight bytes if [CSTYLE](#cstyle) indicates a block cursor, only the bottom three if [CSTYLE](#cstyle) indicates an underline cursor. The pixel pattern is copied back to the position for character code 255 in the VDP Character Pattern Table (0BBEH). The character code 255 is then placed at the current cursor location in the VDP Name Table (0BE6H) and the routine terminates.
 
-This method of generating the cursor character, by using character code 255, can produce curious effects under certain conditions. These can be demonstrated by executing the BASIC statement FOR N=1 TO 100: PRINT CHR$(255);:NEXT and then pressing the cursor up key.
+This method of generating the cursor character, by using character code 255, can produce curious effects under certain conditions. These can be demonstrated by executing the BASIC statement `FOR N=1 TO 100: PRINT CHR$(255);:NEXT` and then pressing the cursor up key.
 
     Address... 0A27H
 
-This routine is used, by the CHGET standard routine for example, to remove the cursor character when it is normally disabled. If CSRSW is non-zero the routine simply terminates with no action, otherwise the cursor is removed (0A33H).
+This routine is used, by the [CHGET](#chget) standard routine for example, to remove the cursor character when it is normally disabled. If [CSRSW](#csrsw) is non-zero the routine simply terminates with no action, otherwise the cursor is removed (0A33H).
 
     Address... 0A2EH
 
-This routine is used, by the CHPUT standard routine for example, .to remove the cursor character when it is normally enabled. If CSRSW is zero the routine simply terminates with no action. .SCRMOD is checked and, if the screen is in Graphics Mode or Multicolour Mode, the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character held in CURSAV written to that location (0BE6H).
+This routine is used, by the [CHPUT](#chput) standard routine for example, .to remove the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character held in [CURSAV](#cursav) written to that location (0BE6H).
 
     Address... 0A44H
 
-This routine performs the ESC,"C" operation for the CHPUT standard routine control code processor. If the cursor column coordinate is already at the rightmost column, determined by LINLEN, then the routine terminates with no action. Otherwise the column coordinate is incremented and CSRX updated. .
+This routine performs the ESC,"C" operation for the [CHPUT](#chput) standard routine control code processor. If the cursor column coordinate is already at the rightmost column, determined by [LINLEN](#linlen), then the routine terminates with no action. Otherwise the column coordinate is incremented and [CSRX](#csrx) updated.
 
     Address... 0A4CH
 
-This routine performs the BS/LEFT operation for the CHPUT standard routine control code processor. The cursor column coordinate is decremented and CSRX updated. If the column coordinate has moved beyond the leftmost position it is set to the rightmost position, from LINLEN, and an UP operation performed.
+This routine performs the BS/LEFT operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is decremented and [CSRX](#csrx) updated. If the column coordinate has moved beyond the leftmost position it is set to the rightmost position, from [LINLEN](#linlen), and an UP operation performed.
 
     Address... 0A55H
 
-This routine performs the ESC,"D" operation for the CHPUT standard routine control code processor. If the cursor column coordinate is already at the leftmost position then the routine terminates with no action. Otherwise the column coordinate is decremented and CSRX updated.
+This routine performs the ESC,"D" operation for the [CHPUT](#chput) standard routine control code processor. If the cursor column coordinate is already at the leftmost position then the routine terminates with no action. Otherwise the column coordinate is decremented and [CSRX](#csrx) updated.
 
     Address... 0A57H
 
-This routine performs the ESC,"A" (UP) operation for the CHPUT standard routine control code processor. If the cursor row coordinate is already at the topmost position the routine terminates with no action. Otherwise the row coordinate is decremented and CSRY updated.
+This routine performs the ESC,"A" (UP) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the topmost position the routine terminates with no action. Otherwise the row coordinate is decremented and [CSRY](#csry) updated.
 
     Address... 0A5BH
 
-This routine performs the RIGHT operation for the CHPUT standard routine control code processor. The cursor column coordinate is incremented and CSRX updated. If the column coordinate has moved beyond the rightmost position, determined by LINLEN, it is set to the leftmost position (01H) and a DOWN operation performed.
+This routine performs the RIGHT operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is incremented and [CSRX](#csrx) updated. If the column coordinate has moved beyond the rightmost position, determined by [LINLEN](#linlen), it is set to the leftmost position (01H) and a DOWN operation performed.
 
     Address... 0A61H
 
-This routine performs the ESC,"B" (DOWN) operation for the CHPUT standard routine control code processor. If the cursor row coordinate is already at the lowest position, determined by CRTCNT and CNSDFG (0C32H), then the routine terminates with no action. Otherwise the row coordinate is incremented and CSRY updated.
+This routine performs the ESC,"B" (DOWN) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the lowest position, determined by [CRTCNT](#crtcnt) and [CNSDFG](#cnsdfg) (0C32H), then the routine terminates with no action. Otherwise the row coordinate is incremented and [CSRY](#csry) updated.
 
     Address... 0A71H
 
-This routine performs the TAB operation for the CHPUT standard routine control code processor. ASCII spaces are output (08DFH) until CSRX is a multiple of eight plus one (BIOS columns 1, 9, 17, 25, 33).
+This routine performs the TAB operation for the [CHPUT](#chput) standard routine control code processor. ASCII spaces are output (08DFH) until [CSRX](#csrx) is a multiple of eight plus one (BIOS columns 1, 9, 17, 25, 33).
 
     Address... 0A7FH
 
-This routine performs the ESC,"H" (HOME) operation for the CHPUT standard routine control code processor, CSRX and CSRY are simply set to 1,1. The ROM BIOS cursor coordinate system, while functionally identical to that used by the BASIC Interpreter, numbers the screen rows from 1 to 24 and the columns from 1 to 32/40.
+This routine performs the ESC,"H" (HOME) operation for the [CHPUT](#chput) standard routine control code processor, [CSRX](#csrx) and [CSRY](#csry) are simply set to 1,1. The ROM BIOS cursor coordinate system, while functionally identical to that used by the BASIC Interpreter, numbers the screen rows from 1 to 24 and the columns from 1 to 32/40.
 
     Address... 0A81H
 
-This routine performs the CR operation for the CHPUT standard routine control code processor, CSRX is simply set to 01H .
+This routine performs the CR operation for the [CHPUT](#chput) standard routine control code processor, [CSRX](#csrx) is simply set to 01H .
 
     Address... 0A85H
 
-This routine performs the ESC,"M" function for the CHPUT standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll up the relevant section of LINTTB, the line termination table, by one byte. It is then used to scroll up the relevant section of the screen a row at a time. Starting at the row below the current row, each line is copied from the VDP Name Table into the LINWRK buffer (0BAAH) then copied back to the Name Table one row higher (0BC3H). Finally the lowest row on the screen is erased (0AECH).
+This routine performs the ESC,"M" function for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll up the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll up the relevant section of the screen a row at a time. Starting at the row below the current row, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer (0BAAH) then copied back to the Name Table one row higher (0BC3H). Finally the lowest row on the screen is erased (0AECH).
 
     Address... 0AB4H
 
-This routine performs the ESC,"L" operation for the CHPDT standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll down the relevant section of LINTTB, the line termination table, by one byte. It is then used to scroll down the relevant section of the screen a row at a time.  Starting at the next to last row of the screen, each line is copied from the VDP Name Table into the LINWRK buffer (0BAAH), then copied back to the Name Table one row lower (0BC3H).  Finally the current row is erased (0AECH).
+This routine performs the ESC,"L" operation for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll down the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll down the relevant section of the screen a row at a time.  Starting at the next to last row of the screen, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer (0BAAH), then copied back to the Name Table one row lower (0BC3H). Finally the current row is erased (0AECH).
 
     Address... 0AE3H
 
-This routine is used to perform the DEL operation for the CHPUT standard routine control code processor. A LEFT operation is first performed. If this cannot be completed, because the cursor is already at the home position, then the routine terminates with no action. Otherwise a space is written to the VDP Name Table at the cursor's physical location (0BE6H).
+This routine is used to perform the DEL operation for the [CHPUT](#chput) standard routine control code processor. A LEFT operation is first performed. If this cannot be completed, because the cursor is already at the home position, then the routine terminates with no action. Otherwise a space is written to the VDP Name Table at the cursor's physical location (0BE6H).
 
     Address... 0AECH
 
-This routine performs the ESC,"l" operation for the CHPUT standard routine control code processor. The cursor column coordinate is set to 01H and control drops into the ESC,"K" routine.
+This routine performs the ESC,"l" operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is set to 01H and control drops into the ESC,"K" routine.
 
     Address... 0AEEH
 
-This routine performs the ESC,"K" operation for the CHPHT standard routine control code processor. The row's entry in LINTTB, the line termination table, is first made non-zero to indicate that the logical line is not extended (0C29H). The cursor coordinates are converted to a physical address (0BF2H) in the VDP Name Table and the VDP set up for writes via the SETWRT standard routine. Spaces are then written directly to the VDP Data Port until the rightmost column, determined by LINLEN, is reached.
+This routine performs the ESC,"K" operation for the [CHPUT](#chput) standard routine control code processor. The row's entry in [LINTTB](#linttb), the line termination table, is first made non-zero to indicate that the logical line is not extended (0C29H). The cursor coordinates are converted to a physical address (0BF2H) in the VDP Name Table and the VDP set up for writes via the [SETWRT](#setwrt) standard routine. Spaces are then written directly to the VDP [Data Port](#dataport) until the rightmost column, determined by [LINLEN](#linlen), is reached.
 
     Address... 0B05H
 
-This routine performs the ESC,"J" operation for the CHPUT standard routine control code processor. An ESC,"K" operation is performed on successive rows, starting with the current one, until the bottom of the screen is reached.
+This routine performs the ESC,"J" operation for the [CHPUT](#chput) standard routine control code processor. An ESC,"K" operation is performed on successive rows, starting with the current one, until the bottom of the screen is reached.
 
 <a name="erafnk"></a>
 
@@ -1376,7 +1381,7 @@ This routine performs the ESC,"J" operation for the CHPUT standard routine contr
     Exit...... None
     Modifies.. AF, DE, EI
 
-Standard routine to turn the function key display off.  CNSDFG is first zeroed and, if the VDP is in Graphics Mode or Multicolour Mode, the routine terminates with no further action. If the VDP is in 40x24 Text Mode or 32x24 Text Mode the last row on the screen is then erased (0AECH).
+Standard routine to turn the function key display off. [CNSDFG](#cnsdfg) is first zeroed and, if the VDP is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no further action. If the VDP is in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode) the last row on the screen is then erased (0AECH).
 
 <a name="fnksb"></a>
 
@@ -1386,7 +1391,7 @@ Standard routine to turn the function key display off.  CNSDFG is first zeroed a
     Exit...... None
     Modifies.. AF, BC, DE, EI
 
-Standard routine to show the function key display if it is enabled. If CNSDFG is zero the routine terminates with no action, otherwise control drops into the DSPFNK standard routine..
+Standard routine to show the function key display if it is enabled. If [CNSDFG](#cnsdfg) is zero the routine terminates with no action, otherwise control drops into the [DSPFNK](#dspfnk) standard routine..
 
 <a name="dspfnk"></a>
 
@@ -1396,29 +1401,29 @@ Standard routine to show the function key display if it is enabled. If CNSDFG is
     Exit...... None
     Modifies.. AF, BC, DE, EI
 
-Standard routine to turn the function key display on. CNSDFG is set to FFH and, if the VDP is in Graphics Mode or Multicolour Mode, the routine terminates with no further action. Otherwise the cursor row coordinate is checked and, if the cursor is on the last row of the screen, a LF code (0AH) issued to the OUTDO standard routine to scroll the screen up.
+Standard routine to turn the function key display on. [CNSDFG](#cnsdfg) is set to FFH and, if the VDP is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no further action. Otherwise the cursor row coordinate is checked and, if the cursor is on the last row of the screen, a LF code (0AH) issued to the [OUTDO](#outdo) standard routine to scroll the screen up.
 
-Register pair HL is then set to point to either the unshifted or shifted function strings in the Workspace Area depending upon whether the SHIFT key is pressed. LINLEN has four subtracted, to allow a minimum of one space between fields, and is divided by five to determine the field size for each string.  Successive characters are then taken from each function string, checked for graphic headers via the CNVCHR standard routine and placed in the LINWRK buffer until the string is exhausted or the zone is filled. When all five strings are completed the LINWRK buffer is written to the last row in the VDP Name Table (0BC3H).
+Register pair HL is then set to point to either the unshifted or shifted function strings in the Workspace Area depending upon whether the SHIFT key is pressed. [LINLEN](#linlen) has four subtracted, to allow a minimum of one space between fields, and is divided by five to determine the field size for each string.  Successive characters are then taken from each function string, checked for graphic headers via the [CNVCHR](#cnvchr) standard routine and placed in the [LINWRK](#linwrk) buffer until the string is exhausted or the zone is filled. When all five strings are completed the [LINWRK](#linwrk) buffer is written to the last row in the VDP Name Table (0BC3H).
 
     Address... 0B9CH
 
-This routine is used by the function key display related standard routines. The contents of register A are placed in CNSDFG then SCRMOD tested and Flag NC returned if the screen is in Graphics Mode or Multicolour Mode.
+This routine is used by the function key display related standard routines. The contents of register A are placed in [CNSDFG](#cnsdfg) then [SCRMOD](#scrmod) tested and Flag NC returned if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode).
 
     Address... 0BA5H
 
-This routine copies eight bytes from the VDP VRAM into the LINWRK buffer, the VRAM physical address is supplied in register pair HL.
+This routine copies eight bytes from the VDP VRAM into the [LINWRK](#linwrk) buffer, the VRAM physical address is supplied in register pair HL.
 
     Address... 0BAAH
 
-This routine copies a complete row of characters, with the length determined by LINLEN, from the VDP VRAM into the LINWRK buffer. The cursor row coordinate is supplied in register L.
+This routine copies a complete row of characters, with the length determined by [LINLEN](#linlen), from the VDP VRAM into the [LINWRK](#linwrk) buffer. The cursor row coordinate is supplied in register L.
 
     Address... 0BBEH
 
-This routine copies eight bytes from the LINWRK buffer into the VDP VRAM, the VRAM physical address is supplied in register pair HL.
+This routine copies eight bytes from the [LINWRK](#linwrk) buffer into the VDP VRAM, the VRAM physical address is supplied in register pair HL.
 
     Address... 0BC3H
 
-This routine copies a complete row of characters, with the length determined by LINLEN, from the LINWRK buffer into the VDP VRAM. The cursor row coordinate is supplied in register L.
+This routine copies a complete row of characters, with the length determined by [LINLEN](#linlen), from the [LINWRK](#linwrk) buffer into the VDP VRAM. The cursor row coordinate is supplied in register L.
 
     Address... 0BD8H
 
@@ -1428,9 +1433,9 @@ This routine reads a single byte from the VDP VRAM into register C. The column c
 
 This routine converts a pair of screen coordinates, the column in register H and the row in register L, into a physical address in the VDP Name Table. This address is returned in register pair HL.
 
-The row coordinate is first multiplied by thirty-two or forty, depending upon the screen mode, and added to the column coordinate. This is then added to the Name Table base address, taken from NAMBAS, to produce an initial address.
+The row coordinate is first multiplied by thirty-two or forty, depending upon the screen mode, and added to the column coordinate. This is then added to the Name Table base address, taken from [NAMBAS](#nambas), to produce an initial address.
 
-Because of the variable screen width, as contained in LINLEN, an additional offset has to be added to the initial address to keep the active region roughly centered within the screen. The difference between the "true" number of characters per row, thirty-two or forty, and the current width is halved and then rounded up to produce the left hand offset. For a UK machine, with a thirty-seven character width in 40x24 Text Mode, this will result in two unused characters on the left hand side and one on the right. The statement PRINT (41-WID)\2, where WID is any screen width, will display the left hand column offset in 40x24 Text Mode.
+Because of the variable screen width, as contained in [LINLEN](#linlen), an additional offset has to be added to the initial address to keep the active region roughly centered within the screen. The difference between the "true" number of characters per row, thirty-two or forty, and the current width is halved and then rounded up to produce the left hand offset. For a UK machine, with a thirty-seven character width in [40x24 Text Mode](#40x24textmode), this will result in two unused characters on the left hand side and one on the right. The statement `PRINT (41-WID)\2`, where `WID` is any screen width, will display the left hand column offset in [40x24 Text Mode](#40x24textmode).
 
 A complete BASIC program which emulates this routine is given below:
 
@@ -1444,15 +1449,15 @@ This program is designed for the ROW and COL coordinate system used by the ROM B
 
     Address... 0C1DH
 
-This routine calculates the address of a row's entry in LINTTB, the line termination table. The row coordinate is supplied in register L and the address returned in register pair DE.
+This routine calculates the address of a row's entry in [LINTTB](#linttb), the line termination table. The row coordinate is supplied in register L and the address returned in register pair DE.
 
     Address... 0C29H
 
-This routine makes a row's entry in LINTTB non-zero when entered at 0C29H and zero when entered at 0C2AH. The row coordinate is supplied in register L.
+This routine makes a row's entry in [LINTTB](#linttb) non-zero when entered at 0C29H and zero when entered at 0C2AH. The row coordinate is supplied in register L.
 
     Address... 0C32H
 
-This routine returns the number of rows on the screen in register A. It will normally return twenty-four if the function key display is disabled and twenty-three if it is enabled. Note that the screen size is determined by CRTCNT and may be modified with a BASIC statement, POKE &HF3B1H,14:SCREEN 0 for example.
+This routine returns the number of rows on the screen in register A. It will normally return twenty-four if the function key display is disabled and twenty-three if it is enabled. Note that the screen size is determined by [CRTCNT](#crtcnt) and may be modified with a BASIC statement, `POKE &HF3B1H,14:SCREEN 0` for example.
 
 <a name="keyint"></a>
 
@@ -1462,27 +1467,27 @@ This routine returns the number of rows on the screen in register A. It will nor
     Exit...... None
     Modifies.. EI
 
-Standard routine to process Z80 interrupts, these are generated by the VDP once every 20 ms on a UK machine. The VDP Status Register is first read and bit 7 checked to ensure that this is a frame rate interrupt, if not the routine terminates with no action. The contents of the Status Register are saved in STATFL and bit 5 checked for sprite coincidence. If the Coincidence Flag is active then the relevant entry in TRPTBL is updated (0EF1H).
+Standard routine to process Z80 interrupts, these are generated by the VDP once every 20 ms on a UK machine. The VDP Status Register is first read and bit 7 checked to ensure that this is a frame rate interrupt, if not the routine terminates with no action. The contents of the [Status Register](#vdpstatusregister) are saved in [STATFL](#statfl) and bit 5 checked for sprite coincidence. If the Coincidence Flag is active then the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H).
 
-INTCNT, the "INTERVAL" counter, is then decremented. If this has reached zero the relevant entry in TRPTBL is updated (0EF1H) and the counter reset with the contents of INTVAL.
+[INTCNT](#intcnt), the "INTERVAL" counter, is then decremented. If this has reached zero the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H) and the counter reset with the contents of [INTVAL](#intval).
 
-JIFFY, the "TIME" counter, is then incremented. This counter just wraps around to zero when it overflows.
+[JIFFY](#jiffy), the "TIME" counter, is then incremented. This counter just wraps around to zero when it overflows.
 
-MUSICF is examined to determine whether any of the three music queues generated by the "PLAY" statement are active. For each active queue the dequeueing routine (113BH) is called to fetch the next music packet and write it to the PSG.
+[MUSICF](#musicf) is examined to determine whether any of the three music queues generated by the "`PLAY`" statement are active. For each active queue the dequeueing routine (113BH) is called to fetch the next music packet and write it to the PSG.
 
-SCNCNT is then decremented to determine if a joystick and keyboard scan is required, if not the interrupt handler terminates with no further action. This counter is used to increase throughput and to minimize keybounce problems by ensuring that a scan is only carried out every three interrupts. Assuming a scan is required joystick connector 1 is selected and the two Trigger bits read (120CH), followed by the two Trigger bits from joystick connector 2 (120CH) and the SPACE key from row 8 of the keyboard (1226H). These five inputs, which are all related to the "STRIG" statement, are combined into a single byte where 0=Pressed, 1=Not pressed:
+[SCNCNT](#scncnt) is then decremented to determine if a joystick and keyboard scan is required, if not the interrupt handler terminates with no further action. This counter is used to increase throughput and to minimize keybounce problems by ensuring that a scan is only carried out every three interrupts. Assuming a scan is required joystick connector 1 is selected and the two Trigger bits read (120CH), followed by the two Trigger bits from joystick connector 2 (120CH) and the SPACE key from row 8 of the keyboard (1226H). These five inputs, which are all related to the "`STRIG`" statement, are combined into a single byte where 0=Pressed, 1=Not pressed:
 
 <a name="figure35"></a>![][CH04F35]
 
-**Figure 35:** "STRIG" Inputs
+**Figure 35:** "`STRIG`" Inputs
 
-This reading is compared with the previous one, held in TRGFLG, to produce an active transition byte and TRGFLG is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. This active transition byte is shifted out bit by bit and the relevant entry in TRPTBL updated (0EF1H) for each active device.
+This reading is compared with the previous one, held in [TRGFLG](#trgflg), to produce an active transition byte and [TRGFLG](#trgflg) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. This active transition byte is shifted out bit by bit and the relevant entry in [TRPTBL](#trptbl) updated (0EF1H) for each active device.
 
-A complete scan of the keyboard matrix is then performed to identify new key depressions, any found are translated into key codes and placed in KEYBUF (0D12H). If KEYBUF is found to be empty at the end of this process REPCNT is decremented to see whether the auto-repeat delay has expired, if not the routine terminates. If the delay period has expired REPCNT is reset with the fast repeat value (60 ms), the OLDKEY keyboard map is reinitialized and the keyboard scanned again (0D4EH). Any keys which are continuously pressed will show up as new transitions during this scan. Note that keys will only auto-repeat while an application program keeps KEYBUF empty by reading characters.  The interrupt handler then terminates.
+A complete scan of the keyboard matrix is then performed to identify new key depressions, any found are translated into key codes and placed in [KEYBUF](#keybuf) (0D12H). If [KEYBUF](#keybuf) is found to be empty at the end of this process [REPCNT](#repcnt) is decremented to see whether the auto-repeat delay has expired, if not the routine terminates. If the delay period has expired [REPCNT](#repcnt) is reset with the fast repeat value (60 ms), the [OLDKEY](#oldkey) keyboard map is reinitialized and the keyboard scanned again (0D4EH). Any keys which are continuously pressed will show up as new transitions during this scan. Note that keys will only auto-repeat while an application program keeps [KEYBUF](#keybuf) empty by reading characters.  The interrupt handler then terminates.
 
     Address... 0D12H
 
-This routine performs a complete scan of all eleven rows of the keyboard matrix for the interrupt handler. Each of the eleven rows is read in via the PPI and placed in ascending ' order in NEWKEY. ENSTOP is then checked to see if warm starts are enabled. If its contents are non-zero and the keys CODE, GRAPH, CTRL and SHIFT are pressed control transfers to the BASIC Interpreter (409BH) via the CALBAS standard routine. This facility is useful as even a machine code program can be terminated as long as the interrupt handler is running.  The contents of NEWKEY are compared with the previous scan contained in OLDKEY. If any change at all has occurred REPCNT is loaded with the initial auto-repeat delay (780 ms). Each row 1, reading from NEWKEY is then compared with the previous one, held in OLDKEY, to produce an active transition byte and OLDKEY is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. If the row contains any transitions these are decoded and placed in KEYBUF as key codes (0D89H). When all eleven rows have been completed the routine checks whether there are any characters in KEYBUF, by subtracting GETPNT from PUTPNT, and terminates.
+This routine performs a complete scan of all eleven rows of the keyboard matrix for the interrupt handler. Each of the eleven rows is read in via the PPI and placed in ascending order in [NEWKEY](#newkey). [ENSTOP](#enstop) is then checked to see if warm starts are enabled. If its contents are non-zero and the keys CODE, GRAPH, CTRL and SHIFT are pressed control transfers to the BASIC Interpreter (409BH) via the [CALBAS](#calbas) standard routine. This facility is useful as even a machine code program can be terminated as long as the interrupt handler is running.  The contents of [NEWKEY](#newkey) are compared with the previous scan contained in [OLDKEY](#oldkey). If any change at all has occurred [REPCNT](#repcnt) is loaded with the initial auto-repeat delay (780 ms). Each row 1, reading from [NEWKEY](#newkey) is then compared with the previous one, held in [OLDKEY](#oldkey), to produce an active transition byte and [OLDKEY](#oldkey) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. If the row contains any transitions these are decoded and placed in [KEYBUF](#keybuf) as key codes (0D89H). When all eleven rows have been completed the routine checks whether there are any characters in [KEYBUF](#keybuf), by subtracting [GETPNT](#getpnt) from [PUTPNT](#putpnt), and terminates.
 
 <a name="chsns"></a>
 
