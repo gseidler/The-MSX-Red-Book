@@ -1640,13 +1640,13 @@ This routine searches the table at 1B97H to determine which group of keys the ke
 
 This table contains the key codes of key numbers 30H to 57H other than the special keys CAP, F1 to F5, STOP and HOME. A zero entry in the table means that no key code will be produced when that key is pressed:
 
-           00H 00H 00H 00H 00H 00H 00H 00H Row 6
-           0DH 18H 08H 00H 09H 1BH 00H 00H Row 7
-           1CH 1FH 1EH 1DH 7FH 12H 0CH 20H Row 8
-           34H 33H 32H 31H 30H 00H 00H 00H Row 9
-           2EH 2CH 2DH 39H 38H 37H 36H 35H Row 10
-
-            7   6   5   4   3   2   1   0  Column
+    00H 00H 00H 00H 00H 00H 00H 00H Row 6
+    0DH 18H 08H 00H 09H 1BH 00H 00H Row 7
+    1CH 1FH 1EH 1DH 7FH 12H 0CH 20H Row 8
+    34H 33H 32H 31H 30H 00H 00H 00H Row 9
+    2EH 2CH 2DH 39H 38H 37H 36H 35H Row 10
+    
+     7   6   5   4   3   2   1   0  Column
 
 </a>
 
