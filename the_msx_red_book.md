@@ -3,7 +3,31 @@
 [Introduction](#introduction)
 
 1. [Programmable Peripheral Interface](#chapter1)
+    + [PPI Port A (I/O Port A8H)](#ppiporta)
+    + [Expanders](#expanders)
+    + [PPI Port B (I/O Port A9H)](#ppiportb)
+    + [PPI Port C (I/O Port AAH)](#ppiportc)
+    + [PPI Mode Port (I/O Port ABH)](#ppimodeport)
 2. [Video Display Processor](#chapter2)
+    + [Data Port (I/O Port 98H)](#dataport)
+    + [Command Port (I/O Port 99H)](#commandport)
+    + [Address Register](#addressregister)
+    + [VDP Status Register](#vdpstatusregister)
+    + [VDP Mode Registers](#vdpmoderegisters)
+    + [Mode Register 0](#moderegister0)
+    + [Mode Register 1](#moderegister1)
+    + [Mode Register 2](#moderegister2)
+    + [Mode Register 3](#moderegister3)
+    + [Mode Register 4](#moderegister4)
+    + [Mode Register 5](#moderegister5)
+    + [Mode Register 6](#moderegister6)
+    + [Mode Register 7](#moderegister7)
+    + [Screen Modes](#screenmodes)
+    + [40x24 Text Mode](#40x24textmode)
+    + [32x24 Text Mode](#30x24textmode)
+    + [Graphics Mode](#graphicsmode)
+    + [Multicolour Mode](#multicolourmode)
+    + [Sprites](#sprites)
 3. [Programmable Sound Generator](#chapter3)
 4. [ROM BIOS](#chapter4)
 5. [ROM BASIC Interpreter](#chapter5)
@@ -81,7 +105,7 @@ A typical UK machine will have one Primary Slot containing the MSX ROM, one cont
 
 System memory can be increased to a theoretical maximum of sixteen 64 KB areas by using expander interfaces. An expander plugs into any Primary Slot to provide four 64 KB Secondary Slots, numbered 0 to 3, instead of one primary one. Each expander has its own local hardware, called a Secondary Slot Register, to select which of the Secondary Slots should appear in the Primary Slot. As before pages can be selected from different Secondary Slots.
 
-<a name="figure2">![][CH01F02]
+<a name="figure2"></a>![][CH01F02]
 
 **Figure 2:** Secondary Slot Register
 
