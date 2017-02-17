@@ -24,7 +24,7 @@
     + [Mode Register 7](#moderegister7)
     + [Screen Modes](#screenmodes)
     + [40x24 Text Mode](#40x24textmode)
-    + [32x24 Text Mode](#30x24textmode)
+    + [32x24 Text Mode](#32x24textmode)
     + [Graphics Mode](#graphicsmode)
     + [Multicolour Mode](#multicolourmode)
     + [Sprites](#sprites)
