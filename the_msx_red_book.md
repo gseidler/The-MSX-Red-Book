@@ -60,6 +60,8 @@ MSX is a trademark of Microsoft Corp.
 Z80 is a trademark of Zilog Corp.  
 ACADEMY is trademark of Alfred.
 
+<br><br><br>
+
 #<a name="introduction"></a>Introduction
 
 ##<a name="aims"></a>Aims
@@ -93,6 +95,7 @@ Although there are obviously a great many additional components involved in the 
 
 It is believed that this book contains zero defects, if you know otherwise the author would be delighted to hear from you. This book is dedicated to the Walking Nightmare.
 
+<br><br><br>
 
 #<a name="chapter1"></a>1. Programmable Peripheral Interface
 
@@ -193,6 +196,8 @@ The C Dir bit determines the direction of the lower four bits only of Port C: 0=
 **Figure 6:** PPI Bit Set/Reset
 
 The PPI Mode Port can be used to directly set or reset any bit of Port C when bit 7 is 0. The Bit Number, from 0 to 7, determines which bit is to be affected. Its new value is determined by the Set/Reset bit: 0=Reset, 1=Set. The advantage of this mode is that a single output can be easily modified. As an example the Caps Lock LED may be turned on with the BASIC statement `OUT &HAB,12` and off with the statement `OUT &HAB,13`.
+
+<br><br><br>
 
 #<a name="chapter2"></a>2. Video Display Processor
 
@@ -440,6 +445,8 @@ The Sprite Pattern Table occupies 2 KB of VRAM from 3800H to 3FFFH. It contains 
 
 **Figure 24:** 16x16 Sprite Pattern Block
 
+<br><br><br>
+
 #<a name="chapter3"></a>3. Programmable Sound Generator
 
 As well as controlling three sound channels the 8910 PSG contains two eight bit data ports, called A and B, through which it interfaces the joysticks and the cassette input. The PSG appears to the Z80 as three I/O ports called the [Address Port](#addressport), the [Data Write Port](#datawriteport) and the [Data Read Port](#datareadport).
@@ -549,6 +556,8 @@ The two Pulse bits are used to generate a short positive- going pulse to any pad
 The Joystick Select bit determines which joystick connector is connected to PSG Port A for input: 0=Connector 1, 1=Connector 2.
 
 The Kana LED output is unused on UK machines. On Japanese machines it is used to drive a keyboard mode indicator.
+
+<br><br><br>
 
 #<a name="chapter4"></a>4. ROM BIOS
 
