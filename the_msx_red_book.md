@@ -719,7 +719,7 @@ Standard routine to read a single byte from memory in any slot. The Slot Identif
 
 The flag is normally 0 but must be 1 if a Secondary Slot number is included in the Slot ID. The memory address and Slot ID are first processed (027EH) to yield a set of bit masks to apply to the relevant slot register. If a Secondary Slot number is specified then the Secondary Slot Register is first modified to select the relevant page from that Secondary Slot (02A3H). The Primary Slot is then switched in to the Z80 address space, the byte read and the Primary Slot restored to its original setting via the RDPRIM routine in the Workspace Area. Finally, if a Secondary Slot number is included in the Slot ID, the original Secondary Slot Register setting is restored (01ECH).
 
-Note that, unless it is the slot containing the Workspace Area, any attempt to access page 3 (C000H to FFFFH) will cause the system to crash as RDPRIM will switch itself out. Note also that interrupts are left disabled by all the memory switching routines.
+Note that, unless it is the slot containing the Workspace Area, any attempt to access page 3 (C000H to FFFFH) will cause the system to crash as [RDPRIM](#rdprim) will switch itself out. Note also that interrupts are left disabled by all the memory switching routines.
 
 <a name="wrslt"></a>
 
@@ -729,7 +729,7 @@ Note that, unless it is the slot containing the Workspace Area, any attempt to a
     Exit...... None
     Modifies.. AF, BC, D, DI
 
-Standard routine to write a single byte to memory in any slot. Its operation is fundamentally the same as that of the RDSLT standard routine except that the Workspace Area routine WRPRIM is used rather than RDPRIM.
+Standard routine to write a single byte to memory in any slot. Its operation is fundamentally the same as that of the RDSLT standard routine except that the Workspace Area routine [WRPRIM](#wrprim) is used rather than [RDPRIM](#rdprim).
 
 <a name="calbas"></a>
 
@@ -739,7 +739,7 @@ Standard routine to write a single byte to memory in any slot. Its operation is 
     Exit...... None
     Modifies.. AF', BC', DE', HL', IY, DI
 
-Standard routine to call an address in the BASIC Interpreter from any slot. Usually this will be from a machine code program running in an extension ROM in page 1 (4000H to 7FFFH). The high byte of register pair IY is loaded with the MSX ROM Slot ID (00H) and control transfers to the CALSLT standard routine.
+Standard routine to call an address in the BASIC Interpreter from any slot. Usually this will be from a machine code program running in an extension ROM in page 1 (4000H to 7FFFH). The high byte of register pair IY is loaded with the MSX ROM Slot ID (00H) and control transfers to the [CALSLT](#calslt) standard routine.
 
 <a name="callf"></a>
 
@@ -749,14 +749,14 @@ Standard routine to call an address in the BASIC Interpreter from any slot. Usua
     Exit...... None
     Modifies.. AF', BC', DE', HL', IX, IY, DI
 
-Standard routine to call an address in any slot. The Slot ID and address are supplied as inline parameters rather than in registers to fit inside a hook (Chapter 6), for example:
+Standard routine to call an address in any slot. The Slot ID and address are supplied as inline parameters rather than in registers to fit inside a hook ([Chapter 6](#chapter6)), for example:
 
     RST 30H
     DEFB Slot ID
     DEFW Address
     RET
 
-The Slot ID is first collected and placed in the high byte of register pair IY. The address is then placed in register pair IX and control drops into the CALSLT standard routine.
+The Slot ID is first collected and placed in the high byte of register pair IY. The address is then placed in register pair IX and control drops into the [CALSLT](#calslt) standard routine.
 
 <a name="calslt"></a>
 
@@ -766,7 +766,7 @@ The Slot ID is first collected and placed in the high byte of register pair IY. 
     Exit...... None
     Modifies.. AF', BC', DE', HL', DI
 
-Standard routine to call an address in any slot. Its operation is fundamentally the same as that of the RDSLT standard routine except that the Workspace Area routine CLPRIM is used rather than RDPRIM. Note that CALBAS and CALLF are just specialized entry points to this standard routine which offer a reduction in the amount of code required.
+Standard routine to call an address in any slot. Its operation is fundamentally the same as that of the [RDSLT](#rdslt) standard routine except that the Workspace Area routine [CLPRIM](#clprim) is used rather than [RDPRIM](#rdprim). Note that [CALBAS](#calbas) and [CALLF](#callf) are just specialized entry points to this standard routine which offer a reduction in the amount of code required.
 
 <a name="enaslt"></a>
 
@@ -776,7 +776,7 @@ Standard routine to call an address in any slot. Its operation is fundamentally 
     Exit...... None
     Modifies.. AF, BC, DE, DI
 
-Standard routine to switch in a page permanently from any slot. Unlike the RDSLT, WRSLT and CALSLT standard routines the Primary Slot switching is performed directly and not by a Workspace Area routine. Consequently addresses in page 0 (0000H to 3FFFH) will cause an immediate system crash.
+Standard routine to switch in a page permanently from any slot. Unlike the [RDSLT](#rdslt), [WRSLT](#wrslt) and [CALSLT](#calslt) standard routines the Primary Slot switching is performed directly and not by a Workspace Area routine. Consequently addresses in page 0 (0000H to 3FFFH) will cause an immediate system crash.
 
     Address... 027EH
 
@@ -805,7 +805,7 @@ Bits 6 and 7 of register D are first copied into the Primary Slot register. This
     Exit...... None
     Modifies.. AF, BC, DE, HL, SP
 
-Standard routine to perform memory initialization at power- up. It non-destructively tests for RAM in pages 2 and 3 in all sixteen possible slots then sets the Primary and Secondary Slot registers to switch in the largest area found. The entire Workspace Area (F380H to FFC9H) is zeroed and EXPTBL and SLTTBL filled in to map any expansion interfaces in existence Interrupt Mode 1 is set and control transfers to the remainder of the power-up initialization routine (7C76H).
+Standard routine to perform memory initialization at power- up. It non-destructively tests for RAM in pages 2 and 3 in all sixteen possible slots then sets the Primary and Secondary Slot registers to switch in the largest area found. The entire Workspace Area (F380H to FFC9H) is zeroed and [EXPTBL](#exptbl) and [SLTTBL](#slttbl) filled in to map any expansion interfaces in existence Interrupt Mode 1 is set and control transfers to the remainder of the power-up initialization routine (7C76H).
 
 <a name="iscntc"></a>
 
@@ -815,11 +815,11 @@ Standard routine to perform memory initialization at power- up. It non-destructi
     Exit...... None
     Modifies.. AF, EI
 
-Standard routine to check whether the CTRL-STOP or STOP keys have been pressed. It is used by the BASIC Interpreter at the end of each statement to check for program termination. BASROM is first examined to see if it contains a non-zero value, if so the routine terminates immediately. This is to prevent users breaking into any extension ROM containing a BASIC program.
+Standard routine to check whether the CTRL-STOP or STOP keys have been pressed. It is used by the BASIC Interpreter at the end of each statement to check for program termination. [BASROM](#basrom) is first examined to see if it contains a non-zero value, if so the routine terminates immediately. This is to prevent users breaking into any extension ROM containing a BASIC program.
 
-INTFLG is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on (09DAH) and INTFLG continually checked until one of the two key codes reappears. The cursor is then turned off (0A27H) and, if the key is STOP, the routine terminates.
+INTFLG is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on (09DAH) and [INTFLG](#intflg) continually checked until one of the two key codes reappears. The cursor is then turned off (0A27H) and, if the key is STOP, the routine terminates.
 
-If CTRL-STOP has been detected then the keyboard buffer is first cleared via the KILBUF standard routine and TRPTBL is checked to see whether an "ON STOP GOSUB" statement is active.  If so the relevant entry in TRPTBL is updated (0EF1H) and the routine terminates as the event will be handled by the Interpreter Runloop. Otherwise the ENASLT standard routine is used to switch in page 1 from the MSX ROM, in case an extension ROM is using the routine, and control transfers to the "STOP" statement handler (63E6H).
+If CTRL-STOP has been detected then the keyboard buffer is first cleared via the [KILBUF](#kilbuf) standard routine and [TRPTBL](#trptbl) is checked to see whether an "`ON STOP GOSUB`" statement is active.  If so the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H) and the routine terminates as the event will be handled by the Interpreter Runloop. Otherwise the [ENASLT](#enaslt) standard routine is used to switch in page 1 from the MSX ROM, in case an extension ROM is using the routine, and control transfers to the "`STOP`" statement handler (63E6H).
 
 <a name="kilbuf"></a>
 
@@ -829,7 +829,7 @@ If CTRL-STOP has been detected then the keyboard buffer is first cleared via the
     Exit...... None
     Modifies.. HL
 
-Standard Routine to clear the forty character type-ahead keyboard buffer KEYBUF. There are two pointers into this buffer, PUTPNT where the interrupt handler places characters, and GETPNT where application programs fetch them from. As the number of characters in the buffer is indicated by the difference between these two pointers KEYBUF is emptied simply by making them both equal.
+Standard Routine to clear the forty character type-ahead keyboard buffer [KEYBUF](#keybuf). There are two pointers into this buffer, [PUTPNT](#putpnt) where the interrupt handler places characters, and [GETPNT](#getpnt) where application programs fetch them from. As the number of characters in the buffer is indicated by the difference between these two pointers [KEYBUF](#keybuf) is emptied simply by making them both equal.
 
 <a name="breakx"></a>
 
@@ -839,7 +839,7 @@ Standard Routine to clear the forty character type-ahead keyboard buffer KEYBUF.
     Exit...... Flag C if CTRL-STOP key pressed
     Modifies.. AF
 
-Standard routine which directly tests rows 6 and 7 of the keyboard to determine whether the CTRL and STOP keys are both pressed. If they are then KEYBUF is cleared and row 7 of OLDKEY modified to prevent the interrupt handler picking the keys up as well. This routine may often be more suitable for use by an application program, in preference to ISCNTC, as it will work when interrupts are disabled, during cassette I/O for example, and does not exit to the Interpreter.
+Standard routine which directly tests rows 6 and 7 of the keyboard to determine whether the CTRL and STOP keys are both pressed. If they are then [KEYBUF](#keybuf) is cleared and row 7 of [OLDKEY](#oldkey) modified to prevent the interrupt handler picking the keys up as well. This routine may often be more suitable for use by an application program, in preference to [ISCNTC](#iscntc), as it will work when interrupts are disabled, during cassette I/O for example, and does not exit to the Interpreter.
 
 <a name="initio"></a>
 
@@ -849,9 +849,9 @@ Standard routine which directly tests rows 6 and 7 of the keyboard to determine 
     Exit...... None
     Modifies.. AF, E, EI
 
-Standard routine to initialize the PSG and the Centronics Status Port. PSG Register 7 is first set to 80H making PSG Port B=Output and PSG Port A=Input. PSG Register 15 is set to CFH to initialize the Joystick connector control hardware. PSG Register 14 is then read and the Keyboard Mode bit placed in KANAMD, this has no relevance for UK machines.
+Standard routine to initialize the PSG and the Centronics Status Port. PSG Register 7 is first set to 80H making PSG Port B=Output and PSG Port A=Input. PSG Register 15 is set to CFH to initialize the Joystick connector control hardware. PSG Register 14 is then read and the Keyboard Mode bit placed in [KANAMD](#kanamd), this has no relevance for UK machines.
 
-Finally a value of FFH is output to the Centronics Status Port (I/O port 90H) to set the STROBE signal high. Control then drops into the GICINI standard routine to complete initialization.
+Finally a value of FFH is output to the Centronics Status Port (I/O port 90H) to set the [STROBE](#strobe) signal high. Control then drops into the [GICINI](#gicini) standard routine to complete initialization.
 
 <a name="gicini"></a>
 
@@ -861,11 +861,11 @@ Finally a value of FFH is output to the Centronics Status Port (I/O port 90H) to
     Exit...... None
     Modifies.. EI
 
-Standard routine to initialize the PSG and the Workspace Area variables associated with the "PLAY" statement. QUETAB, VCBA, VCBB and VCBC are first initialized with the values shown in Chapter 6. PSG Registers 8, 9 and 10 are then set to zero amplitude and PSG Register 7 to B8H. This enables the Tone Generator and disables the Noise Generator on each channel.
+Standard routine to initialize the PSG and the Workspace Area variables associated with the "PLAY" statement. [QUETAB](#quetab), [VCBA](#vcba), [VCBB](#vcbb) and [VCBC](#vcbc) are first initialized with the values shown in Chapter 6. PSG Registers 8, 9 and 10 are then set to zero amplitude and PSG Register 7 to B8H. This enables the Tone Generator and disables the Noise Generator on each channel.
 
     Address... 0508H
 
-This six byte table contains the "PLAY" statement parameters initially placed in VCBA, VCBB and VCBC by the GICINI standard routine: Octave=4, Length=4, Tempo=120, Volume=88H, Envelope=00FFH.
+This six byte table contains the "PLAY" statement parameters initially placed in [VCBA](#vcba), [VCBB](#vcbb) and [VCBC](#vcbc) by the [GICINI](#gicini) standard routine: Octave=4, Length=4, Tempo=120, Volume=88H, Envelope=00FFH.
 
 <a name="initxt"></a>
 
@@ -875,7 +875,7 @@ This six byte table contains the "PLAY" statement parameters initially placed in
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to 40x24 Text Mode.  The screen is temporarily disabled via the DISSCR standard routine and SCRMOD and OLDSCR set to 00H. The parameters required by the CHPUT standard routine are set up by copying LINI.40 to LINLEN, TXTNAM to NAMBAS and TXTCGP to CGPBAS. The VDP colours are then set by the CHGCLR standard routine and the screen is cleared (077EH). The current character set is copied into the VRAM Character Pattern Table (071EH). Finally the VDP mode and base addresses are set via the SETTXT standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [40x24 Text Mode](#40x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 00H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL40](#linl40) to [LINLEN](#linlen), [TXTNAM](#txtnam) to [NAMBAS](#nambas) and [TXTCGP](#txtcgp) to [CGPBAS](#cgpbas). The VDP colours are then set by the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH). The current character set is copied into the VRAM Character Pattern Table (071EH). Finally the VDP mode and base addresses are set via the [SETTXT](#settxt) standard routine and the screen is enabled.
 
 <a name="init32"></a>
 
@@ -885,7 +885,7 @@ Standard routine to initialize the VDP to 40x24 Text Mode.  The screen is tempor
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to 32x24 Text Mode.  The screen is temporarily disabled via the DISSCR standard routine and SCRMOD and OLDSCR set to 01H. The parameters required by the CHPUT standard routine are set up by copying LINL32 to LINLEN, T32NAM to NAMBAS, T32CGP to CGPBAS, T32PAT to PATBAS and T32ATR to ATRBAS. The VDP colours are then set via the CHGCLR standard routine and the screen is cleared (077EH).  The current character set is copied into the VRAM Character Pattern Table (071EH) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the SETT32 standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [32x24 Text Mode](#32x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 01H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL32](#linl32) to [LINLEN](#linlen), [T32NAM](#t32nam) to [NAMBAS](#nambas), [T32CGP](#t32cgp) to [CGPBAS](#cgpbas), [T32PAT](#t32pat) to [PATBAS](#patbas) and [T32ATR](#t32atr) to [ATRBAS](#atrbas). The VDP colours are then set via the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH).  The current character set is copied into the VRAM Character Pattern Table (071EH) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the [SETT32](#sett32) standard routine and the screen is enabled.
 
 <a name="enascr"></a>
 
@@ -895,7 +895,7 @@ Standard routine to initialize the VDP to 32x24 Text Mode.  The screen is tempor
     Exit...... None
     Modifies.. AF, BC, EI
 
-Standard routine to enable the screen. This simply involves setting bit 6 of VDP Mode Register 1.
+Standard routine to enable the screen. This simply involves setting bit 6 of VDP [Mode Register 1](#moderegister1).
 
 <a name="disscr"></a>
 
@@ -905,7 +905,7 @@ Standard routine to enable the screen. This simply involves setting bit 6 of VDP
     Exit...... None
     Modifies.. AF, BC, EI
 
-Standard routine to disable the screen. This simply involves resetting bit 6 of VDP Mode Register 1.
+Standard routine to disable the screen. This simply involves resetting bit 6 of VDP [Mode Register 1](#moderegister1).
 
 <a name="wrtvdp"></a>
 
@@ -915,7 +915,7 @@ Standard routine to disable the screen. This simply involves resetting bit 6 of 
     Exit...... None
     Modifies.. AF, B, EI
 
-Standard routine to write a data byte to any VDP Mode Register. The register selection byte is first written to the VDP Command Port, followed by the data byte. This is then copied to the relevant register image, RGOSAV to RG7SAV, in the Workspace Area
+Standard routine to write a data byte to any VDP [Mode Register](#vdpmoderegisters). The register selection byte is first written to the VDP [Command Port](#commandpport), followed by the data byte. This is then copied to the relevant register image, [RGOSAV](#rgosav) to [RG7SAV](#rg7sav), in the Workspace Area
 
 <a name="settxt"></a>
 
@@ -925,7 +925,7 @@ Standard routine to write a data byte to any VDP Mode Register. The register sel
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to 40x24 Text Mode. The mode bits M1, M2 and M3 are first set in VDP Mode Registers 0 and 1. The five VRAM table base addresses, beginning with TXTNAM, are then copied from the Workspace Area into VDP Mode Registers 2, 3, 4, 5 and 6 (0677H).
+Standard routine to partially set the VDP to [40x24 Text Mode](#40x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [TXTNAM](#txtnam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) (0677H).
 
 <a name="sett32"></a>
 
@@ -935,7 +935,7 @@ Standard routine to partially set the VDP to 40x24 Text Mode. The mode bits M1, 
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to 32x24 Text Mode. The mode bits M1, M2 and M3 are first set in VDP Mode Registers 0 and 1. The five VRAM table base addresses, beginning with T32NAM, are then copied from the Workspace Area into VDP Mode Registers 2, 3, 4, 5 and 6 (0677H).
+Standard routine to partially set the VDP to [32x24 Text Mode](#32x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [T32NAM](#t32nam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) (0677H).
 
 <a name="inigrp"></a>
 
@@ -945,7 +945,7 @@ Standard routine to partially set the VDP to 32x24 Text Mode. The mode bits M1, 
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to Graphics Mode. The screen is temporarily disabled via the DISSCR standard routine and SCRMOD set to 02H. The parameters required by the GRPPRT standard routine are set up by copying GRPPAT to PATBAS and GRPATR to ATRBAS. The character code driver pattern is then copied into the VDP Name Table, the screen cleared (07A1H) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the SETGRP standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [Graphics Mode](#graphicsmode). The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) set to 02H. The parameters required by the [GRPPRT](#grpprt) standard routine are set up by copying [GRPPAT](#grppat) to [PATBAS](#patbas) and [GRPATR](#grpatr) to [ATRBAS](#atrbas). The character code driver pattern is then copied into the VDP Name Table, the screen cleared (07A1H) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the [SETGRP](#setgrp) standard routine and the screen is enabled.
 
 <a name="setgrp"></a>
 
@@ -955,7 +955,7 @@ Standard routine to initialize the VDP to Graphics Mode. The screen is temporari
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to Graphics Mode.  The mode bits M1, M2 and M3 are first set in VDP Mode Registers 0 and 1. The five VRAM table base addresses, beginning with GRPNAM, are then copied from the Workspace Area into VDP Mode Registers 2, 3, 4, 5 and 6 (0677H).
+Standard routine to partially set the VDP to [Graphics Mode](#graphicsmode).  The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [GRPNAM](#grpnam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) (0677H).
 
 <a name="inimlt"></a>
 
@@ -965,7 +965,7 @@ Standard routine to partially set the VDP to Graphics Mode.  The mode bits M1, M
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to Multicolour Mode.  The screen is temporarily disabled via the DISSCR standard routine and SCRMOD set to 03H. The parameters required by the GRPPRT standard routine are set up by copying MLTPAT to PATBAS and MLTATR to ATRBAS. The character code driver pattern is then copied into the VDP Name Table, the screen cleared (07B9H) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the SETMLT standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [Multicolour Mode](#multicolourmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) set to 03H. The parameters required by the [GRPPRT](#grpprt) standard routine are set up by copying [MLTPAT](#mltpat) to [PATBAS](#patbas) and [MLTATR](#mltatr) to [ATRBAS](#atrbas). The character code driver pattern is then copied into the VDP Name Table, the screen cleared (07B9H) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the [SETMLT](#setmlt) standard routine and the screen is enabled.
 
 <a name="setmlt"></a>
 
@@ -975,11 +975,11 @@ Standard routine to initialize the VDP to Multicolour Mode.  The screen is tempo
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to Multicolour Mode. The mode bits M1, M2 and M3 are first set in VDP Mode Registers 0 and 1. The five VRAM table base addresses, beginning with MLTNAM, are then copied from the Workspace Area to VDP Mode Registers 2, 3, 4, 5 and 6.
+Standard routine to partially set the VDP to [Multicolour Mode](#multicolourmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [MLTNAM](#mltnam), are then copied from the Workspace Area to VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6).
 
     Address... 0677H
 
-This routine is used by the SETTXT, SETT32, SETGRP and SETMLT standard routines to copy a block of five table base addresses from the Workspace Area into VDP Mode Registers 2, 3, 4, 5 and 6. On entry register pair HL points to the relevant group of addresses. Each base address is collected in turn shifted the required number of places and then written to the relevant Mode Register via the WRTVDP standard routine.
+This routine is used by the [SETTXT](#settxt), [SETT32](#sett32), [SETGRP](#setgrp) and [SETMLT](#setmlt) standard routines to copy a block of five table base addresses from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6). On entry register pair HL points to the relevant group of addresses. Each base address is collected in turn shifted the required number of places and then written to the relevant Mode Register via the [WRTVDP](#wrtvdp) standard routine.
 
 <a name="clrspr"></a>
 
@@ -989,11 +989,11 @@ This routine is used by the SETTXT, SETT32, SETGRP and SETMLT standard routines 
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to clear all sprites. The entire 2 KB Sprite Pattern Table is first filled with zeros via the FILVRM standard routine. The vertical coordinate of each of the thirty-two sprite attribute blocks is then set to -47 (D1H) to place the sprite above the top of the screen, the horizontal coordinate is left unchanged.
+Standard routine to clear all sprites. The entire 2 KB Sprite Pattern Table is first filled with zeros via the [FILVRM](#filvrm) standard routine. The vertical coordinate of each of the thirty-two sprite attribute blocks is then set to -47 (D1H) to place the sprite above the top of the screen, the horizontal coordinate is left unchanged.
 
-The pattern numbers in the Sprite Attribute Table are initialized with the series 0, 1, 2, 3, 4,... 31 for 8x8 sprites or the series 0, 4, 8, 12, 16,... 124 for 16x16 sprites. The series to be generated is determined by the Size bit in VDP Mode Register 1. Finally the colour byte of each sprite attribute block is filled in with the colour code contained in FORCLR, this is initially white.
+The pattern numbers in the Sprite Attribute Table are initialized with the series 0, 1, 2, 3, 4,... 31 for 8x8 sprites or the series 0, 4, 8, 12, 16,... 124 for 16x16 sprites. The series to be generated is determined by the Size bit in VDP [Mode Register 1](#moderegister1). Finally the colour byte of each sprite attribute block is filled in with the colour code contained in [FORCLR](#forclr), this is initially white.
 
-Note that the Size and Mag bits in VDP Mode Register 1 are not affected by this routine. Note also that the INIT32, INIGRP and INIMLT standard routines use this routine with an entry point at 06BBH, leaving the Sprite Pattern Table undisturbed.
+Note that the Size and Mag bits in VDP Mode Register 1 are not affected by this routine. Note also that the [INIT32](#init32), [INIGRP](#inigrp) and [INIMLT](#inimlt) standard routines use this routine with an entry point at 06BBH, leaving the Sprite Pattern Table undisturbed.
 
 <a name="calpat"></a>
 
@@ -1003,7 +1003,7 @@ Note that the Size and Mag bits in VDP Mode Register 1 are not affected by this 
     Exit...... HL=Sprite pattern address
     Modifies.. AF, DE, HL
 
-Standard routine to calculate the address of a sprite pattern. The pattern number is first multiplied by eight then, if 16x16 sprites are selected, multiplied by a further factor of four. This is then added to the Sprite Pattern Table base address, taken from PATBAS, to produce the final address.
+Standard routine to calculate the address of a sprite pattern. The pattern number is first multiplied by eight then, if 16x16 sprites are selected, multiplied by a further factor of four. This is then added to the Sprite Pattern Table base address, taken from [PATBAS](#patbas), to produce the final address.
 
 This numbering system is in line with the BASIC Interpreter's usage of pattern numbers rather than the VDP's when 16x16 sprites are selected. As an example while the Interpreter calls the second pattern number one, it is actually VDP pattern number four. This usage means that the maximum pattern number this routine should allow, when 16x16 sprites are selected, is sixty-three. There is no actual check on this limit so large pattern numbers will produce addresses greater than 3FFFH. Such addresses, when passed to the other VDP routines, will wrap around past zero and corrupt the Character Pattern Table in VRAM.
 
@@ -1015,7 +1015,7 @@ This numbering system is in line with the BASIC Interpreter's usage of pattern n
     Exit...... HL=Sprite attribute address
     Modifies.. AF, DE, HL
 
-Standard routine to calculate the address of a sprite attribute block. The sprite number, from zero to thirty-one, is multiplied by four and added to the Sprite Attribute Table base address taken from ATRBAS.
+Standard routine to calculate the address of a sprite attribute block. The sprite number, from zero to thirty-one, is multiplied by four and added to the Sprite Attribute Table base address taken from [ATRBAS](#atrbas).
 
 <a name="gspsiz"></a>
 
@@ -1025,7 +1025,7 @@ Standard routine to calculate the address of a sprite attribute block. The sprit
     Exit...... A=Bytes in sprite pattern (8 or 32)
     Modifies.. AF
 
-Standard routine to return the number of bytes occupied by each sprite pattern in the Sprite Pattern Table. The result is determined simply by examining the Size bit in VDP Mode Register 1.
+Standard routine to return the number of bytes occupied by each sprite pattern in the Sprite Pattern Table. The result is determined simply by examining the Size bit in VDP [Mode Register 1](#moderegister1).
 
 <a name="ldirmv"></a>
 
@@ -1035,13 +1035,13 @@ Standard routine to return the number of bytes occupied by each sprite pattern i
     Exit...... None
     Modifies.. AF, BC, DE, EI
 
-Standard routine to copy a block into main memory from the VDP VRAM. The VRAM starting address is set via the SETRD standard routine and then sequential bytes read from the VDP Data Port and placed in main memory.
+Standard routine to copy a block into main memory from the VDP VRAM. The VRAM starting address is set via the [SETRD](#setrd) standard routine and then sequential bytes read from the VDP Data Port and placed in main memory.
 
     Address... 071EH
 
-This routine is used to copy a 2 KB character set into the VDP Character Pattern Table in any mode. The base address of the Character Pattern Table in VRAM is taken from CGPBAS. The starting address of the character set is taken from CGPNT. The RDSLT standard routine is used to read the character data so this may be situated in an extension ROM.
+This routine is used to copy a 2 KB character set into the VDP Character Pattern Table in any mode. The base address of the Character Pattern Table in VRAM is taken from [CGPBAS](#cgpbas). The starting address of the character set is taken from [CGPNT](#cgpnt). The [RDSLT](#rdslt) standard routine is used to read the character data so this may be situated in an extension ROM.
 
-At power-up CGPNT is initialized with the address contained at ROM location 0004H, which is 1BBFH. CGPNT is easily altered to produce some interesting results, POKE &HF920,&HC7:SCREEN 0 provides a thoroughly confusing example.
+At power-up [CGPNT](#cgpnt) is initialized with the address contained at ROM location 0004H, which is 1BBFH. [CGPNT](#cgpnt) is easily altered to produce some interesting results, `POKE &HF920,&HC7:SCREEN 0` provides a thoroughly confusing example.
 
 <a name="ldirvm"></a>
 
@@ -1051,15 +1051,15 @@ At power-up CGPNT is initialized with the address contained at ROM location 0004
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to copy a block to VRAM from main memory.  The VRAM starting address is set via the SETWRT standard routine and then sequential bytes taken from main memory and written to the VDP Data Port.
+Standard routine to copy a block to VRAM from main memory.  The VRAM starting address is set via the [SETWRT](#setwrt) standard routine and then sequential bytes taken from main memory and written to the VDP [Data Port](#dataport).
 
     Address... 0777H
 
-This routine will clear the screen in any VDP mode. In 40x24 Text Mode and 32x24 Text Mode the Name Table, whose base address is taken from NAMBAS, is first filled with ASCII spaces. The cursor is then set to the home position (0A7FH) and LINTTB, the line termination table, re-initialized. Finally the function key display is restored, if it is enabled, via the FNKSB standard routine.
+This routine will clear the screen in any VDP mode. In [40x24 Text Mode](#40x24textmode) and [32x24 Text Mode](#32x24textmode) the Name Table, whose base address is taken from [NAMBAS](#nambas), is first filled with ASCII spaces. The cursor is then set to the home position (0A7FH) and [LINTTB](#linttb), the line termination table, re-initialized. Finally the function key display is restored, if it is enabled, via the [FNKSB](#fnksb) standard routine.
 
-In Graphics Mode the border colour is first set via VDP Mode Register 7 (0832H). The Colour Table is then filled with the background colour code, taken from BAKCLR, for both 0 and 1 pixels. Finally the Character Pattern Table is filled with zeroes.
+In [Graphics Mode](#graphicsmode) the border colour is first set via VDP [Mode Register 7](#moderegister7) (0832H). The Colour Table is then filled with the background colour code, taken from [BAKCLR](#bakclr), for both 0 and 1 pixels. Finally the Character Pattern Table is filled with zeroes.
 
-In Multicolour Mode the border colour is first set via VDP Mode Register 7 (0832H). The Character Pattern Table is then filled with the background colour taken from BAKCLR.
+In [Multicolour Mode](#multicolourmode) the border colour is first set via VDP [Mode Register 7](#moderegister7) (0832H). The Character Pattern Table is then filled with the background colour taken from [BAKCLR](#bakclr).
 
 <a name="wrtvrm"></a>
 
@@ -1069,7 +1069,7 @@ In Multicolour Mode the border colour is first set via VDP Mode Register 7 (0832
     Exit...... None
     Modifies.. EI
 
-Standard routine to write a single byte to the VDP VRAM. The VRAM address is first set up via the SETWRT standard routine and then the data byte written to the VDP Data Port. Note that the two seemingly spurious EX(SP),HL instructions in this routine, and several others, are required to meet the VDP's timing constraints.
+Standard routine to write a single byte to the VDP VRAM. The VRAM address is first set up via the [SETWRT](#setwrt) standard routine and then the data byte written to the VDP [Data Port](#dataport). Note that the two seemingly spurious `EX(SP),HL` instructions in this routine, and several others, are required to meet the VDP's timing constraints.
 
 <a name="rdvrm"></a>
 
@@ -1079,7 +1079,7 @@ Standard routine to write a single byte to the VDP VRAM. The VRAM address is fir
     Exit...... A=Byte read
     Modifies.. AF, EI
 
-Standard routine to read a single byte from the VDP VRAM.  The VRAM address is first set up via the SETRD standard routine and then the byte read from the VDP Data Port.
+Standard routine to read a single byte from the VDP VRAM. The VRAM address is first set up via the [SETRD](#setrd) standard routine and then the byte read from the VDP [Data Port](#dataport).
 
 <a name="setwrt"></a>
 
@@ -1089,7 +1089,7 @@ Standard routine to read a single byte from the VDP VRAM.  The VRAM address is f
     Exit...... None
     Modifies.. AF, EI
 
-Standard routine to set up the VDP for subsequent writes to VRAM via the Data Port. The address contained in register pair HL is written to the VDP Command Port LSB first, MSB second as shown in Figure 7. Addresses greater than 3FFFH will wrap around past zero as the two most significant bits of the address are ignored.
+Standard routine to set up the VDP for subsequent writes to VRAM via the [Data Port](#dataport). The address contained in register pair HL is written to the VDP [Command Port](#commandport) LSB first, MSB second as shown in [Figure 7](#figure7). Addresses greater than 3FFFH will wrap around past zero as the two most significant bits of the address are ignored.
 
 <a name="setrd"></a>
 
@@ -1099,7 +1099,7 @@ Standard routine to set up the VDP for subsequent writes to VRAM via the Data Po
     Exit...... None
     Modifies.. AF, EI
 
-Standard routine to set up the VDP for subsequent reads from VRAM via the Data Port. The address contained in register pair HL is written to the VDP Command Port LSB first, MSB second as shown in Figure 7. Addresses greater than 3FFFH will wrap around past zero as the two most significant bits of the address are ignored.
+Standard routine to set up the VDP for subsequent reads from VRAM via the [Data Port](#dataport). The address contained in register pair HL is written to the VDP [Command Port](#commandport) LSB first, MSB second as shown in [Figure 7](#figure7). Addresses greater than 3FFFH will wrap around past zero as the two most significant bits of the address are ignored.
 
 <a name="chgclr"></a>
 
@@ -1109,7 +1109,7 @@ Standard routine to set up the VDP for subsequent reads from VRAM via the Data P
     Exit...... None
     Modifies.. AF, BC, HL, EI
 
-Standard routine to set the VDP colours. SCRMOD is first examined to determine the appropriate course of action. In 40x24 Text Mode the contents of BAKCLR and FORCLR are written to VDP Mode Register 7 to set the colour of the 0 and 1 pixels, these are initially blue and white. Note that in this mode there is no way of specifying the border colour, this will be the same as the 0 pixel colour. In 32x24 Text Mode, Graphics Mode or Multicolour Mode the contents of BDRCLR are written to VDP Mode Register 7 to set the colour of the border, this is initially blue. Also in 32x24 Text Mode the contents of BAKCLR and FORCLR are copied to the whole of the Colour Table to determine the 0 and 1 pixel colours.
+Standard routine to set the VDP colours. [SCRMOD](#scrmod) is first examined to determine the appropriate course of action. In [40x24 Text Mode](#40x24textmode) the contents of [BAKCLR](#bakclr) and [FORCLR](#forclr) are written to VDP [Mode Register 7](#moderegister7) to set the colour of the 0 and 1 pixels, these are initially blue and white. Note that in this mode there is no way of specifying the border colour, this will be the same as the 0 pixel colour. In [32x24 Text Mode](#32x24textmode), [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode) the contents of [BDRCLR](#bdrclr) are written to VDP [Mode Register 7](#moderegister7) to set the colour of the border, this is initially blue. Also in [32x24 Text Mode](#32x24textmode) the contents of [BAKCLR](#bakclr) and [FORCLR](#forclr) are copied to the whole of the Colour Table to determine the 0 and 1 pixel colours.
 
 <a name="filvrm"></a>
 
@@ -1119,7 +1119,7 @@ Standard routine to set the VDP colours. SCRMOD is first examined to determine t
     Exit...... None
     Modifies.. AF, BC, EI
 
-Standard routine to fill a block of the VDP VRAM with a single data byte. The VRAM starting address, contained in register pair HL, is first set up via the SETWRT standard routine. The data byte is then repeatedly written to the VDP Data Port to fill successive VRAM locations.
+Standard routine to fill a block of the VDP VRAM with a single data byte. The VRAM starting address, contained in register pair HL, is first set up via the [SETWRT](#setwrt) standard routine. The data byte is then repeatedly written to the VDP Data Port to fill successive VRAM locations.
 
 <a name="totext"></a>
 
