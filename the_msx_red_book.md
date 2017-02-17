@@ -29,6 +29,21 @@
     + [Multicolour Mode](#multicolourmode)
     + [Sprites](#sprites)
 3. [Programmable Sound Generator](#chapter3)
+    + [Address Port (I/O port A0H)](#addressport)
+    + [Data Write Port (I/O port A1H)](#datawriteport)
+    + [Data Read Port (I/O port A2H)](#datareadport)
+    + [Registers 0 and 1](#registers0and1)
+    + [Registers 2 and 3](#registers2and3)
+    + [Registers 4 and 5](#registers4and5)
+    + [Register 6](#register6)
+    + [Register 7](#register7)
+    + [Register 8](#register8)
+    + [Register 9](#register9)
+    + [Register 10](#register10)
+    + [Registers 11 and 12](#registers11and12)
+    + [Register 13](#register13)
+    + [Register 14](#register14)
+    + [Register 15](#register15)
 4. [ROM BIOS](#chapter4)
 5. [ROM BASIC Interpreter](#chapter5)
 6. [Memory Map](#chapter6)
@@ -425,7 +440,7 @@ The Sprite Pattern Table occupies 2 KB of VRAM from 3800H to 3FFFH. It contains 
 
 #<a name="chapter3"></a>3. Programmable Sound Generator
 
-As well as controlling three sound channels the 8910 PSG contains two eight bit data ports, called A and B, through which it interfaces the joysticks and the cassette input. The PSG appears to the Z80 as three I/O ports called the Address Port, the Data Write Port and the Data Read Port.
+As well as controlling three sound channels the 8910 PSG contains two eight bit data ports, called A and B, through which it interfaces the joysticks and the cassette input. The PSG appears to the Z80 as three I/O ports called the [Address Port](#addressport), the [Data Write Port](#datawriteport) and the [Data Read Port](#datareadport).
 
 ##<a name="addressport"></a>Address Port (I/O port A0H)
 
@@ -513,7 +528,7 @@ The four Envelope Shape bits determine the shape of the amplitude modulation env
 
 **Figure 32**
 
-This register is used to read in PSG Port A. The six joystick bits reflect the state of the four direction switches and two trigger buttons on a joystick: 0=Pressed, 1=Not pressed. Alternatively up to six Paddles may be connected instead of one joystick. Although most MSX machines have two 9 pin joystick connectors only one can be read at a time. The one to be selected for reading is determined by the Joystick Select bit in PSG Register 15.
+This register is used to read in PSG Port A. The six joystick bits reflect the state of the four direction switches and two trigger buttons on a joystick: 0=Pressed, 1=Not pressed. Alternatively up to six Paddles may be connected instead of one joystick. Although most MSX machines have two 9 pin joystick connectors only one can be read at a time. The one to be selected for reading is determined by the Joystick Select bit in [PSG Register 15](#register15).
 
 The Keyboard Mode bit is unused on UK machines. On Japanese machines it is tied to a jumper link to determine the keyboard's character set.
 
