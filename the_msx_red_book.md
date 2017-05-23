@@ -1,4 +1,4 @@
-#<a name="contents"></a>Contents
+#Contents<a name="contents"></a>
 
 [Introduction](#introduction)
 
@@ -53,24 +53,24 @@
 
 [Index](#index)
 
-Contents Copyright 1985 Avalon Software  
+Contents Copyright 1985 Avalon Software
 Iver Lane, Cowley, Middx, UB8 2JD
 
-MSX is a trademark of Microsoft Corp.  
-Z80 is a trademark of Zilog Corp.  
+MSX is a trademark of Microsoft Corp.
+Z80 is a trademark of Zilog Corp.
 ACADEMY is trademark of Alfred.
 
 <br><br><br>
 
-#<a name="introduction"></a>Introduction
+#Introduction<a name="introduction"></a>
 
-##<a name="aims"></a>Aims
+##Aims<a name="aims"></a>
 
 This book is about MSX computers and how they work. For technical and commercial reasons MSX computer manufacturers only make a limited amount of information available to the end user about the design of their machines. Usually this will be a fairly detailed description of Microsoft MSX BASIC together with a broad outline of the system hardware. While this level of documentation is adequate for the casual user it will inevitably prove limiting to anyone engaged in more sophisticated programming.
 
 The aim of this book is to provide a description of the standard MSX hardware and software at a level of detail sufficient to satisfy that most demanding of users, the machine code programmer. It is not an introductory course on programming and is necessarily of a rather technical nature. It is assumed that you already possess, or intend to acquire by other means, an understanding of the Z80 Microprocessor at the machine code level. As there are so many general purpose books already in existence about the Z80 any description of its characteristics would simply duplicate widely available information.
 
-##<a name="organization"></a>Organization
+##Organization<a name="organization"></a>
 
 The MSX Standard specifies the following as the major functional components in any MSX computer:
 
@@ -97,11 +97,11 @@ It is believed that this book contains zero defects, if you know otherwise the a
 
 <br><br><br>
 
-#<a name="chapter1"></a>1. Programmable Peripheral Interface
+#1. Programmable Peripheral Interface<a name="chapter1"></a>
 
 The 8255 PPI is a general purpose parallel interface device configured as three eight bit data ports, called A, B and C, and a mode port. It appears to the Z80 as four I/O ports through which the keyboard, the memory switching hardware, the cassette motor, the cassette output, the Caps Lock LED and the Key Click audio output can be controlled. Once the PPI has been initialized access to a particular piece of hardware just involves writing to or reading the relevant I/O port.
 
-##<a name="ppiporta"></a>PPI Port A (I/O Port A8H)
+##PPI Port A (I/O Port A8H)<a name="ppiporta"></a>
 
 <a name="figure1"></a>![][CH01F01]
 
@@ -121,7 +121,7 @@ As an example "10100000" would be produced on a Toshiba HX10 where pages 3 and 2
 
 A typical UK machine will have one Primary Slot containing the MSX ROM, one containing 64 KB of RAM and two slots brought out to external connectors. Most Japanese machines have a cartridge type connector on each of these external slots but UK machines usually have one cartridge connector and one IDC connector.
 
-##<a name="expanders"></a>Expanders
+##Expanders<a name="expanders"></a>
 
 System memory can be increased to a theoretical maximum of sixteen 64 KB areas by using expander interfaces. An expander plugs into any Primary Slot to provide four 64 KB Secondary Slots, numbered 0 to 3, instead of one primary one. Each expander has its own local hardware, called a Secondary Slot Register, to select which of the Secondary Slots should appear in the Primary Slot. As before pages can be selected from different Secondary Slots.
 
@@ -143,7 +143,7 @@ The BASIC Interpreter itself has four methods of accessing extension ROMs. The f
 
 The BASIC Interpreter can also execute a BASIC program ROM detected in page 2 (8000H to BFFFH) during the power-up ROM search. What the BASIC Interpreter cannot do is use any RAM hidden behind other memory devices. This limitation is a reflection of the difficulty in converting an established program to take advantage of newer, more complex machines. A similar situation exists with the version of Microsoft BASIC available on the IBM PC. Out of a 1 MB memory space only 64 KB can be used for program storage.
 
-##<a name="ppiportb"></a>PPI Port B (I/O Port A9H)
+##PPI Port B (I/O Port A9H)<a name="ppiportb"></a>
 
 <a name="figure3"></a>![][CH01F03]
 
@@ -151,7 +151,7 @@ The BASIC Interpreter can also execute a BASIC program ROM detected in page 2 (8
 
 This input port is used to read the eight bits of column data from the currently selected row of the keyboard. The MSX keyboard is a software scanned eleven row by eight column matrix of normally open switches. Current machines usually only have keys in rows zero to eight. Conversion of key depressions into character codes is performed by the MSX ROM interrupt handler, this process is described in [Chapter 4](#chapter4).
 
-##<a name="ppiportc"></a>PPI Port C (I/O Port AAH)
+##PPI Port C (I/O Port AAH)<a name="ppiportc"></a>
 
 <a name="figure4"></a>![][CH01F04]
 
@@ -169,7 +169,7 @@ The Key Click output is attenuated and mixed with the audio output from the Prog
 
 Note that there are standard routines in the ROM BIOS to access all of the functions available with this port. These should be used in preference to direct manipulation of the hardware if at all possible.
 
-##<a name="ppimodeport"></a>PPI Mode Port (I/O Port ABH)
+##PPI Mode Port (I/O Port ABH)<a name="ppimodeport"></a>
 
 <a name="figure5"></a>![][CH01F05]
 
@@ -199,15 +199,15 @@ The PPI Mode Port can be used to directly set or reset any bit of Port C when bi
 
 <br><br><br>
 
-#<a name="chapter2"></a>2. Video Display Processor
+#2. Video Display Processor<a name="chapter2"></a>
 
 The 9929 VDP contains all the circuitry necessary to generate the video display. It appears to the Z80 as two I/O ports called the [Data Port](#dataport) and the [Command Port](#commandport). Although the VDP has its own 16 KB of VRAM (Video RAM), the contents of which define the screen image, this cannot be directly accessed by the Z80. Instead it must use the two I/O ports to modify the VRAM and to set the various VDP operating conditions.
 
-##<a name="dataport"></a>Data Port (I/O Port 98H)
+##Data Port (I/O Port 98H)<a name="dataport"></a>
 
 The Data Port is used to read or write single bytes to the VRAM. The VDP possesses an internal address register pointing to a location in the VRAM. Reading the Data Port will input the byte from this VRAM location while writing to the Data Port will store a byte there. After a read or write the [address register](#addressregister) is automatically incremented to point to the next VRAM location. Sequential bytes can be accessed simply by continuous reads or writes to the Data Port.
 
-##<a name="commandport"></a>Command Port (I/O Port 99H)
+##Command Port (I/O Port 99H)<a name="commandport"></a>
 
 The Command Port is used for three purposes:
 
@@ -215,7 +215,7 @@ The Command Port is used for three purposes:
 2. To read the [VDP Status Register](#vdpstatusregister).
 3. To write to one of the VDP Mode Registers.
 
-##<a name="addressregister"></a>Address Register
+##Address Register<a name="addressregister"></a>
 
 The Data Port address register must be set up in different ways depending on whether the subsequent access is to be a read or a write. The address register can be set to any value from 0000H to 3FFFH by first writing the LSB (Least Significant Byte) and then the MSB (Most Significant Byte) to the [Command Port](#commandport). Bits 6 and 7 of the MSB are used by the VDP to determine whether the address register is being set up for subsequent reads or writes as follows:
 
@@ -225,7 +225,7 @@ The Data Port address register must be set up in different ways depending on whe
 
 It is important that no other accesses are made to the VDP in between writing the LSB and the MSB as this will upset its synchronization. The MSX ROM interrupt handler is continuously reading the [VDP Status Register](#vdpstatusregister) as a background task so interrupts should be disabled as necessary.
 
-##<a name="vdpstatusregister"></a>VDP Status Register
+##VDP Status Register<a name="vdpstatusregister"></a>
 
 Reading the Command Port will input the contents of the VDP Status Register. This contains various flags as below:
 
@@ -241,11 +241,11 @@ The Fifth Sprite Flag is normally 0 but is set to 1 when there are more than fou
 
 The Frame Flag is normally 0 but is set to a 1 at the end of the last active line of the video frame. For UK machines with a 50 Hz frame rate this will occur every 20 ms. Reading the Status register will reset this flag to a 0. There is an associated output signal from the VDP which generates Z80 interrupts at the same rate, this drives the MSX ROM interrupt handler.
 
-##<a name="vdpmoderegisters"></a>VDP Mode Registers
+##VDP Mode Registers<a name="vdpmoderegisters"></a>
 
 The VDP has eight write-only registers, numbered 0 to 7, which control its general operation. A particular register is set by first writing a data byte then a register selection byte to the Command Port. The register selection byte contains the register number in the lower three bits: 10000RRR. As the Mode Registers are write-only, and cannot be read, the MSX ROM maintains an exact copy of the eight registers in the Workspace Area of RAM ([Chapter 6](#chapter6)). Using the MSX ROM standard routines for VDP functions ensures that this register image is correctly updated.
 
-##<a name="moderegister0"></a>Mode Register 0
+##Mode Register 0<a name="moderegister0"></a>
 
 <a name="figure9"></a>![][CH02F09]
 
@@ -255,7 +255,7 @@ The External VDP bit determines whether external VDP input is to be enabled or d
 
 The M3 bit is one of the three VDP mode selection bits, see [Mode Register 1](#moderegister1).
 
-##<a name="moderegister1"></a>Mode Register 1
+##Mode Register 1<a name="moderegister1"></a>
 
 <a name="figure10"></a>![][CH02F10]
 
@@ -279,7 +279,7 @@ The Blank bit is used to enable or disable the entire video display: 0=Disable, 
 
 The 4/16K bit alters the VDP VRAM addressing characteristics to suit either 4 KB or 16 KB chips: 0=4 KB, 1=16 KB.
 
-##<a name="moderegister2"></a>Mode Register 2
+##Mode Register 2<a name="moderegister2"></a>
 
 <a name="figure11"></a>![][CH02F11]
 
@@ -288,7 +288,7 @@ The 4/16K bit alters the VDP VRAM addressing characteristics to suit either 4 KB
 Mode Register 2 defines the starting address of the Name Table in the VDP VRAM. The four available bits only specify positions 00BB BB00 0000 0000 of the full address so register contents of 0FH would result in a base address of 3C00H.
 
 
-##<a name="moderegister3"></a>Mode Register 3
+##Mode Register 3<a name="moderegister3"></a>
 
 <a name="figure12"></a>![][CH02F12]
 
@@ -296,7 +296,7 @@ Mode Register 2 defines the starting address of the Name Table in the VDP VRAM. 
 
 Mode Register 3 defines the starting address of the Colour Table in the VDP VRAM. The eight available bits only specify positions 00BB BBBB BB00 0000 of the full address so register contents of FFH would result in a base address of 3FC0H. In [Graphics Mode](#graphicsmode) only bit 7 is effective thus offering a base of 0000H or 2000H. Bits 0 to 6 must be 1.
 
-##<a name="moderegister4"></a>Mode Register 4
+##Mode Register 4<a name="moderegister4"></a>
 
 <a name="figure13"></a>![][CH02F13]
 
@@ -304,7 +304,7 @@ Mode Register 3 defines the starting address of the Colour Table in the VDP VRAM
 
 Mode Register 4 defines the starting address of the Character Pattern Table in the VDP VRAM. The three available bits only specify positions 00BB B000 0000 0000 of the full address so register contents of 07H would result in a base address of 3800H. In [Graphics Mode](#graphicsmode) only bit 2 is effective thus offering a base of 0000H or 2000H. Bits 0 and 1 must be 1.
 
-##<a name="moderegister5"></a>Mode Register 5
+##Mode Register 5<a name="moderegister5"></a>
 
 <a name="figure14"></a>![][CH02F14]
 
@@ -312,7 +312,7 @@ Mode Register 4 defines the starting address of the Character Pattern Table in t
 
 Mode Register 5 defines the starting address of the Sprite Attribute Table in the VDP VRAM. The seven available bits only specify positions 00BB BBBB B000 0000 of the full address so register contents of 7FH would result in a base address of 3F80H.
 
-##<a name="moderegister6"></a>Mode Register 6
+##Mode Register 6<a name="moderegister6"></a>
 
 <a name="figure15"></a>![][CH02F15]
 
@@ -320,7 +320,7 @@ Mode Register 5 defines the starting address of the Sprite Attribute Table in th
 
 Mode Register 6 defines the starting address of the Sprite Pattern Table in the VDP VRAM. The three available bits only specify positions 00BB B000 0000 0000 of the full address so register contents of 07H would result in a base address of 3800H.
 
-##<a name="moderegister7"></a>Mode Register 7
+##Mode Register 7<a name="moderegister7"></a>
 
 <a name="figure16"></a>![][CH02F16]
 
@@ -335,7 +335,7 @@ The Text Colour 1 bits determine the colour of all 1 pixels in [40x24 Text Mode]
     2 Green        6 Dark Red   10 Yellow        14 Grey
     3 Light Green  7 Sky Blue   11 Light Yellow  15 White
 
-##<a name="screenmodes"></a>Screen Modes
+##Screen Modes<a name="screenmodes"></a>
 
 The VDP has four operating modes, each one offering a slightly different set of capabilities. Generally speaking, as the resolution goes up the price to be paid in VRAM size and updating complexity also increases. In a dedicated application these associated hardware and software costs are important considerations. For an MSX machine they are irrelevant, it therefore seems a pity that a greater attempt was not made to standardize on one particular mode. The [Graphics Mode](#graphicsmode) is capable of adequately performing all the functions of the other modes with only minor reservations.
 
@@ -347,7 +347,7 @@ During a video frame the VDP will sequentially read every character code from th
 
 Note that the VDP has no hardware cursor facility, if one is required it must be software generated.
 
-##<a name="40x24textmode"></a>40x24 Text Mode
+##40x24 Text Mode<a name="40x24textmode"></a>
 
 The Name Table occupies 960 bytes of VRAM from 0000H to 03BFH:
 
@@ -363,7 +363,7 @@ Pattern Table occupies 2 KB of VRAM from 0800H to 0FFFH. Each eight byte block c
 
 The first block contains the pattern for character code 0, the second the pattern for character code 1 and so on to character code 255. Note that only the leftmost six pixels are actually displayed in this mode. The colours of the 0 and 1 pixels in this mode are defined by [VDP Mode Register 7](#moderegister7), initially they are blue and white.
 
-##<a name="32x24textmode"></a>32x24 Text Mode
+##32x24 Text Mode<a name="32x24textmode"></a>
 
 The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH. As in [40x24 Text Mode](#40x24textmode) normal operation involves placing character codes in the required position in the table. The "`VPOKE`" statement may be used to attain familiarity with the screen layout:
 
@@ -375,7 +375,7 @@ The Character Pattern Table occupies 2 KB of VRAM from 0000H to 07FFH. Its struc
 
 The border colour is defined by [VDP Mode Register 7](#moderegister7) and is initially blue. An additional table, the Colour Table, determines the colour of the 0 and 1 pixels. This occupies thirty-two bytes of VRAM from 2000H to 201FH. Each entry in the Colour Table defines the 0 and 1 pixel colours for a group of eight character codes, the lower four bits defining the 0 pixel colour, the upper four bits the 1 pixel colour. The first entry in the table defines the colours for character codes 0 to 7, the second for character codes 8 to 15 and so on for thirty-two entries. The MSX ROM initializes all entries to the same value, blue and white, and provides no facilities for changing individual ones.
 
-##<a name="graphicsmode"></a>Graphics Mode
+##Graphics Mode<a name="graphicsmode"></a>
 
 The Name Table occupies 768 bytes of VRAM from 1800H to 1AFFH, the same as in [32x24 Text Mode](#32x24textmode). The table is initialized with the character code sequence 0 to 255 repeated three times and is then left untouched, in this mode it is the Character Pattern Table which is modified during normal operation.
 
@@ -387,7 +387,7 @@ The Character Pattern Table occupies 6 KB of VRAM from 0000H to 17FFH. While its
 
 The border colour is defined by VDP Mode Register 7 and is initially blue. The Colour Table occupies 6 KB of VRAM from 2000H to 37FFH. There is an exact byte-to-byte mapping from the Character Pattern Table to the Colour Table but, because it takes a whole byte to define the 0 pixel and 1 pixel colours, there is a lower resolution for colours than for pixels. The lower four bits of a Colour Table entry define the colour of all the 0 pixels on the corresponding eight pixel line. The upper four bits define the colour of the 1 pixels. The Colour Table is initialized so that the 0 pixel colour and the 1 pixel colour are blue for the entire table. Because both colours are the same it will be necessary to alter one colour when a bit is set in the Character Pattern Table.
 
-##<a name="multicolourmode"></a>Multicolour Mode
+##Multicolour Mode<a name="multicolourmode"></a>
 
 The Name Table occupies 768 bytes of VRAM from 0800H to 0AFFH, the screen mapping is the same as in [32x24 Text Mode](#32x24textmode). The table is initialized with the following character code pattern:
 
@@ -421,7 +421,7 @@ When the Name Table is filled with the special driver sequence of character code
 
 The border colour is defined by [VDP Mode Register 7](#moderegister7) and is initially blue. There is no separate Colour Table as the colours are defined directly by the contents of the Character Pattern Table, this is initially filled with blue.
 
-##<a name="sprites"></a>Sprites
+##Sprites<a name="sprites"></a>
 
 The VDP can control thirty-two sprites in all modes except [40x24 Text Mode](#40x24textmode). Their treatment is identical in all modes and independent of any character-orientated activity.
 
@@ -447,23 +447,23 @@ The Sprite Pattern Table occupies 2 KB of VRAM from 3800H to 3FFFH. It contains 
 
 <br><br><br>
 
-#<a name="chapter3"></a>3. Programmable Sound Generator
+#3. Programmable Sound Generator<a name="chapter3"></a>
 
 As well as controlling three sound channels the 8910 PSG contains two eight bit data ports, called A and B, through which it interfaces the joysticks and the cassette input. The PSG appears to the Z80 as three I/O ports called the [Address Port](#addressport), the [Data Write Port](#datawriteport) and the [Data Read Port](#datareadport).
 
-##<a name="addressport"></a>Address Port (I/O port A0H)
+##Address Port (I/O port A0H)<a name="addressport"></a>
 
 The PSG contains sixteen internal registers which completely define its operation. A specific register is selected by writing its number, from 0 to 15, to this port. Once selected, repeated accesses to that register may be made via the two data ports.
 
-##<a name="datawriteport"></a>Data Write Port (I/O port A1H)
+##Data Write Port (I/O port A1H)<a name="datawriteport"></a>
 
 This port is used to write to any register once it has been selected by the Address Port.
 
-##<a name="datareadport"></a>Data Read Port (I/O port A2H)
+##Data Read Port (I/O port A2H)<a name="datareadport"></a>
 
 This port is used to read any register once it has been selected by the Address Port.
 
-##<a name="registers0and1"></a>Registers 0 and 1
+##Registers 0 and 1<a name="registers0and1"></a>
 
 <a name="figure25"></a>![][CH03F25]
 
@@ -471,15 +471,15 @@ This port is used to read any register once it has been selected by the Address 
 
 These two registers are used to define the frequency of the Tone Generator for Channel A. Variable frequencies are produced by dividing a fixed master frequency with the number held in Registers 0 and 1, this number can be in the range 1 to 4095.  Register 0 holds the least significant eight bits and Register 1 the most significant four. The PSG divides an external 1.7897725 MHz frequency by sixteen to produce a Tone Generator master frequency of 111,861 Hz. The output of the Tone Generator can therefore range from 111,861 Hz (divide by 1) down to 27.3 Hz (divide by 4095). As an example to produce a middle "A" (440 Hz) the divider value in Registers 0 and 1 would be 254.
 
-##<a name="registers2and3"></a>Registers 2 and 3
+##Registers 2 and 3<a name="registers2and3"></a>
 
 These two registers control the Channel B Tone Generator as for Channel A.
 
-##<a name="registers4and5"></a>Registers 4 and 5
+##Registers 4 and 5<a name="registers4and5"></a>
 
 These two registers control the Channel C Tone Generator as for Channel A.
 
-##<a name="register6"></a>Register 6
+##Register 6<a name="register6"></a>
 
 <a name="figure26"></a>![][CH03F26]
 
@@ -487,7 +487,7 @@ These two registers control the Channel C Tone Generator as for Channel A.
 
 In addition to three square wave Tone Generators the PSG contains a single Noise Generator. The fundamental frequency of the noise source can be controlled in a similar fashion to the Tone Generators. The five least significant bits of Register 6 hold a divider value from 1 to 31. The Noise Generator master frequency is 111,861 Hz as before.
 
-##<a name="register7"></a>Register 7
+##Register 7<a name="register7"></a>
 
 <a name="figure27"></a>![][CH03F27]
 
@@ -495,7 +495,7 @@ In addition to three square wave Tone Generators the PSG contains a single Noise
 
 This register enables or disables the Tone Generator and Noise Generator for each of the three channels: 0=Enable 1=Disable. It also controls the direction of interface ports A and B, to which the joysticks and cassette are attached: 0=Input, 1=Output. Register 7 must always contain 10xxxxxx or possible damage could result to the PSG, there are active devices connected to its I/O pins. The BASIC "SOUND" statement will force these bits to the correct value for Register 7 but there is no protection at the machine code level.
 
-##<a name="register8"></a>Register 8
+##Register 8<a name="register8"></a>
 
 <a name="figure28"></a>![][CH03F28]
 
@@ -503,15 +503,15 @@ This register enables or disables the Tone Generator and Noise Generator for eac
 
 The four Amplitude bits determine the amplitude of Channel A from a minimum of 0 to a maximum of 15. The Mode bit selects either fixed or modulated amplitude: 0=Fixed, 1=Modulated. When modulated amplitude is selected the fixed amplitude value is ignored and the channel is modulated by the output from the Envelope Generator.
 
-##<a name="register9"></a>Register 9
+##Register 9<a name="register9"></a>
 
 This register controls the amplitude of Channel B as for Channel A.
 
-##<a name="register10"></a>Register 10
+##Register 10<a name="register10"></a>
 
 This register controls the amplitude of Channel C as for Channel A.
 
-##<a name="registers11and12"></a>Registers 11 and 12
+##Registers 11 and 12<a name="registers11and12"></a>
 
 <a name="figure29"></a>![][CH03F29]
 
@@ -519,7 +519,7 @@ This register controls the amplitude of Channel C as for Channel A.
 
 These two registers control the frequency of the single Envelope Generator used for amplitude modulation. As for the Tone Generators this frequency is determined by placing a divider count in the registers. The divider value may range from 1 to 65535 with Register 11 holding the least significant eight bits and Register 12 the most significant. The master frequency for the Envelope Generator is 6991 Hz so the envelope frequency may range from 6991 Hz (divide by 1) to 0.11 Hz (divide by 65535).
 
-##<a name="register13"></a>Register 13
+##Register 13<a name="register13"></a>
 
 <a name="figure30"></a>![][CH03F30]
 
@@ -531,7 +531,7 @@ The four Envelope Shape bits determine the shape of the amplitude modulation env
 
 **Figure 31**
 
-##<a name="register14"></a>Register 14
+##Register 14<a name="register14"></a>
 
 <a name="figure32"></a>![][CH03F32]
 
@@ -543,7 +543,7 @@ The Keyboard Mode bit is unused on UK machines. On Japanese machines it is tied 
 
 The Cassette Input is used to read the signal from the cassette EAR output. This is passed through a comparator to clean the edges and to convert to digital levels but is otherwise unprocessed.
 
-##<a name="register15"></a>Register 15
+##Register 15<a name="register15"></a>
 
 <a name="figure33"></a>![][CH03F33]
 
@@ -559,13 +559,13 @@ The Kana LED output is unused on UK machines. On Japanese machines it is used to
 
 <br><br><br>
 
-#<a name="chapter4"></a>4. ROM BIOS
+#4. ROM BIOS<a name="chapter4"></a>
 
 The design of the MSX ROM is of importance if machine code programs are to be developed efficiently and Operate reliably.  Almost every program, including the BASIC Interpreter itself, will require a certain set of primitive functions to operate.  These include screen and printer drivers, a keyboard decoder and other hardware related functions. By separating these routines from the BASIC Interpreter they can be made available to any application program. The section of ROM from 0000H to 268BH is largely devoted to such routines and is called the ROM BIOS (Basic Input Output System).
 
 This chapter gives a functional description of every recognizably separate routine in the ROM BIOS. Special attention is given to the "standard" routines. These are documented by Microsoft and guaranteed to remain consistent through possible hardware and software changes. The first few hundred bytes of the ROM consists of Z80 JP instructions which provide fixed position entry points to these routines. For maximum compatibility with future software an application program should restrict its dependence on the ROM to these locations only. The description of the ROM begins with this list of entry points to the standard routines. A brief comment is placed with each entry point, the full description is given with the routine itself.
 
-##<a name="dataareas"></a>Data Areas
+##Data Areas<a name="dataareas"></a>
 
 It is expected that most users will wish to disassemble the ROM to some extent (the full listing runs to nearly four hundred pages). In order to ease this process the data areas, which do not contain executable Z80 code, are shown below:
 
@@ -582,7 +582,7 @@ It is expected that most users will wish to disassemble the ROM to some extent (
 
 Note that these data areas are for the UK ROM, there are slight differences in the Japanese ROM relating to the keyboard decoder and the video character set. Disparities between the ROMs are restricted to these regions with the bulk of the code being identical in both cases.
 
-##<a name="terminology"></a>Terminology
+##Terminology<a name="terminology"></a>
 
 Reference is frequently made in this chapter to the standard routines and to Workspace Area variables. Whenever this is done the Microsoft-recommended name is used in upper case letters, for example "the [FILVRM](#filvrm) standard routine" and "[SCRMOD](#scrmod) is set".  Subroutines which are not named are referred to by a parenthesized address, "the screen is cleared (0777H)" for example. When reference is made to the Z80 status flags assembly language conventions are used, for example "Flag C" would mean that the carry flag is set while "Flag NZ" means that the zero flag is reset. The terms "EI" and "DI" mean enabled interrupts and disabled interrupts respectively.
 
@@ -685,7 +685,7 @@ Reference is frequently made in this chapter to the standard routines and to Wor
 |0108H |[DOWNC](#downc)  |172AH |Move current pixel physical address down
 |010BH |[TDOWNC](#tdownc)|170AH |Test then DOWNC if legal
 |010EH |[SCALXY](#scalxy)|1599H |Scale graphics coordinates
-|0111H |[MAPXYC](#mapxyc)|15DFH |Map graphic coordinates to physical address 
+|0111H |[MAPXYC](#mapxyc)|15DFH |Map graphic coordinates to physical address
 |0114H |[FETCHC](#fetchc)|1639H |Fetch current pixel physical address
 |0117H |[STOREC](#storec)|1640H |Store current pixel physical address
 |011AH |[SETATR](#setatr)|1676H |Set attribute byte
@@ -1645,7 +1645,7 @@ This table contains the key codes of key numbers 30H to 57H other than the speci
     1CH 1FH 1EH 1DH 7FH 12H 0CH 20H Row 8
     34H 33H 32H 31H 30H 00H 00H 00H Row 9
     2EH 2CH 2DH 39H 38H 37H 36H 35H Row 10
-    
+
      7   6   5   4   3   2   1   0  Column
 
 </a>
@@ -2049,7 +2049,7 @@ This routine is used to check the current screen mode, it returns Flag Z if the 
 Standard routine to convert a graphics coordinate pair into the current pixel physical address. The location in the Character Pattern Table of the byte containing the pixel is placed in [CLOC](#cloc). The bit mask identifying the pixel within that byte is placed in [CMASK](#cmask). Slightly different conversion methods are used for [Graphics Mode](#graphicsmode) and [Multicolour Mode](#multicolourmode), equivalent programs in BASIC are:
 
     Graphics Mode
-    
+
     10 INPUT"X,Y Coordinates";X,Y
     20 A=(Y\8)*256+(Y AND 7)+(X AND &HF8)
     30 PRINT"ADDR=";HEX$(Base(12)+A);"H ";
@@ -2065,9 +2065,9 @@ Standard routine to convert a graphics coordinate pair into the current pixel ph
     150 DATA 00000100
     160 DATA 00000010
     170 DATA 00000001
-    
+
     Multicolour Mode
-    
+
     10 INPUT"X,Y Coordinates";X,Y
     20 X=X\4:Y-Y\4
     30 A=(Y\8)*256+(Y AND 7)+(X*4 AND &HF8)
