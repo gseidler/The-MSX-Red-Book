@@ -584,7 +584,7 @@ Note that these data areas are for the UK ROM, there are slight differences in t
 
 ## <a name="terminology"></a>Terminology
 
-Reference is frequently made in this chapter to the standard routines and to Workspace Area variables. Whenever this is done the Microsoft-recommended name is used in upper case letters, for example "the [FILVRM](#filvrm) standard routine" and "[SCRMOD](#scrmod) is set". Subroutines which are not named are referred to by a parenthesized address, "the screen is cleared (0777H)" for example. When reference is made to the Z80 status flags assembly language conventions are used, for example "Flag C" would mean that the carry flag is set while "Flag NZ" means that the zero flag is reset. The terms "EI" and "DI" mean enabled interrupts and disabled interrupts respectively.
+Reference is frequently made in this chapter to the standard routines and to Workspace Area variables. Whenever this is done the Microsoft-recommended name is used in upper case letters, for example "the [FILVRM](#filvrm) standard routine" and "[SCRMOD](#scrmod) is set". Subroutines which are not named are referred to by a parenthesized address, "the screen is cleared ([0777H](#0777h))" for example. When reference is made to the Z80 status flags assembly language conventions are used, for example "Flag C" would mean that the carry flag is set while "Flag NZ" means that the zero flag is reset. The terms "EI" and "DI" mean enabled interrupts and disabled interrupts respectively.
 
 |ADDR. |NAME             |TO                |FUNCTION
 |:----:|:---------------:|:----------------:|--------------------------------------
@@ -726,7 +726,7 @@ Standard routine to read a single byte from memory in any slot. The Slot Identif
 
 **Figure 34:** Slot ID
 
-The flag is normally 0 but must be 1 if a Secondary Slot number is included in the Slot ID. The memory address and Slot ID are first processed (027EH) to yield a set of bit masks to apply to the relevant slot register. If a Secondary Slot number is specified then the Secondary Slot Register is first modified to select the relevant page from that Secondary Slot (02A3H). The Primary Slot is then switched in to the Z80 address space, the byte read and the Primary Slot restored to its original setting via the RDPRIM routine in the Workspace Area. Finally, if a Secondary Slot number is included in the Slot ID, the original Secondary Slot Register setting is restored (01ECH).
+The flag is normally 0 but must be 1 if a Secondary Slot number is included in the Slot ID. The memory address and Slot ID are first processed ([027EH](#027eh)) to yield a set of bit masks to apply to the relevant slot register. If a Secondary Slot number is specified then the Secondary Slot Register is first modified to select the relevant page from that Secondary Slot ([02A3H](#02a3h)). The Primary Slot is then switched in to the Z80 address space, the byte read and the Primary Slot restored to its original setting via the [RDPRIM](#rdprim) routine in the Workspace Area. Finally, if a Secondary Slot number is included in the Slot ID, the original Secondary Slot Register setting is restored (01ECH).
 
 Note that, unless it is the slot containing the Workspace Area, any attempt to access page 3 (C000H to FFFFH) will cause the system to crash as [RDPRIM](#rdprim) will switch itself out. Note also that interrupts are left disabled by all the memory switching routines.
 
@@ -818,7 +818,7 @@ Bits 6 and 7 of register D are first copied into the Primary Slot register. This
     Exit...... None
     Modifies.. AF, BC, DE, HL, SP
 
-Standard routine to perform memory initialization at power- up. It non-destructively tests for RAM in pages 2 and 3 in all sixteen possible slots then sets the Primary and Secondary Slot registers to switch in the largest area found. The entire Workspace Area (F380H to FFC9H) is zeroed and [EXPTBL](#exptbl) and [SLTTBL](#slttbl) filled in to map any expansion interfaces in existence Interrupt Mode 1 is set and control transfers to the remainder of the power-up initialization routine (7C76H).
+Standard routine to perform memory initialization at power- up. It non-destructively tests for RAM in pages 2 and 3 in all sixteen possible slots then sets the Primary and Secondary Slot registers to switch in the largest area found. The entire Workspace Area (F380H to FFC9H) is zeroed and [EXPTBL](#exptbl) and [SLTTBL](#slttbl) filled in to map any expansion interfaces in existence Interrupt Mode 1 is set and control transfers to the remainder of the power-up initialization routine ([7C76H](#7c76h)).
 
 <a name="03fbh"></a><a name="iscntc"></a>
 
@@ -830,9 +830,9 @@ Standard routine to perform memory initialization at power- up. It non-destructi
 
 Standard routine to check whether the CTRL-STOP or STOP keys have been pressed. It is used by the BASIC Interpreter at the end of each statement to check for program termination. [BASROM](#basrom) is first examined to see if it contains a non-zero value, if so the routine terminates immediately. This is to prevent users breaking into any extension ROM containing a BASIC program.
 
-INTFLG is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on (09DAH) and [INTFLG](#intflg) continually checked until one of the two key codes reappears. The cursor is then turned off (0A27H) and, if the key is STOP, the routine terminates.
+INTFLG is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on ([09DAH](#09dah)) and [INTFLG](#intflg) continually checked until one of the two key codes reappears. The cursor is then turned off ([0A27H](#0a27h)) and, if the key is STOP, the routine terminates.
 
-If CTRL-STOP has been detected then the keyboard buffer is first cleared via the [KILBUF](#kilbuf) standard routine and [TRPTBL](#trptbl) is checked to see whether an "`ON STOP GOSUB`" statement is active.  If so the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H) and the routine terminates as the event will be handled by the Interpreter Runloop. Otherwise the [ENASLT](#enaslt) standard routine is used to switch in page 1 from the MSX ROM, in case an extension ROM is using the routine, and control transfers to the "`STOP`" statement handler (63E6H).
+If CTRL-STOP has been detected then the keyboard buffer is first cleared via the [KILBUF](#kilbuf) standard routine and [TRPTBL](#trptbl) is checked to see whether an "`ON STOP GOSUB`" statement is active.  If so the relevant entry in [TRPTBL](#trptbl) is updated ([0EF1H](#0ef1h)) and the routine terminates as the event will be handled by the Interpreter Runloop. Otherwise the [ENASLT](#enaslt) standard routine is used to switch in page 1 from the MSX ROM, in case an extension ROM is using the routine, and control transfers to the "`STOP`" statement handler (63E6H).
 
 <a name="0468h"></a><a name="kilbuf"></a>
 
@@ -890,7 +890,7 @@ This six byte table contains the "PLAY" statement parameters initially placed in
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to [40x24 Text Mode](#40x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 00H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL40](#linl40) to [LINLEN](#linlen), [TXTNAM](#txtnam) to [NAMBAS](#nambas) and [TXTCGP](#txtcgp) to [CGPBAS](#cgpbas). The VDP colours are then set by the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH). The current character set is copied into the VRAM Character Pattern Table (071EH). Finally the VDP mode and base addresses are set via the [SETTXT](#settxt) standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [40x24 Text Mode](#40x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 00H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL40](#linl40) to [LINLEN](#linlen), [TXTNAM](#txtnam) to [NAMBAS](#nambas) and [TXTCGP](#txtcgp) to [CGPBAS](#cgpbas). The VDP colours are then set by the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH). The current character set is copied into the VRAM Character Pattern Table ([071EH](#071eh)). Finally the VDP mode and base addresses are set via the [SETTXT](#settxt) standard routine and the screen is enabled.
 
 <a name="0538h"></a><a name="init32"></a>
 
@@ -900,7 +900,7 @@ Standard routine to initialize the VDP to [40x24 Text Mode](#40x24textmode).  Th
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to initialize the VDP to [32x24 Text Mode](#32x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 01H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL32](#linl32) to [LINLEN](#linlen), [T32NAM](#t32nam) to [NAMBAS](#nambas), [T32CGP](#t32cgp) to [CGPBAS](#cgpbas), [T32PAT](#t32pat) to [PATBAS](#patbas) and [T32ATR](#t32atr) to [ATRBAS](#atrbas). The VDP colours are then set via the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH).  The current character set is copied into the VRAM Character Pattern Table (071EH) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the [SETT32](#sett32) standard routine and the screen is enabled.
+Standard routine to initialize the VDP to [32x24 Text Mode](#32x24textmode).  The screen is temporarily disabled via the [DISSCR](#disscr) standard routine and [SCRMOD](#scrmod) and [OLDSCR](#oldscr) set to 01H. The parameters required by the [CHPUT](#chput) standard routine are set up by copying [LINL32](#linl32) to [LINLEN](#linlen), [T32NAM](#t32nam) to [NAMBAS](#nambas), [T32CGP](#t32cgp) to [CGPBAS](#cgpbas), [T32PAT](#t32pat) to [PATBAS](#patbas) and [T32ATR](#t32atr) to [ATRBAS](#atrbas). The VDP colours are then set via the [CHGCLR](#chgclr) standard routine and the screen is cleared (077EH).  The current character set is copied into the VRAM Character Pattern Table ([071EH](#071eh)) and all sprites cleared (06BBH). Finally the VDP mode and base addresses are set via the [SETT32](#sett32) standard routine and the screen is enabled.
 
 <a name="0570h"></a><a name="enascr"></a>
 
@@ -940,7 +940,7 @@ Standard routine to write a data byte to any VDP [Mode Register](#vdpmoderegiste
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to [40x24 Text Mode](#40x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [TXTNAM](#txtnam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) (0677H).
+Standard routine to partially set the VDP to [40x24 Text Mode](#40x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [TXTNAM](#txtnam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) ([0677H](#0677h)).
 
 <a name="05b4h"></a><a name="sett32"></a>
 
@@ -950,7 +950,7 @@ Standard routine to partially set the VDP to [40x24 Text Mode](#40x24textmode). 
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to partially set the VDP to [32x24 Text Mode](#32x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [T32NAM](#t32nam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) (0677H).
+Standard routine to partially set the VDP to [32x24 Text Mode](#32x24textmode). The mode bits M1, M2 and M3 are first set in VDP Mode Registers [0](#moderegister0) and [1](#moderegister1). The five VRAM table base addresses, beginning with [T32NAM](#t32nam), are then copied from the Workspace Area into VDP Mode Registers [2](#moderegister2), [3](#moderegister3), [4](#moderegister4), [5](#moderegister5) and [6](#moderegister6) ([0677H](#0677h)).
 
 <a name="05d2h"></a><a name="inigrp"></a>
 
@@ -1060,7 +1060,7 @@ Standard routine to copy a block into main memory from the VDP VRAM. The VRAM st
 
 This routine is used to copy a 2 KB character set into the VDP Character Pattern Table in any mode. The base address of the Character Pattern Table in VRAM is taken from [CGPBAS](#cgpbas). The starting address of the character set is taken from [CGPNT](#cgpnt). The [RDSLT](#rdslt) standard routine is used to read the character data so this may be situated in an extension ROM.
 
-At power-up [CGPNT](#cgpnt) is initialized with the address contained at ROM location 0004H, which is 1BBFH. [CGPNT](#cgpnt) is easily altered to produce some interesting results, `POKE &HF920,&HC7:SCREEN 0` provides a thoroughly confusing example.
+At power-up [CGPNT](#cgpnt) is initialized with the address contained at ROM location 0004H, which is [1BBFH](#1bbfh). [CGPNT](#cgpnt) is easily altered to produce some interesting results, `POKE &HF920,&HC7:SCREEN 0` provides a thoroughly confusing example.
 
 <a name="0744h"></a><a name="ldirvm"></a>
 
@@ -1070,13 +1070,13 @@ At power-up [CGPNT](#cgpnt) is initialized with the address contained at ROM loc
     Exit...... None
     Modifies.. AF, BC, DE, HL, EI
 
-Standard routine to copy a block to VRAM from main memory.  The VRAM starting address is set via the [SETWRT](#setwrt) standard routine and then sequential bytes taken from main memory and written to the VDP [Data Port](#dataport).
+Standard routine to copy a block to VRAM from main memory. The VRAM starting address is set via the [SETWRT](#setwrt) standard routine and then sequential bytes taken from main memory and written to the VDP [Data Port](#dataport).
 
 <a name="0777h"></a>
 
     Address... 0777H
 
-This routine will clear the screen in any VDP mode. In [40x24 Text Mode](#40x24textmode) and [32x24 Text Mode](#32x24textmode) the Name Table, whose base address is taken from [NAMBAS](#nambas), is first filled with ASCII spaces. The cursor is then set to the home position (0A7FH) and [LINTTB](#linttb), the line termination table, re-initialized. Finally the function key display is restored, if it is enabled, via the [FNKSB](#fnksb) standard routine.
+This routine will clear the screen in any VDP mode. In [40x24 Text Mode](#40x24textmode) and [32x24 Text Mode](#32x24textmode) the Name Table, whose base address is taken from [NAMBAS](#nambas), is first filled with ASCII spaces. The cursor is then set to the home position ([0A7FH](#0a7fh)) and [LINTTB](#linttb), the line termination table, re-initialized. Finally the function key display is restored, if it is enabled, via the [FNKSB](#fnksb) standard routine.
 
 In [Graphics Mode](#graphicsmode) the border colour is first set via VDP [Mode Register 7](#moderegister7) (0832H). The Colour Table is then filled with the background colour code, taken from [BAKCLR](#bakclr), for both 0 and 1 pixels. Finally the Character Pattern Table is filled with zeroes.
 
@@ -1224,27 +1224,27 @@ If the character is a graphic header [GRPHED](#grphed) is set to 01H and the rou
     Exit...... None
     Modifies.. EI
 
-Standard routine to output a character to the screen in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode). [SCRMOD](#scrmod) is first checked and, if the VDP is in either [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor is removed (0A2EH), the character decoded (08DFH) and then the cursor replaced (09E1H). Finally the cursor column position is placed in [TTYPOS](#ttypos), for use by the "`PRINT`" statement, and the routine terminates.
+Standard routine to output a character to the screen in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode). [SCRMOD](#scrmod) is first checked and, if the VDP is in either [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor is removed ([0A2EH](#0a2eh)), the character decoded ([08DFH](#08dfh)) and then the cursor replaced ([09E1H](#09e1h)). Finally the cursor column position is placed in [TTYPOS](#ttypos), for use by the "`PRINT`" statement, and the routine terminates.
 
 <a name="08dfh"></a>
 
     Address... 08DFH
 
-This routine is used by the [CHPUT](#chput) standard routine to decode a character and take the appropriate action. The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise [ESCCNT](#esccnt) is checked to see if a previous ESC character (1BH) has been received, if so control transfers to the ESC sequence processor (098FH). Otherwise the character is checked to see if it is smaller than 20H, if so control transfers to the control code processor (0914H). The character is then checked to see if it is DEL (7FH), if so control transfers to the delete routine (0AE3H).
+This routine is used by the [CHPUT](#chput) standard routine to decode a character and take the appropriate action. The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise [ESCCNT](#esccnt) is checked to see if a previous ESC character (1BH) has been received, if so control transfers to the ESC sequence processor ([098FH](#098fh)). Otherwise the character is checked to see if it is smaller than 20H, if so control transfers to the control code processor ([0914H](#0914h)). The character is then checked to see if it is DEL (7FH), if so control transfers to the delete routine (0AE3H).
 
-Assuming the character is displayable the cursor coordinates are taken from [CSRY](#csry) and [CSRX](#csrx) and placed in register pair HL, H=Column, L=Row. These are then converted to a physical address in the VDP Name Table and the character placed there (0BE6H).  The cursor column position is then incremented (0A44H) and, assuming the rightmost column has not been exceeded, the routine terminates. Otherwise the row's entry in [LINTTB](#linttb), the line termination table, is zeroed to indicate an extended logical line, the column number is set to 01H and a LF is performed.
+Assuming the character is displayable the cursor coordinates are taken from [CSRY](#csry) and [CSRX](#csrx) and placed in register pair HL, H=Column, L=Row. These are then converted to a physical address in the VDP Name Table and the character placed there ([0BE6H](#0be6h)).  The cursor column position is then incremented ([0A44H](#0a44h)) and, assuming the rightmost column has not been exceeded, the routine terminates. Otherwise the row's entry in [LINTTB](#linttb), the line termination table, is zeroed to indicate an extended logical line, the column number is set to 01H and a LF is performed.
 
 <a name="0908h"></a>
 
     Address... 0908H
 
-This routine performs the LF operation for the [CHPUT](#chput) standard routine control code processor. The cursor row is incremented (0A61H) and, assuming the lowest row has not been exceeded, the routine terminates. Otherwise the screen is scrolled upwards and the lowest row erased (0A88H).
+This routine performs the LF operation for the [CHPUT](#chput) standard routine control code processor. The cursor row is incremented ([0A61H](#0a61h)) and, assuming the lowest row has not been exceeded, the routine terminates. Otherwise the screen is scrolled upwards and the lowest row erased (0A88H).
 
 <a name="0914h"></a>
 
     Address... 0914H
 
-This is the control code processor for the [CHPUT](#chput) standard routine. The table at 092FH is searched for a match with the code and control transferred to the associated address.
+This is the control code processor for the [CHPUT](#chput) standard routine. The table at [092FH](#092fh) is searched for a match with the code and control transferred to the associated address.
 
 <a name="092fh"></a>
 
@@ -1323,7 +1323,7 @@ This routine performs the ESC operation for the [CHPUT](#chput) standard routine
 
     Address... 098FH
 
-This is the [CHPUT](#chput) standard routine ESC sequence processor.  If [ESCCNT](#esccnt) contains FFH then the character is the second control character and control transfers to the control code processor (0919H) to search the ESC code table at 0953H.
+This is the [CHPUT](#chput) standard routine ESC sequence processor.  If [ESCCNT](#esccnt) contains FFH then the character is the second control character and control transfers to the control code processor (0919H) to search the ESC code table at [0953H](#0953h).
 
 If [ESCCNT](#esccnt) contains 01H then the character is the single parameter of the ESC,"x" sequence. If the parameter is "4" (34H) then [CSTYLE](#cstyle) is set to 00H resulting in a block cursor. If the parameter is "5" (35H) then [CSRSW](#csrsw) is set to 00H making the cursor normally disabled.
 
@@ -1343,9 +1343,9 @@ This routine is used, by the [CHGET](#chget) standard routine for example, to di
 
     Address... 09E1H
 
-This routine is used, by the [CHPUT](#chput) standard routine for example, to display the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character read from that location (0BD8H) and saved in [CURSAV](#cursav).
+This routine is used, by the [CHPUT](#chput) standard routine for example, to display the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character read from that location ([0BD8H](#0bd8h)) and saved in [CURSAV](#cursav).
 
-The character's eight byte pixel pattern is read from the VDP Character Pattern Table into the [LINWRK](#linwrk) buffer (0BA5H). The pixel pattern is then inverted, all eight bytes if [CSTYLE](#cstyle) indicates a block cursor, only the bottom three if [CSTYLE](#cstyle) indicates an underline cursor. The pixel pattern is copied back to the position for character code 255 in the VDP Character Pattern Table (0BBEH). The character code 255 is then placed at the current cursor location in the VDP Name Table (0BE6H) and the routine terminates.
+The character's eight byte pixel pattern is read from the VDP Character Pattern Table into the [LINWRK](#linwrk) buffer ([0BA5H](#0ba5h)). The pixel pattern is then inverted, all eight bytes if [CSTYLE](#cstyle) indicates a block cursor, only the bottom three if [CSTYLE](#cstyle) indicates an underline cursor. The pixel pattern is copied back to the position for character code 255 in the VDP Character Pattern Table ([0BBEH](#0bbeh)). The character code 255 is then placed at the current cursor location in the VDP Name Table ([0BE6H](#0be6h)) and the routine terminates.
 
 This method of generating the cursor character, by using character code 255, can produce curious effects under certain conditions. These can be demonstrated by executing the BASIC statement `FOR N=1 TO 100: PRINT CHR$(255);:NEXT` and then pressing the cursor up key.
 
@@ -1359,7 +1359,7 @@ This routine is used, by the [CHGET](#chget) standard routine for example, to re
 
     Address... 0A2EH
 
-This routine is used, by the [CHPUT](#chput) standard routine for example, .to remove the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character held in [CURSAV](#cursav) written to that location (0BE6H).
+This routine is used, by the [CHPUT](#chput) standard routine for example, .to remove the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character held in [CURSAV](#cursav) written to that location ([0BE6H](#0be6h)).
 
 <a name="0a44h"></a>
 
@@ -1395,13 +1395,13 @@ This routine performs the RIGHT operation for the [CHPUT](#chput) standard routi
 
     Address... 0A61H
 
-This routine performs the ESC,"B" (DOWN) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the lowest position, determined by [CRTCNT](#crtcnt) and [CNSDFG](#cnsdfg) (0C32H), then the routine terminates with no action. Otherwise the row coordinate is incremented and [CSRY](#csry) updated.
+This routine performs the ESC,"B" (DOWN) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the lowest position, determined by [CRTCNT](#crtcnt) and [CNSDFG](#cnsdfg) ([0C32H](#0c32h)), then the routine terminates with no action. Otherwise the row coordinate is incremented and [CSRY](#csry) updated.
 
 <a name="0a71h"></a>
 
     Address... 0A71H
 
-This routine performs the TAB operation for the [CHPUT](#chput) standard routine control code processor. ASCII spaces are output (08DFH) until [CSRX](#csrx) is a multiple of eight plus one (BIOS columns 1, 9, 17, 25, 33).
+This routine performs the TAB operation for the [CHPUT](#chput) standard routine control code processor. ASCII spaces are output ([08DFH](#08dfh)) until [CSRX](#csrx) is a multiple of eight plus one (BIOS columns 1, 9, 17, 25, 33).
 
 <a name="0a7fh"></a>
 
@@ -1419,13 +1419,13 @@ This routine performs the CR operation for the [CHPUT](#chput) standard routine 
 
     Address... 0A85H
 
-This routine performs the ESC,"M" function for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll up the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll up the relevant section of the screen a row at a time. Starting at the row below the current row, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer (0BAAH) then copied back to the Name Table one row higher (0BC3H). Finally the lowest row on the screen is erased (0AECH).
+This routine performs the ESC,"M" function for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased ([0AECH](#0aech)). The row count is first used to scroll up the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll up the relevant section of the screen a row at a time. Starting at the row below the current row, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer ([0BAAH](#0baah)) then copied back to the Name Table one row higher ([0BC3H](#0bc3h)). Finally the lowest row on the screen is erased ([0AECH](#0aech)).
 
 <a name="0ab4h"></a>
 
     Address... 0AB4H
 
-This routine performs the ESC,"L" operation for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased (0AECH). The row count is first used to scroll down the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll down the relevant section of the screen a row at a time.  Starting at the next to last row of the screen, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer (0BAAH), then copied back to the Name Table one row lower (0BC3H). Finally the current row is erased (0AECH).
+This routine performs the ESC,"L" operation for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased ([0AECH](#0aech)). The row count is first used to scroll down the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll down the relevant section of the screen a row at a time.  Starting at the next to last row of the screen, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer ([0BAAH](#0baah)), then copied back to the Name Table one row lower ([0BC3H](#0bc3h)). Finally the current row is erased ([0AECH](#0aech)).
 
     Address... 0AE3H
 
@@ -1441,7 +1441,7 @@ This routine performs the ESC,"l" operation for the [CHPUT](#chput) standard rou
 
     Address... 0AEEH
 
-This routine performs the ESC,"K" operation for the [CHPUT](#chput) standard routine control code processor. The row's entry in [LINTTB](#linttb), the line termination table, is first made non-zero to indicate that the logical line is not extended (0C29H). The cursor coordinates are converted to a physical address (0BF2H) in the VDP Name Table and the VDP set up for writes via the [SETWRT](#setwrt) standard routine. Spaces are then written directly to the VDP [Data Port](#dataport) until the rightmost column, determined by [LINLEN](#linlen), is reached.
+This routine performs the ESC,"K" operation for the [CHPUT](#chput) standard routine control code processor. The row's entry in [LINTTB](#linttb), the line termination table, is first made non-zero to indicate that the logical line is not extended ([0C29H](#0c29h)). The cursor coordinates are converted to a physical address (0BF2H) in the VDP Name Table and the VDP set up for writes via the [SETWRT](#setwrt) standard routine. Spaces are then written directly to the VDP [Data Port](#dataport) until the rightmost column, determined by [LINLEN](#linlen), is reached.
 
     Address... 0B05H
 
@@ -1455,7 +1455,7 @@ This routine performs the ESC,"J" operation for the [CHPUT](#chput) standard rou
     Exit...... None
     Modifies.. AF, DE, EI
 
-Standard routine to turn the function key display off. [CNSDFG](#cnsdfg) is first zeroed and, if the VDP is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no further action. If the VDP is in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode) the last row on the screen is then erased (0AECH).
+Standard routine to turn the function key display off. [CNSDFG](#cnsdfg) is first zeroed and, if the VDP is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no further action. If the VDP is in [40x24 Text Mode](#40x24textmode) or [32x24 Text Mode](#32x24textmode) the last row on the screen is then erased ([0AECH](#0aech)).
 
 <a name="0b26h"></a><a name="fnksb"></a>
 
@@ -1477,7 +1477,7 @@ Standard routine to show the function key display if it is enabled. If [CNSDFG](
 
 Standard routine to turn the function key display on. [CNSDFG](#cnsdfg) is set to FFH and, if the VDP is in [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), the routine terminates with no further action. Otherwise the cursor row coordinate is checked and, if the cursor is on the last row of the screen, a LF code (0AH) issued to the [OUTDO](#outdo) standard routine to scroll the screen up.
 
-Register pair HL is then set to point to either the unshifted or shifted function strings in the Workspace Area depending upon whether the SHIFT key is pressed. [LINLEN](#linlen) has four subtracted, to allow a minimum of one space between fields, and is divided by five to determine the field size for each string.  Successive characters are then taken from each function string, checked for graphic headers via the [CNVCHR](#cnvchr) standard routine and placed in the [LINWRK](#linwrk) buffer until the string is exhausted or the zone is filled. When all five strings are completed the [LINWRK](#linwrk) buffer is written to the last row in the VDP Name Table (0BC3H).
+Register pair HL is then set to point to either the unshifted or shifted function strings in the Workspace Area depending upon whether the SHIFT key is pressed. [LINLEN](#linlen) has four subtracted, to allow a minimum of one space between fields, and is divided by five to determine the field size for each string.  Successive characters are then taken from each function string, checked for graphic headers via the [CNVCHR](#cnvchr) standard routine and placed in the [LINWRK](#linwrk) buffer until the string is exhausted or the zone is filled. When all five strings are completed the [LINWRK](#linwrk) buffer is written to the last row in the VDP Name Table ([0BC3H](#0bc3h)).
 
 <a name="0b9ch"></a>
 
@@ -1545,7 +1545,7 @@ This routine calculates the address of a row's entry in [LINTTB](#linttb), the l
 
     Address... 0C29H
 
-This routine makes a row's entry in [LINTTB](#linttb) non-zero when entered at 0C29H and zero when entered at 0C2AH. The row coordinate is supplied in register L.
+This routine makes a row's entry in [LINTTB](#linttb) non-zero when entered at [0C29H](#0c29h) and zero when entered at 0C2AH. The row coordinate is supplied in register L.
 
 <a name="0c32h"></a>
 
@@ -1561,29 +1561,29 @@ This routine returns the number of rows on the screen in register A. It will nor
     Exit...... None
     Modifies.. EI
 
-Standard routine to process Z80 interrupts, these are generated by the VDP once every 20 ms on a UK machine. The [VDP Status Register](#vdpstatusregister) is first read and bit 7 checked to ensure that this is a frame rate interrupt, if not the routine terminates with no action. The contents of the [Status Register](#vdpstatusregister) are saved in [STATFL](#statfl) and bit 5 checked for sprite coincidence. If the Coincidence Flag is active then the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H).
+Standard routine to process Z80 interrupts, these are generated by the VDP once every 20 ms on a UK machine. The [VDP Status Register](#vdpstatusregister) is first read and bit 7 checked to ensure that this is a frame rate interrupt, if not the routine terminates with no action. The contents of the [Status Register](#vdpstatusregister) are saved in [STATFL](#statfl) and bit 5 checked for sprite coincidence. If the Coincidence Flag is active then the relevant entry in [TRPTBL](#trptbl) is updated ([0EF1H](#0ef1h)).
 
 [INTCNT](#intcnt), the "INTERVAL" counter, is then decremented. If this has reached zero the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H) and the counter reset with the contents of [INTVAL](#intval).
 
 [JIFFY](#jiffy), the "TIME" counter, is then incremented. This counter just wraps around to zero when it overflows.
 
-[MUSICF](#musicf) is examined to determine whether any of the three music queues generated by the "`PLAY`" statement are active. For each active queue the dequeueing routine (113BH) is called to fetch the next music packet and write it to the PSG.
+[MUSICF](#musicf) is examined to determine whether any of the three music queues generated by the "`PLAY`" statement are active. For each active queue the dequeueing routine ([113BH](#113bh)) is called to fetch the next music packet and write it to the PSG.
 
-[SCNCNT](#scncnt) is then decremented to determine if a joystick and keyboard scan is required, if not the interrupt handler terminates with no further action. This counter is used to increase throughput and to minimize keybounce problems by ensuring that a scan is only carried out every three interrupts. Assuming a scan is required joystick connector 1 is selected and the two Trigger bits read (120CH), followed by the two Trigger bits from joystick connector 2 (120CH) and the SPACE key from row 8 of the keyboard (1226H). These five inputs, which are all related to the "`STRIG`" statement, are combined into a single byte where 0=Pressed, 1=Not pressed:
+[SCNCNT](#scncnt) is then decremented to determine if a joystick and keyboard scan is required, if not the interrupt handler terminates with no further action. This counter is used to increase throughput and to minimize keybounce problems by ensuring that a scan is only carried out every three interrupts. Assuming a scan is required joystick connector 1 is selected and the two Trigger bits read ([120CH](#120ch)), followed by the two Trigger bits from joystick connector 2 ([120CH](#120ch)) and the SPACE key from row 8 of the keyboard ([1226H](#1226h)). These five inputs, which are all related to the "`STRIG`" statement, are combined into a single byte where 0=Pressed, 1=Not pressed:
 
 <a name="figure35"></a>![][CH04F35]
 
 **Figure 35:** "`STRIG`" Inputs
 
-This reading is compared with the previous one, held in [TRGFLG](#trgflg), to produce an active transition byte and [TRGFLG](#trgflg) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. This active transition byte is shifted out bit by bit and the relevant entry in [TRPTBL](#trptbl) updated (0EF1H) for each active device.
+This reading is compared with the previous one, held in [TRGFLG](#trgflg), to produce an active transition byte and [TRGFLG](#trgflg) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. This active transition byte is shifted out bit by bit and the relevant entry in [TRPTBL](#trptbl) updated ([0EF1H](#0ef1h)) for each active device.
 
-A complete scan of the keyboard matrix is then performed to identify new key depressions, any found are translated into key codes and placed in [KEYBUF](#keybuf) (0D12H). If [KEYBUF](#keybuf) is found to be empty at the end of this process [REPCNT](#repcnt) is decremented to see whether the auto-repeat delay has expired, if not the routine terminates. If the delay period has expired [REPCNT](#repcnt) is reset with the fast repeat value (60 ms), the [OLDKEY](#oldkey) keyboard map is reinitialized and the keyboard scanned again (0D4EH). Any keys which are continuously pressed will show up as new transitions during this scan. Note that keys will only auto-repeat while an application program keeps [KEYBUF](#keybuf) empty by reading characters.  The interrupt handler then terminates.
+A complete scan of the keyboard matrix is then performed to identify new key depressions, any found are translated into key codes and placed in [KEYBUF](#keybuf) ([0D12H](#0d12h)). If [KEYBUF](#keybuf) is found to be empty at the end of this process [REPCNT](#repcnt) is decremented to see whether the auto-repeat delay has expired, if not the routine terminates. If the delay period has expired [REPCNT](#repcnt) is reset with the fast repeat value (60 ms), the [OLDKEY](#oldkey) keyboard map is reinitialized and the keyboard scanned again (0D4EH). Any keys which are continuously pressed will show up as new transitions during this scan. Note that keys will only auto-repeat while an application program keeps [KEYBUF](#keybuf) empty by reading characters.  The interrupt handler then terminates.
 
 <a name="0d12h"></a>
 
     Address... 0D12H
 
-This routine performs a complete scan of all eleven rows of the keyboard matrix for the interrupt handler. Each of the eleven rows is read in via the PPI and placed in ascending order in [NEWKEY](#newkey). [ENSTOP](#enstop) is then checked to see if warm starts are enabled. If its contents are non-zero and the keys CODE, GRAPH, CTRL and SHIFT are pressed control transfers to the BASIC Interpreter (409BH) via the [CALBAS](#calbas) standard routine. This facility is useful as even a machine code program can be terminated as long as the interrupt handler is running.  The contents of [NEWKEY](#newkey) are compared with the previous scan contained in [OLDKEY](#oldkey). If any change at all has occurred [REPCNT](#repcnt) is loaded with the initial auto-repeat delay (780 ms). Each row 1, reading from [NEWKEY](#newkey) is then compared with the previous one, held in [OLDKEY](#oldkey), to produce an active transition byte and [OLDKEY](#oldkey) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. If the row contains any transitions these are decoded and placed in [KEYBUF](#keybuf) as key codes (0D89H). When all eleven rows have been completed the routine checks whether there are any characters in [KEYBUF](#keybuf), by subtracting [GETPNT](#getpnt) from [PUTPNT](#putpnt), and terminates.
+This routine performs a complete scan of all eleven rows of the keyboard matrix for the interrupt handler. Each of the eleven rows is read in via the PPI and placed in ascending order in [NEWKEY](#newkey). [ENSTOP](#enstop) is then checked to see if warm starts are enabled. If its contents are non-zero and the keys CODE, GRAPH, CTRL and SHIFT are pressed control transfers to the BASIC Interpreter (409BH) via the [CALBAS](#calbas) standard routine. This facility is useful as even a machine code program can be terminated as long as the interrupt handler is running.  The contents of [NEWKEY](#newkey) are compared with the previous scan contained in [OLDKEY](#oldkey). If any change at all has occurred [REPCNT](#repcnt) is loaded with the initial auto-repeat delay (780 ms). Each row 1, reading from [NEWKEY](#newkey) is then compared with the previous one, held in [OLDKEY](#oldkey), to produce an active transition byte and [OLDKEY](#oldkey) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. If the row contains any transitions these are decoded and placed in [KEYBUF](#keybuf) as key codes ([0D89H](#0d89h)). When all eleven rows have been completed the routine checks whether there are any characters in [KEYBUF](#keybuf), by subtracting [GETPNT](#getpnt) from [PUTPNT](#putpnt), and terminates.
 
 <a name="0d6ah"></a><a name="chsns"></a>
 
@@ -1605,7 +1605,7 @@ This routine converts each active bit in a keyboard row transition byte into a k
 
 **Figure 36:** Key Numbers
 
-The key number is then converted into a key code and placed in [KEYBUF](#keybuf) (1021H). When all eight possible bits have been processed the routine terminates.
+The key number is then converted into a key code and placed in [KEYBUF](#keybuf) ([1021H](#1021h)). When all eight possible bits have been processed the routine terminates.
 
 <a name="0da5h"></a>
 
@@ -1663,7 +1663,7 @@ This table contains the key codes of key numbers 00H to 2FH for various combinat
 
     Address... 0EC5H
 
-Control transfers to this routine, from 0FC3H, to complete decoding of the five function keys. The relevant entry in [FNKFLG](#fnkflg) is first checked to determine whether the key is associated with an "`ON KEY GOSUB`" statement. If so, and provided that [CURLIN](#curlin) shows the BASIC Interpreter to be in program mode, the relevant entry in [TRPTBL](#trptbl) is updated (0EF1H) and the routine terminates. If the key is not tied to an "`ON KEY GOSUB`" statement, or if the Interpreter is in direct mode, the string of characters associated with the function key is returned instead. The key number is multiplied by sixteen, as each string is sixteen characters long, and added to the starting address of the function key strings in the Workspace Area. Sequential characters are then taken from the string and placed in [KEYBUF](#keybuf) (0F55H) until the zero byte terminator is reached.
+Control transfers to this routine, from [0FC3H](#0fc3h), to complete decoding of the five function keys. The relevant entry in [FNKFLG](#fnkflg) is first checked to determine whether the key is associated with an "`ON KEY GOSUB`" statement. If so, and provided that [CURLIN](#curlin) shows the BASIC Interpreter to be in program mode, the relevant entry in [TRPTBL](#trptbl) is updated ([0EF1H](#0ef1h)) and the routine terminates. If the key is not tied to an "`ON KEY GOSUB`" statement, or if the Interpreter is in direct mode, the string of characters associated with the function key is returned instead. The key number is multiplied by sixteen, as each string is sixteen characters long, and added to the starting address of the function key strings in the Workspace Area. Sequential characters are then taken from the string and placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) until the zero byte terminator is reached.
 
 <a name="0ef1h"></a>
 
@@ -1675,13 +1675,13 @@ This routine is used to update a device's entry in [TRPTBL](#trptbl) when it has
 
     Address... 0F06H
 
-This section of the key decoder processes the HOME key only.  The state of the SHIFT key is determined via row 6 of [NEWKEY](#newkey) and the key code for HOME (0BH) or CLS (0CH) placed in [KEYBUF](#keybuf) (0F55H) accordingly.
+This section of the key decoder processes the HOME key only. The state of the SHIFT key is determined via row 6 of [NEWKEY](#newkey) and the key code for HOME (0BH) or CLS (0CH) placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) accordingly.
 
 <a name="0f10h"></a>
 
     Address... 0F10H
 
-This section of the keyboard decoder processes key numbers 30H to 57H apart from the CAP, F1 to F5, STOP and HOME keys.  The key number is simply used to look up the key code in the table at 1033H and this is then placed in [KEYBUF](#keybuf) (0F55H).
+This section of the keyboard decoder processes key numbers 30H to 57H apart from the CAP, F1 to F5, STOP and HOME keys. The key number is simply used to look up the key code in the table at [1033H](#1033h) and this is then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)).
 
 <a name="0f1fh"></a>
 
@@ -1695,7 +1695,7 @@ The state of the SHIFT and CODE keys is determined via row 6 of [NEWKEY](#newkey
 
     Address... 0F36H
 
-This section of the keyboard decoder processes the CAP key.  The current state of [CAPST](#capst) is inverted and control drops into the [CHGCAP](#chgcap) standard routine.
+This section of the keyboard decoder processes the CAP key. The current state of [CAPST](#capst) is inverted and control drops into the [CHGCAP](#chgcap) standard routine.
 
 <a name="0f3dh"></a><a name="chgcap"></a>
 
@@ -1711,7 +1711,7 @@ Standard routine to turn the Caps Lock LED on or off as determined by the conten
 
     Address... 0F46H
 
-This section of the keyboard decoder processes the STOP key.  The state of the CTRL key is determined via row 6 of [NEWKEY](#newkey) and the key code for STOP (04H) or CTRL/STOP (03H) produced as appropriate. If the CTRL/STOP code is produced it is copied to [INTFLG](#intflg), for use by the [ISCNTC](#iscntc) standard routine, and then placed in [KEYBUF](#keybuf) (0F55H). If the STOP code is produced it is also copied to INTFLG but is not placed in [KEYBUF](#keybuf), instead only a click is generated (0F64H). This means that an application program cannot read the STOP key code via the ROM BIOS standard routines.
+This section of the keyboard decoder processes the STOP key. The state of the CTRL key is determined via row 6 of [NEWKEY](#newkey) and the key code for STOP (04H) or CTRL/STOP (03H) produced as appropriate. If the CTRL/STOP code is produced it is copied to [INTFLG](#intflg), for use by the [ISCNTC](#iscntc) standard routine, and then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the STOP code is produced it is also copied to INTFLG but is not placed in [KEYBUF](#keybuf), instead only a click is generated (0F64H). This means that an application program cannot read the STOP key code via the ROM BIOS standard routines.
 
 <a name="0f55h"></a>
 
@@ -1735,19 +1735,19 @@ Standard routine to set or reset the Key Click output via the [PPI Mode Port](#p
 
     Address... 0F83H
 
-This section of the keyboard decoder processes key numbers 00H to 2FH. The state of the SHIFT, GRAPH and CODE keys is determined via row 6 of [NEWKEY](#newkey) and combined with the key number to form a look-up address into the table at 0DA5H. The key code is then taken from the table. If it is zero the routine terminates with no further action, if it is FFH control transfers to the DEAD key processor (0F1FH). If the code is in the range 40H to 5FH or 60H to 7FH and the CTRL key is pressed then the corresponding control code is placed in [KEYBUF](#keybuf) (0F55H). If the code is in the range 01H to 1FH then a graphic header code (01H) is first placed in [KEYBUF](#keybuf) (0F55H) followed by the code with 40H added. If the code is in the range 61H to 7BH and [CAPST](#capst) indicates that caps lock is on then it is converted to upper case by subtracting 20H. Assuming that [KANAST](#kanast) contains zero, as it always will on UK machines, then the key code is placed in [KEYBUF](#keybuf) (0F55H) and the routine terminates. On European MSX machines, with a DEAD key instead of a pound key, then the key codes corresponding to the vowels a, e, i, o, u may be further modified into graphics codes.
+This section of the keyboard decoder processes key numbers 00H to 2FH. The state of the SHIFT, GRAPH and CODE keys is determined via row 6 of [NEWKEY](#newkey) and combined with the key number to form a look-up address into the table at [0DA5H](#0da5h). The key code is then taken from the table. If it is zero the routine terminates with no further action, if it is FFH control transfers to the DEAD key processor ([0F1FH](#0f1fh)). If the code is in the range 40H to 5FH or 60H to 7FH and the CTRL key is pressed then the corresponding control code is placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the code is in the range 01H to 1FH then a graphic header code (01H) is first placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) followed by the code with 40H added. If the code is in the range 61H to 7BH and [CAPST](#capst) indicates that caps lock is on then it is converted to upper case by subtracting 20H. Assuming that [KANAST](#kanast) contains zero, as it always will on UK machines, then the key code is placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) and the routine terminates. On European MSX machines, with a DEAD key instead of a pound key, then the key codes corresponding to the vowels a, e, i, o, u may be further modified into graphics codes.
 
 <a name="0fc3h"></a>
 
     Address... 0FC3H
 
-This section of the keyboard decoder processes the five function keys. The state of the SHIFT key is examined via row 6 of [NEWKEY](#newkey) and five added to the key number if it is pressed. Control then transfers to 0EC5H to complete processing.
+This section of the keyboard decoder processes the five function keys. The state of the SHIFT key is examined via row 6 of [NEWKEY](#newkey) and five added to the key number if it is pressed. Control then transfers to [0EC5H](#0ec5h) to complete processing.
 
 <a name="1021h"></a>
 
     Address... 1021H
 
-This routine searches the table at 1B97H to determine which group of keys the key number supplied in register C belongs to.  The associated address is then taken from the table and control transferred to that section of the keyboard decoder. Note that the table itself is actually patched into the middle of the [OUTDO](#outdo) standard routine as a result of the modifications made to the Japanese ROM.
+This routine searches the table at [1B97H](#1b97h) to determine which group of keys the key number supplied in register C belongs to.  The associated address is then taken from the table and control transferred to that section of the keyboard decoder. Note that the table itself is actually patched into the middle of the [OUTDO](#outdo) standard routine as a result of the modifications made to the Japanese ROM.
 
 <a name="1033h"></a>
 
@@ -1769,7 +1769,7 @@ This table contains the key codes of key numbers 30H to 57H other than the speci
 
     Address... 105BH
 
-This routine simply zeroes [KANAST](#kanast) and then transfers control to 10C2H.
+This routine simply zeroes [KANAST](#kanast) and then transfers control to [10C2H](#10c2h).
 
 <a name="1061h"></a>
 
@@ -1791,7 +1791,7 @@ This routine increments the keyboard buffer pointer, either [PUTPNT](#putpnt) or
     Exit...... A=Character from keyboard
     Modifies.. AF, EI
 
-Standard routine to fetch a character from the keyboard buffer. The buffer is first checked to see if already contains a character (0D6AH). If not the cursor is turned on (09DAH), the buffer checked repeatedly until a character appears (0D6AH) and then the cursor turned off (0A27H). The character is taken from the buffer using [GETPNT](#getpnt) which is then incremented (10C2H).
+Standard routine to fetch a character from the keyboard buffer. The buffer is first checked to see if already contains a character ([0D6AH](#0d6ah)). If not the cursor is turned on ([09DAH](#09dah)), the buffer checked repeatedly until a character appears ([0D6AH](#0d6ah)) and then the cursor turned off ([0A27H](#0a27h)). The character is taken from the buffer using [GETPNT](#getpnt) which is then incremented ([10C2H](#10c2h)).
 
 <a name="10f9h"></a><a name="ckcntc"></a>
 
@@ -1855,7 +1855,7 @@ The packet header may be followed by zero or more blocks, in any order, containi
 
 The routine first locates the current duration counter in the relevant voice buffer ([VCBA](#vcba), [VCBB](#vcbb) or [VCBC](#vcbc)) via the [GETVCP](#getvcp) standard routine and decrements it. If the counter has reached zero then the next packet must be read from the queue, otherwise the routine terminates.
 
-The queue number is placed in [QUEUEN](#queuen) and a byte read from the queue (11E2H). This is then checked to see if it is the end of data mark (FFH), if so the queue terminates (11B0H).  Otherwise the byte count is placed in register C and the duration MSB in the relevant voice buffer. The second byte is read (11E2H) and the duration LSB placed in the relevant voice buffer. The byte count is then examined, if there are no bytes to follow the packet header the routine terminates. Otherwise successive bytes are read from the queue, and the appropriate action taken, until the byte count is exhausted.
+The queue number is placed in [QUEUEN](#queuen) and a byte read from the queue ([11E2H](#11e2h)). This is then checked to see if it is the end of data mark (FFH), if so the queue terminates ([11B0H](#11b0h)).  Otherwise the byte count is placed in register C and the duration MSB in the relevant voice buffer. The second byte is read ([11E2H](#11e2h)) and the duration LSB placed in the relevant voice buffer. The byte count is then examined, if there are no bytes to follow the packet header the routine terminates. Otherwise successive bytes are read from the queue, and the appropriate action taken, until the byte count is exhausted.
 
 If a frequency block is found then a second byte is read and both bytes written to PSG Registers [0](#registers0and1) and [1](#registers0and1), [2](#registers2and3) and [3](#registers2and3) or [4](#registers4and5) and [5](#registers4and5) depending on the queue number.
 
@@ -1883,7 +1883,7 @@ Standard routine used by the "`PLAY`" statement handler to initiate music dequeu
 
     Address... 11E2H
 
-This routine loads register A with the current queue number, from [QUEUEN](#queuen), and then reads a byte from that queue (14ADH).
+This routine loads register A with the current queue number, from [QUEUEN](#queuen), and then reads a byte from that queue ([14ADH](#14adh)).
 
 <a name="11eeh"></a><a name="gtstck"></a>
 
@@ -1893,7 +1893,7 @@ This routine loads register A with the current queue number, from [QUEUEN](#queu
     Exit...... A=Joystick position code
     Modifies.. AF, B, DE, HL, EI
 
-Standard routine to read the position of a joystick or the four cursor keys. If the supplied ID is zero the state of the cursor keys is read via [PPI Port B](#ppiportb) (1226H) and converted to a position code using the look-up table at 1243H. Otherwise joystick connector 1 or 2 is read (120CH) and the four direction bits converted to a position code using the look-up table at 1233H. The returned position codes are:
+Standard routine to read the position of a joystick or the four cursor keys. If the supplied ID is zero the state of the cursor keys is read via [PPI Port B](#ppiportb) ([1226H](#1226h)) and converted to a position code using the look-up table at 1243H. Otherwise joystick connector 1 or 2 is read ([120CH](#120ch)) and the four direction bits converted to a position code using the look-up table at 1233H. The returned position codes are:
 
 <a name="figure39a"></a>![][CH04F39a]
 
@@ -1917,7 +1917,7 @@ This routine reads row 8 of the keyboard matrix. The current contents of [PPI Po
     Exit...... A=Status code
     Modifies.. AF, BC, EI
 
-Standard routine to check the joystick trigger or space key status. If the supplied ID is zero row 8 of the keyboard matrix is read (1226H) and converted to a status code. Otherwise joystick connector 1 or 2 is read (120CH) and converted to a status code. The selection IDs are:
+Standard routine to check the joystick trigger or space key status. If the supplied ID is zero row 8 of the keyboard matrix is read ([1226H](#1226h)) and converted to a status code. Otherwise joystick connector 1 or 2 is read ([120CH](#120ch)) and converted to a status code. The selection IDs are:
 
     0=SPACE KEY
     1=JOY 1, TRIGGER A
@@ -1982,7 +1982,7 @@ Standard routine to process a Z80 Non Maskable Interrupt, simply returns on a st
     Exit...... None
     Modifies.. BC, DE, HL
 
-Standard routine to initialize the ten function key strings to their power-up values. The one hundred and sixty bytes of data commencing at 13A9H are copied to the [FNKSTR](#fnkstr) buffer in the Workspace Area.
+Standard routine to initialize the ten function key strings to their power-up values. The one hundred and sixty bytes of data commencing at [13A9H](#13a9h) are copied to the [FNKSTR](#fnkstr) buffer in the Workspace Area.
 
 <a name="13a9h"></a>
 
@@ -2105,7 +2105,7 @@ Standard routine for use by Disk BASIC, simply returns on standard MSX machines.
     Exit...... Flag Z if queue full
     Modifies.. AF, BC, HL
 
-Standard routine to place a data byte in one of the three music queues. The queue's get and put positions are first taken from [QUETAB](#quetab) (14FAH). The put position is temporarily incremented and compared with the get position, if they are equal the routine terminates as the queue is full. Otherwise the queue's address is taken from [QUETAB](#quetab) and the put position added to it. The data byte is placed at this location in the queue, the put position is incremented and the routine terminates. Note that the music queues are circular, if the get or put pointers reach the last position in the queue they wrap around back to the start.
+Standard routine to place a data byte in one of the three music queues. The queue's get and put positions are first taken from [QUETAB](#quetab) ([14FAH](#14fah)). The put position is temporarily incremented and compared with the get position, if they are equal the routine terminates as the queue is full. Otherwise the queue's address is taken from [QUETAB](#quetab) and the put position added to it. The data byte is placed at this location in the queue, the put position is incremented and the routine terminates. Note that the music queues are circular, if the get or put pointers reach the last position in the queue they wrap around back to the start.
 
 <a name="14adh"></a>
 
@@ -2115,7 +2115,7 @@ This routine is used by the interrupt handler to read a byte from one of the thr
 
     Address... 14DAH
 
-This routine is used by the [GICINI](#gicini) standard routine to initialize a queue's control block in [QUETAB](#quetab). The control block is first located in [QUETAB](#quetab) (1504H) and the put, get and putback bytes zeroed. The size byte is set from register B and the queue address from register pair DE.
+This routine is used by the [GICINI](#gicini) standard routine to initialize a queue's control block in [QUETAB](#quetab). The control block is first located in [QUETAB](#quetab) ([1504H](#1504h)) and the put, get and putback bytes zeroed. The size byte is set from register B and the queue address from register pair DE.
 
 <a name="14ebh"></a><a name="lftq"></a>
 
@@ -2125,7 +2125,7 @@ This routine is used by the [GICINI](#gicini) standard routine to initialize a q
     Exit...... HL=Free space left in queue
     Modifies.. AF, BC, HL
 
-Standard routine to return the number of free bytes left in a music queue. The queue's get and put positions are taken from [QUETAB](#quetab) (14FAH) and the free space determined by subtracting put from get.
+Standard routine to return the number of free bytes left in a music queue. The queue's get and put positions are taken from [QUETAB](#quetab) ([14FAH](#14fah)) and the free space determined by subtracting put from get.
 
 <a name="14fah"></a>
 
@@ -2149,19 +2149,19 @@ This routine locates a queue's control block in [QUETAB](#quetab). The queue num
 
 Standard routine to display a character on the screen in either [Graphics Mode](#graphicsmode) or [Multicolour Mode](#multicolourmode), it is functionally equivalent to the [CHPUT](#chput) standard routine.
 
-The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise the character is checked to see if it is a control code. Only the CR code (0DH) is recognized (157EH), all other characters smaller than 20H are ignored.
+The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise the character is checked to see if it is a control code. Only the CR code (0DH) is recognized ([157EH](#157eh)), all other characters smaller than 20H are ignored.
 
 Assuming the character is displayable its eight byte pixel pattern is copied from the ROM character set into the [PATWRK](#patwrk) buffer (0752H) and [FORCLR](#forclr) copied to [ATRBYT](#atrbyt) to set its colour.  The current graphics coordinates are then taken from [GRPACX](#grpacx) and [GRPACY](#grpacy) and used to set the current pixel physical address via the [SCALXY](#scalxy) and [MAPXYC](#mapxyc) standard routines.
 
-The eight byte pattern in [PATWRK](#patwrk) is processed a byte at a time. At the start of each byte the current pixel physical address is obtained via the [FETCHC](#fetchc) standard routine and saved.  The eight bits are then examined in turn. If the bit is a 1 the associated pixel is set by the [SETC](#setc) standard routine, if it is a 0 no action is taken. After each bit the current pixel physical address is moved right (16ACH). When the byte is finished, or the right hand edge of the screen is reached, the initial current pixel physical address is restored and moved down one position by the [TDOWNC](#tdownc) standard routine.
+The eight byte pattern in [PATWRK](#patwrk) is processed a byte at a time. At the start of each byte the current pixel physical address is obtained via the [FETCHC](#fetchc) standard routine and saved.  The eight bits are then examined in turn. If the bit is a 1 the associated pixel is set by the [SETC](#setc) standard routine, if it is a 0 no action is taken. After each bit the current pixel physical address is moved right ([16ACH](#16ach)). When the byte is finished, or the right hand edge of the screen is reached, the initial current pixel physical address is restored and moved down one position by the [TDOWNC](#tdownc) standard routine.
 
-When the pattern is complete, or the bottom of the screen has been reached, [GRPACX](#grpacx) is updated. In [Graphics Mode](#graphicsmode) its value is increased by eight, in [Multicolour Mode](#multicolourmode) by thirty-two. If [GRPACX](#grpacx) then exceeds 255, the right hand edge of the screen, a CR operation is performed (157EH).
+When the pattern is complete, or the bottom of the screen has been reached, [GRPACX](#grpacx) is updated. In [Graphics Mode](#graphicsmode) its value is increased by eight, in [Multicolour Mode](#multicolourmode) by thirty-two. If [GRPACX](#grpacx) then exceeds 255, the right hand edge of the screen, a CR operation is performed ([157EH](#157eh)).
 
 <a name="157eh"></a>
 
     Address... 157EH
 
-This routine performs the CR operation for the [GRPPRT](#grpprt) standard routine, this code functions as a combined CR,LF. [GRPACX](#grpacx) is zeroed and eight or thirty-two, depending on the screen mode, added to [GRPACY](#grpacy). If GRPACY then exceeds 191, the bottom of the screen, it is set to zero.
+This routine performs the CR operation for the [GRPPRT](#grpprt) standard routine, this code functions as a combined CR,LF. [GRPACX](#grpacx) is zeroed and eight or thirty-two, depending on the screen mode, added to [GRPACY](#grpacy). If [GRPACY](#grpacy) then exceeds 191, the bottom of the screen, it is set to zero.
 
 [GRPACX](#grpacx) and [GRPACY](#grpacy) may be manipulated directly by an application program to compensate for the limited number of control functions available.
 
@@ -2271,7 +2271,7 @@ Standard routine to set the graphics ink colour used by the [SETC](#setc) and [N
     Exit...... None
     Modifies.. AF, EI
 
-Standard routine to set the current pixel to any colour, the colour code is taken from [ATRBYT](#atrbyt). The pixel's VRAM physical address is first obtained via the [FETCHC](#fetchc) standard routine. In [Graphics Mode](#graphicsmode) both the Character Pattern Table and Colour Table are then modified (186CH).
+Standard routine to set the current pixel to any colour, the colour code is taken from [ATRBYT](#atrbyt). The pixel's VRAM physical address is first obtained via the [FETCHC](#fetchc) standard routine. In [Graphics Mode](#graphicsmode) both the Character Pattern Table and Colour Table are then modified ([186CH](#186ch)).
 
 In [Multicolour Mode](#multicolourmode) the byte pointed to by [CLOC](#cloc) is read from the Character Pattern Table by the [RDVRM](#rdvrm) standard routine. The contents of [ATRBYT](#atrbyt) are then placed in the upper or lower four bits, as determined by [CMASK](#cmask), and the byte written back via the [WRTVRM](#wrtvrm) standard routine
 
@@ -2281,7 +2281,7 @@ In [Multicolour Mode](#multicolourmode) the byte pointed to by [CLOC](#cloc) is 
 
 This routine moves the current pixel physical address one position right. If the right hand edge of the screen is exceeded it returns with Flag C and the physical address is unchanged. In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first shifted one bit right, if the pixel still remains within the byte the routine terminates. If [CLOC](#cloc) is at the rightmost character cell (LSB=F8H to FFH) then the routine terminates with Flag C (175AH).  Otherwise [CMASK](#cmask) is set to 80H, the leftmost pixel, and 0008H added to [CLOC](#cloc).
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (1779H).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([1779H](#1779h)).
 
 <a name="16c5h"></a><a name="rightc"></a>
 
@@ -2293,7 +2293,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position right. In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first shifted one bit right, if the pixel still remains within the byte the routine terminates. Otherwise [CMASK](#cmask) is set to 80H, the leftmost pixel, and 0008H added to [CLOC](#cloc). Note that incorrect addresses will be produced if the right hand edge of the screen is exceeded.
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (178BH).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([178BH](#178bh)).
 
 <a name="16d8h"></a>
 
@@ -2301,7 +2301,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 This routine moves the current pixel physical address one position left. If the left hand edge of the screen is exceeded it returns Flag C and the physical address is unchanged. In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first shifted one bit left, if the pixel still remains within the byte the routine terminates. If [CLOC](#cloc) is at the leftmost character cell (LSB=00H to 07H) then the routine terminates with Flag C (175AH). Otherwise [CMASK](#cmask) is set to 01H, the rightmost pixel, and 0008H subtracted from [CLOC](#cloc).
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (179CH).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([179CH](#179ch)).
 
 <a name="16eeh"></a><a name="leftc"></a>
 
@@ -2313,7 +2313,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position left. In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first shifted one bit left, if the pixel still remains within the byte the routine terminates. Otherwise [CMASK](#cmask) is set to 01H, the leftmost pixel, and 0008H subtracted from [CLOC](#cloc). Note that incorrect addresses will be produced if the left hand edge of the screen is exceeded.
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (17ACH).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([17ACH](#17ach)).
 
 <a name="170ah"></a><a name="tdownc"></a>
 
@@ -2325,7 +2325,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position down. If the bottom edge of the screen is exceeded it returns Flag C and the physical address is unchanged. In [Graphics Mode](#graphicsmode) [CLOC](#cloc) is first incremented, if it still remains within an eight byte boundary the routine terminates. If [CLOC](#cloc) was in the bottom character row ([CLOC](#cloc)>=1700H) then the routine terminates with Flag C (1759H). Otherwise 00F8H is added to [CLOC](#cloc).
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (17C6H).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([17C6H](#17c6h)).
 
 <a name="172ah"></a><a name="downc"></a>
 
@@ -2337,7 +2337,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position down. In [Graphics Mode](#graphicsmode) [CLOC](#cloc) is first incremented, if it still remains within an eight byte boundary the routine terminates. Otherwise 00F8H is added to [CLOC](#cloc). Note that incorrect addresses will be produced if the bottom edge of the screen is exceeded.
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (17DCH).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([17DCH](#17dch)).
 
 <a name="173ch"></a><a name="tupc"></a>
 
@@ -2349,7 +2349,7 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position up. If the top edge of the screen is exceeded it returns with Flag C and the physical address is unchanged. In [Graphics Mode](#graphicsmode) [CLOC](#cloc) is first decremented, if it still remains within an eight byte boundary the routine terminates. If [CLOC](#cloc) was in the top character row ([CLOC](#cloc)<0100H) then the routine terminates with Flag C. Otherwise 00F8H is subtracted from [CLOC](#cloc).
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (17E3H).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([17E3H](#17e3h)).
 
 <a name="175dh"></a><a name="upc"></a>
 
@@ -2361,13 +2361,13 @@ In [Multicolour Mode](#multicolourmode) control transfers to a separate routine 
 
 Standard routine to move the current pixel physical address one position up. In [Graphics Mode](#graphicsmode) [CLOC](#cloc) is first decremented, if it still remains within an eight byte boundary the routine terminates. Otherwise 00F8H is subtracted from [CLOC](#cloc). Note that incorrect addresses will be produced if the top edge of the screen is exceeded.
 
-In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (17F8H).
+In [Multicolour Mode](#multicolourmode) control transfers to a separate routine ([17F8H](#17f8h)).
 
 <a name="1779h"></a>
 
     Address... 1779H
 
-This is the [Multicolour Mode](#multicolourmode) version of the routine at 16ACH. It is identical to the [Graphics Mode](#graphicsmode) version except that [CMASK](#cmask) is shifted four bit positions right and becomes F0H if a cell boundary is crossed.
+This is the [Multicolour Mode](#multicolourmode) version of the routine at [16ACH](#16ach). It is identical to the [Graphics Mode](#graphicsmode) version except that [CMASK](#cmask) is shifted four bit positions right and becomes F0H if a cell boundary is crossed.
 
 <a name="178bh"></a>
 
@@ -2379,7 +2379,7 @@ This is the [Multicolour Mode](#multicolourmode) version of the [RIGHTC](#rightc
 
     Address... 179CH
 
-This is the [Multicolour Mode](#multicolourmode) version of the routine at 16D8H. It is identical to the [Graphics Mode](#graphicsmode) version except that [CMASK](#cmask) is shifted four bit positions left and becomes 0FH if a cell boundary is crossed.
+This is the [Multicolour Mode](#multicolourmode) version of the routine at [16D8H](#16d8h). It is identical to the [Graphics Mode](#graphicsmode) version except that [CMASK](#cmask) is shifted four bit positions left and becomes 0FH if a cell boundary is crossed.
 
 <a name="17ach"></a>
 
@@ -2434,7 +2434,7 @@ This is the [Multicolour Mode](#multicolourmode) version of the [UPC](#upc) stan
 
 Standard routine to set the colour of multiple pixels horizontally rightwards from the current pixel physical address. Although its function can be duplicated by the [SETC](#setc) and [RIGHTC](#rightc) standard routines this would result in significantly slower operation. The supplied pixel count should be chosen so that the right-hand edge of the screen is not passed as this will produce anomalous behaviour. The current pixel physical address is unchanged by this routine.
 
-In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first examined to determine the number of pixels to the right within the current character cell. Assuming the fill count is large enough these are then set (186CH). The remaining fill count is divided by eight to determine the number of whole character cells. Successive bytes in the Character Pattern Table are then zeroed and the corresponding bytes in the Colour Table set from [ATRBYT](#atrbyt) to fill these whole cells. The remaining fill count is then converted to a bit mask, using the seven byte table at 185DH, and these pixels are set (186CH).
+In [Graphics Mode](#graphicsmode) [CMASK](#cmask) is first examined to determine the number of pixels to the right within the current character cell. Assuming the fill count is large enough these are then set ([186CH](#186ch)). The remaining fill count is divided by eight to determine the number of whole character cells. Successive bytes in the Character Pattern Table are then zeroed and the corresponding bytes in the Colour Table set from [ATRBYT](#atrbyt) to fill these whole cells. The remaining fill count is then converted to a bit mask, using the seven byte table at 185DH, and these pixels are set ([186CH](#186ch)).
 
 In [Multicolour Mode](#multicolourmode) control transfers to a separate routine (18BBH).
 
@@ -2537,7 +2537,7 @@ The length of the header is determined by the contents of register A: 00H=Short 
     2400 Baud SHORT ... 7936 Cycles ... 1.6 Seconds
     2400 Baud LONG ... 31744 Cycles ... 6.3 Seconds
 
-After the motor has been turned on and the delay has expired the contents of [HEADER](#header) are multiplied by two hundred and fifty-six and, if register A is non-zero, by a further factor of four to produce the cycle count. HI cycles are then generated (1A4DH) until the count is exhausted whereupon control transfers to the [BREAKX](#breakx) standard routine. Because the CTRL-STOP key is only examined at termination it is impossible to break out part way through this routine.
+After the motor has been turned on and the delay has expired the contents of [HEADER](#header) are multiplied by two hundred and fifty-six and, if register A is non-zero, by a further factor of four to produce the cycle count. HI cycles are then generated ([1A4DH](#1a4dh)) until the count is exhausted whereupon control transfers to the [BREAKX](#breakx) standard routine. Because the CTRL-STOP key is only examined at termination it is impossible to break out part way through this routine.
 
 <a name="1a19h"></a><a name="tapout"></a>
 
@@ -2551,7 +2551,7 @@ Standard routine to write a single byte of data to the cassette. The MSX ROM use
 
 At 1200 baud each 0 bit is written as one complete 1200 Hz LO cycle and each 1 bit as two complete 2400 Hz HI cycles. The data rate is thus constant as 0 and 1 bits have the same duration.  When the 2400 baud rate is selected the two frequencies change to 2400 Hz and 4800 Hz but the format is otherwise unchanged.
 
-A byte of data is written with a 0 start bit (1A50H), eight data bits with the least significant bit first, and two 1 stop bits (1A40H). At the 1200 baud rate a single byte will have a nominal duration of 11 x 833 µs = 9.2 ms. After the stop bits have been written control transfers to the [BREAKX](#breakx) standard routine to check the CTRL-STOP key. The byte 43H is shown below as it would be written to cassette:
+A byte of data is written with a 0 start bit ([1A50H](#1a50h)), eight data bits with the least significant bit first, and two 1 stop bits ([1A40H](#1a40h)). At the 1200 baud rate a single byte will have a nominal duration of 11 x 833 µs = 9.2 ms. After the stop bits have been written control transfers to the [BREAKX](#breakx) standard routine to check the CTRL-STOP key. The byte 43H is shown below as it would be written to cassette:
 
 <a name="figure39b"></a>![][CH04F39b]
 
@@ -2563,13 +2563,13 @@ It is important not to leave too long an interval between bytes when writing dat
 
     Address... 1A39H
 
-This routine writes a single LO cycle with a length of approximately 816 µs to the cassette. The length of each half of the cycle is taken from [LOW](#low) and control transfers to the general cycle generator (1A50H).
+This routine writes a single LO cycle with a length of approximately 816 µs to the cassette. The length of each half of the cycle is taken from [LOW](#low) and control transfers to the general cycle generator ([1A50H](#1a50h)).
 
 <a name="1a40h"></a>
 
     Address... 1A40H
 
-This routine writes two HI cycles to the cassette. The first cycle is generated (1A4DH) followed by a 17 µs delay and then the second cycle (1A4DH).
+This routine writes two HI cycles to the cassette. The first cycle is generated ([1A4DH](#1a4dh)) followed by a 17 µs delay and then the second cycle ([1A4DH](#1a4dh)).
 
 <a name="1a4dh"></a>
 
@@ -2593,9 +2593,9 @@ On all MSX machines the Z80 runs at a clock frequency of 3.579545 MHz (280 ns) w
     Exit...... Flag C if CTRL-STOP termination
     Modifies.. AF, BC, DE, HL, DI
 
-Standard routine to turn the cassette motor on, read the cassette until a header is found and then determine the baud rate. Successive cycles are read from the cassette and the length of each one measured (1B34H). When 1,111 cycles have been found with less than 35 µs variation in their lengths a header has been located.
+Standard routine to turn the cassette motor on, read the cassette until a header is found and then determine the baud rate. Successive cycles are read from the cassette and the length of each one measured ([1B34H](#1b34h)). When 1,111 cycles have been found with less than 35 µs variation in their lengths a header has been located.
 
-The next 256 cycles are then read (1B34H) and averaged to determine the cassette HI cycle length. This figure is multiplied by 1.5 and placed in [LOWLIM](#lowlim) where it defines the minimum acceptable length of a 0 start bit. The HI cycle length is placed in [WINWID](#winwid) and will be used to discriminate between LO and HI cycles.
+The next 256 cycles are then read ([1B34H](#1b34h)) and averaged to determine the cassette HI cycle length. This figure is multiplied by 1.5 and placed in [LOWLIM](#lowlim) where it defines the minimum acceptable length of a 0 start bit. The HI cycle length is placed in [WINWID](#winwid) and will be used to discriminate between LO and HI cycles.
 
 <a name="1abch"></a><a name="tapin"></a>
 
@@ -2605,9 +2605,9 @@ The next 256 cycles are then read (1B34H) and averaged to determine the cassette
     Exit...... A=Byte read, Flag C if CTRL-STOP or I/O error
     Modifies.. AF, BC, DE, L
 
-Standard routine to read a byte of data from the cassette.  The cassette is first read continuously until a start bit is found. This is done by locating a negative transition, measuring the following cycle length (1B1FH) and comparing this to see if it is greater than [LOWLIM](#lowlim).
+Standard routine to read a byte of data from the cassette.  The cassette is first read continuously until a start bit is found. This is done by locating a negative transition, measuring the following cycle length ([1B1FH](#1b1fh)) and comparing this to see if it is greater than [LOWLIM](#lowlim).
 
-Each of the eight data bits is then read by counting the number of transitions within a fixed period of time (1B03H). If zero or one transitions are found it is a 0 bit, if two or three are found it is a 1 bit. If more than three transitions are found the routine terminates with Flag C as this is presumed to be a hardware error of some sort. After the value of each bit has been determined a further one or two transitions are read (1B23H) to retain synchronization. With an odd transition count one more will be read, with an even transition count two more.
+Each of the eight data bits is then read by counting the number of transitions within a fixed period of time ([1B03H](#1b03h)). If zero or one transitions are found it is a 0 bit, if two or three are found it is a 1 bit. If more than three transitions are found the routine terminates with Flag C as this is presumed to be a hardware error of some sort. After the value of each bit has been determined a further one or two transitions are read (1B23H) to retain synchronization. With an odd transition count one more will be read, with an even transition count two more.
 
 <a name="1b03h"></a>
 
@@ -2641,7 +2641,7 @@ This routine measures the length of a complete cassette cycle from negative tran
     Exit...... None
     Modifies.. EI
 
-Standard routine used by the BASIC Interpreter to output a character to the current device. The [ISFLIO](#isflio) standard routine is first used to check whether output is currently directed to an I/O buffer, if so control transfers to the sequential output driver (6C48H) via the [CALBAS](#calbas) standard routine. If [PRTFLG](#prtflg) is zero control transfers to the [CHPUT](#chput) standard routine to output the character to the screen. Assuming the printer is active [RAWPRT](#rawprt) is checked. If this is non-zero the character is passed directly to the printer (1BABH), otherwise control drops into the [OUTDLP](#outdlp) standard routine.
+Standard routine used by the BASIC Interpreter to output a character to the current device. The [ISFLIO](#isflio) standard routine is first used to check whether output is currently directed to an I/O buffer, if so control transfers to the sequential output driver ([6C48H](#6c48h)) via the [CALBAS](#calbas) standard routine. If [PRTFLG](#prtflg) is zero control transfers to the [CHPUT](#chput) standard routine to output the character to the screen. Assuming the printer is active [RAWPRT](#rawprt) is checked. If this is non-zero the character is passed directly to the printer ([1BABH](#1babh)), otherwise control drops into the [OUTDLP](#outdlp) standard routine.
 
 <a name="1b63h"></a><a name="outdlp"></a>
 
@@ -2653,7 +2653,7 @@ Standard routine used by the BASIC Interpreter to output a character to the curr
 
 Standard routine to output a character to the printer. If the character is a TAB code (09H) spaces are issued to the [OUTDLP](#outdlp) standard routine until [LPTPOS](#lptpos) is a multiple of eight (0, 8, 16 etc.). If the character is a CR code (0DH) [LPTPOS](#lptpos) is zeroed if it is any other control code [LPTPOS](#lptpos) is unaffected, if it is a displayable character [LPTPOS](#lptpos) is incremented.
 
-If [NTMSXP](#ntmsxp) is zero, meaning an MSX-specific printer is connected, the character is passed directly to the printer (1BABH). Assuming a normal printer is connected the [CNVCHR](#cnvchr) standard routine is used to check for graphic characters. If the character is a header code (01H) the routine terminates with no action. If it is a converted graphic character it is replaced by a space, all other characters are passed to the printer (1BACH).
+If [NTMSXP](#ntmsxp) is zero, meaning an MSX-specific printer is connected, the character is passed directly to the printer ([1BABH](#1babh)). Assuming a normal printer is connected the [CNVCHR](#cnvchr) standard routine is used to check for graphic characters. If the character is a header code (01H) the routine terminates with no action. If it is a converted graphic character it is replaced by a space, all other characters are passed to the printer (1BACH).
 
 <a name="1b97h"></a>
 
@@ -2680,7 +2680,7 @@ This twenty byte table is used by the keyboard decoder to find the correct routi
 
     Address... 1BABH
 
-This routine is used by the [OUTDLP](#outdlp) standard routine to pass a character to the printer. It is sent via the [LPTOUT](#lptout) standard routine, if this returns Flag C control transfers to the "`Device I/O error`" generator (73B2H) via the [CALBAS](#calbas) standard routine.
+This routine is used by the [OUTDLP](#outdlp) standard routine to pass a character to the printer. It is sent via the [LPTOUT](#lptout) standard routine, if this returns Flag C control transfers to the "`Device I/O error`" generator ([73B2H](#73b2h)) via the [CALBAS](#calbas) standard routine.
 
 <a name="1bbfh"></a>
 
@@ -2718,15 +2718,15 @@ Standard routine used by the "`INPUT`" statement handler to collect a logical li
 
 Standard routine used by the "`LINE INPUT`" statement handler to collect a logical line of text from the console. Characters are read from the keyboard until either the CR or CTRL-STOP keys are pressed. The logical line is then read from the screen character by character and placed in the Workspace Area text buffer BUF.
 
-The current screen coordinates are first taken from [CSRX](#csrx) and [CSRY](#csry) and placed in [FSTPOS](#fstpos). The screen row immediately above the current one then has its entry in [LINTTB](#linttb) made non-zero (0C29H) to stop it extending logically into the current row.
+The current screen coordinates are first taken from [CSRX](#csrx) and [CSRY](#csry) and placed in [FSTPOS](#fstpos). The screen row immediately above the current one then has its entry in [LINTTB](#linttb) made non-zero ([0C29H](#0c29h)) to stop it extending logically into the current row.
 
-Each keyboard character read via the [CHGET](#chget) standard routine is checked (0919H) against the editing key table at 2439H.  Control then transfers to one of the editing routines or to the default key handler (23FFH) as appropriate. This process continues until Flag C is returned by the CTRL-STOP or CR routines. Register pair HL is then set to point to the start of [BUF](#buf) and the routine terminates. Note that the carry, flag is cleared when Flag NZ is also returned to distinguish between a CR or protected CTRL-STOP termination and a normal CTRL-STOP termination.
+Each keyboard character read via the [CHGET](#chget) standard routine is checked (0919H) against the editing key table at [2439H](#2439h).  Control then transfers to one of the editing routines or to the default key handler ([23FFH](#23ffh)) as appropriate. This process continues until Flag C is returned by the CTRL-STOP or CR routines. Register pair HL is then set to point to the start of [BUF](#buf) and the routine terminates. Note that the carry, flag is cleared when Flag NZ is also returned to distinguish between a CR or protected CTRL-STOP termination and a normal CTRL-STOP termination.
 
 <a name="23ffh"></a>
 
     Address... 23FFH
 
-This routine processes all characters for the [INLIN](#inlin) standard routine except the special editing keys. If the character is a TAB code (09H) spaces are issued (23FFH) until [CSRX](#csrx) is a multiple of eight plus one (columns 1, 9, 17, 25, 33). If the character is a graphic header code (01H) it is simply echoed to the [OUTDO](#outdo) standard routine. All other control codes smaller than 20H are echoed to the [OUTDO](#outdo) standard routine after which [INSFLG](#insflg) and [CSTYLE](#cstyle) are zeroed. For the displayable characters [INSFLG](#insflg) is first checked and a space inserted (24F2H) if applicable before the character is echoed to the [OUTDO](#outdo) standard routine.
+This routine processes all characters for the [INLIN](#inlin) standard routine except the special editing keys. If the character is a TAB code (09H) spaces are issued ([23FFH](#23ffh)) until [CSRX](#csrx) is a multiple of eight plus one (columns 1, 9, 17, 25, 33). If the character is a graphic header code (01H) it is simply echoed to the [OUTDO](#outdo) standard routine. All other control codes smaller than 20H are echoed to the [OUTDO](#outdo) standard routine after which [INSFLG](#insflg) and [CSTYLE](#cstyle) are zeroed. For the displayable characters [INSFLG](#insflg) is first checked and a space inserted ([24F2H](#24f2h)) if applicable before the character is echoed to the [OUTDO](#outdo) standard routine.
 
 <a name="2439h"></a>
 
@@ -2754,13 +2754,13 @@ This table contains the special editing keys recognized by the [INLIN](#inlin) s
 
     Address... 245AH
 
-This routine performs the CR operation for the [INLIN](#inlin) standard routine. The starting coordinates of the logical line are found (266CH) and the cursor removed from the screen (0A2EH). Up to 254 characters are then read from the VDP VRAM (0BD8H) and placed in [BUF](#buf). Any null codes (00H) are ignored, any characters smaller than 20H are replaced by a graphic header code (01H) and the character itself with 40H added. As the end of each physical row is reached [LINTTB](#linttb) is checked (0C1DH) to see whether the logical line extends to the next physical row. Trailing spaces are then stripped from [BUF](#buf) and a zero byte added as an end of text marker. The cursor is restored to the screen (09E1H) and its coordinates set to the last physical row of the logical line via the [POSIT](#posit) standard routine. A LF code is issued to the [OUTDO](#outdo) standard routine, [INSFLG](#insflg) is zeroed and the routine terminates with a CR code (0DH) in register A and Flag NZ,C. This CR code will be echoed to the screen by the [INLIN](#inlin) standard routine mainloop just before it terminates.
+This routine performs the CR operation for the [INLIN](#inlin) standard routine. The starting coordinates of the logical line are found (266CH) and the cursor removed from the screen ([0A2EH](#0a2eh)). Up to 254 characters are then read from the VDP VRAM ([0BD8H](#0bd8h)) and placed in [BUF](#buf). Any null codes (00H) are ignored, any characters smaller than 20H are replaced by a graphic header code (01H) and the character itself with 40H added. As the end of each physical row is reached [LINTTB](#linttb) is checked ([0C1DH](#0c1dh)) to see whether the logical line extends to the next physical row. Trailing spaces are then stripped from [BUF](#buf) and a zero byte added as an end of text marker. The cursor is restored to the screen ([09E1H](#09e1h)) and its coordinates set to the last physical row of the logical line via the [POSIT](#posit) standard routine. A LF code is issued to the [OUTDO](#outdo) standard routine, [INSFLG](#insflg) is zeroed and the routine terminates with a CR code (0DH) in register A and Flag NZ,C. This CR code will be echoed to the screen by the [INLIN](#inlin) standard routine mainloop just before it terminates.
 
 <a name="24c5h"></a>
 
     Address... 24C5H
 
-This routine performs the CTRL-STOP operation for the [INLIN](#inlin) standard routine. The last physical row of the logical line is found by examining [LINTTB](#linttb) (0C1DH), [CSTYLE](#cstyle) is zeroed, a zero byte is placed at the start of [BUF](#buf) and all music variables are cleared via the [GICINI](#gicini) standard routine. [TRPTBL](#trptbl) is then examined (0454H) to see if an "`ON STOP`" statement is active, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. [BASROM](#basrom) is then checked to see whether a protected ROM is running, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. Otherwise the cursor is reset (24B2H) and the routine terminates with Flag Z,C.
+This routine performs the CTRL-STOP operation for the [INLIN](#inlin) standard routine. The last physical row of the logical line is found by examining [LINTTB](#linttb) ([0C1DH](#0c1dh)), [CSTYLE](#cstyle) is zeroed, a zero byte is placed at the start of [BUF](#buf) and all music variables are cleared via the [GICINI](#gicini) standard routine. [TRPTBL](#trptbl) is then examined (0454H) to see if an "`ON STOP`" statement is active, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. [BASROM](#basrom) is then checked to see whether a protected ROM is running, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. Otherwise the cursor is reset (24B2H) and the routine terminates with Flag Z,C.
 
 <a name="24e5h"></a>
 
@@ -2772,9 +2772,9 @@ This routine performs the INS operation for the [INLIN](#inlin) standard routine
 
     Address... 24F2H
 
-This routine inserts a space character for the default key section of the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and the current cursor coordinates taken from [CSRX](#csrx) and [CSRY](#csry). The character at this position is read from the VDP VRAM (0BD8H) and replaced with a space (0BE6H). Successive characters are then copied one column position to the right until the end of the physical row is reached.
+This routine inserts a space character for the default key section of the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the current cursor coordinates taken from [CSRX](#csrx) and [CSRY](#csry). The character at this position is read from the VDP VRAM ([0BD8H](#0bd8h)) and replaced with a space ([0BE6H](#0be6h)). Successive characters are then copied one column position to the right until the end of the physical row is reached.
 
-At this point [LINTTB](#linttb) is examined (0C1DH) to determine whether the logical line is extended, if so the process continues on the next physical row. Otherwise the character taken from the last column position is examined, if this is a space the routine terminates by replacing the cursor (09E1H).  Otherwise the physical row's entry in [LINTTB](#linttb) is zeroed to indicate an extended logical line. The number of the next physical row is compared with the number of rows on the screen (0C32H). If the next row is the last one the screen is scrolled up (0A88H), otherwise a blank row is inserted (0AB7H) and the copying process continues.
+At this point [LINTTB](#linttb) is examined ([0C1DH](#0c1dh)) to determine whether the logical line is extended, if so the process continues on the next physical row. Otherwise the character taken from the last column position is examined, if this is a space the routine terminates by replacing the cursor ([09E1H](#09e1h)).  Otherwise the physical row's entry in [LINTTB](#linttb) is zeroed to indicate an extended logical line. The number of the next physical row is compared with the number of rows on the screen (0C32H). If the next row is the last one the screen is scrolled up (0A88H), otherwise a blank row is inserted (0AB7H) and the copying process continues.
 
 <a name="2550h"></a>
 
@@ -2786,49 +2786,49 @@ This routine performs the DEL operation for the [INLIN](#inlin) standard routine
 
     Address... 2561H
 
-This routine performs the BS operation for the [INLIN](#inlin) standard routine. The cursor is first removed (0A2EH) and the cursor column coordinate decremented unless it is at the leftmost position and the previous row is not extended.  Characters are then read from the VDP VRAM (0BD8H) and written back one position to the left (0BE6H) until the end of the logical line is reached. At this point a space is written to the VDP VRAM (0BE6H) and the cursor character is restored (09E1H).
+This routine performs the BS operation for the [INLIN](#inlin) standard routine. The cursor is first removed ([0A2EH](#0a2eh)) and the cursor column coordinate decremented unless it is at the leftmost position and the previous row is not extended.  Characters are then read from the VDP VRAM ([0BD8H](#0bd8h)) and written back one position to the left ([0BE6H](#0be6h)) until the end of the logical line is reached. At this point a space is written to the VDP VRAM ([0BE6H](#0be6h)) and the cursor character is restored ([09E1H](#09e1h)).
 
 <a name="25aeh"></a>
 
     Address... 25AEH
 
-This routine performs the CTRL-U operation for the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and the start of the logical line located (266CH) and placed in [CSRX](#csrx) and [CSRY](#csry). The entire logical line is then cleared (25BEH).
+This routine performs the CTRL-U operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the start of the logical line located ([266CH](#266ch)) and placed in [CSRX](#csrx) and [CSRY](#csry). The entire logical line is then cleared (25BEH).
 
 <a name="25b9h"></a>
 
     Address... 25B9H
 
-This routine performs the CTRL-E operation for the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and the remainder of the physical row cleared (0AEEH). This process is repeated for successive physical rows until the end of the logical line is found in [LINTBB](#lintbb) (0C1DH). The cursor is then restored (09E1H), [INSFLG](#insflg) zeroed and [CSTLYE](#cstlye) reset to a block cursor (242DH).
+This routine performs the CTRL-E operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the remainder of the physical row cleared ([0AEEH](#0aeeh)). This process is repeated for successive physical rows until the end of the logical line is found in [LINTBB](#lintbb) ([0C1DH](#0c1dh)). The cursor is then restored ([09E1H](#09e1h)), [INSFLG](#insflg) zeroed and [CSTLYE](#cstlye) reset to a block cursor (242DH).
 
 <a name="25d7h"></a>
 
     Address... 25D7H
 
-This routine performs the CTRL-N operation for the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and the last physical row of the logical line found by examination of [LINTTB](#linttb) (0C1DH). Starting at the rightmost column of this physical row characters are read from the VDP VRAM (0BD8H) until a non-space character is found. The cursor coordinates are then set one column to the right of this position (0A5BH) and the routine terminates by restoring the cursor (25CDH).
+This routine performs the CTRL-N operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the last physical row of the logical line found by examination of [LINTTB](#linttb) ([0C1DH](#0c1dh)). Starting at the rightmost column of this physical row characters are read from the VDP VRAM ([0BD8H](#0bd8h)) until a non-space character is found. The cursor coordinates are then set one column to the right of this position ([0A5BH](#0a5bh)) and the routine terminates by restoring the cursor (25CDH).
 
 <a name="25f8h"></a>
 
     Address... 25F8H
 
-This routine performs the CTRL-F operation for the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and moved successively right (2624H) until a non-alphanumeric character is found. The cursor is then moved successively right (2624H) until an alphanumeric character is found. The routine terminates by restoring the cursor (25CDH).
+This routine performs the CTRL-F operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and moved successively right ([2624H](#2624h)) until a non-alphanumeric character is found. The cursor is then moved successively right ([2624H](#2624h)) until an alphanumeric character is found. The routine terminates by restoring the cursor (25CDH).
 
 <a name="260eh"></a>
 
     Address... 260EH
 
-This routine performs the CTRL-B operation for the [INLIN](#inlin) standard routine. The cursor is removed (0A2EH) and moved successively left (2634H) until an alphanumeric character is found. The cursor is then moved successively left (2634H) until a non-alphanumeric character is found and then moved one position right (0A5BH). The routine terminates by restoring the cursor (25CDH).
+This routine performs the CTRL-B operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and moved successively left ([2634H](#2634h)) until an alphanumeric character is found. The cursor is then moved successively left ([2634H](#2634h)) until a non-alphanumeric character is found and then moved one position right ([0A5BH](#0a5bh)). The routine terminates by restoring the cursor (25CDH).
 
 <a name="2624h"></a>
 
     Address... 2624H
 
-This routine moves the cursor one position right (0A5BH), loads register D with the rightmost column number, register E with the bottom row number and then tests for an alphanumeric character at the cursor position (263DH).
+This routine moves the cursor one position right ([0A5BH](#0a5bh)), loads register D with the rightmost column number, register E with the bottom row number and then tests for an alphanumeric character at the cursor position (263DH).
 
 <a name="2634h"></a>
 
     Address... 2634H
 
-This routine moves the cursor one position left (0A4CH), loads register D with the leftmost column number and register E with the top row number. The current cursor coordinates are compared with these values and the routine terminates Flag Z if the cursor is at this position. Otherwise the character at this position is read from the VDP VRAM (0BD8H) and checked to see if it is alphanumeric. If so the routine terminates Flag NZ,C otherwise it terminates Flag NZ,NC.
+This routine moves the cursor one position left ([0A4CH](#0a4ch)), loads register D with the leftmost column number and register E with the top row number. The current cursor coordinates are compared with these values and the routine terminates Flag Z if the cursor is at this position. Otherwise the character at this position is read from the VDP VRAM ([0BD8H](#0bd8h)) and checked to see if it is alphanumeric. If so the routine terminates Flag NZ,C otherwise it terminates Flag NZ,NC.
 
 The alphanumeric characters are the digits "0" to "9" and the letters "A" to "Z" and "a" to "z". Also included are the graphics characters 86H to 9FH and A6H to FFH, these were originally Japanese letters and should have been excluded during the conversion to the UK ROM.
 
@@ -2836,7 +2836,7 @@ The alphanumeric characters are the digits "0" to "9" and the letters "A" to "Z"
 
     Address... 266CH
 
-This routine finds the start of a logical line and returns its screen coordinates in register pair HL. Each physical row above the current one is checked via the [LINTTB](#linttb) table (0C1DH) until a non-extended row is found. The row immediately below this on the screen is the start of the logical line and its row number is placed in register L. This is then compared with [FSTPOS](#fstpos), which contains the row number when the [INLIN](#inlin) standard routine was first entered, to see if the cursor is still on the same line. If so the column coordinate in register H is set to its initial position from [FSTPOS](#fstpos). Otherwise register H is set to the leftmost position to return the whole line.
+This routine finds the start of a logical line and returns its screen coordinates in register pair HL. Each physical row above the current one is checked via the [LINTTB](#linttb) table ([0C1DH](#0c1dh)) until a non-extended row is found. The row immediately below this on the screen is the start of the logical line and its row number is placed in register L. This is then compared with [FSTPOS](#fstpos), which contains the row number when the [INLIN](#inlin) standard routine was first entered, to see if the cursor is still on the same line. If so the column coordinate in register H is set to its initial position from [FSTPOS](#fstpos). Otherwise register H is set to the leftmost position to return the whole line.
 
     Address...2680H, JP to power-up initialize routine (7C76H).
     Address...2683H, JP to the SYNCHR standard routine (558CH).
@@ -2849,11 +2849,11 @@ This routine finds the start of a logical line and returns its screen coordinate
 
 Microsoft BASIC has evolved over the years to its present position as the industry standard. It was originally written for the 8080 Microprocessor and even the MSX version is held in 8080 Assembly Language form. This process of continuous development means that there are less Z80-specific instructions than would be expected in a more modern program. It also means that numerous changes have been made and the result is a rather convoluted program. The structure of the Interpreter makes it unlikely that an application program will be able to use its many facilities. However most programs will need to cooperate with it to some extent so this chapter gives a detailed description of its operation.
 
-There are four readily identifiable areas of importance within the Interpreter, the one most familiar to any user is the Mainloop (4134H). This collects numbered lines of text from the console and places them in order in the Program Text Area of memory until a direct statement is received.
+There are four readily identifiable areas of importance within the Interpreter, the one most familiar to any user is the Mainloop ([4134H](#4134h)). This collects numbered lines of text from the console and places them in order in the Program Text Area of memory until a direct statement is received.
 
-The Runloop (4601H) is responsible for the execution of a program. It examines the first token of each program line and calls the appropriate routine to process the remainder of the statement. This continues until no more program text remains, control then returns to the Mainloop.
+The Runloop ([4601H](#4601h)) is responsible for the execution of a program. It examines the first token of each program line and calls the appropriate routine to process the remainder of the statement. This continues until no more program text remains, control then returns to the Mainloop.
 
-The analysis of numeric or string operands within a statement is performed by the Expression Evaluator (4C64H).  Each expression is composed of factors, in turn analyzed by the Factor Evaluator (4DC7H), which are linked together by dyadic infix operators. As there are several types of operand, notably line numbers, which cannot form part of an expression in Microsoft BASIC the term "evaluated" is only used to refer to those that can. Otherwise a term such as "computed" will be used.
+The analysis of numeric or string operands within a statement is performed by the Expression Evaluator ([4C64H](#4c64h)).  Each expression is composed of factors, in turn analyzed by the Factor Evaluator ([4DC7H](#4dc7h)), which are linked together by dyadic infix operators. As there are several types of operand, notably line numbers, which cannot form part of an expression in Microsoft BASIC the term "evaluated" is only used to refer to those that can. Otherwise a term such as "computed" will be used.
 
 One point to note when examining the Interpreter in detail is that it contains a lot of trick code. The writers seem particularly fond of jumping into the middle of instructions to provide multiple entry points to a routine. As an example take the instruction:
 
@@ -2871,12 +2871,12 @@ This routine is used by the Expression Evaluator to subtract two double precisio
 
     Address... 269AH
 
-This routine is used by the Expression Evaluator to add two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the second operand is zero the routine terminates with no action, if the first operand is zero the second operand is copied to [DAC](#dac) (2F05H) and the routine terminates. The two exponents are compared, if they differ by more than 10^15 the routine terminates with the larger operand as the result. Otherwise the difference between the two exponents is used to align the mantissae by shifting the smaller one rightwards (27A3H), for example:
+This routine is used by the Expression Evaluator to add two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the second operand is zero the routine terminates with no action, if the first operand is zero the second operand is copied to [DAC](#dac) ([2F05H](#2f05h)) and the routine terminates. The two exponents are compared, if they differ by more than 10^15 the routine terminates with the larger operand as the result. Otherwise the difference between the two exponents is used to align the mantissae by shifting the smaller one rightwards ([27A3H](#27a3h)), for example:
 
     19.2100 = .1921*10^2 = .192100
     + .7436 = .7436*10^0 = .007436
 
-If the two mantissa signs are equal the mantissae are then added (2759H), if they are different the mantissae are subtracted (276BH). The exponent of the result is simply the larger of the two original exponents. If an overflow was produced by addition the result mantissa is shifted right one digit (27DBH) and the exponent incremented. If leading zeroes were produced by subtraction the result mantissa is renormalized by shifting left (2797H). The guard byte is then examined and the result rounded up if the fifteenth digit is equal to or greater than five.
+If the two mantissa signs are equal the mantissae are then added ([2759H](#2759h)), if they are different the mantissae are subtracted ([276BH](#276bh)). The exponent of the result is simply the larger of the two original exponents. If an overflow was produced by addition the result mantissa is shifted right one digit (27DBH) and the exponent incremented. If leading zeroes were produced by subtraction the result mantissa is renormalized by shifting left ([2797H](#2797h)). The guard byte is then examined and the result rounded up if the fifteenth digit is equal to or greater than five.
 
 <a name="2759h"></a>
 
@@ -2910,7 +2910,7 @@ This routine shifts a double precision mantissa right. The number of digits to s
 
     Address... 27E6H
 
-This routine is used by the Expression Evaluator to multiply two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If either operand is zero the routine terminates with a zero result (2E7DH). Otherwise the two exponents are added to produce the result exponent. If this is smaller than 10^-63 the routine terminates with a zero result, if it is greater than 10^63 an "`Overflow error`" is generated (4067H). The two mantissa signs are then processed to yield the sign of the result, if they are the same the result is positive, if they differ it is negative.
+This routine is used by the Expression Evaluator to multiply two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If either operand is zero the routine terminates with a zero result ([2E7DH](#2e7dh)). Otherwise the two exponents are added to produce the result exponent. If this is smaller than 10^-63 the routine terminates with a zero result, if it is greater than 10^63 an "`Overflow error`" is generated (4067H). The two mantissa signs are then processed to yield the sign of the result, if they are the same the result is positive, if they differ it is negative.
 
 Even though the mantissae are in BCD format they are multiplied using the normal binary add and shift method. To accomplish this the first operand is successively multiplied by two (288AH) to produce the constants X\*80, X\*40, X\*20, X\*10, X\*8, X\*4, X\*2, and X in the [HOLD8](#hold8) buffer. The second operand remains in [ARG](#arg) and [DAC](#dac) is zeroed to function as the product accumulator. Multiplication proceeds by taking successive pairs of digits from the second operand starting with the least significant pair. For each 1 bit in the digit pair the appropriate multiple of the first operand is added to the product. As an example the single multiplication 1823\*96 would produce:
 
@@ -2938,13 +2938,13 @@ The mantissae are divided using the normal long division method. The second oper
 
     Address... 2993H
 
-This routine is used by the Factor Evaluator to apply the "`COS`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied (2C3BH) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. The operand then has 0.25 (90 degrees) subtracted (2C32H), its mantissa sign is inverted (2E8DH) and control drops into the "`SIN`" routine.
+This routine is used by the Factor Evaluator to apply the "`COS`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied (2C3BH) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. The operand then has 0.25 (90 degrees) subtracted ([2C32H](#2c32h)), its mantissa sign is inverted (2E8DH) and control drops into the "`SIN`" routine.
 
 <a name="29ach"></a>
 
     Address... 29ACH
 
-This routine is used by the Factor Evaluator to apply the "`SIN`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied (2C3BH) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. As the function is periodic only the fractional part of the operand is now required. This is extracted by pushing the operand (2CCCH) obtaining the integer part (30CFH) and copying it to [ARG](#arg) (2C4DH), popping the whole operand to [DAC](#dac) (2CE1H) and then subtracting the integer part (268CH).
+This routine is used by the Factor Evaluator to apply the "`SIN`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied ([2C3BH](#2c3bh)) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. As the function is periodic only the fractional part of the operand is now required. This is extracted by pushing the operand ([2CCCH](#2ccch)) obtaining the integer part ([30CFH](#30cfh)) and copying it to [ARG](#arg) ([2C4DH](#2c4dh)), popping the whole operand to [DAC](#dac) ([2CE1H](#2ce1h)) and then subtracting the integer part ([268CH](#268ch)).
 
 The first digit of the mantissa is then examined to determine the operand's quadrant. If it is in the first quadrant it is unchanged. If it is in the second quadrant it is subtracted from 0.5 (180 degrees) to reflect it about the Y axis. If it is in the third quadrant it is subtracted from 0.5 (180 degrees) to reflect it about the X axis. If it is in the fourth quadrant 1.0 (360 degrees) is subtracted to reflect it about both axes. The function is then computed by polynomial approximation (2C88H) using the list of coefficients at 2DEFH. These are the first eight terms in the Taylor series X-(X^3/3!)+(X^5/5!)-(X^7/7!) ... with the coefficients multiplied by successive factors of 2\*PI to compensate for the initial scaling.
 
@@ -2958,7 +2958,7 @@ This routine is used by the Factor Evaluator to apply the "`TAN`" function to a 
 
     Address... 2A14H
 
-This routine is used by the Factor Evaluator to apply the "`ATN`" function to a double precision operand contained in [DAC](#dac). The function is computed by polynomial approximation (2C88H) using the list of coefficients at 2E30H. These are the first eight terms in the Taylor series X-(X^3/3)+(X^5/5)-(X^7/7) ...  with the coefficients modified slightly to telescope the series.
+This routine is used by the Factor Evaluator to apply the "`ATN`" function to a double precision operand contained in [DAC](#dac). The function is computed by polynomial approximation ([2C88H](#2c88h)) using the list of coefficients at 2E30H. These are the first eight terms in the Taylor series X-(X^3/3)+(X^5/5)-(X^7/7) ...  with the coefficients modified slightly to telescope the series.
 
 <a name="2a72h"></a>
 
@@ -3062,7 +3062,7 @@ This routine generates an odd series based on the double precision operand conta
 
     X^1*(Kn)+X^3*(Kn-1)+x^5*(Kn-2)+X^5*(Kn-3) ...
 
-The address of the coefficient list is supplied in register pair HL. The first byte of the list contains the coefficient count, the double precision coefficients follow with K1 first and Kn last. The even series is generated (2C9AH) and multiplied (27E6H) by the original operand.
+The address of the coefficient list is supplied in register pair HL. The first byte of the list contains the coefficient count, the double precision coefficients follow with K1 first and Kn last. The even series is generated ([2C9AH](#2c9ah)) and multiplied ([27E6H](#27e6h)) by the original operand.
 
 <a name="2c9ah"></a>
 
@@ -3179,13 +3179,13 @@ This routine simply zeroes the exponent byte in [DAC](#dac).
 
     Address... 2E82H
 
-This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in DAC. The operand's sign is first checked (2EA1H), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is negated (322BH). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
+This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in DAC. The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
 
 <a name="2e97h"></a>
 
     Address... 2E97H
 
-This routine is used by the Factor Evaluator to apply the "`SGN`" function to an operand contained in [DAC](#dac). The operand's sign is checked (2EA1H), extended into register pair HL and then placed in [DAC](#dac) as an integer:
+This routine is used by the Factor Evaluator to apply the "`SGN`" function to an operand contained in [DAC](#dac). The operand's sign is checked ([2EA1H](#2ea1h)), extended into register pair HL and then placed in [DAC](#dac) as an integer:
 
     Zero ....... 0000H
     Positive ... 0001H
@@ -3197,7 +3197,7 @@ This routine is used by the Factor Evaluator to apply the "`SGN`" function to an
 
     Address... 2EA1H
 
-This routine returns the sign of an operand contained in [DAC](#dac). The operands type is first checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand the mantissa sign is examined (2E71H). If it is an integer its value is taken from [DAC](#dac)+2 and translated into the flags shown at 2E71H.
+This routine returns the sign of an operand contained in [DAC](#dac). The operands type is first checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand the mantissa sign is examined ([2E71H](#2e71h)). If it is an integer its value is taken from [DAC](#dac)+2 and translated into the flags shown at [2E71H](#2e71h).
 
 <a name="2eb1h"></a>
 
@@ -3269,25 +3269,25 @@ It should be noted that for relational operators the Expression Evaluator regard
 
     Address... 2F4DH
 
-This routine is used by the Expression Evaluator to find the relation (<>=) between two integer operands. The first operand is contained in register pair DE and the second in register pair HL. The results are as for the single precision version (2F21H).
+This routine is used by the Expression Evaluator to find the relation (<>=) between two integer operands. The first operand is contained in register pair DE and the second in register pair HL. The results are as for the single precision version ([2F21H](#2f21h)).
 
 <a name="2f83h"></a>
 
     Address... 2F83H
 
-This routine is used by the Expression Evaluator to find the relation (<>=) between two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg). The results are as for the single precision version (2F21H).
+This routine is used by the Expression Evaluator to find the relation (<>=) between two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg). The results are as for the single precision version ([2F21H](#2f21h)).
 
 <a name="2f8ah"></a>
 
     Address... 2F8AH
 
-This routine is used by the Factor Evaluator to apply the "`CINT`" function to an operand contained in [DAC](#dac). The operand type is first checked via the [GETYPR](#getypr) standard routine, if it is already integer the routine simply terminates. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand it is converted to a signed binary integer in register pair DE (305DH) and then placed in [DAC](#dac) as an integer. Out of range values result in an "`Overflow`" error (4067H).
+This routine is used by the Factor Evaluator to apply the "`CINT`" function to an operand contained in [DAC](#dac). The operand type is first checked via the [GETYPR](#getypr) standard routine, if it is already integer the routine simply terminates. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand it is converted to a signed binary integer in register pair DE ([305DH](#305dh)) and then placed in [DAC](#dac) as an integer. Out of range values result in an "`Overflow`" error (4067H).
 
 <a name="2fa2h"></a>
 
     Address... 2FA2H
 
-This routine checks whether [DAC](#dac) contains the single precision operand -32768, if so it replaces it with the integer equivalent 8000H. This step is required during numeric input conversion (3299H) because of the asymmetric integer number range.
+This routine checks whether [DAC](#dac) contains the single precision operand -32768, if so it replaces it with the integer equivalent 8000H. This step is required during numeric input conversion ([3299H](#3299h)) because of the asymmetric integer number range.
 
 <a name="2fb2h"></a>
 
@@ -3317,27 +3317,27 @@ This routine checks that the current operand is a string type, if not a "`Type m
 
     Address... 305DH
 
-This routine is used by the "`CINT`" routine (2F8AH) to convert a BCD single precision or double precision operand into a signed binary integer in register pair DE, it returns Flag C if an overflow has occurred. Successive digits are taken from the mantissa and added to the product starting with the most significant one. After each addition the product is multiplied by ten. The number of digits to process is determined by the exponent, for example five digits would be taken with an exponent of 10^5. Finally the mantissa sign is checked and the product negated (3221H) if necessary.
+This routine is used by the "`CINT`" routine ([2F8AH](#2f8ah)) to convert a BCD single precision or double precision operand into a signed binary integer in register pair DE, it returns Flag C if an overflow has occurred. Successive digits are taken from the mantissa and added to the product starting with the most significant one. After each addition the product is multiplied by ten. The number of digits to process is determined by the exponent, for example five digits would be taken with an exponent of 10^5. Finally the mantissa sign is checked and the product negated (3221H) if necessary.
 
 <a name="30beh"></a>
 
     Address... 30BEH
 
-This routine is used by the Factor Evaluator to apply the "`FIX`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is an integer the routine simply terminates. The mantissa sign is then checked (2E71H), if it is positive control transfers to the "`INT`" routine (30CFH). Otherwise the sign is inverted to positive, the "`INT`" function is performed (30CFH) and the sign restored to negative.
+This routine is used by the Factor Evaluator to apply the "`FIX`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is an integer the routine simply terminates. The mantissa sign is then checked ([2E71H](#2e71h)), if it is positive control transfers to the "`INT`" routine ([30CFH](#30cfh)). Otherwise the sign is inverted to positive, the "`INT`" function is performed ([30CFH](#30cfh)) and the sign restored to negative.
 
 <a name="30cfh"></a>
 
     Address... 30CFH
 
-This routine is used by the Factor Evaluator to apply the "INT" function to an operand contained in DAC. The operand's type is first checked via the GETYPR standard routine, if it is an integer the routine simply terminates. The number of fractional digits is determined by subtracting the exponent from the type's digit count, 6 for single precision, 14 for double precision.
+This routine is used by the Factor Evaluator to apply the "`INT`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is an integer the routine simply terminates. The number of fractional digits is determined by subtracting the exponent from the type's digit count, 6 for single precision, 14 for double precision.
 
-If the mantissa sign is positive these fractional digits are simply zeroed. If the mantissa sign is negative each fractional digit is examined before it is zeroed. If all the digits were previously zero the routine simply terminates. Otherwise -1.0 is added to the operand by the single precision addition routine (324EH) or the double precision addition routine (269AH). It should be noted that an operand's type is not normally changed by the "CINT" function.
+If the mantissa sign is positive these fractional digits are simply zeroed. If the mantissa sign is negative each fractional digit is examined before it is zeroed. If all the digits were previously zero the routine simply terminates. Otherwise -1.0 is added to the operand by the single precision addition routine ([324EH](#324eh)) or the double precision addition routine ([269AH](#269ah)). It should be noted that an operand's type is not normally changed by the "`CINT`" function.
 
 <a name="314ah"></a>
 
     Address... 314AH
 
-This routine multiplies the unsigned binary integers in register pairs BC and DE, the result is returned in register pair DE. The standard shift and add method is used, the product is successively multiplied by two and register pair BC added to it for every 1 bit in register pair DE. The routine is used by the Variable search routine (5EA4H) to compute an element's position within an Array, a "Subscript out of range" error is generated (601DH) if an overflow occurs.
+This routine multiplies the unsigned binary integers in register pairs BC and DE, the result is returned in register pair DE. The standard shift and add method is used, the product is successively multiplied by two and register pair BC added to it for every 1 bit in register pair DE. The routine is used by the Variable search routine ([5EA4H](#5ea4h)) to compute an element's position within an Array, a "Subscript out of range" error is generated (601DH) if an overflow occurs.
 
 <a name="3167h"></a>
 
@@ -3349,7 +3349,7 @@ This routine is used by the Expression Evaluator to subtract two integer operand
 
     Address... 3172H
 
-This routine is used by the Expression Evaluator to add two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The signed binary operands are normally just added and placed in DAC. However, if an overflow has occurred both operands are converted to single precision (2FCBH) and control transfers to the single precision adder (324EH). An overflow has occurred when both operands are of the same sign and the result is of the opposite sign, for example:
+This routine is used by the Expression Evaluator to add two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The signed binary operands are normally just added and placed in DAC. However, if an overflow has occurred both operands are converted to single precision (2FCBH) and control transfers to the single precision adder ([324EH](#324eh)). An overflow has occurred when both operands are of the same sign and the result is of the opposite sign, for example:
 
     30000+15000=-20536
 
