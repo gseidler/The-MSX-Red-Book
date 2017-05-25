@@ -2841,7 +2841,7 @@ The alphanumeric characters are the digits "0" to "9" and the letters "A" to "Z"
 This routine finds the start of a logical line and returns its screen coordinates in register pair HL. Each physical row above the current one is checked via the [LINTTB](#linttb) table ([0C1DH](#0c1dh)) until a non-extended row is found. The row immediately below this on the screen is the start of the logical line and its row number is placed in register L. This is then compared with [FSTPOS](#fstpos), which contains the row number when the [INLIN](#inlin) standard routine was first entered, to see if the cursor is still on the same line. If so the column coordinate in register H is set to its initial position from [FSTPOS](#fstpos). Otherwise register H is set to the leftmost position to return the whole line.
 
     Address...2680H, JP to power-up initialize routine (7C76H).
-    Address...2683H, JP to the SYNCHR standard routine (558CH).
+    Address...2683H, JP to the [SYNCHR](#synchr) standard routine (558CH).
     Address...2686H, JP to the CHRGTR standard routine (4666H).
     Address...2689H, JP to the GETYPR standard routine (5597H).
 
@@ -3361,13 +3361,13 @@ This routine is used by the Expression Evaluator to add two integer operands. Th
 
     Address... 3193H
 
-This routine is used by the Expression Evaluator to multiply two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The two operand signs are saved temporarily and both operands made positive (3215H). Multiplication proceeds using the standard binary shift and add method with register pair HL as the product accumulator, register pair BC containing the first operand and register pair DE the second.  If the product exceeds 7FFFH at any time during multiplication both operands are converted to single precision (2FCBH) and control transfers to the single precision multiplier (325CH).  Otherwise the initial signs are restored and, if they differ, the product negated before being placed in DAC as an integer (321DH).
+This routine is used by the Expression Evaluator to multiply two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The two operand signs are saved temporarily and both operands made positive ([3215H](#3215h)). Multiplication proceeds using the standard binary shift and add method with register pair HL as the product accumulator, register pair BC containing the first operand and register pair DE the second.  If the product exceeds 7FFFH at any time during multiplication both operands are converted to single precision (2FCBH) and control transfers to the single precision multiplier ([325CH](#325ch)).  Otherwise the initial signs are restored and, if they differ, the product negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="31e6h"></a>
 
     Address... 31E6H
 
-This routine is used by the Expression Evaluator to integer divide (\) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. If the second operand is zero a "Division by zero" error is generated (4058H), otherwise the two operand signs are saved and both operands made positive (3215H). Division proceeds using the standard binary shift and subtract method with register pair HL containing the remainder, register pair BC the second operand and register pair DE the first operand and the product. When division is complete the initial signs are restored and, if they differ, the product is negated before being placed in DAC as an integer (321DH).
+This routine is used by the Expression Evaluator to integer divide (\) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). If the second operand is zero a "Division by zero" error is generated (4058H), otherwise the two operand signs are saved and both operands made positive ([3215H](#3215h)). Division proceeds using the standard binary shift and subtract method with register pair HL containing the remainder, register pair BC the second operand and register pair DE the first operand and the product. When division is complete the initial signs are restored and, if they differ, the product is negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="3215h"></a>
 
@@ -3379,49 +3379,49 @@ This routine is used to make two signed binary integers, in register pairs HL an
 
     Address... 322BH
 
-This routine is used by the "ABS" function to make a negative integer contained in DAC positive. The operand is taken from DAC, negated and then placed back in DAC (3221H). If the operand's value is 8000H it is converted to single precision (2FCCH) as there is no integer of value +32768.
+This routine is used by the "`ABS`" function to make a negative integer contained in DAC positive. The operand is taken from DAC, negated and then placed back in DAC (3221H). If the operand's value is 8000H it is converted to single precision (2FCCH) as there is no integer of value +32768.
 
 <a name="323ah"></a>
 
     Address... 323AH
 
-This routine is used by the Expression Evaluator to "MOD" two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The sign of the first operand is saved and the two operands divided (31E6H). As the remainder is returned doubled by the division process register pair DE is shifted one place right to restore it. The sign of the first operand is then restored and, if it is negative, the remainder is negated before being placed in DAC as an integer (321DH).
+This routine is used by the Expression Evaluator to "`MOD`" two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The sign of the first operand is saved and the two operands divided ([31E6H](#31e6h)). As the remainder is returned doubled by the division process register pair DE is shifted one place right to restore it. The sign of the first operand is then restored and, if it is negative, the remainder is negated before being placed in DAC as an integer (321DH).
 
 <a name="324eh"></a>
 
     Address... 324EH
 
-This routine is used by the Expression Evaluator to add two single precision operands. The first operand is contained in registers C, B, E, D and the second in DAC, the result is returned in DAC. The first operand is copied to ARG (3280H), the second operand is converted to double precision (3042H) and control transfers to the double precision adder (269AH).
+This routine is used by the Expression Evaluator to add two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), the second operand is converted to double precision (3042H) and control transfers to the double precision adder ([269AH](#269ah)).
 
 <a name="3257h"></a>
 
     Address... 3257H
 
-This routine is used by the Expression Evaluator to subtract two single precision operands. The first operand is contained in registers C, B, E, D and the second in DAC, the result is returned in DAC. The second operand is negated (2E8DH) and control transfers to the single precision adder (324EH).
+This routine is used by the Expression Evaluator to subtract two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The second operand is negated (2E8DH) and control transfers to the single precision adder ([324EH](#324eh)).
 
 <a name="325ch"></a>
 
     Address... 325CH
 
-This routine is used by the Expression Evaluator to multiply two single precision operands. The first operand is contained in registers C, B, E, D and the second in DAC, the result is returned in DAC. The first operand is copied to ARG (3280H), the second operand is converted to double precision (3042H) and control transfers to the double precision multiplier (27E6H).
+This routine is used by the Expression Evaluator to multiply two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), the second operand is converted to double precision (3042H) and control transfers to the double precision multiplier ([27E6H](#27e6h)).
 
 <a name="3265h"></a>
 
     Address... 3265H
 
-This routine is used by the Expression Evaluator to divide two single precision operands. The first operand is contained in registers C, B, E, D and the second in DAC, the result is returned in DAC. The first and second operands are exchanged so that the first is in DAC and the second in the registers. The second operand is then copied to ARG (3280H), the first operand is converted to double precision (3042H) and control transfers to the double precision divider (289FH).
+This routine is used by the Expression Evaluator to divide two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first and second operands are exchanged so that the first is in DAC and the second in the registers. The second operand is then copied to [ARG](#arg) ([3280H](#3280h)), the first operand is converted to double precision (3042H) and control transfers to the double precision divider ([289FH](#289fh)).
 
 <a name="3280h"></a>
 
     Address... 3280H
 
-This routine copies the single precision operand contained in registers C, B, E and D to ARG and then zeroes the four least significant bytes.
+This routine copies the single precision operand contained in registers C, B, E and D to [ARG](#arg) and then zeroes the four least significant bytes.
 
 <a name="3299h"></a>
 
     Address... 3299H
 
-This routine converts a number in textual form to one of the standard internal numeric types, it is used during tokenization and by the "VAL", "INPUT" and "READ" Statement handlers. On entry register pair HL points to the first character of the text string to be converted. On exit register pair HL points to the character following the string, the numeric operand is in DAC and the type code in VALTYP. Examples of the three types are:
+This routine converts a number in textual form to one of the standard internal numeric types, it is used during tokenization and by the "`VAL`", "`INPUT`" and "`READ`" Statement handlers. On entry register pair HL points to the first character of the text string to be converted. On exit register pair HL points to the character following the string, the numeric operand is in [DAC](#dac) and the type code in [VALTYP](#valtyp). Examples of the three types are:
 
     +-----------------------------------------------+
     ¦     ¦     ¦ FFH ¦ 7FH ¦     ¦     ¦     ¦     ¦
@@ -3440,21 +3440,21 @@ This routine converts a number in textual form to one of the standard internal n
 
 **Figure 41:** Numeric Types in DAC
 
-An integer is a sixteen bit binary number in two's complement form, it is stored LSB first, MSB second at DAC+2.  An integer can range from 8000H (-32768) to 7FFFH (+32767).
+An integer is a sixteen bit binary number in two's complement form, it is stored LSB first, MSB second at [DAC](#dac)+2.  An integer can range from 8000H (-32768) to 7FFFH (+32767).
 
-A floating point number consists of an exponent byte and a three or seven byte mantissa. The exponent is kept in signed binary form and can range from 01H (-63) through 40H (0) up to 7FH (+63), the special value of 00H is used for the number zero. These exponent values are for a normalized mantissa. The Interpreter presents exponent-form numbers to the user with a leading digit, this results in an asymmetric exponent range of E-64 to E+62. Bit 7 of the exponent byte holds the mantissa sign, 0 for positive and 1 for negative, the mantissa itself is kept in packed BCD form with two digits per byte. It should be noted that the Interpreter uses the contents of VALTYP to determine a number's type, not the format of the number itself.
+A floating point number consists of an exponent byte and a three or seven byte mantissa. The exponent is kept in signed binary form and can range from 01H (-63) through 40H (0) up to 7FH (+63), the special value of 00H is used for the number zero. These exponent values are for a normalized mantissa. The Interpreter presents exponent-form numbers to the user with a leading digit, this results in an asymmetric exponent range of E-64 to E+62. Bit 7 of the exponent byte holds the mantissa sign, 0 for positive and 1 for negative, the mantissa itself is kept in packed BCD form with two digits per byte. It should be noted that the Interpreter uses the contents of [VALTYP](#valtyp) to determine a number's type, not the format of the number itself.
 
-Conversion starts by examining the first text character. If this is an "&" control transfers to the special radix conversion routine (4EB8H), if it is a leading sign character it is temporarily saved. Successive numeric characters are then taken and added to the integer product with appropriate multiplications by ten as each new digit is found. If the value of the product exceeds 32767, or a decimal point is found, the product is converted to single precision and any further characters placed directly in DAC. If a seventh digit is found the product is changed to double precision, if more than fourteen digits are found the excess digits are read but ignored.
+Conversion starts by examining the first text character. If this is an "&" control transfers to the special radix conversion routine ([4EB8H](#4eb8h)), if it is a leading sign character it is temporarily saved. Successive numeric characters are then taken and added to the integer product with appropriate multiplications by ten as each new digit is found. If the value of the product exceeds 32767, or a decimal point is found, the product is converted to single precision and any further characters placed directly in [DAC](#dac). If a seventh digit is found the product is changed to double precision, if more than fourteen digits are found the excess digits are read but ignored.
 
-Conversion ceases when a non-numeric character is found. If this a type definition character ("%", "#" or "!") the appropriate conversion routine is called and control transfers to the exit point (331EH). If it is an exponent prefix ("E", "e", "D" or "d") one of the conversion routines will also be used and then the following digits converted to a binary exponent in register E. At the exit point (331EH) the product's type is checked via the GETYPR standard routine. If it is single precision or double precision the exponent is calculated by first subtracting the fractional digit count, in register B, from the total digit count, in register D, to produce the leading digit count. This is then added to any explicitly stated exponent, in register E, and placed at DAC+0 as the exponent.
+Conversion ceases when a non-numeric character is found. If this a type definition character ("%", "#" or "!") the appropriate conversion routine is called and control transfers to the exit point (331EH). If it is an exponent prefix ("E", "e", "D" or "d") one of the conversion routines will also be used and then the following digits converted to a binary exponent in register E. At the exit point (331EH) the product's type is checked via the [GETYPR](#getypr) standard routine. If it is single precision or double precision the exponent is calculated by first subtracting the fractional digit count, in register B, from the total digit count, in register D, to produce the leading digit count. This is then added to any explicitly stated exponent, in register E, and placed at [DAC](#dac)+0 as the exponent.
 
-The leading sign character is restored and the product negated if required (2E86H), if the product is integer the routine then terminates. If the product is single precision control terminates by checking for the special value of -32768 (2FA2H). If the product is double precision control terminates by rounding up from the fifteenth digit (273CH).
+The leading sign character is restored and the product negated if required (2E86H), if the product is integer the routine then terminates. If the product is single precision control terminates by checking for the special value of -32768 ([2FA2H](#2fa2h)). If the product is double precision control terminates by rounding up from the fifteenth digit (273CH).
 
 <a name="340ah"></a>
 
     Address... 340AH
 
-This routine is used by the error handler to display the message " in " (6678H) followed by the line number supplied in register pair HL (3412H).
+This routine is used by the error handler to display the message " in " ([6678H](#6678h)) followed by the line number supplied in register pair HL ([3412H](#3412h)).
 
 <a name="3412h"></a>
 
@@ -3466,7 +3466,7 @@ This routine displays the unsigned binary integer supplied in register pair HL. 
 
     Address... 3425H
 
-This routine converts the numeric operand contained in DAC to textual form in FBUFFR. The address of the first character of the resulting text is returned in register pair HL, the text is terminated by a zero byte. The operand is first converted to double precision (375FH). The BCD digits of the mantissa are then unpacked, converted to ASCII and placed in FBUFFR (36B3H).  The position of the decimal point is determined by the exponent, for example:
+This routine converts the numeric operand contained in [DAC](#dac) to textual form in [FBUFFR](#fbuffr). The address of the first character of the resulting text is returned in register pair HL, the text is terminated by a zero byte. The operand is first converted to double precision ([375FH](#375fh)). The BCD digits of the mantissa are then unpacked, converted to ASCII and placed in [FBUFFR](#fbuffr) (36B3H). The position of the decimal point is determined by the exponent, for example:
 
     .999*10 ^ +2 = 99.9
     .999*10 ^ +1 = 9.99
@@ -3475,7 +3475,7 @@ This routine converts the numeric operand contained in DAC to textual form in FB
 
 If the exponent is outside the range 10^-1 to 10^14 the number is presented in exponential form. In this case the decimal point is placed after the first digit and the exponent is converted from binary and follows the mantissa.
 
-An alternative entry point to the routine exists at 3426H for the "PRINT USING" statement handler. With this entry point the number of characters to prefix the decimal point is supplied in register B, the number of characters to point fix it in register C and a format byte in register A:
+An alternative entry point to the routine exists at 3426H for the "`PRINT USING`" statement handler. With this entry point the number of characters to prefix the decimal point is supplied in register B, the number of characters to point fix it in register C and a format byte in register A:
 
        7     6     5     4     3     2     1     0
     +-----------------------------------------------+
@@ -3484,9 +3484,9 @@ An alternative entry point to the routine exists at 3426H for the "PRINT USING" 
 
 **Figure 42:** Format Byte
 
-Operation in this mode is fairly similar to the normal mode but with the addition of extra facilities. Once the operand has been converted to double precision the exponential form will be assumed if bit 0 of the format byte is set. The mantissa is shifted to the right in DAC and rounded up to lose unwanted postfix digits (377BH). As the mantissa is converted to ASCII (36B3H) commas will be inserted at the appropriate points if bit 6 of the format byte is set. During post-conversion formatting (351CH) unused prefix positions will be filled with asterisks if bit 5 is set, a pound prefix may be added by setting bit 4. Bit 3 enables the "+" sign for positive numbers if set, otherwise a space is used. Bit 2 places any sign at the front if reset and at the back if set.
+Operation in this mode is fairly similar to the normal mode but with the addition of extra facilities. Once the operand has been converted to double precision the exponential form will be assumed if bit 0 of the format byte is set. The mantissa is shifted to the right in [DAC](#dac) and rounded up to lose unwanted postfix digits ([377BH](#377bh)). As the mantissa is converted to ASCII (36B3H) commas will be inserted at the appropriate points if bit 6 of the format byte is set. During post-conversion formatting (351CH) unused prefix positions will be filled with asterisks if bit 5 is set, a pound prefix may be added by setting bit 4. Bit 3 enables the "+" sign for positive numbers if set, otherwise a space is used. Bit 2 places any sign at the front if reset and at the back if set.
 
-The entry point to the routine at 3441H is used to convert unsigned integers, notably line numbers, to their textual form.  For example 9000H, when treated as a normal integer, would be converted to -28672. By using this entry point 36864 would be produced instead. The operand is converted by successive division with the factors 10000, 1000, 100, 10 and 1 and the resulting digits placed in FBUFFR (36DBH).
+The entry point to the routine at 3441H is used to convert unsigned integers, notably line numbers, to their textual form.  For example 9000H, when treated as a normal integer, would be converted to -28672. By using this entry point 36864 would be produced instead. The operand is converted by successive division with the factors 10000, 1000, 100, 10 and 1 and the resulting digits placed in [FBUFFR](#fbuffr) (36DBH).
 
 <a name="3710h"></a>
 
