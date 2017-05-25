@@ -632,14 +632,14 @@ Reference is frequently made in this chapter to the standard routines and to Wor
 |0065H |......           |.....             |NOP
 |0066H |[NMI](#nmi)      |[1398H](#1398h)   |Non Maskable Interrupt handler
 |0069H |[CLRSPR](#clrspr)|[06A8H](#06a8h)   |Clear all sprites
-|006CH |[INITXT](#initxt)|[050EH](#050eh)   |Initialize VDP to 40x24 Text Mode
-|006FH |[INIT32](#init32)|[0538H](#0538h)   |Initialize VDP to 32x24 Text Mode
-|0072H |[INIGRP](#inigrp)|[05D2H](#05d2h)   |Initialize VDP to Graphics Mode
-|0075H |[INIMLT](#inimlt)|[061FH](#061fh)   |Initialize VDP to Multicolour Mode
-|0078H |[SETTXT](#settxt)|[0594H](#0594h)   |Set VDP to 40x24 Text Mode
-|007BH |[SETT32](#sett32)|[05B4H](#05b4h)   |Set VDP to 32x24 Text Mode
-|007EH |[SETGRP](#setgrp)|[0602H](#0602h)   |Set VDP to Graphics Mode
-|0081H |[SETMLT](#setmlt)|[0659H](#0659h)   |Set VDP to Multicolour Mode
+|006CH |[INITXT](#initxt)|[050EH](#050eh)   |Initialize VDP to [40x24 Text Mode](#40x24_text_mode)
+|006FH |[INIT32](#init32)|[0538H](#0538h)   |Initialize VDP to [32x24 Text Mode](#32x24_text_mode)
+|0072H |[INIGRP](#inigrp)|[05D2H](#05d2h)   |Initialize VDP to [Graphics Mode](#graphics_mode)
+|0075H |[INIMLT](#inimlt)|[061FH](#061fh)   |Initialize VDP to [Multicolour Mode](#multicolor_mode)
+|0078H |[SETTXT](#settxt)|[0594H](#0594h)   |Set VDP to [40x24 Text Mode](#40x24_text_mode)
+|007BH |[SETT32](#sett32)|[05B4H](#05b4h)   |Set VDP to [32x24 Text Mode](#32x24_text_mode)
+|007EH |[SETGRP](#setgrp)|[0602H](#0602h)   |Set VDP to [Graphics Mode](#graphics_mode)
+|0081H |[SETMLT](#setmlt)|[0659H](#0659h)   |Set VDP to [Multicolour Mode](#multicolour_mode)
 |0084H |[CALPAT](#calpat)|[06E4H](#06e4h)   |Calculate address of sprite pattern
 |0087H |[CALATR](#calatr)|[06F9H](#06f9h)   |Calculate address of sprite attribute
 |008AH |[GSPSIZ](#gspsiz)|[0704H](#0704h)   |Get sprite size
@@ -3186,7 +3186,7 @@ This routine simply zeroes the exponent byte in [DAC](#dac).
 
     Address... 2E82H
 
-This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in DAC. The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
+This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in [DAC](#dac). The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
 
 <a name="2e97h"></a>
 
@@ -3264,7 +3264,7 @@ This routine copies any operand from [DAC](#dac) to [ARG](#arg). The length of t
 
     Address... 2F21H
 
-This routine is used by the Expression Evaluator to find the relation (<>=) between two single precision operands. The first operand is contained in registers C, B, E and D and the second in DAC. The result is returned in register A and the flags:
+This routine is used by the Expression Evaluator to find the relation (<>=) between two single precision operands. The first operand is contained in registers C, B, E and D and the second in [DAC](#dac). The result is returned in register A and the flags:
 
     Operand 1=Operand 2 ... A=00H, Flag Z,NC
     Operand 1<Operand 2 ... A=01H, Flag NZ,NC
@@ -3350,13 +3350,13 @@ This routine multiplies the unsigned binary integers in register pairs BC and DE
 
     Address... 3167H
 
-This routine is used by the Expression Evaluator to subtract two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The second operand is negated (3221H) and control drops into the addition routine.
+This routine is used by the Expression Evaluator to subtract two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The second operand is negated (3221H) and control drops into the addition routine.
 
 <a name="3172h"></a>
 
     Address... 3172H
 
-This routine is used by the Expression Evaluator to add two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The signed binary operands are normally just added and placed in DAC. However, if an overflow has occurred both operands are converted to single precision (2FCBH) and control transfers to the single precision adder ([324EH](#324eh)). An overflow has occurred when both operands are of the same sign and the result is of the opposite sign, for example:
+This routine is used by the Expression Evaluator to add two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The signed binary operands are normally just added and placed in [DAC](#dac). However, if an overflow has occurred both operands are converted to single precision (2FCBH) and control transfers to the single precision adder ([324EH](#324eh)). An overflow has occurred when both operands are of the same sign and the result is of the opposite sign, for example:
 
     30000+15000=-20536
 
@@ -3384,13 +3384,13 @@ This routine is used to make two signed binary integers, in register pairs HL an
 
     Address... 322BH
 
-This routine is used by the "`ABS`" function to make a negative integer contained in DAC positive. The operand is taken from DAC, negated and then placed back in DAC (3221H). If the operand's value is 8000H it is converted to single precision (2FCCH) as there is no integer of value +32768.
+This routine is used by the "`ABS`" function to make a negative integer contained in [DAC](#dac) positive. The operand is taken from [DAC](#dac), negated and then placed back in [DAC](#dac) (3221H). If the operand's value is 8000H it is converted to single precision (2FCCH) as there is no integer of value +32768.
 
 <a name="323ah"></a>
 
     Address... 323AH
 
-This routine is used by the Expression Evaluator to "`MOD`" two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The sign of the first operand is saved and the two operands divided ([31E6H](#31e6h)). As the remainder is returned doubled by the division process register pair DE is shifted one place right to restore it. The sign of the first operand is then restored and, if it is negative, the remainder is negated before being placed in DAC as an integer (321DH).
+This routine is used by the Expression Evaluator to "`MOD`" two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The sign of the first operand is saved and the two operands divided ([31E6H](#31e6h)). As the remainder is returned doubled by the division process register pair DE is shifted one place right to restore it. The sign of the first operand is then restored and, if it is negative, the remainder is negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="324eh"></a>
 
@@ -3414,7 +3414,7 @@ This routine is used by the Expression Evaluator to multiply two single precisio
 
     Address... 3265H
 
-This routine is used by the Expression Evaluator to divide two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first and second operands are exchanged so that the first is in DAC and the second in the registers. The second operand is then copied to [ARG](#arg) ([3280H](#3280h)), the first operand is converted to double precision (3042H) and control transfers to the double precision divider ([289FH](#289fh)).
+This routine is used by the Expression Evaluator to divide two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first and second operands are exchanged so that the first is in [DAC](#dac) and the second in the registers. The second operand is then copied to [ARG](#arg) ([3280H](#3280h)), the first operand is converted to double precision (3042H) and control transfers to the double precision divider ([289FH](#289fh)).
 
 <a name="3280h"></a>
 
@@ -3465,7 +3465,7 @@ This routine is used by the error handler to display the message " in " ([6678H]
 
     Address... 3412H
 
-This routine displays the unsigned binary integer supplied in register pair HL. The operand is placed in DAC as an integer (2F99H), converted to text (3441H) and then displayed (6677H).
+This routine displays the unsigned binary integer supplied in register pair HL. The operand is placed in [DAC](#dac) as an integer (2F99H), converted to text (3441H) and then displayed (6677H).
 
 <a name="3425h"></a>
 
@@ -3557,7 +3557,7 @@ This routine is used by the Expression Evaluator to exponentiate (^) two single 
 
     Address... 37D7H
 
-This routine is used by the Expression Evaluator to exponentiate (^) two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in DAC. The result is usually computed using:
+This routine is used by the Expression Evaluator to exponentiate (^) two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). The result is usually computed using:
 
     X^P=EXP(P*LOG(X))
 
@@ -3855,7 +3855,7 @@ This routine searches the Z80 stack for the "`FOR`" loop parameter block whose l
 
     Address... 4001H
 
-This routine is used by the Factor Evaluator to apply the "`INP`" function to an operand contained in [DAC](#dac). The port number is checked ([5439H](#5439h)), the port read and the result placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "`INP`" function to an operand contained in [DAC](#dac). The port number is checked ([5439H](#5439h)), the port read and the result placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="400bh"></a>
 
@@ -4057,7 +4057,7 @@ Standard routine to fetch the next character from the program text. Register pai
 
     Address... 46E8H
 
-This routine is used by the Factor Evaluator and during detokenization to recover a numeric operand when one of the prefix tokens is returned by the [CHRGTR](#chrgtr) standard routine. The prefix token is first taken from [CONSAV](#consav), if it is anything but a line number or pointer token the operand is copied from [CONLO](#conlo) to [DAC](#dac) and the type code copied from [CONTYP](#contyp) to [VALTYP](#valtyp). If it is a line number it is converted to single precision and placed in [DAC](#dac) (3236H). If it is a pointer the original line number is recovered from the referenced program line, converted to single precision and placed in DAC (3236H).
+This routine is used by the Factor Evaluator and during detokenization to recover a numeric operand when one of the prefix tokens is returned by the [CHRGTR](#chrgtr) standard routine. The prefix token is first taken from [CONSAV](#consav), if it is anything but a line number or pointer token the operand is copied from [CONLO](#conlo) to [DAC](#dac) and the type code copied from [CONTYP](#contyp) to [VALTYP](#valtyp). If it is a line number it is converted to single precision and placed in [DAC](#dac) (3236H). If it is a pointer the original line number is recovered from the referenced program line, converted to single precision and placed in [DAC](#dac) (3236H).
 
 <a name="4718h"></a>
 
@@ -4150,7 +4150,7 @@ This is the "`DATA`" statement handler. The program text is skipped over until a
 
     Address... 4880H
 
-This is the "LET" statement handler. The Variable is first located (5EA4H), its address saved in TEMP and the operand evaluated (4C64H). If necessary the operand's type is then changed to match that of the Variable (517AH). Assuming the operand is one of the three numeric types it is simply copied from DAC to the Variable in the Variable Storage Area (2EF3H).  If the operand is a string type the address of the string body is taken from the descriptor and checked. If it is in KBUF, as would be the case for an explicit string in a direct statement, the body is first copied to the String Storage Area and a new descriptor created (6611H). The descriptor is then freed from TEMPST (67EEH) and copied to the Variable in the Variable Storage Area (2EF3H).
+This is the "LET" statement handler. The Variable is first located (5EA4H), its address saved in TEMP and the operand evaluated (4C64H). If necessary the operand's type is then changed to match that of the Variable (517AH). Assuming the operand is one of the three numeric types it is simply copied from [DAC](#dac) to the Variable in the Variable Storage Area (2EF3H).  If the operand is a string type the address of the string body is taken from the descriptor and checked. If it is in KBUF, as would be the case for an explicit string in a direct statement, the body is first copied to the String Storage Area and a new descriptor created (6611H). The descriptor is then freed from TEMPST (67EEH) and copied to the Variable in the Variable Storage Area (2EF3H).
 
 <a name="48e4h"></a>
 
@@ -4276,7 +4276,7 @@ This routine checks that the next character in the program text is the "=" token
 
     Address... 4C64H
 
-This is the Expression Evaluator. On entry register pair HL points to the first character of the expression to be evaluated. On exit register pair HL points to the character following the expression, the result is in DAC and the type code in VALTYP. For a string result the address of the string descriptor is returned at DAC+2. The descriptor itself comprising a single byte for the string length and two bytes for its address, will be in TEMPST or inside a string Variable.
+This is the Expression Evaluator. On entry register pair HL points to the first character of the expression to be evaluated. On exit register pair HL points to the character following the expression, the result is in [DAC](#dac) and the type code in VALTYP. For a string result the address of the string descriptor is returned at [DAC](#dac)+2. The descriptor itself comprising a single byte for the string length and two bytes for its address, will be in TEMPST or inside a string Variable.
 
 An expression is a list of factors (4DC7H) linked together by operators with differing precedence levels. To process such an expression correctly the Expression Evaluator must be able to temporarily stack an intermediate result, if the next operator has a higher precedence than the current operator, and start afresh on a new calculation. It therefore has two basic operations, STACK and APPLY. For example:
 
@@ -4298,19 +4298,19 @@ Evaluation terminates when the next operator has a precedence equal to or lower 
 
     Address... 4D22H
 
-This routine is used by the Expression Evaluator to apply an infix math operator (+-\*/ ) to a pair of numeric operands.  There are separate routines for the relational operators (4F57H) and the logical operators (4F78H). The first operand, its type code, and the operator token are supplied on the Z80 stack, the second operand and its type code are supplied in DAC and VALTYP. The types of both operands are first compared, if they differ the lowest precision operand is converted to match the higher. The operands are then moved to the positions required by the math routines. For integers the first operand is placed in register pair DE and the second in register pair HL. For single precision the first operand is placed in registers C, B, E, D and the second in DAC. For double precision the first operand is placed in DAC and the second in ARG. The operator token is then used to obtain the required address from the table at 3D51H, 3D5DH or 3D69H, depending upon the operand type, and control transfers to the relevant math routine.
+This routine is used by the Expression Evaluator to apply an infix math operator (+-\*/ ) to a pair of numeric operands.  There are separate routines for the relational operators (4F57H) and the logical operators (4F78H). The first operand, its type code, and the operator token are supplied on the Z80 stack, the second operand and its type code are supplied in [DAC](#dac) and VALTYP. The types of both operands are first compared, if they differ the lowest precision operand is converted to match the higher. The operands are then moved to the positions required by the math routines. For integers the first operand is placed in register pair DE and the second in register pair HL. For single precision the first operand is placed in registers C, B, E, D and the second in [DAC](#dac). For double precision the first operand is placed in [DAC](#dac) and the second in [ARG](#arg). The operator token is then used to obtain the required address from the table at 3D51H, 3D5DH or 3D69H, depending upon the operand type, and control transfers to the relevant math routine.
 
 <a name="4db8h"></a>
 
     Address... 4DB8H
 
-This routine is used by the Expression Evaluator to divide two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. Both operands are converted to single precision (2FCBH) and control transfers to the single precision division routine (3265H).
+This routine is used by the Expression Evaluator to divide two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). Both operands are converted to single precision (2FCBH) and control transfers to the single precision division routine (3265H).
 
 <a name="4dc7h"></a>
 
     Address... 4DC7H
 
-This is the Factor Evaluator. On entry register pair HL points to the character before the factor to be evaluated. On exit register pair HL points to the character following the factor, the result is in DAC and the type code in VALTYP. A factor may be one of the following:
+This is the Factor Evaluator. On entry register pair HL points to the character before the factor to be evaluated. On exit register pair HL points to the character following the factor, the result is in [DAC](#dac) and the type code in VALTYP. A factor may be one of the following:
 
 1. A numeric or string constant
 2. A numeric or string Variable
@@ -4318,11 +4318,11 @@ This is the Factor Evaluator. On entry register pair HL points to the character 
 4. A monadic operator (+-NOT)
 5. A parenthesized expression
 
-The first character is taken from the program text via the CHRGTR standard routine and examined. If it is an end of Statement character a "Missing operand" error is generated (406AH). If it is an ASCII digit it is converted from textual form to one of the standard numeric types in DAC (3299H).
+The first character is taken from the program text via the CHRGTR standard routine and examined. If it is an end of Statement character a "Missing operand" error is generated (406AH). If it is an ASCII digit it is converted from textual form to one of the standard numeric types in [DAC](#dac) (3299H).
 
-If it is upper case alphabetic (64A8H) it is a Variable and its current value is returned (4E9BH). If it is a numeric token the number is copied from CONLO to DAC (46B8H). If it is one of the FFH prefixed function tokens shown in the table at 39DEH it is decoded to transfer control to the relevant function handler (4ECFH). If it is the monadic "+" operator it is simply skipped over, only the monadic "-" operator (4E8DH) and monadic "NOT" operator (4F63H) require any action.
+If it is upper case alphabetic (64A8H) it is a Variable and its current value is returned (4E9BH). If it is a numeric token the number is copied from CONLO to [DAC](#dac) (46B8H). If it is one of the FFH prefixed function tokens shown in the table at 39DEH it is decoded to transfer control to the relevant function handler (4ECFH). If it is the monadic "+" operator it is simply skipped over, only the monadic "-" operator (4E8DH) and monadic "NOT" operator (4F63H) require any action.
 
-If it is an opening quote the following explicit string is analyzed and a descriptor created (6636H). If it is an "&" it is a non-decimal numeric constant and it is converted to one of the standard numeric types in DAC (4EB8H). If it is not one of the functions shown below then it must be a parenthesized expression (4E87H), otherwise a "Syntax error" is generated.  The following function tokens are tested for directly and control transferred to the address shown:
+If it is an opening quote the following explicit string is analyzed and a descriptor created (6636H). If it is an "&" it is a non-decimal numeric constant and it is converted to one of the standard numeric types in [DAC](#dac) (4EB8H). If it is not one of the functions shown below then it must be a parenthesized expression (4E87H), otherwise a "Syntax error" is generated.  The following function tokens are tested for directly and control transferred to the address shown:
 
     ERR ....  4DFDH   ATTR$ .... 7C43H
     ERL ....  4E0BH   VARPTR ... 4E41H
@@ -4340,19 +4340,19 @@ If it is an opening quote the following explicit string is analyzed and a descri
 
     Address... 4DFDH
 
-This routine is used by the Factor Evaluator to apply the "ERR" function. The contents of ERRFLG are placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "ERR" function. The contents of ERRFLG are placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="4e0bh"></a>
 
     Address... 4E0BH
 
-This routine is used by the Factor Evaluator to apply the "ERL" function. The contents of ERRLIN are copied to DAC as a single precision number (3236H).
+This routine is used by the Factor Evaluator to apply the "ERL" function. The contents of ERRLIN are copied to [DAC](#dac) as a single precision number (3236H).
 
 <a name="4e41h"></a>
 
     Address... 4E41H
 
-This routine is used by the Factor Evaluator to apply the "VARPTR" function. If the function token is followed by a "#" the buffer number is evaluated (521BH), the I/O buffer FCB located (6A6DH) and its address placed in DAC as an integer (2F99H). Otherwise the Variable is located (5F5DH) and its address placed in DAC as an integer (2F99H).
+This routine is used by the Factor Evaluator to apply the "VARPTR" function. If the function token is followed by a "#" the buffer number is evaluated (521BH), the I/O buffer FCB located (6A6DH) and its address placed in [DAC](#dac) as an integer (2F99H). Otherwise the Variable is located (5F5DH) and its address placed in [DAC](#dac) as an integer (2F99H).
 
 <a name="4e8dh"></a>
 
@@ -4364,7 +4364,7 @@ This routine is used by the Factor Evaluator to apply the monadic "-" operator. 
 
     Address... 4E9BH
 
-This routine is used by the Factor Evaluator to return the current value of a Variable. The Variable is first located (5EA4H). If it is a string Variable its address is placed in DAC to point to the descriptor. Otherwise the contents of the Variable are copied to DAC (2F08).
+This routine is used by the Factor Evaluator to return the current value of a Variable. The Variable is first located (5EA4H). If it is a string Variable its address is placed in [DAC](#dac) to point to the descriptor. Otherwise the contents of the Variable are copied to [DAC](#dac) (2F08).
 
 <a name="4ea9h"></a>
 
@@ -4376,7 +4376,7 @@ This routine returns the single character pointed to by register pair HL in regi
 
     Address... 4EB8H
 
-This routine is used by the Factor Evaluator and the numeric input routine (3299H) to convert an ampersand ("&") Prefixed number from textual form to an integer in DAC. As each legal character is found the product is multiplied by 2, 8 or 16, depending upon the character which initially followed the ampersand, and the new digit added to it. If the product overflows an "Overflow" error is generated (4067H). The routine terminates when an unacceptable character is found.
+This routine is used by the Factor Evaluator and the numeric input routine (3299H) to convert an ampersand ("&") Prefixed number from textual form to an integer in [DAC](#dac). As each legal character is found the product is multiplied by 2, 8 or 16, depending upon the character which initially followed the ampersand, and the new digit added to it. If the product overflows an "Overflow" error is generated (4067H). The routine terminates when an unacceptable character is found.
 
 <a name="4efch"></a>
 
@@ -4400,39 +4400,39 @@ This routine is used by the Expression Evaluator to apply a relational operator 
     Operand 1<Operand 2 ... A=01H, Flag NZ,NC
     Operand 1>Operand 2 ... A=FFH, Flag NZ,C
 
-The Expression Evaluator also supplies a bit mask defining the original operators on the Z80 stack. This has a 1 in each position if the associated operation is required: 00000<=>. The mask is applied to the relation result producing zero if none of the conditions is satisfied. This is then placed in DAC as a true (-1) or false (0) integer (2E9AH).
+The Expression Evaluator also supplies a bit mask defining the original operators on the Z80 stack. This has a 1 in each position if the associated operation is required: 00000<=>. The mask is applied to the relation result producing zero if none of the conditions is satisfied. This is then placed in [DAC](#dac) as a true (-1) or false (0) integer (2E9AH).
 
 <a name="4f63h"></a>
 
     Address... 4F63H
 
-This routine is used by the Factor Evaluator to apply the monadic "NOT" operator. Register D is set to an initial precedence level of 5AH and the expression evaluated (4C67H) and converted to an integer (2F8AH). It is then inverted and restored to DAC.
+This routine is used by the Factor Evaluator to apply the monadic "NOT" operator. Register D is set to an initial precedence level of 5AH and the expression evaluated (4C67H) and converted to an integer (2F8AH). It is then inverted and restored to [DAC](#dac).
 
 <a name="4f78h"></a>
 
     Address... 4F78H
 
-This routine is used by the Expression Evaluator to apply a logical operator ("OR", "AND", "XOR", "EQV" and "IMP") or the "MOD" and "\" operators to a pair of numeric operands. The first operand, which has already been converted to an integer, is supplied on the Z80 stack and the second is supplied in DAC.  The operator token (actually its precedence level) is supplied in register B. After converting the second operand to an integer (2F8AH) the operator is examined. There are separate routines for "MOD" (323AH) and "\" (31E6H) but the logical operators are processed locally using the corresponding Z80 logical instructions on register pairs DE and HL. The result is stored in DAC as an integer (2F99H).
+This routine is used by the Expression Evaluator to apply a logical operator ("OR", "AND", "XOR", "EQV" and "IMP") or the "MOD" and "\" operators to a pair of numeric operands. The first operand, which has already been converted to an integer, is supplied on the Z80 stack and the second is supplied in [DAC](#dac).  The operator token (actually its precedence level) is supplied in register B. After converting the second operand to an integer (2F8AH) the operator is examined. There are separate routines for "MOD" (323AH) and "\" (31E6H) but the logical operators are processed locally using the corresponding Z80 logical instructions on register pairs DE and HL. The result is stored in [DAC](#dac) as an integer (2F99H).
 
 <a name="4fc7h"></a>
 
     Address... 4FC7H
 
-This routine is used by the Factor Evaluator to apply the "LPOS" function to an operand contained in DAC. The contents of LPTPOS are placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "LPOS" function to an operand contained in [DAC](#dac). The contents of LPTPOS are placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="4fcch"></a>
 
     Address... 4FCCH
 
-This routine is used by the Factor Evaluator to apply the "POS" function to an operand contained in DAC. The contents of TTYPOS are placed in DAC as an integer (2F99).
+This routine is used by the Factor Evaluator to apply the "POS" function to an operand contained in [DAC](#dac). The contents of TTYPOS are placed in [DAC](#dac) as an integer (2F99).
 
 <a name="4fd5h"></a>
 
     Address... 4FD5H
 
-This routine is used by the Factor Evaluator to apply the "USR" function. The user number is collected directly from the program text, it cannot be an expression, and the associated address taken from USRTAB (4FF4H). The following parenthesized operand is then evaluated (4E87H) and left in DAC as the passed parameter. If it is a string type its storage is freed (67D3H).  The current program text position is pushed onto the Z80 stack followed by a return to 3297H, the routine at this address will restore the program text position after the user function has terminated. Control then transfers to the user address with register pair HL pointing to the first byte of DAC and the type code, from VALTYP, in register A. Additionally, for a string parameter, the descriptor address is taken from DAC and placed in register pair DE.
+This routine is used by the Factor Evaluator to apply the "USR" function. The user number is collected directly from the program text, it cannot be an expression, and the associated address taken from USRTAB (4FF4H). The following parenthesized operand is then evaluated (4E87H) and left in [DAC](#dac) as the passed parameter. If it is a string type its storage is freed (67D3H).  The current program text position is pushed onto the Z80 stack followed by a return to 3297H, the routine at this address will restore the program text position after the user function has terminated. Control then transfers to the user address with register pair HL pointing to the first byte of [DAC](#dac) and the type code, from VALTYP, in register A. Additionally, for a string parameter, the descriptor address is taken from [DAC](#dac) and placed in register pair DE.
 
-The user routine may modify any register except the Z80 SP and should terminate with a RET instruction, interrupts may be left disabled if necessary as the Runloop will re-enable them.  Any numeric parameter to be returned to the Interpreter should be placed in DAC. Strictly speaking this should be the same numeric type as the passed parameter, however if VALTYP is modified the Interpreter will always accept it.
+The user routine may modify any register except the Z80 SP and should terminate with a RET instruction, interrupts may be left disabled if necessary as the Runloop will re-enable them.  Any numeric parameter to be returned to the Interpreter should be placed in [DAC](#dac). Strictly speaking this should be the same numeric type as the passed parameter, however if VALTYP is modified the Interpreter will always accept it.
 
 Returning a string type is more difficult. Using the same method as the Factor Evaluator string functions, which involves copying the string to the String Storage Area and pushing a new descriptor onto TEMPST, is complicated and vulnerable to changes in the MSX system. A simpler and more reliable method is to use the passed parameter to create the space for the result. This should not be an explicitly stated string as the program text will have to be modified, instead an implicit parameter should be used. This must be done with care however, it is very easy to gain the impression that the Interpreter has accepted the string when in fact it has not. Take the following example which does nothing but return the passed parameter:
 
@@ -4506,7 +4506,7 @@ Control transfers to this routine from the Runloop execution point (4640H) if a 
 
     Address... 51C9H
 
-This is the "WIDTH" statement handler. The operand is evaluated (521CH) and its magnitude checked. If it is zero or greater than thirty-two or forty, depending upon the screen mode held in OLDSCR an "Illegal function call" error is generated (475AH). If it is the same as the current contents of LINLEN the routine terminates with no further action. Otherwise the current screen is cleared with a FORMFEED control code (0CH) via the OUTDO standard routine in case the screen is to be made smaller. The operand is then placed in LINLEN and either LINL32 or LINL40, depending upon the screen mode held in OLDSCR, and the screen cleared again in case it has been made larger. Because the line length variable to be changed is selected by OLDSCR, rather than SCRMOD, the width can still be changed even if the screen is currently in Graphics Mode or Multicolour Mode. In this case the change is effective when a return is made to the Interpreter Mainloop or an "INPUT" statement is executed.
+This is the "WIDTH" statement handler. The operand is evaluated (521CH) and its magnitude checked. If it is zero or greater than thirty-two or forty, depending upon the screen mode held in [OLDSCR](#oldscr) an "Illegal function call" error is generated (475AH). If it is the same as the current contents of LINLEN the routine terminates with no further action. Otherwise the current screen is cleared with a FORMFEED control code (0CH) via the OUTDO standard routine in case the screen is to be made smaller. The operand is then placed in LINLEN and either LINL32 or LINL40, depending upon the screen mode held in [OLDSCR](#oldscr), and the screen cleared again in case it has been made larger. Because the line length variable to be changed is selected by [OLDSCR](#oldscr), rather than SCRMOD, the width can still be changed even if the screen is currently in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode). In this case the change is effective when a return is made to the Interpreter Mainloop or an "INPUT" statement is executed.
 
 <a name="520eh"></a>
 
@@ -4540,19 +4540,19 @@ This routine is used by the "LIST" statement handler to convert a tokenized prog
 
 Any normal or FFH prefixed token is converted to the corresponding keyword by a simple linear search of the tokens in the table at 3A72H. Exceptions are made if either an opening quote character, a "REM" token, or a "DATA" token has previously been found. Normally these tokens will be followed by plain text anyway, the check is made to stop graphics characters being interpreted as tokens. The three byte sequence ":" (3AH), "REM" token (8FH), " " token (E6H) is converted to the single " " character (27H) and the statement separator (3AH) preceding an "ELSE" token (A1H) is scrubbed out.
 
-If one of the numeric tokens is found its value and type are first copied from CONLO and CONTYP to DAC and VALTYP (46E8H).  It is then converted to textual form in FBUFFR by the decimal (3425H), octal (371EH) or hex (3722H) conversion routines. For octal and hex types the number is prefixed by an ampersand and an "O" or "H" letter. A type suffix, "'" or "#", is added to single precision or double precision numbers only if there is no decimal part and no exponent part ("E" or "D").
+If one of the numeric tokens is found its value and type are first copied from CONLO and CONTYP to [DAC](#dac) and VALTYP (46E8H).  It is then converted to textual form in FBUFFR by the decimal (3425H), octal (371EH) or hex (3722H) conversion routines. For octal and hex types the number is prefixed by an ampersand and an "O" or "H" letter. A type suffix, "'" or "#", is added to single precision or double precision numbers only if there is no decimal part and no exponent part ("E" or "D").
 
 <a name="53e2h"></a>
 
     Address... 53E2H
 
-This is the "DELETE" statement handler. The optional start and termination line number operands are collected and the starting position found in the program text (4279H). If any pointers exist in the program text they are converted back to line numbers (54EAH). The terminating program line is found by a search of the program text (4295H), if this address is smaller than that of the starting program line an "Illegal function call" error is generated (475AH), otherwise the message "OK" is displayed (6678H). The block of memory from the end of the terminating line to the start of the Variable Storage Area is copied down to the beginning of the starting line and VARTAB, ARYTAB and STREND are reset to the new (lower) end of the program text. Control then transfers directly to the end of the Mainloop (4237H) to reset the remaining pointers and to relink the Program Text Area. Note that, because control does not return to the normal "OK" point, the screen will not be returned to text mode. If the screen is in Graphics Mode or Multicolour mode when a "DELETE" is executed, which is admittedly rather unlikely, the system will crash.
+This is the "DELETE" statement handler. The optional start and termination line number operands are collected and the starting position found in the program text (4279H). If any pointers exist in the program text they are converted back to line numbers (54EAH). The terminating program line is found by a search of the program text (4295H), if this address is smaller than that of the starting program line an "Illegal function call" error is generated (475AH), otherwise the message "OK" is displayed (6678H). The block of memory from the end of the terminating line to the start of the Variable Storage Area is copied down to the beginning of the starting line and VARTAB, ARYTAB and STREND are reset to the new (lower) end of the program text. Control then transfers directly to the end of the Mainloop (4237H) to reset the remaining pointers and to relink the Program Text Area. Note that, because control does not return to the normal "OK" point, the screen will not be returned to text mode. If the screen is in [Graphics Mode](#graphics_mode) or [Multicolour mode](#multicolour_mode) when a "DELETE" is executed, which is admittedly rather unlikely, the system will crash.
 
 <a name="541ch"></a>
 
     Address... 541CH
 
-This routine is used by the Factor Evaluator to apply the "PEEK" function to an operand contained in DAC. The address operand is checked (5439H) then the byte read from memory and placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "PEEK" function to an operand contained in [DAC](#dac). The address operand is checked (5439H) then the byte read from memory and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="5423h"></a>
 
@@ -4570,7 +4570,7 @@ This routine evaluates the next operand in the program text (4C64H) and places i
 
     Address... 5439H
 
-This routine converts the numeric operand contained in DAC into an integer in register pair HL. The operand must be in the range -32768 to +65535 and is normally an address as required by "POKE", "PEEK", "BLOAD", etc. The operand's type is first checked via the GETYPR standard routine, if it is already an integer it is simply placed in register pair HL (2F8AH).  Assuming the operand is single precision or double precision its sign is checked, if it is negative it is converted to integer (2F8AH). Otherwise it is converted to single precision (2FB2H) and its magnitude checked (2F21H). If it is greater than 32767 and smaller than 65536 then -65536 is added (324EH) before it is converted to integer (2F8AH).
+This routine converts the numeric operand contained in [DAC](#dac) into an integer in register pair HL. The operand must be in the range -32768 to +65535 and is normally an address as required by "POKE", "PEEK", "BLOAD", etc. The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already an integer it is simply placed in register pair HL (2F8AH).  Assuming the operand is single precision or double precision its sign is checked, if it is negative it is converted to integer (2F8AH). Otherwise it is converted to single precision (2FB2H) and its magnitude checked (2F21H). If it is greater than 32767 and smaller than 65536 then -65536 is added (324EH) before it is converted to integer (2F8AH).
 
 <a name="5468h"></a>
 
@@ -4586,7 +4586,7 @@ A dummy renumbering run of the program text is first carried out to check than n
 
     Address... 54F6H
 
-When entered at 54F6H this routine converts every line number operand in the program text to a pointer. When entered at 54F7H it performs the reverse operation and converts every pointer in the program text back to a line number operand.  Starting at the beginning of the Program Text Area each line is examined for a pointer token (0DH) or a line number operand token (0EH) depending upon the mode. In pointer to line number operand mode the pointer is replaced by the line number from the referenced program line and the token changed to 0EH. In line number operand to pointer mode the program text is searched (4295H) to find the relevant line, its address replaces the line number operand and the token is changed to 0DH. If the search is unsuccessful a message of the form "Undefined line NNNN in NNNN" is displayed (6678H) and the conversion process continues. A special check is made for the "ON ERROR GOTO 0" statement, to prevent the generation of a spurious error message, but no check is made for the similar "RESUME 0" statement. In this case an error message will be displayed, this should be ignored.
+When entered at 54F6H this routine converts every line number operand in the program text to a pointer. When entered at 54F7H it performs the reverse operation and converts every pointer in the program text back to a line number operand.  Starting at the beginning of the Program Text Area each line is examined for a pointer token (0DH) or a line number operand token (0EH) depending upon the mode. In pointer to line number operand mode the pointer is replaced by the line number from the referenced program line and the token changed to 0EH. In line number operand to pointer mode the program text is searched (4295H) to find the relevant line, its address replaces the line number operand and the token is changed to 0DH. If the search is unsuccessful a message of the form "Undefined line NNNN in NNNN" is displayed (6678H) and the conversion process continues. A special check is made for the "`ON ERROR GOTO 0`" statement, to prevent the generation of a spurious error message, but no check is made for the similar "RESUME 0" statement. In this case an error message will be displayed, this should be ignored.
 
 <a name="555ah"></a>
 
@@ -4701,7 +4701,7 @@ This routine is used by the macro language parser to collect a numeric parameter
 
     Address... 575AH
 
-This routine is used by the macro language parser "=" and "X" handlers. The Variable name is copied to BUF until the ";" delimiter is found, if this takes more than thirty-nine characters to find an "Illegal function call" error is generated (475AH). Otherwise control transfers to the Factor Evaluator Variable handler (4E9BH) and the Variable contents are returned in DAC.
+This routine is used by the macro language parser "=" and "X" handlers. The Variable name is copied to BUF until the ";" delimiter is found, if this takes more than thirty-nine characters to find an "Illegal function call" error is generated (475AH). Otherwise control transfers to the Factor Evaluator Variable handler (4E9BH) and the Variable contents are returned in [DAC](#dac).
 
 <a name="577ah"></a>
 
@@ -4739,7 +4739,7 @@ This is the "PSET" statement handler. After the coordinate pair has been evaluat
 
     Address... 5803H
 
-This routine is used by the Factor Evaluator to apply the "POINT" function. The current contents of CLOC, CMASK, GYPOS, GXPOS, GRPACY and GRPACX are stacked and the coordinate pair operand evaluated (57ABH). The colour of the new pixel is read via the SCALXY, MAPXYC and READC standard routines and placed in DAC as an integer (2F99H), the old coordinate values are then popped and restored. Note that a value of -1 is returned if the point coordinates are outside the screen.
+This routine is used by the Factor Evaluator to apply the "POINT" function. The current contents of CLOC, CMASK, GYPOS, GXPOS, GRPACY and GRPACX are stacked and the coordinate pair operand evaluated (57ABH). The colour of the new pixel is read via the SCALXY, MAPXYC and READC standard routines and placed in [DAC](#dac) as an integer (2F99H), the old coordinate values are then popped and restored. Note that a value of -1 is returned if the point coordinates are outside the screen.
 
 <a name="5850h"></a>
 
@@ -4842,7 +4842,7 @@ This graphics routine shifts the contents of register pair DE one bit to the rig
 
     Address... 59BCH
 
-This routine generates an "Illegal function call" error (475AH) if the screen is not in Graphics Mode or Multicolour Mode.
+This routine generates an "Illegal function call" error (475AH) if the screen is not in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode).
 
 <a name="59c5h"></a>
 
@@ -5124,7 +5124,7 @@ This is the simple Variable search routine. There are four types of simple Varia
 
 NOFUNS is first checked to determine whether a user defined function is currently being evaluated. If so the search is carried out on the contents of PARM1 first of all, only if this fails will it move onto the main Variable Storage Area. A linear search method is used, the two name characters and type byte of each Variable in the storage area are compared to the reference characters and type until a match is found or the end of the storage area is reached. If the search is successful the routine terminates with the address of the first byte of the Variable contents in register pair DE. If the search is unsuccessful the Array Storage Area is moved upwards and the new Variable is added to the end of the existing ones and initialized to zero.
 
-There are two exceptions to this automatic creation of a new Variable. If the search is being carried out by the "VARPTR" function, and this is determined by examining the return address, no Variable will be created. Instead the routine terminates with register pair DE set to zero (5F61H) causing a subsequent "Illegal function call" error. The second exception occurs when the search is being carried out by the Factor Evaluator, that is when the Variable is newly declared inside an expression. In this case DAC is zeroed for numeric types, and loaded with the address of a dummy zero length descriptor for a string type, thus returning a zero result (5FA7H). These actions are designed to prevent the Expression Evaluator creating a new Variable ("VARPTR") is the only function to take a Variable argument directly rather than via an expression and so requires separate protection). If this were not so then assignment to an Array, via the "LET" statement handler, would fail as any simple Variable created during expression evaluation would change the Array's address.
+There are two exceptions to this automatic creation of a new Variable. If the search is being carried out by the "VARPTR" function, and this is determined by examining the return address, no Variable will be created. Instead the routine terminates with register pair DE set to zero (5F61H) causing a subsequent "Illegal function call" error. The second exception occurs when the search is being carried out by the Factor Evaluator, that is when the Variable is newly declared inside an expression. In this case [DAC](#dac) is zeroed for numeric types, and loaded with the address of a dummy zero length descriptor for a string type, thus returning a zero result (5FA7H). These actions are designed to prevent the Expression Evaluator creating a new Variable ("VARPTR") is the only function to take a Variable argument directly rather than via an expression and so requires separate protection). If this were not so then assignment to an Array, via the "LET" statement handler, would fail as any simple Variable created during expression evaluation would change the Array's address.
 
 <a name="5fbah"></a>
 
@@ -5315,37 +5315,37 @@ The STEP value is taken from the parameter block and added (3172H, 324EH or 2697
 
     Address... 65C8H
 
-This routine is used by the Expression Evaluator to find the relation (<>=) between two string operands. The address of the first string descriptor is supplied on the Z80 stack and the address of the second in DAC. The result is returned in register A and the flags as for the numeric relation routines:
+This routine is used by the Expression Evaluator to find the relation (<>=) between two string operands. The address of the first string descriptor is supplied on the Z80 stack and the address of the second in [DAC](#dac). The result is returned in register A and the flags as for the numeric relation routines:
 
     String 1=String 2 ... A=00H, Flag Z,NC
     String 1<String 2 ... A=01H, Flag NZ,NC
     String 1>String 2 ... A=FFH, Flag NZ,C
 
-Comparison commences at the first character of each string and continues until the two characters differ or one of the strings is exhausted. Control then returns to the Expression Evaluator (4F57H) to place the true or false numeric result in DAC.
+Comparison commences at the first character of each string and continues until the two characters differ or one of the strings is exhausted. Control then returns to the Expression Evaluator (4F57H) to place the true or false numeric result in [DAC](#dac).
 
 <a name="65f5h"></a>
 
     Address... 65F5H
 
-This routine is used by the Factor Evaluator to apply the "OCT$" function to an operand contained in DAC. The number is first converted to textual form in FBUFFR (371EH) and then the result string is created (6607H).
+This routine is used by the Factor Evaluator to apply the "OCT$" function to an operand contained in [DAC](#dac). The number is first converted to textual form in FBUFFR (371EH) and then the result string is created (6607H).
 
 <a name="65fah"></a>
 
     Address... 65FAH
 
-This routine is used by the Factor Evaluator to apply the "HEX$" function to an operand contained in DAC. The number is first converted to textual form in FBUFFR (3722H) and then the result string is created (6607H).
+This routine is used by the Factor Evaluator to apply the "HEX$" function to an operand contained in [DAC](#dac). The number is first converted to textual form in FBUFFR (3722H) and then the result string is created (6607H).
 
 <a name="65ffh"></a>
 
     Address... 65FFH
 
-This routine is used by the Factor Evaluator to apply the "BIN$" function to an operand contained in DAC. The number is first converted to textual form in FBUFFR (371AH) and then the result string is created (6607H).
+This routine is used by the Factor Evaluator to apply the "BIN$" function to an operand contained in [DAC](#dac). The number is first converted to textual form in FBUFFR (371AH) and then the result string is created (6607H).
 
 <a name="6604h"></a>
 
     Address... 6604H
 
-This routine is used by the Factor Evaluator to apply the "STR$" function to an operand contained in DAC. The number is first converted to textual form in FBUFFR (3425H) then analyzed to determine its length and address (6635H). After checking that sufficient space is available (668EH) the string is copied to the String Storage Area (67C7H) and the result descriptor created (6654H).
+This routine is used by the Factor Evaluator to apply the "STR$" function to an operand contained in [DAC](#dac). The number is first converted to textual form in FBUFFR (3425H) then analyzed to determine its length and address (6635H). After checking that sufficient space is available (668EH) the string is copied to the String Storage Area (67C7H) and the result descriptor created (6654H).
 
 <a name="6627h"></a>
 
@@ -5363,7 +5363,7 @@ This routine is used by the Factor Evaluator to analyze the character string who
 
     Address... 6654H
 
-This routine is used by the string functions to create a result descriptor. The descriptor is copied from DSCTMP to the next available position in TEMPST and its address placed in DAC. Unless TEMPST is full, in which case a "String formula too complex" error is generated, TEMPPT is increased by three bytes and the routine terminates.
+This routine is used by the string functions to create a result descriptor. The descriptor is copied from DSCTMP to the next available position in TEMPST and its address placed in [DAC](#dac). Unless TEMPST is full, in which case a "String formula too complex" error is generated, TEMPPT is increased by three bytes and the routine terminates.
 
 <a name="6678h"></a>
 
@@ -5395,7 +5395,7 @@ If a large number of Variables are present garbage collection may take an apprec
     60 NEXT N
     70 GOTO 30
 
-The String Storage Area is also used to hold the intermediate strings produced during expression evaluation. Because so many string functions take multiple arguments, "MID$" takes three for example, the management of intermediate results is a major problem. To deal with it a standardized approach to string results is taken throughout the Interpreter. A producer of a string simply adds the string body to the heap in the String Storage Area, adds the descriptor to the descriptor heap in TEMPST and places the address of the descriptor in DAC. It is up to the user of the result to free this storage (67D0H) once it has processed the string. This rule applies to all parts of the system, from the individual function handlers back through the Expression Evaluator to the statement handlers, with only two exceptions.
+The String Storage Area is also used to hold the intermediate strings produced during expression evaluation. Because so many string functions take multiple arguments, "MID$" takes three for example, the management of intermediate results is a major problem. To deal with it a standardized approach to string results is taken throughout the Interpreter. A producer of a string simply adds the string body to the heap in the String Storage Area, adds the descriptor to the descriptor heap in TEMPST and places the address of the descriptor in [DAC](#dac). It is up to the user of the result to free this storage (67D0H) once it has processed the string. This rule applies to all parts of the system, from the individual function handlers back through the Expression Evaluator to the statement handlers, with only two exceptions.
 
 The first exception occurs when the Factor Evaluator finds an explicitly stated string, such as "SOMETHING" in the program text. In this case it is not necessary to copy the string to the String Storage Area as the original will suffice.
 
@@ -5411,25 +5411,25 @@ This routine is used by the Expression Evaluator to concatenate two string opera
 
     Address... 67D0H
 
-This routine frees any storage occupied by the string whose descriptor address is contained in DAC. The address of the descriptor is taken from DAC and examined to determine whether it is that of the last descriptor in TEMPST (67EEH), if not the routine terminates. Otherwise TEMPPT is reduced by three bytes clearing this descriptor from TEMPST. The address of the string body is then taken from the descriptor and compared with FRETOP to see if this is the lowest string in the String Storage Area, if not the routine terminates. Otherwise the length of the string is added to FRETOP, which is then updated with this new value, freeing the storage occupied by the string body.
+This routine frees any storage occupied by the string whose descriptor address is contained in [DAC](#dac). The address of the descriptor is taken from [DAC](#dac) and examined to determine whether it is that of the last descriptor in TEMPST (67EEH), if not the routine terminates. Otherwise TEMPPT is reduced by three bytes clearing this descriptor from TEMPST. The address of the string body is then taken from the descriptor and compared with FRETOP to see if this is the lowest string in the String Storage Area, if not the routine terminates. Otherwise the length of the string is added to FRETOP, which is then updated with this new value, freeing the storage occupied by the string body.
 
 <a name="67ffh"></a>
 
     Address... 67FFH
 
-This routine is used by the Factor Evaluator to apply the "LEN" function to an operand contained in DAC. The operand's storage is freed (67D0H) and the string length taken from the descriptor and placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "LEN" function to an operand contained in [DAC](#dac). The operand's storage is freed (67D0H) and the string length taken from the descriptor and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="680bh"></a>
 
     Address... 680BH
 
-This routine is used by the Factor Evaluator to apply the "ASC" function to an operand contained in DAC. The operand's storage is freed and the string length examined (6803H), if it is zero an "Illegal function call" error is generated (475AH).  Otherwise the first character is. taken from the string and placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "ASC" function to an operand contained in [DAC](#dac). The operand's storage is freed and the string length examined (6803H), if it is zero an "Illegal function call" error is generated (475AH).  Otherwise the first character is. taken from the string and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="681bh"></a>
 
     Address... 681BH
 
-This routine is used by the Factor Evaluator to apply the "CHR$" function to an operand contained in DAC. After checking that sufficient space is available (6625H) the operand is converted to a single byte integer (521FH). This character is then placed in the String Storage Area and the result descriptor created (6654H).
+This routine is used by the Factor Evaluator to apply the "CHR$" function to an operand contained in [DAC](#dac). After checking that sufficient space is available (6625H) the operand is converted to a single byte integer (521FH). This character is then placed in the String Storage Area and the result descriptor created (6654H).
 
 <a name="6829h"></a>
 
@@ -5441,7 +5441,7 @@ This routine is used by the Factor Evaluator to apply the "STRING$" function. Af
 
     Address... 6848H
 
-This routine is used by the Factor Evaluator to apply the "SPACE$" function to an operand contained in DAC. The operand is first converted to a single byte integer in register E (521FH). After checking that sufficient space is available (6627H) the required number of spaces are copied to the String Storage Area and the result descriptor created (6654H).
+This routine is used by the Factor Evaluator to apply the "SPACE$" function to an operand contained in [DAC](#dac). The operand is first converted to a single byte integer in register E (521FH). After checking that sufficient space is available (6627H) the required number of spaces are copied to the String Storage Area and the result descriptor created (6654H).
 
 <a name="6861h"></a>
 
@@ -5465,7 +5465,7 @@ This routine is used by the Factor Evaluator to apply the "MID$" function. The f
 
     Address... 68BBH
 
-This routine is used by the Factor Evaluator to apply the "VAL" function to an operand contained in DAC. The string length is taken from the descriptor (6803H) and checked, if it is zero it is placed in DAC as an integer (4FCFH). The length is then added to the starting address of the string body to give the location of the character immediately following it.  This is temporarily replaced with a zero byte and the string is converted to numeric form in DAC (3299H). The original character is then restored and the routine terminates. The temporary zero byte delimiter is necessary because strings are packed together in the String Storage Area, without it the numeric converter would run on into succeeding strings.
+This routine is used by the Factor Evaluator to apply the "VAL" function to an operand contained in [DAC](#dac). The string length is taken from the descriptor (6803H) and checked, if it is zero it is placed in [DAC](#dac) as an integer (4FCFH). The length is then added to the starting address of the string body to give the location of the character immediately following it.  This is temporarily replaced with a zero byte and the string is converted to numeric form in [DAC](#dac) (3299H). The original character is then restored and the routine terminates. The temporary zero byte delimiter is necessary because strings are packed together in the String Storage Area, without it the numeric converter would run on into succeeding strings.
 
 <a name="68e3h"></a>
 
@@ -5477,7 +5477,7 @@ This routine is used by the "LEFT$", "MID$" and "RIGHT$" function handlers to ch
 
     Address... 68EBH
 
-This routine is used by the Factor Evaluator to apply the "INSTR" function. The first operand, which may be the starting position or the source string, is evaluated (4C62H) and its type tested. If it is the source string a default starting position of one is taken. If it is the starting position operand its value is checked and the source string operand evaluated (4C64H). The pattern string is then evaluated (4C64H) and the storage of both operands freed (67D0H). The length of the pattern string is checked and, if zero, the starting position is placed in DAC (4FCFH). The pattern string is then checked against successive characters from the source string, commencing at the starting position, until a match is found or the source string is exhausted. With a successful search the character position of the substring is placed in DAC as an integer (4FCFH), otherwise a zero result is returned.
+This routine is used by the Factor Evaluator to apply the "INSTR" function. The first operand, which may be the starting position or the source string, is evaluated (4C62H) and its type tested. If it is the source string a default starting position of one is taken. If it is the starting position operand its value is checked and the source string operand evaluated (4C64H). The pattern string is then evaluated (4C64H) and the storage of both operands freed (67D0H). The length of the pattern string is checked and, if zero, the starting position is placed in [DAC](#dac) (4FCFH). The pattern string is then checked against successive characters from the source string, commencing at the starting position, until a match is found or the source string is exhausted. With a successful search the character position of the substring is placed in [DAC](#dac) as an integer (4FCFH), otherwise a zero result is returned.
 
 <a name="696eh"></a>
 
@@ -5495,7 +5495,7 @@ This routine is used by various string functions to evaluate an optional operand
 
     Address... 69F2H
 
-This routine is used by the Factor Evaluator to apply the "FRE" function to an operand contained in DAC. If the operand is numeric the single precision difference between the Z80 Stack Pointer and the contents of STREND is placed in DAC (4FC1H). If the operand is a string type its storage is freed (67D3H) and garbage collection initiated (66B6H). The single precision difference between the contents of FRETOP and those of STKTOP is then placed in DAC (4FC1H).
+This routine is used by the Factor Evaluator to apply the "FRE" function to an operand contained in [DAC](#dac). If the operand is numeric the single precision difference between the Z80 Stack Pointer and the contents of STREND is placed in [DAC](#dac) (4FC1H). If the operand is a string type its storage is freed (67D3H) and garbage collection initiated (66B6H). The single precision difference between the contents of FRETOP and those of STKTOP is then placed in [DAC](#dac) (4FC1H).
 
 <a name="6a0eh"></a>
 
@@ -5617,25 +5617,25 @@ This routine is used by the file I/O handlers to return, in register pair HL, th
 
     Address... 6D03H
 
-This routine is used by the Factor Evaluator to apply the "LOC" function to the I/O buffer whose number is contained in DAC. The FCB is located (6A6AH) and the LOC function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "LOC" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the LOC function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d14h"></a>
 
     Address... 6D14H
 
-This routine is used by the Factor Evaluator to apply the "LOF" function to the I/O buffer whose number is contained in DAC. The FCB is located (6A6AH) and the LOF function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "LOF" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the LOF function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d25h"></a>
 
     Address... 6D25H
 
-This routine is used by the Factor Evaluator to apply the "EOF" function to the I/O buffer whose number is contained in DAC. The FCB is located (6A6AH) and the EOF function dispatched (6F8FH).
+This routine is used by the Factor Evaluator to apply the "EOF" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the EOF function dispatched (6F8FH).
 
 <a name="6d39h"></a>
 
     Address... 6D39H
 
-This routine is used by the Factor Evaluator to apply the "FPOS" function to the I/O buffer whose number is contained in DAC. The FCB is located (6A6AH) and the FPOS function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "FPOS" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the FPOS function dispatched (6F8FH). An "Illegal function call" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d48h"></a>
 
@@ -5661,7 +5661,7 @@ This routine is used by the "INPUT" statement handler to input a string from an 
 
 This is the "LINE INPUT" statement handler when input is from an I/O buffer. The buffer number is evaluated, the FCB located and the mode checked (6D55H). The Variable to assign to is then located (5EA4H) and its type checked to ensure it is a string type (3058H). A return is set up to the "LET" statement handler (487BH) to perform the assignment and the input string collected.
 
-Characters are sequentially input (6C71H) and placed in BUF until the correct delimiter is found, EOF is reached or BUF fills up (6E41H). When the terminating condition is reached and assignment is to a numeric Variable the string is converted to numeric form in DAC (3299H). When assignment is to a string Variable the string is analyzed and the result descriptor created (6638H).
+Characters are sequentially input (6C71H) and placed in BUF until the correct delimiter is found, EOF is reached or BUF fills up (6E41H). When the terminating condition is reached and assignment is to a numeric Variable the string is converted to numeric form in [DAC](#dac) (3299H). When assignment is to a string Variable the string is analyzed and the result descriptor created (6638H).
 
 For "LINE INPUT" all characters are accepted until a CR code is reached. Note that if this CR code is preceded by a LF code then it will not function as a delimiter but will merely be accepted as part of the string. For "INPUT" to a numeric Variable leading spaces are stripped then characters accepted until a CR code, a space or a comma is reached. Note that as for "LINE INPUT" a CR code will not function as a delimiter when preceded by a LF code. In this case however the CR code will not be placed in BUF but ignored. For "INPUT" to a string Variable leading spaces are stripped then characters accepted until a CR or comma is reached. Note that as for "LINE INPUT" a CR code will not function as a delimiter when preceded by a LF code. In this case however neither code will be placed in BUF both are ignored. An alternative mode is entered when the first character read, after any spaces, is a double quote character.  In this case all characters will be accepted, and stored in BUF, until another double quote delimiter is read.
 
@@ -5945,7 +5945,7 @@ This is the dispatcher sequential input routine for the CAS device. CASPRV is fi
 
     Address... 726DH
 
-This is the dispatcher eof routine for the CAS device. The next character is input (723FH) and placed in CASPRV. It is then tested for the end of file code (1AH) and the result placed in DAC as an integer, zero for false, FFFFH for true.
+This is the dispatcher eof routine for the CAS device. The next character is input (723FH) and placed in CASPRV. It is then tested for the end of file code (1AH) and the result placed in [DAC](#dac) as an integer, zero for false, FFFFH for true.
 
 <a name="727ch"></a>
 
@@ -6050,7 +6050,7 @@ This routine issues a CR,LF sequence to the current output device via the OUTDO 
 
     Address... 7347H
 
-This routine is used by the Factor Evaluator to apply the "INKEY$" function. The state of the keyboard buffer is examined via the CHSNS standard routine. If the buffer is empty the address of a dummy null string descriptor is returned in DAC.  Otherwise the next character is read from the keyboard buffer via the CHGET standard routine. After checking that sufficient space is available (6625H) the character is copied to the String Storage Area and the result descriptor created (6821H).
+This routine is used by the Factor Evaluator to apply the "INKEY$" function. The state of the keyboard buffer is examined via the CHSNS standard routine. If the buffer is empty the address of a dummy null string descriptor is returned in [DAC](#dac).  Otherwise the next character is read from the keyboard buffer via the CHGET standard routine. After checking that sufficient space is available (6625H) the character is copied to the String Storage Area and the result descriptor created (6821H).
 
 <a name="7367h"></a>
 
@@ -6356,13 +6356,13 @@ This is the "KEY n", "KEY(n) ON/OFF/STOP", "KEY ON" and "KEY OFF" statement hand
 
     Address... 7900H
 
-This routine is used by the Factor Evaluator to apply the "TIME" function. The contents of JIFFY are placed in DAC as a single precision number (3236H).
+This routine is used by the Factor Evaluator to apply the "TIME" function. The contents of JIFFY are placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="790ah"></a>
 
     Address... 790AH
 
-This routine is used by the Factor Evaluator to apply the "CSRLIN" function. The contents of CSRY are decremented and placed in DAC as an integer (2E9AH).
+This routine is used by the Factor Evaluator to apply the "CSRLIN" function. The contents of CSRY are decremented and placed in [DAC](#dac) as an integer (2E9AH).
 
 <a name="7911h"></a><a name="time"></a>
 
@@ -6374,31 +6374,31 @@ This is the "TIME" statement handler. The operand is evaluated (542FH) and place
 
     Address... 791BH
 
-This routine is used by the Factor Evaluator to apply the "PLAY" function. The numeric channel selection operand is evaluated (7C08H). If this is zero the contents of MUSICF are placed in DAC as an integer of value zero or FFFFH. Otherwise the channel number is used to select the appropriate bit of MUSICF and this is then converted to an integer as before.
+This routine is used by the Factor Evaluator to apply the "PLAY" function. The numeric channel selection operand is evaluated (7C08H). If this is zero the contents of MUSICF are placed in [DAC](#dac) as an integer of value zero or FFFFH. Otherwise the channel number is used to select the appropriate bit of MUSICF and this is then converted to an integer as before.
 
 <a name="7940h"></a>
 
     Address... 7940H
 
-This routine is used by the Factor Evaluator to apply the "STICK" function to an operand contained in DAC. The stick number is checked (521FH) and passed to the GTSTCK standard routine in register A. The result is placed in DAC as an integer (4FCFH ) .
+This routine is used by the Factor Evaluator to apply the "STICK" function to an operand contained in [DAC](#dac). The stick number is checked (521FH) and passed to the GTSTCK standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH ) .
 
 <a name="794ch"></a>
 
     Address... 794CH
 
-This routine is used by the Factor Evaluator to apply the "STRIG" function to an operand contained in DAC. The trigger number is checked (521FH) and passed to the GTTRIG standard routine in register A. The result is placed in DAC as an integer of value zero or FFFFH.
+This routine is used by the Factor Evaluator to apply the "STRIG" function to an operand contained in [DAC](#dac). The trigger number is checked (521FH) and passed to the GTTRIG standard routine in register A. The result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="795ah"></a>
 
     Address... 795AH
 
-This routine is used by the Factor Evaluator to apply the "PDL" function to an operand contained in DAC. The paddle number is checked (521FH) and passed to the GTPDL standard routine in register A. The result is placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "PDL" function to an operand contained in [DAC](#dac). The paddle number is checked (521FH) and passed to the GTPDL standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7969h"></a>
 
     Address... 7969H
 
-This routine is used by the Factor Evaluator to apply the "PAD" function to an operand contained in DAC. The pad number is checked (521F) and passed to the GTPAD standard routine in register A. The result is placed in DAC as an integer for pads 1, 2, 5 or 6. For pads 0, 3, 4 or 7 the result is placed in DAC as an integer of value zero or FFFFH.
+This routine is used by the Factor Evaluator to apply the "PAD" function to an operand contained in [DAC](#dac). The pad number is checked (521F) and passed to the GTPAD standard routine in register A. The result is placed in [DAC](#dac) as an integer for pads 1, 2, 5 or 6. For pads 0, 3, 4 or 7 the result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="7980h"></a><a name="color"></a>
 
@@ -6422,7 +6422,7 @@ This routine is used to set the cassette baud rate. The operand is evaluated (52
 
     Address... 7A48H
 
-This is the "SPRITE" statement handler. If the next character is anything other than a "$" control transfers to the "SPRITE ON/OFF/STOP" statement handler (77ABH). SCRMOD is then checked and an "Illegal function call" error generated (475AH) if the screen is in 40x24 Text Mode. The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7AA0H). The string operand is then evaluated (4C5FH) and its storage freed (67D0H). The sprite size, obtained via the GSPSIZ standard routine, is compared with the string length and, if the string is shorter than the sprite, the Sprite Pattern Table entry is first filled with zeroes via the FILVRM standard routine. Characters are then copied from the string body to the Sprite Pattern Table via the LDIRVM standard routine until the string is exhausted or the sprite is full. If the string is longer than the sprite size any excess characters are ignored.
+This is the "SPRITE" statement handler. If the next character is anything other than a "$" control transfers to the "SPRITE ON/OFF/STOP" statement handler (77ABH). SCRMOD is then checked and an "Illegal function call" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7AA0H). The string operand is then evaluated (4C5FH) and its storage freed (67D0H). The sprite size, obtained via the GSPSIZ standard routine, is compared with the string length and, if the string is shorter than the sprite, the Sprite Pattern Table entry is first filled with zeroes via the FILVRM standard routine. Characters are then copied from the string body to the Sprite Pattern Table via the LDIRVM standard routine until the string is exhausted or the sprite is full. If the string is longer than the sprite size any excess characters are ignored.
 
     Address... 7A84H
 
@@ -6442,7 +6442,7 @@ Note that no check is made on the pattern number magnitude for differing sprite 
     40 SPRITE$(65)=STRING$(32,255)
     50 GOTO 50
 
-The above puts a real sprite in the top left of the screen and then uses an illegal statement in line 40 to corrupt the VRAM just to the right of it. The "SPRITE$" function can also be manipulated in this way and, as there is no screen mode check, up to thirty-two bytes of the Name Table can be read in 40x24 Text Mode, for example:
+The above puts a real sprite in the top left of the screen and then uses an illegal statement in line 40 to corrupt the VRAM just to the right of it. The "SPRITE$" function can also be manipulated in this way and, as there is no screen mode check, up to thirty-two bytes of the Name Table can be read in [40x24 Text Mode](#40x24_text_mode), for example:
 
     10 SCREEN 0,2
     20 PRINT"something"
@@ -6455,7 +6455,7 @@ The above puts a real sprite in the top left of the screen and then uses an ille
 
     Address... 7AAFH
 
-This is the "GET/PUT SPRITE" statement handler, control is transferred here from the general "GET/PUT" statement handler (775BH). Register B is first checked to make sure that the statement is "PUT" and an "Illegal function call" error generated (475AH) if otherwise. SCRMOD is then checked and an "Illegal function call" error generated (475AH) if the screen is in 40x24 Text Mode. The sprite number operand, from zero to thirty-one, is evaluated (521CH) and passed to the CALATR standard routine to locate the four byte attribute block in the Sprite Attribute Table. If a coordinate operand exists it is evaluated and the X coordinate placed in register pair BC, the Y coordinate in register pair DE (579CH).
+This is the "GET/PUT SPRITE" statement handler, control is transferred here from the general "GET/PUT" statement handler (775BH). Register B is first checked to make sure that the statement is "PUT" and an "Illegal function call" error generated (475AH) if otherwise. SCRMOD is then checked and an "Illegal function call" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite number operand, from zero to thirty-one, is evaluated (521CH) and passed to the CALATR standard routine to locate the four byte attribute block in the Sprite Attribute Table. If a coordinate operand exists it is evaluated and the X coordinate placed in register pair BC, the Y coordinate in register pair DE (579CH).
 
 The Y coordinate LSB is written to byte 0 of the attribute block in VRAM via the WRTVRM standard routine. Bit 7 of the X coordinate is then examined to determine whether it is negative, that is off the left hand side of the screen. If so thirty two is added to the X coordinate and register B is set to 80H to set the early clock bit in the attribute block. For example an X coordinate of -1 (FFFFH) would be changed to +31 with an early clock. The X coordinate LSB is then written to byte 1 of the attribute block via the WRTVRM standard routine.  Byte 3 of the attribute block is read in via the RDVRM standard routine, the new early clock bit is mixed in and it is then written back to VRAM via the WRTVRM standard routine.
 
@@ -6471,7 +6471,7 @@ This is the "VDP" statement handler. The register number operand, from zero to s
 
     Address... 7B47H
 
-This routine is used by the Factor Evaluator to apply the "VDP" function. The register number operand, from zero to eight, is evaluated (7C08H) and added to RGOSAV to locate the corresponding register image in the Workspace Area. The VDP register image is then read and placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "VDP" function. The register number operand, from zero to eight, is evaluated (7C08H) and added to RGOSAV to locate the corresponding register image in the Workspace Area. The VDP register image is then read and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7b5ah"></a><a name="base"></a>
 
@@ -6491,7 +6491,7 @@ This routine is used by the "BASE" statement handler to update the VDP base addr
     40 FOR N=1 TO 2000:NEXT
     50 BASE(0)=0
 
-Note also that this routine contains a bug. While SETTXT is correctly used for 40x24 Text Mode, SETGRP is used for 32x24 Text Mode and SETMLT for Graphics Mode and Multicolour Mode.  Any "BASE" statement should therefore be immediately followed by a "SCREEN" statement to perform a full initialization.
+Note also that this routine contains a bug. While SETTXT is correctly used for [40x24 Text Mode](#40x24_text_mode), SETGRP is used for [32x24 Text Mode](#32x24_text_mode) and SETMLT for [Graphics Mode](#graphics_mode) and [Multicolour Mode](#multicolour_mode). Any "BASE" statement should therefore be immediately followed by a "SCREEN" statement to perform a full initialization.
 
 <a name="7ba3h"></a>
 
@@ -6528,7 +6528,7 @@ This masking table is used by the "BASE" statement handler to ensure that only l
 
     Address... 7BCBH
 
-This routine is used by the Factor Evaluator to apply the "BASE" function. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) and added to TXTNAM to locate the required Workspace Area base address. This is then placed in DAC as a single precision number (3236H).
+This routine is used by the Factor Evaluator to apply the "BASE" function. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) and added to TXTNAM to locate the required Workspace Area base address. This is then placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="7be2h"></a><a name="vpoke"></a>
 
@@ -6540,13 +6540,13 @@ This is the "VPOKE" statement handler. The VRAM address operand is evaluated (4C
 
     Address... 7BF5H
 
-This routine is used by the Factor Evaluator to apply the "VPEEK" function to an operand contained in DAC. The VRAM address operand is checked to ensure it is less than 4000H (7BFEH). VRAM is then read via the RDVRM standard routine and the result placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "VPEEK" function to an operand contained in [DAC](#dac). The VRAM address operand is checked to ensure it is less than 4000H (7BFEH). VRAM is then read via the RDVRM standard routine and the result placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7bfeh"></a>
 
     Address... 7BFEH
 
-This routine converts a numeric operand in DAC to an integer (2F8AH) and places it in register pair HL. If the operand is equal to or greater than 4000H, and thus outside the allowable VRAM range, an "Illegal function call" error is generated (475AH).
+This routine converts a numeric operand in [DAC](#dac) to an integer (2F8AH) and places it in register pair HL. If the operand is equal to or greater than 4000H, and thus outside the allowable VRAM range, an "Illegal function call" error is generated (475AH).
 
 <a name="7c08h"></a>
 
@@ -6600,7 +6600,7 @@ This is the "CMD" statement handler. An "`Illegal function call`" error is gener
 
     Address... 7C39H
 
-This routine is used by the Factor Evaluator to apply the "DSKF" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "DSKF" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c3eh"></a>
 
@@ -6636,37 +6636,37 @@ This is the "FIELD" statement handler. An "`Illegal function call`" error is gen
 
     Address... 7C57H
 
-This routine is used by the Factor Evaluator to apply the "MKI$" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "MKI$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c5ch"></a>
 
     Address... 7C5CH
 
-This routine is used by the Factor Evaluator to apply the "MKS$" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "MKS$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c61h"></a>
 
     Address... 7C61H
 
-This routine is used by the Factor Evaluator to apply the "MKD$" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "MKD$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c66h"></a>
 
     Address... 7C66H
 
-This routine is used by the Factor Evaluator to apply the "CVI" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "CVI" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c6bh"></a>
 
     Address... 7C6BH
 
-This routine is used by the Factor Evaluator to apply the "CVS" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "CVS" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c70h"></a>
 
     Address... 7C70H
 
-This routine is used by the Factor Evaluator to apply the "CVD" function to an operand contained in DAC. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "CVD" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c76h"></a>
 
@@ -6682,7 +6682,7 @@ Finally the identification message "MSX BASIC etc." is displayed (7D29H) and con
 
     Address... 7D29H
 
-This routine is used during power-up to enable the function key display, place the screen in 40x24 Text Mode via the INITXT standard routine, and display (6678H) the identification message "`MSX BASIC etc.`". The amount of free memory is then computed by subtracting the contents of VARTAB from the contents of STKTOP and displayed (3412H) followed by the "`Bytes free`" message.
+This routine is used during power-up to enable the function key display, place the screen in [40x24 Text Mode](#40x24_text_mode) via the INITXT standard routine, and display (6678H) the identification message "`MSX BASIC etc.`". The amount of free memory is then computed by subtracting the contents of VARTAB from the contents of STKTOP and displayed (3412H) followed by the "`Bytes free`" message.
 
 <a name="7d5dh"></a>
 
@@ -6935,13 +6935,13 @@ These ten variables contain the "`USR`" function addresses. Their values are set
 
     F3AEH LINL40: DEFB 37
 
-This variable contains the 40x24 Text Mode screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
+This variable contains the [40x24 Text Mode](#40x24_text_mode) screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
 
 <a name="f3afh"></a><a name="linl32"></a>
 
     F3AFH LINL32: DEFB 29
 
-This variable contains the 32x24 Text Mode screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
+This variable contains the [32x24 Text Mode](#32x24_text_mode) screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
 
 <a name="f3b0h"></a><a name="linlen"></a>
 
@@ -6973,7 +6973,7 @@ This variable contains the minimum number of columns that must still be availabl
     F3B9H TXTATR: DEFW 0000H   ; Sprite Attribute Base
     F3BBH TXTPAT: DEFW 0000H   ; Sprite Pattern Base
 
-These five variables contain the 40x24 Text Mode VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
+These five variables contain the [40x24 Text Mode](#40x24_text_mode) VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
 
 <a name="f3bdh"></a><a name="t32nam"></a>
 <a name="f3bfh"></a><a name="t32col"></a>
@@ -6987,7 +6987,7 @@ These five variables contain the 40x24 Text Mode VDP base addresses. Their value
     F3C3H T32ATR: DEFW 1B00H   ; Sprite Attribute Base
     F3C5H T32PAT: DEFW 3800H   ; Sprite Pattern Base
 
-These five variables contain the 32x24 Text Mode VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
+These five variables contain the [32x24 Text Mode](#32x24_text_mode) VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
 
 <a name="f3c7h"></a><a name="grpnam"></a>
 <a name="f3c9h"></a><a name="grpcol"></a>
@@ -7001,7 +7001,7 @@ These five variables contain the 32x24 Text Mode VDP base addresses. Their value
     F3CDH GRPATR: DEFW 1B00H   ; Sprite Attribute Base
     F3CFH GRPPAT: DEFW 3800H   ; Sprite Pattern Base
 
-These five variables contain the Graphics Mode VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
+These five variables contain the [Graphics Mode](#graphics_mode) VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
 
 <a name="f3d1h"></a><a name="mltnam"></a>
 <a name="f3d3h"></a><a name="mltcol"></a>
@@ -7015,7 +7015,7 @@ These five variables contain the Graphics Mode VDP base addresses. Their values 
     F3D7H MLTATR: DEFW 1B00H   ; Sprite Attribute Base
     F3D9H MLTPAT: DEFW 3800H   ; Sprite Pattern Base
 
-These five variables contain the Multicolour Mode VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
+These five variables contain the [Multicolour Mode](#multicolour_mode) VDP base addresses. Their values are set at power-up and thereafter only altered by the "`BASE`" statement.
 
 <a name="f3dbh"></a><a name="cliksw"></a>
 
@@ -7059,7 +7059,7 @@ This variable contains the current state of the function key display: 00H=Off, N
     F3E5H RG6SAV: DEFB 00H
     F3E6H RG7SAV: DEFB F4H
 
-These eight variables mimic the state of the eight write-only VDP Mode Registers. The values shown are for 40x24 Text Mode.
+These eight variables mimic the state of the eight write-only VDP Mode Registers. The values shown are for [40x24 Text Mode](#40x24_text_mode).
 
 <a name="f3e7h"></a><a name="statfl"></a>
 
@@ -7089,7 +7089,7 @@ This variable contains the current background colour. Its value is set at power-
 
     F3EBH BDRCLR: DEFB 04H     ; Dark blue
 
-This variable contains the current border colour. Its value is set at power-up and thereafter only altered by the "`COLOR`" statement. The border colour is used by the [CHGCLR](#chgclr) standard routine in 32x24 Text Mode, Graphics Mode and Multicolour Mode to set the border colour.
+This variable contains the current border colour. Its value is set at power-up and thereafter only altered by the "`COLOR`" statement. The border colour is used by the [CHGCLR](#chgclr) standard routine in [32x24 Text Mode](#32x24_text_mode), [Graphics Mode](#graphics_mode) and [Multicolour Mode](#multicolour_mode) to set the border colour.
 
 <a name="f3ech"></a><a name="maxupd"></a>
 
@@ -8298,7 +8298,7 @@ This variable is set by the file I/O error generators but is otherwise unused.
 
     FCAFH SCRMOD: DEFB 00H
 
-This variable contains the current screen mode: 0=40x24 Text Mode, 1=32x24 Text Mode, 2=Graphics Mode, 3=Multicolour Mode.
+This variable contains the current screen mode: 0=[40x24 Text Mode](#40x24_text_mode), 1=[32x24 Text Mode](#32x24_text_mode), 2=[Graphics Mode](#graphics_mode), 3=[Multicolour Mode](#multicolour_mode).
 
 <a name="fcb0h"></a><a name="oldscr"></a>
 
