@@ -2,13 +2,13 @@
 
 [Introduction](#introduction)
 
-1. [Programmable Peripheral Interface](chapter_1)
-    + [PPI Port A (I/O Port A8H)](ppi_port_a)
+1. [Programmable Peripheral Interface](#chapter_1)
+    + [PPI Port A (I/O Port A8H)](#ppi_port_a)
     + [Expanders](#expanders)
-    + [PPI Port B (I/O Port A9H)](ppi_port_b)
-    + [PPI Port C (I/O Port AAH)](ppi_port_c)
+    + [PPI Port B (I/O Port A9H)](#ppi_port_b)
+    + [PPI Port C (I/O Port AAH)](#ppi_port_c)
     + [PPI Mode Port (I/O Port ABH)](#ppi_mode_port)
-2. [Video Display Processor](chapter_2)
+2. [Video Display Processor](#chapter_2)
     + [Data Port (I/O Port 98H)](#data_port)
     + [Command Port (I/O Port 99H)](#command_port)
     + [Address Register](#address_register)
@@ -28,7 +28,7 @@
     + [Graphics Mode](#graphics_mode)
     + [Multicolour Mode](#multicolour_mode)
     + [Sprites](#sprites)
-3. [Programmable Sound Generator](chapter_3)
+3. [Programmable Sound Generator](#chapter_3)
     + [Address Port (I/O port A0H)](#address_port)
     + [Data Write Port (I/O port A1H)](#data_write_port)
     + [Data Read Port (I/O port A2H)](#data_read_port)
@@ -44,11 +44,11 @@
     + [Register 13](#register_13)
     + [Register 14](#register_14)
     + [Register 15](#register_15)
-4. [ROM BIOS](chapter_4)
+4. [ROM BIOS](#chapter_4)
     + [Data Areas](#data_areas)
     + [Terminology](#terminology)
-5. [ROM BASIC Interpreter](chapter_5)
-6. [Memory Map](chapter_6)
+5. [ROM BASIC Interpreter](#chapter_5)
+6. [Memory Map](#chapter_6)
     + [Workspace Area](#workspace_area)
     + [The Hooks](#the_hooks)
 7. [Machine Code Programs](#chapter_7)
@@ -2840,8 +2840,13 @@ The alphanumeric characters are the digits "0" to "9" and the letters "A" to "Z"
 
 This routine finds the start of a logical line and returns its screen coordinates in register pair HL. Each physical row above the current one is checked via the [LINTTB](#linttb) table ([0C1DH](#0c1dh)) until a non-extended row is found. The row immediately below this on the screen is the start of the logical line and its row number is placed in register L. This is then compared with [FSTPOS](#fstpos), which contains the row number when the [INLIN](#inlin) standard routine was first entered, to see if the cursor is still on the same line. If so the column coordinate in register H is set to its initial position from [FSTPOS](#fstpos). Otherwise register H is set to the leftmost position to return the whole line.
 
+<a name="2680h"></a>
+<a name="2683h"></a>
+<a name="2686h"></a>
+<a name="2689h"></a>
+
     Address...2680H, JP to power-up initialize routine (7C76H).
-    Address...2683H, JP to the [SYNCHR](#synchr) standard routine (558CH).
+    Address...2683H, JP to the SYNCHR standard routine (558CH).
     Address...2686H, JP to the CHRGTR standard routine (4666H).
     Address...2689H, JP to the GETYPR standard routine (5597H).
 
@@ -3498,37 +3503,37 @@ This table contains the five constants used by the numeric output routine: 10000
 
     Address... 371AH
 
-This routine is used by the "BIN$" function to convert a numeric operand contained in DAC to textual form. Register B is loaded with the group size (1) and control transfers to the general conversion routine (3724H).
+This routine is used by the "`BIN`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (1) and control transfers to the general conversion routine (3724H).
 
 <a name="371eh"></a>
 
     Address... 371EH
 
-This routine is used by the "OCT$" function to convert a numeric operand contained in DAC to textual form. Register B is loaded with the group size (3) and control transfers to the general conversion routine (3724H).
+This routine is used by the "`OCT`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (3) and control transfers to the general conversion routine (3724H).
 
 <a name="3722h"></a>
 
     Address... 3722H
 
-This routine is used by the "HEX$" function to convert a numeric operand contained in DAC to textual form. Register B is loaded with the group size (4) and the operand converted to a binary integer in register pair HL (5439H). Successive groups of 1, 3 or 4 bits are shifted rightwards out of the operand, converted to ASCII digits and placed in FBUFFR. When the operand is all zeroes the routine terminates with the address of the first text character in register pair HL, the string is terminated with a zero byte.
+This routine is used by the "`HEX`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (4) and the operand converted to a binary integer in register pair HL ([5439H](#5439h)). Successive groups of 1, 3 or 4 bits are shifted rightwards out of the operand, converted to ASCII digits and placed in [FBUFFR](#fbuffr). When the operand is all zeroes the routine terminates with the address of the first text character in register pair HL, the string is terminated with a zero byte.
 
 <a name="3752h"></a>
 
     Address... 3752H
 
-This routine is used during numeric output to return an operand's digit count in register B and the address of its least significant byte in register pair HL. For single precision B=6 and HL=DAC+3, for double precision B=14 and HL=DAC+7.
+This routine is used during numeric output to return an operand's digit count in register B and the address of its least significant byte in register pair HL. For single precision B=6 and HL=[DAC](#dac)+3, for double precision B=14 and HL=[DAC](#dac)+7.
 
 <a name="375fh"></a>
 
     Address... 375FH
 
-This routine is used during numeric output to convert the numeric operand in DAC to double precision (303AH).
+This routine is used during numeric output to convert the numeric operand in [DAC](#dac) to double precision ([303AH](#303ah)).
 
 <a name="377bh"></a>
 
     Address... 377BH
 
-This routine is used during numeric output to shift the mantissa in DAC rightwards (27DBH), the inverse of the digit count is supplied in register A. The result is then rounded up from the fifteenth digit (2741H).
+This routine is used during numeric output to shift the mantissa in [DAC](#dac) rightwards (27DBH), the inverse of the digit count is supplied in register A. The result is then rounded up from the fifteenth digit (2741H).
 
 <a name="37a2h"></a>
 
@@ -3540,29 +3545,29 @@ This routine is used during numeric output to return the inverse of the fraction
 
     Address... 37B4H
 
-This routine is used during numeric output to locate the last non-zero digit of the mantissa contained in DAC. Its address is returned in register pair HL.
+This routine is used during numeric output to locate the last non-zero digit of the mantissa contained in [DAC](#dac). Its address is returned in register pair HL.
 
 <a name="37c8h"></a>
 
     Address... 37C8H
 
-This routine is used by the Expression Evaluator to exponentiate (^) two single precision operands. The first operand is contained in registers C, B, E, D and the second in DAC, the result is returned in DAC. The first operand is copied to ARG (3280H), pushed onto the stack (2CC7H) and exchanged with DAC (2C6FH). The second operand is then popped into ARG and control drops into the double precision exponentiation routine.
+This routine is used by the Expression Evaluator to exponentiate (^) two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), pushed onto the stack ([2CC7H](#2cc7h)) and exchanged with [DAC](#dac) ([2C6FH](#2c6fh)). The second operand is then popped into [ARG](#arg) and control drops into the double precision exponentiation routine.
 
 <a name="37d7h"></a>
 
     Address... 37D7H
 
-This routine is used by the Expression Evaluator to exponentiate (^) two double precision operands. The first operand is contained in DAC and the second in ARG, the result is returned in DAC. The result is usually computed using:
+This routine is used by the Expression Evaluator to exponentiate (^) two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in DAC. The result is usually computed using:
 
     X^P=EXP(P*LOG(X))
 
-An alternative, much faster, method is possible if the power operand is an integer. This is tested for by extracting the integer part of the operand and comparing for equality with the original value (391AH). A positive result to this test means that the faster method can be used, this is described below.
+An alternative, much faster, method is possible if the power operand is an integer. This is tested for by extracting the integer part of the operand and comparing for equality with the original value ([391AH](#391ah)). A positive result to this test means that the faster method can be used, this is described below.
 
 <a name="383fh"></a>
 
     Address... 383FH
 
-This routine is used by the Expression Evaluator to exponentiate (^) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in DAC. The routine operates by breaking the problem down into simple multiplications:
+This routine is used by the Expression Evaluator to exponentiate (^) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The routine operates by breaking the problem down into simple multiplications:
 
     6^13=6^1101=(6^8)*(6^4)*(6^1)
 
@@ -3572,7 +3577,7 @@ As the power operand is in binary form a simple right shift is sufficient to det
 
     Address... 390DH
 
-This routine is used during exponentiation to multiply two integers (3193H), it returns Flag NZ if the result has overflowed to single precision.
+This routine is used during exponentiation to multiply two integers ([3193H](#3193h)), it returns Flag NZ if the result has overflowed to single precision.
 
 <a name="391ah"></a>
 
@@ -3648,7 +3653,7 @@ This table of addresses is used by the Factor Evaluator to find the handler for 
 
     Address... 3A3EH
 
-This table of addresses is used during program tokenization as an index into the BASIC keyword table (3A72H). Each of the twenty six entries defines the starting address of one of the keyword sub-blocks. The first entry points to the keywords beginning with the letter "A", the second to those beginning with the letter "B" and so on.
+This table of addresses is used during program tokenization as an index into the BASIC keyword table ([3A72H](#3a72h)). Each of the twenty six entries defines the starting address of one of the keyword sub-blocks. The first entry points to the keywords beginning with the letter "A", the second to those beginning with the letter "B" and so on.
 
     3A72H ... A   3B9FH ... J    3C8EH ... S
     3A88H ... B   3BA0H ... K    3CDBH ... T
@@ -3725,7 +3730,7 @@ This twenty-one byte table is used by the Interpreter during program tokenizatio
 
     Address... 3D3BH
 
-This table is used by the Expression Evaluator to determine the precedence level for a given infix operator, the higher the table value the greater the operator's precedence. Not included are the precedences for the relational operators (64H), the "NOT" operator (5AH) and the negation operator (7DH), these are defined directly by the Expression and Factor Evaluators.
+This table is used by the Expression Evaluator to determine the precedence level for a given infix operator, the higher the table value the greater the operator's precedence. Not included are the precedences for the relational operators (64H), the "`NOT`" operator (5AH) and the negation operator (7DH), these are defined directly by the Expression and Factor Evaluators.
 
     79H ... +       46H ... OR
     79H ... -       3CH ... XOR
@@ -3826,61 +3831,61 @@ This table contains the Interpreter error messages, each one is stored in plain 
 
     Address... 3FD2H
 
-This is the plain text message " in " terminated by a zero byte.
+This is the plain text message "` in `" terminated by a zero byte.
 
 <a name="3fd7h"></a>
 
     Address... 3FD7H
 
-This is the plain text message "Ok", CR, LF terminated by a zero byte.
+This is the plain text message "`Ok`", CR, LF terminated by a zero byte.
 
 <a name="3fdch"></a>
 
     Address... 3FDCH
 
-This is the plain text message "Break" terminated by a zero byte.
+This is the plain text message "`Break`" terminated by a zero byte.
 
 <a name="3fe2h"></a>
 
     Address... 3FE2H
 
-This routine searches the Z80 stack for the "FOR" loop parameter block whose loop Variable address is supplied in register pair DE. The search is started four bytes above the current Z80 SP to allow for the caller's return address and the Runloop return address. If no "FOR" token (82H) exists the routine terminates Flag NZ, if one is found the loop Variable address is taken from the parameter block and checked. The routine terminates Flag Z upon a successful match with register pair HL pointing to the type byte of the parameter block.  Otherwise the search moves up twenty-two bytes to the start of the next parameter block.
+This routine searches the Z80 stack for the "`FOR`" loop parameter block whose loop Variable address is supplied in register pair DE. The search is started four bytes above the current Z80 SP to allow for the caller's return address and the Runloop return address. If no "`FOR`" token (82H) exists the routine terminates Flag NZ, if one is found the loop Variable address is taken from the parameter block and checked. The routine terminates Flag Z upon a successful match with register pair HL pointing to the type byte of the parameter block.  Otherwise the search moves up twenty-two bytes to the start of the next parameter block.
 
 <a name="4001h"></a>
 
     Address... 4001H
 
-This routine is used by the Factor Evaluator to apply the "INP" function to an operand contained in DAC. The port number is checked (5439H), the port read and the result placed in DAC as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "`INP`" function to an operand contained in [DAC](#dac). The port number is checked ([5439H](#5439h)), the port read and the result placed in DAC as an integer (4FCFH).
 
 <a name="400bh"></a>
 
     Address... 400BH
 
-This routine first evaluates an operand in the range -32768 to +65535 (542FH) and places it in register pair BC. After checking for a comma, via the SYNCHR standard routine, it evaluates a second operand in the range 0 to 255 (521CH) and places this in register A.
+This routine first evaluates an operand in the range -32768 to +65535 ([542FH](#542fh)) and places it in register pair BC. After checking for a comma, via the [SYNCHR](#synchr) standard routine, it evaluates a second operand in the range 0 to 255 (521CH) and places this in register A.
 
 <a name="4016h"></a>
 
     Address... 4016H
 
-This is the "OUT" statement handler. The port number and data byte are evaluated (400BH) and the data byte written to the relevant Z80 port.
+This is the "`OUT`" statement handler. The port number and data byte are evaluated ([400BH](#400bh)) and the data byte written to the relevant Z80 port.
 
 <a name="401ch"></a>
 
     Address... 401CH
 
-This is the "WAIT" statement handler. The port number and "AND" operands are first evaluated (400BH) followed by the optional "XOR" operand (521CH). The port is then repeatedly read and the operands applied, XOR then AND, until a non-zero result is obtained. Contrary to the information given in some MSX manuals the loop can be broken by the CTRL-STOP key as the CKCNTC standard routine is called from inside it.
+This is the "`WAIT`" statement handler. The port number and "`AND`" operands are first evaluated ([400BH](#400bh)) followed by the optional "`XOR`" operand (521CH). The port is then repeatedly read and the operands applied, XOR then AND, until a non-zero result is obtained. Contrary to the information given in some MSX manuals the loop can be broken by the CTRL-STOP key as the [CKCNTC](#ckcntc) standard routine is called from inside it.
 
 <a name="4039h"></a>
 
     Address... 4039H
 
-This routine is used by the Runloop when it encounters the end of the program text while in program mode. ONEFLAG is checked to see whether it still contains an active error code.  If so a "No RESUME" error is generated, otherwise program termination continues normally (6401H). The idea behind this routine is to catch any "ON ERROR" handlers without a "RESUME" statement at the end.
+This routine is used by the Runloop when it encounters the end of the program text while in program mode. [ONEFLAG](#oneflag) is checked to see whether it still contains an active error code.  If so a "`No RESUME`" error is generated, otherwise program termination continues normally (6401H). The idea behind this routine is to catch any "`ON ERROR`" handlers without a "`RESUME`" statement at the end.
 
 <a name="404fh"></a>
 
     Address... 404FH
 
-This routine is used by the "READ" statement handler when an error is found in a "DATA" statement. The line number contained in DATLIN is copied to CURLIN so the error handler will flag the "DATA" line as the illegal statement rather than the program line. Control then drops into the "Syntax error" generator.
+This routine is used by the "`READ`" statement handler when an error is found in a "`DATA`" statement. The line number contained in [DATLIN](#datlin) is copied to [CURLIN](#curlin) so the error handler will flag the "`DATA`" line as the illegal statement rather than the program line. Control then drops into the "Syntax error" generator.
 
 <a name="4055h"></a>
 
@@ -3906,29 +3911,29 @@ This is a group of nine error generators, register E is loaded with the relevant
 
     Address... 406FH
 
-This is the Interpreter error handler, all error generators transfer to here with an error code in register E. VLZADR is first checked to see if the "VAL" statement handler has changed the program text, if so the original character is restored from VLZDAT. The current line number is then copied from CURLIN to ERRLIN and DOT and the Z80 stack is restored from SAVSTK (62F0H). The error code is placed in ERRFLG, for use by the "ERR" function, and the current program text position copied from SAVTXT to ERRTXT for use by the "RESUME" statement handler. The error line number and program text position are also copied to OLDLIN and OLDTXT for use by the "CONT" statement handler. ONELIN is then checked to see if a previous "ON ERROR" statement has been executed. If so, and providing no error code is already active, control transfers to the Runloop (4620H) to execute the BASIC error recovery statements.
+This is the Interpreter error handler, all error generators transfer to here with an error code in register E. [VLZADR](#vlzadr) is first checked to see if the "`VAL`" statement handler has changed the program text, if so the original character is restored from [VLZDAT](#vlzdat). The current line number is then copied from [CURLIN](#curlin) to [ERRLIN](#errlin) and [DOT](#dot) and the Z80 stack is restored from [SAVSTK](#savstk) (62F0H). The error code is placed in [ERRFLG](#errflg), for use by the "`ERR`" function, and the current program text position copied from [SAVTXT](#savtxt) to [ERRTXT](#errtxt) for use by the "`RESUME`" statement handler. The error line number and program text position are also copied to [OLDLIN](#oldlin) and [OLDTXT](#oldtxt) for use by the "`CONT`" statement handler. [ONELIN](#onelin) is then checked to see if a previous "`ON ERROR`" statement has been executed. If so, and providing no error code is already active, control transfers to the Runloop (4620H) to execute the BASIC error recovery statements.
 
-Otherwise the error code is used to count through the error message table at 3D75H until the required one is reached. A CR,LF is issued (7323H) and the screen forced back to text mode via the TOTEXT standard routine. A BELL code is then issued and the error message displayed (6678H). Assuming the Interpreter is in program mode, rather than direct mode, this is followed by the line number (340AH) and control drops into the "OK" point.
+Otherwise the error code is used to count through the error message table at [3D75H](#3d75h) until the required one is reached. A CR,LF is issued ([7323H](#7323h)) and the screen forced back to text mode via the [TOTEXT](#totext) standard routine. A BELL code is then issued and the error message displayed ([6678H](#6678h)). Assuming the Interpreter is in program mode, rather than direct mode, this is followed by the line number ([340AH](#340ah)) and control drops into the "`OK`" point.
 
 <a name="411fh"></a>
 
     Address... 411FH
 
-This is the re-entry point to the Interpreter Mainloop for a terminating program. The screen is forced to text mode via the TOTEXT standard routine, the printer is cleared (7304H) and I/O buffer 0 closed (6D7BH). A CR,LF is then issued to the screen (7323H), the message "OK" is displayed (6678H) and control drops into the Mainloop.
+This is the re-entry point to the Interpreter Mainloop for a terminating program. The screen is forced to text mode via the [TOTEXT](#totext) standard routine, the printer is cleared ([7304H](#7304h)) and I/O buffer 0 closed (6D7BH). A CR,LF is then issued to the screen ([7323H](#7323h)), the message "`OK`" is displayed ([6678H](#6678h)) and control drops into the Mainloop.
 
 <a name="4134h"></a>
 
     Address... 4134H
 
-This is the Interpreter Mainloop. CURLIN is first set to FFFFH to indicate direct mode and AUTFLG checked to see if "AUTO" mode is on. If so the next line number is taken from AUTLIN and displayed (3412H). The Program Text Area is then searched to see if this line already exists (4295H) and either an asterisk or space displayed accordingly.
+This is the Interpreter Mainloop. [CURLIN](#curlin) is first set to FFFFH to indicate direct mode and [AUTFLG](#autflg) checked to see if "`AUTO`" mode is on. If so the next line number is taken from [AUTLIN](#autlin) and displayed ([3412H](#3412h)). The Program Text Area is then searched to see if this line already exists ([4295H](#4295h)) and either an asterisk or space displayed accordingly.
 
-The ISFLIO standard routine is then used to determine whether a "LOAD" statement is active. If so the program line is collected from the cassette (7374H), otherwise it is taken from the console via the PINLIN standard routine. If the line is empty or the CTRL-STOP key has been pressed control transfers back to the start of the Mainloop (4134H) with no further action. If the line commences with a line number this is converted to an unsigned integer in register pair DE (4769H).  The line is then converted to tokenized form and placed in KBUF (42B2H). If no line number was found at the start of the line control then transfers to the Runloop (6D48H) to execute the statement.
+The [ISFLIO](#isflio) standard routine is then used to determine whether a "`LOAD`" statement is active. If so the program line is collected from the cassette ([7374H](#7374h)), otherwise it is taken from the console via the [PINLIN](#pinlin) standard routine. If the line is empty or the CTRL-STOP key has been pressed control transfers back to the start of the Mainloop ([4134H](#4134h)) with no further action. If the line commences with a line number this is converted to an unsigned integer in register pair DE (4769H).  The line is then converted to tokenized form and placed in [KBUF](#kbuf) ([42B2H](#42b2h)). If no line number was found at the start of the line control then transfers to the Runloop ([6D48H](#6d48h)) to execute the statement.
 
-Assuming the line commences with a line number it is tested to see if it is otherwise empty and the result temporarily saved. The line number is copied to DOT and AUTLIN increased by the contents of AUTINC, if AUTLIN now exceeds 65530 the "AUTO" mode is turned off. The Program Text Area is then searched (4295H) to find a matching line number or, failing this, the position of the next highest line number. If no matching line number is found and the line is empty and "AUTO" mode is off an "Undefined line number" error is generated (481CH). If a matching line number is found and the line is empty and "AUTO" mode is on the Mainloop simply skips to the next statement (4237H).
+Assuming the line commences with a line number it is tested to see if it is otherwise empty and the result temporarily saved. The line number is copied to [DOT](#dot) and [AUTLIN](#autlin) increased by the contents of [AUTINC](#autinc), if [AUTLIN](#autlin) now exceeds 65530 the "`AUTO`" mode is turned off. The Program Text Area is then searched ([4295H](#4295h)) to find a matching line number or, failing this, the position of the next highest line number. If no matching line number is found and the line is empty and "`AUTO`" mode is off an "`Undefined line number`" error is generated ([481CH](#481ch)). If a matching line number is found and the line is empty and "`AUTO`" mode is on the Mainloop simply skips to the next statement (4237H).
 
-Otherwise any pointers in the Program Text Area are converted back to line numbers (54EAH) and any existing program line deleted (5405H). Assuming the new program line is non- empty the Program Text Area is opened up by the required amount (6250H) and the tokenized program line copied from KBUF.
+Otherwise any pointers in the Program Text Area are converted back to line numbers (54EAH) and any existing program line deleted (5405H). Assuming the new program line is non-empty the Program Text Area is opened up by the required amount (6250H) and the tokenized program line copied from [KBUF](#kbuf).
 
-The Program Text Area links are then recalculated (4257H), the Variable Storage Areas are cleared (629AH) and control transfers back to the start of the Mainloop.
+The Program Text Area links are then recalculated (4257H), the Variable Storage Areas are cleared ([629AH](#629ah)) and control transfers back to the start of the Mainloop.
 
 <a name="4253h"></a>
 
@@ -3936,7 +3941,7 @@ The Program Text Area links are then recalculated (4257H), the Variable Storage 
 
 This routine recalculates the Program Text Area links after a program modification. The first two bytes of each program line contain the starting address of the following line, this is called the link. Although the link increases the amount of storage required per program line it greatly reduces the time required by the Interpreter to locate a given line.
 
-An example of a typical program line is shown below, in this case the line "10 PRINT 9" situated at the start of the Program Text Area (8001H):
+An example of a typical program line is shown below, in this case the line "`10 PRINT 9`" situated at the start of the Program Text Area (8001H):
 
     +-------------------------------------------+
     ¦ 09H 80H ¦ 0AH 00H ¦ 91H ¦ 20H ¦ 1AH ¦ 00H ¦
@@ -3944,7 +3949,7 @@ An example of a typical program line is shown below, in this case the line "10 P
 
 **Figure 43:** Program Line
 
-In the above example the link is stored in Z80 word order (LSB,MSB) and is immediately followed by the binary line number, also in word order. The statement itself is composed of a "PRINT" token (91H), a single space, the number nine and the end of line character (00H). Further details of the storage format can be found in the tokenizing routine (42B2H).
+In the above example the link is stored in Z80 word order (LSB,MSB) and is immediately followed by the binary line number, also in word order. The statement itself is composed of a "`PRINT`" token (91H), a single space, the number nine and the end of line character (00H). Further details of the storage format can be found in the tokenizing routine ([42B2H](#42b2h)).
 
 Each link is recalculated simply by scanning through the line until the end of line character is found. The process is complete when the end of the Program Storage Area, marked by the special link of 0000H, is reached.
 
@@ -3952,23 +3957,23 @@ Each link is recalculated simply by scanning through the line until the end of l
 
     Address... 4279H
 
-This routine is used by the "LIST" statement handler to collect up to two line number operands from the program text.  If the first line number is present it is converted to an unsigned integer in register pair DE (475FH), if not a default value of 0000H is returned. If the second line number is present it must be preceded by a "-" token (F2H) and is returned on the Z80 stack, if not a default value of 65530 is returned. Control then drops into the program text search routine to find the first referenced program line.
+This routine is used by the "`LIST`" statement handler to collect up to two line number operands from the program text.  If the first line number is present it is converted to an unsigned integer in register pair DE ([475FH](#475fh)), if not a default value of 0000H is returned. If the second line number is present it must be preceded by a "-" token (F2H) and is returned on the Z80 stack, if not a default value of 65530 is returned. Control then drops into the program text search routine to find the first referenced program line.
 
 <a name="4295h"></a>
 
     Address... 4295H
 
-This routine searches the Program Text Area for the program line whose line number is supplied in register pair DE.  Starting at the address contained in TXTTAB each program line is examined for a match. If an equal line number is found the routine terminates with Flag Z,C and register pair BC pointing to the start of the program line. If a higher line number is found the routine terminates Flag NZ,NC and if the end link is reached the routine terminates Flag Z,NC.
+This routine searches the Program Text Area for the program line whose line number is supplied in register pair DE. Starting at the address contained in [TXTTAB](#txttab) each program line is examined for a match. If an equal line number is found the routine terminates with Flag Z,C and register pair BC pointing to the start of the program line. If a higher line number is found the routine terminates Flag NZ,NC and if the end link is reached the routine terminates Flag Z,NC.
 
 <a name="42b2h"></a>
 
     Address... 42B2H
 
-This routine is used by the Interpreter Mainloop to tokenize a line of text. On entry register pair HL points to the first text character in BUF. On exit the tokenized line is in KBUF, register pair BC holds its length and register pair HL points to its start.
+This routine is used by the Interpreter Mainloop to tokenize a line of text. On entry register pair HL points to the first text character in [BUF](#buf). On exit the tokenized line is in [KBUF](#kbuf), register pair BC holds its length and register pair HL points to its start.
 
-Except after opening quotes or after the "REM", "CALL" or "DATA" keywords any string of characters matching a keyword is replaced by that keyword's token. Lower case alphabetics are changed to upper case for keyword comparison. The character "?" is replaced by the "PRINT" token (91H) and the character "'" by ":" (3AH), "REM" token (8FH), "'" token (E6H). The "ELSE" token (A1H) is preceded by a statement separator (3AH). Any other miscellaneous characters in the text are copied without alteration except that lower case alphabetics are converted to upper case. Those tokens smaller than 80H, the function tokens, cannot be stored directly in KBUF as they will conflict with ordinary text. Instead the sequence FFH, token+80H is used.
+Except after opening quotes or after the "`REM`", "`CALL`" or "`DATA`" keywords any string of characters matching a keyword is replaced by that keyword's token. Lower case alphabetics are changed to upper case for keyword comparison. The character "?" is replaced by the "`PRINT`" token (91H) and the character "'" by ":" (3AH), "REM" token (8FH), "'" token (E6H). The "`ELSE`" token (A1H) is preceded by a statement separator (3AH). Any other miscellaneous characters in the text are copied without alteration except that lower case alphabetics are converted to upper case. Those tokens smaller than 80H, the function tokens, cannot be stored directly in [KBUF](#kbuf) as they will conflict with ordinary text. Instead the sequence FFH, token+80H is used.
 
-Numeric constants are first converted into one of the standard types in DAC (3299H). They are then stored in one of several ways depending upon their type and magnitude, the general idea being to minimize memory usage:
+Numeric constants are first converted into one of the standard types in [DAC](#dac) ([3299H](#3299h)). They are then stored in one of several ways depending upon their type and magnitude, the general idea being to minimize memory usage:
 
     0BH LSB MSB ................... Octal number
     0CH LSB MSB ................... Hex number
@@ -3978,9 +3983,9 @@ Numeric constants are first converted into one of the standard types in DAC (329
     1DH EE DD DD DD ............... Single Precision
     1FH EE DD DD DD DD DD DD DD ... Double Precision
 
-There is no specific token for binary numbers, these are left as character strings. This would appear to be a legacy from earlier versions of Microsoft BASIC. Any sign prefixing a number is regarded as an operator and is stored as a separate token, negative numbers are not produced during tokenization.  As double precision numbers occupy so much space a line containing too many, for example PRINT 1#,1#,1# etc. may cause KBUF to fill up. If this happens a "Line buffer overflow" error is generated.
+There is no specific token for binary numbers, these are left as character strings. This would appear to be a legacy from earlier versions of Microsoft BASIC. Any sign prefixing a number is regarded as an operator and is stored as a separate token, negative numbers are not produced during tokenization.  As double precision numbers occupy so much space a line containing too many, for example PRINT 1#,1#,1# etc. may cause [KBUF](#kbuf) to fill up. If this happens a "`Line buffer overflow`" error is generated.
 
-Any number following one of the keyword tokens in the table at 43B5H is considered to be a line number operand and is stored with a different token:
+Any number following one of the keyword tokens in the table at [43B5H](#43b5h) is considered to be a line number operand and is stored with a different token:
 
     0DH LSB MSB ................... Pointer
     0EH LSB MSB ................... Line number
@@ -4007,9 +4012,9 @@ This table of tokens is used during tokenization to check for the keywords which
 
     Address... 4524H
 
-This is the "FOR" statement handler. The loop Variable is first located and assigned its initial value by the "LET" handler (4880H), the address of the loop Variable is returned in register pair DE. The end of the statement is found (485BH) and its address placed in ENDFOR. The Z80 stack is then searched (3FE6H) for any parameter blocks using the same loop Variable. For each one found the current ENDFOR address is compared with that of the parameter block, if there is a match that section of the stack is discarded. This is done in case there are any incomplete loops as a result of a "GOTO" back to the "FOR" statement from inside the loop.
+This is the "`FOR`" statement handler. The loop Variable is first located and assigned its initial value by the "`LET`" handler ([4880H](#4880h)), the address of the loop Variable is returned in register pair DE. The end of the statement is found ([485BH](#485bh)) and its address placed in [ENDFOR](#endfor). The Z80 stack is then searched (3FE6H) for any parameter blocks using the same loop Variable. For each one found the current [ENDFOR](#endfor) address is compared with that of the parameter block, if there is a match that section of the stack is discarded. This is done in case there are any incomplete loops as a result of a "`GOTO`" back to the "`FOR`" statement from inside the loop.
 
-The termination operand and optional "STEP" operand are then evaluated and converted to the same type as the loop Variable.  After checking that stack space is available (625EH) a twenty- five byte parameter block is pushed onto the Z80 stack. This is made up of the following:
+The termination operand and optional "`STEP`" operand are then evaluated and converted to the same type as the loop Variable. After checking that stack space is available ([625EH](#625eh)) a twenty-five byte parameter block is pushed onto the Z80 stack. This is made up of the following:
 
     2 bytes ... ENDFOR address
     2 bytes ... Current line number
@@ -4020,23 +4025,23 @@ The termination operand and optional "STEP" operand are then evaluated and conve
     2 bytes ... Address of loop Variable
     1 byte  ... FOR token (82H)
 
-The parameter block remains on the stack for use by the "NEXT" statement handler until termination is reached, it is then discarded. The size of the block remains constant even though, for integer and single precision loop Variables, the full eight bytes are not required for the termination and STEP values. In these cases the least significant bytes are packed out with garbage.
+The parameter block remains on the stack for use by the "`NEXT`" statement handler until termination is reached, it is then discarded. The size of the block remains constant even though, for integer and single precision loop Variables, the full eight bytes are not required for the termination and STEP values. In these cases the least significant bytes are packed out with garbage.
 
-It should be noted that the type of arithmetic operation performed by the "NEXT" statement handler, and hence the loop execution speed, depends entirely upon the loop Variable type and not the operand types. For the fastest program execution integer type Variables, N% for example, should be used.
+It should be noted that the type of arithmetic operation performed by the "`NEXT`" statement handler, and hence the loop execution speed, depends entirely upon the loop Variable type and not the operand types. For the fastest program execution integer type Variables, N% for example, should be used.
 
 <a name="4601h"></a>
 
     Address... 4601H
 
-This is the Runloop, each statement handler returns here upon completion so the Interpreter can proceed to the next statement. The current Z80 SP is copied to SAVSTK for error recovery purposes and the CTRL-STOP key checked via the ISCNTC standard routine. Any pending interrupts are processed (6389H) and the current program text position, held in register pair HL throughout the Interpreter, is copied to SAVTXT.
+This is the Runloop, each statement handler returns here upon completion so the Interpreter can proceed to the next statement. The current Z80 SP is copied to [SAVSTK](#savstk) for error recovery purposes and the CTRL-STOP key checked via the [ISCNTC](#iscntc) standard routine. Any pending interrupts are processed ([6389H](#6389h)) and the current program text position, held in register pair HL throughout the Interpreter, is copied to [SAVTXT](#savtxt).
 
-The current program character is then examined, if this is a statement separator (3AH) control transfers immediately to the execution point (4640H). If it is anything else but an end of line character (00H) a "Syntax error" is generated (4055H) as there is spurious text at the end of the statement. Register pair HL is advanced to the first character of the new program line and the link examined, if this is zero the program is terminated (4039H). Otherwise the line number is taken from the new line and placed in CURLIN. If TRCFLG is non-zero the line number is displayed (3412H) enclosed by square brackets, control then drops into the execution point.
+The current program character is then examined, if this is a statement separator (3AH) control transfers immediately to the execution point ([4640H](#4640h)). If it is anything else but an end of line character (00H) a "`Syntax error`" is generated ([4055H](#4055h)) as there is spurious text at the end of the statement. Register pair HL is advanced to the first character of the new program line and the link examined, if this is zero the program is terminated ([4039H](#4039h)). Otherwise the line number is taken from the new line and placed in [CURLIN](#curlin). If [TRCFLG](#trcflg) is non-zero the line number is displayed ([3412H](#3412h)) enclosed by square brackets, control then drops into the execution point.
 
 <a name="4640h"></a>
 
     Address... 4640H
 
-This is the Runloop execution point. A return to the start of the Runloop (4601H) is pushed onto the Z80 stack and the first character taken from the new statement via the CHRGTR standard routine. If it is an underline character (5FH) control transfers to the "CALL" statement handler (55A7H). If it is smaller than 81H, the smallest statement token, control transfers to the "LET" handler (4880H). If it is larger than D8H, the largest statement token, it is checked to see if it is one of the function tokens allowed as a statement (51ADH).  Otherwise the handler address is taken from the table at 392EH and pushed onto the stack. Control then drops into the CHRGTR standard routine to fetch the next program character before control transfers to the statement handler.
+This is the Runloop execution point. A return to the start of the Runloop ([4601H](#4601h)) is pushed onto the Z80 stack and the first character taken from the new statement via the [CHRGTR](#chrgtr) standard routine. If it is an underline character (5FH) control transfers to the "`CALL`" statement handler (55A7H). If it is smaller than 81H, the smallest statement token, control transfers to the "`LET`" handler ([4880H](#4880h)). If it is larger than D8H, the largest statement token, it is checked to see if it is one of the function tokens allowed as a statement ([51ADH](#51adh)). Otherwise the handler address is taken from the table at [392EH](#392eh) and pushed onto the stack. Control then drops into the [CHRGTR](#chrgtr) standard routine to fetch the next program character before control transfers to the statement handler.
 
 <a name="4666h"></a><a name="chrgtr"></a>
 
@@ -4046,100 +4051,100 @@ This is the Runloop execution point. A return to the start of the Runloop (4601H
     Exit...... A=Next program character
     Modifies.. AF, HL
 
-Standard routine to fetch the next character from the program text. Register pair HL is incremented and the character placed in register A. If it is a space, TAB code (09H) or LF code (0AH) it is skipped over. If it is a statement separator (3AH) or end of line character (00H) the routine terminates with Flag Z,NC. If it is a digit from "0" to "9" the routine terminates with Flag NZ,C. If it is any other character apart from the numeric prefix tokens the routine terminates Flag NZ,NC. If the character is one of the numeric prefix tokens then it is placed in CONSAV and the operand copied to CONLO.  The type code is placed in CONTYP and the address of the trailing program character in CONTXT.
+Standard routine to fetch the next character from the program text. Register pair HL is incremented and the character placed in register A. If it is a space, TAB code (09H) or LF code (0AH) it is skipped over. If it is a statement separator (3AH) or end of line character (00H) the routine terminates with Flag Z,NC. If it is a digit from "0" to "9" the routine terminates with Flag NZ,C. If it is any other character apart from the numeric prefix tokens the routine terminates Flag NZ,NC. If the character is one of the numeric prefix tokens then it is placed in [CONSAV](#consav) and the operand copied to [CONLO](#conlo). The type code is placed in [CONTYP](#contyp) and the address of the trailing program character in CONTXT.
 
 <a name="46e8h"></a>
 
     Address... 46E8H
 
-This routine is used by the Factor Evaluator and during detokenization to recover a numeric operand when one of the prefix tokens is returned by the CHRGTR standard routine. The prefix token is first taken from CONSAV, if it is anything but a line number or pointer token the operand is copied from CONLO to DAC and the type code copied from CONTYP to VALTYP. If it is a line number it is converted to single precision and placed in DAC (3236H). If it is a pointer the original line number is recovered from the referenced program line, converted to single precision and placed in DAC (3236H).
+This routine is used by the Factor Evaluator and during detokenization to recover a numeric operand when one of the prefix tokens is returned by the [CHRGTR](#chrgtr) standard routine. The prefix token is first taken from [CONSAV](#consav), if it is anything but a line number or pointer token the operand is copied from [CONLO](#conlo) to [DAC](#dac) and the type code copied from [CONTYP](#contyp) to [VALTYP](#valtyp). If it is a line number it is converted to single precision and placed in [DAC](#dac) (3236H). If it is a pointer the original line number is recovered from the referenced program line, converted to single precision and placed in DAC (3236H).
 
 <a name="4718h"></a>
 
     Address... 4718H
 
-This is the "DEFSTR" statement handler. Register E is loaded with the string type code (03H) and control drops into the general type definition routine.
+This is the "`DEFSTR`" statement handler. Register E is loaded with the string type code (03H) and control drops into the general type definition routine.
 
 <a name="471bh"></a>
 
     Address... 471BH
 
-This is the "DEFINT" statement handler. Register E is loaded with the integer type code (02H) and control drops into the general type definition routine.
+This is the "`DEFINT`" statement handler. Register E is loaded with the integer type code (02H) and control drops into the general type definition routine.
 
 <a name="471eh"></a>
 
     Address... 471EH
 
-This is the "DEFSNG" statement handler. Register E is loaded with the single precision type code (04H) and control drops into the general type definition routine.
+This is the "`DEFSNG`" statement handler. Register E is loaded with the single precision type code (04H) and control drops into the general type definition routine.
 
 <a name="4721h"></a>
 
     Address... 4721H
 
-This is the "DEFDBL" statement handler. Register E is loaded with the double precision type code (08H) and the first range definition character checked (64A7H). If this is not upper case alphabetic a "Syntax error" is generated (4055H). If a "-" token (F2H) follows the second range definition character is taken and checked (64A7H), the difference between the two determines the number of entries in DEFTBL that are filled with the type code.
+This is the "`DEFDBL`" statement handler. Register E is loaded with the double precision type code (08H) and the first range definition character checked ([64A7H](#64a7h)). If this is not upper case alphabetic a "`Syntax error`" is generated ([4055H](#4055h)). If a "-" token (F2H) follows the second range definition character is taken and checked ([64A7H](#64a7h)), the difference between the two determines the number of entries in [DEFTBL](#deftbl) that are filled with the type code.
 
 <a name="4755h"></a>
 
     Address... 4755H
 
-This routine evaluates an operand and converts it to an integer in register pair DE (520FH). If the operand is negative an "Illegal function call" error is generated.
+This routine evaluates an operand and converts it to an integer in register pair DE (520FH). If the operand is negative an "`Illegal function call`" error is generated.
 
 <a name="475fh"></a>
 
     Address... 475FH
 
-This routine is used by the statement handlers shown in the table at 43B5H to collect a single line number operand from the program text and convert it to an unsigned integer in register pair DE. If the first character in the text is a "." (2EH) the routine terminates with the contents of DOT. If it is one of the line number tokens (0DH or 0EH) the routine terminates with the contents of CONLO. Otherwise successive digits are taken and added to the product, with appropriate multiplications by ten, until a non-numeric character is found.
+This routine is used by the statement handlers shown in the table at [43B5H](#43b5h) to collect a single line number operand from the program text and convert it to an unsigned integer in register pair DE. If the first character in the text is a "." (2EH) the routine terminates with the contents of [DOT](#dot). If it is one of the line number tokens (0DH or 0EH) the routine terminates with the contents of [CONLO](#conlo). Otherwise successive digits are taken and added to the product, with appropriate multiplications by ten, until a non-numeric character is found.
 
 <a name="479eh"></a>
 
     Address... 479EH
 
-This is the "RUN" statement handler. If no line number operand is present in the program text the system is cleared (629AH) and control returns to the Runloop with register pair HL pointing to the start of the Program Storage Area. If a line number operand is present the system is cleared (62A1H) and control transfers to the "GOTO" statement handler (47E7H).  Otherwise a following filename is assumed, for example RUN "CAS:FILE", and control transfers to the "LOAD" statement handler (6B5BH);
+This is the "`RUN`" statement handler. If no line number operand is present in the program text the system is cleared ([629AH](#629ah)) and control returns to the Runloop with register pair HL pointing to the start of the Program Storage Area. If a line number operand is present the system is cleared (62A1H) and control transfers to the "`GOTO`" statement handler (47E7H).  Otherwise a following filename is assumed, for example `RUN "CAS:FILE"`, and control transfers to the "`LOAD`" statement handler ([6B5BH](#6b5bh));
 
 <a name="47b2h"></a>
 
     Address... 47B2H
 
-This is the "GOSUB" statement handler. After checking that stack space is available (625EH) the line number operand is collected and placed in register pair DE (4769H). The seven byte parameter block is then pushed onto the stack and control transfers to the "GOTO" handler (47EBH). The parameter block is made up of the following:
+This is the "`GOSUB`" statement handler. After checking that stack space is available ([625EH](#625eh)) the line number operand is collected and placed in register pair DE (4769H). The seven byte parameter block is then pushed onto the stack and control transfers to the "`GOTO`" handler (47EBH). The parameter block is made up of the following:
 
     2 bytes ... End of statement address
     2 bytes ... Current line number
     2 bytes ... 0000H
     1 byte  ... GOSUB token (8DH)
 
-The parameter block remains on the stack until a "RETURN" statement is executed. It is then used to determine the original program text position after which it is discarded.
+The parameter block remains on the stack until a "`RETURN`" statement is executed. It is then used to determine the original program text position after which it is discarded.
 
 <a name="47cfh"></a>
 
     Address... 47CFH
 
-This routine is used by the Runloop interrupt processor (6389H) to create a "GOSUB" type parameter block on the Z80 stack. An interrupt block is identical to a normal block except that the two zero bytes shown above are replaced by the address of the device's entry in TRPTBL. This address will be used by the "RETURN" statement handler to update the device's interrupt status once a subroutine has terminated. After pushing the parameter block control transfers to the Runloop to execute the program line whose address is supplied in register pair DE.
+This routine is used by the Runloop interrupt processor ([6389H](#6389h)) to create a "`GOSUB`" type parameter block on the Z80 stack. An interrupt block is identical to a normal block except that the two zero bytes shown above are replaced by the address of the device's entry in [TRPTBL](#trptbl). This address will be used by the "`RETURN`" statement handler to update the device's interrupt status once a subroutine has terminated. After pushing the parameter block control transfers to the Runloop to execute the program line whose address is supplied in register pair DE.
 
 <a name="47e8h"></a>
 
     Address... 47E8H
 
-This is the "GOTO" statement handler. The line number operand is collected (4769H) and placed in register pair HL. If it is a pointer control transfers immediately to the Runloop to begin execution at the new program text position. Otherwise the line number is compared with the current line number to determine the starting position for the program text search. If it is greater the search starts from the end of this line (4298H), if it is smaller it starts from the beginning of the Program Text Area (4295H). If the referenced line cannot be found an "Undefined line number" error is generated (481CH).  Otherwise the line number operand is replaced by the referenced program line's address and its token changed to the pointer type (5583H). Control then transfers to the Runloop to execute the referenced program line.
+This is the "`GOTO`" statement handler. The line number operand is collected (4769H) and placed in register pair HL. If it is a pointer control transfers immediately to the Runloop to begin execution at the new program text position. Otherwise the line number is compared with the current line number to determine the starting position for the program text search. If it is greater the search starts from the end of this line (4298H), if it is smaller it starts from the beginning of the Program Text Area ([4295H](#4295h)). If the referenced line cannot be found an "`Undefined line number`" error is generated ([481CH](#481ch)). Otherwise the line number operand is replaced by the referenced program line's address and its token changed to the pointer type (5583H). Control then transfers to the Runloop to execute the referenced program line.
 
 <a name="481ch"></a>
 
     Address... 481CH
 
-This is the "Undefined line number" error generator.
+This is the "`Undefined line number`" error generator.
 
 <a name="4821h"></a>
 
     Address... 4821H
 
-This is the "RETURN" statement handler. A dummy loop Variable address is placed in register pair DE and the Z80 stack searched (3FE2H) to find the first parameter block not belonging to a "FOR" loop, this section of stack is then discarded. If no "GOSUB" token (8DH) is found at this point a "RETURN without GOSUB" error is generated.
+This is the "`RETURN`" statement handler. A dummy loop Variable address is placed in register pair DE and the Z80 stack searched ([3FE2H](#3fe2h)) to find the first parameter block not belonging to a "`FOR`" loop, this section of stack is then discarded. If no "`GOSUB`" token (8DH) is found at this point a "`RETURN without GOSUB`" error is generated.
 
-The next two bytes are then taken from the block, if they are non-zero the block was generated by an interrupt and the temporary "STOP" condition is removed (633EH). The program text is then examined, if anything follows the "RETURN" token itself it is assumed to be a line number operand and control transfers to the "GOTO" handler (47E8H). Otherwise the old line number and program text address are taken from the block and control returns to the Runloop.
+The next two bytes are then taken from the block, if they are non-zero the block was generated by an interrupt and the temporary "`STOP`" condition is removed ([633EH](#633eh)). The program text is then examined, if anything follows the "`RETURN`" token itself it is assumed to be a line number operand and control transfers to the "`GOTO`" handler ([47E8H](#47e8h)). Otherwise the old line number and program text address are taken from the block and control returns to the Runloop.
 
 <a name="485bh"></a>
 
     Address... 485BH
 
-This is the "DATA" statement handler. The program text is skipped over until a statement separator (3AH) or end of line character (00H) is found. This routine is also the "REM" and "ELSE" statement handler via the entry point at 485DH, in this case only the end of line character acts as a terminator.
+This is the "`DATA`" statement handler. The program text is skipped over until a statement separator (3AH) or end of line character (00H) is found. This routine is also the "`REM`" and "`ELSE`" statement handler via the entry point at 485DH, in this case only the end of line character acts as a terminator.
 
 <a name="4880h"></a>
 
