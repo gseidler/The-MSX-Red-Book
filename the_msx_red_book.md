@@ -3181,35 +3181,35 @@ This routine pops an eight byte double precision operand from the Z80 stack into
 
 This table contains the double precision constants used by the math routines. The first three constants have zero in the exponent position as they are in a special intermediate form used by the random number generator.
 
-    ADDR.  CONSTANT                   ADDR. CONSTANT
-    -------------------------------------------------------------
-    2CF1H  .14389820420821 RND        2DAEH  6.2503651127908
-    2CF9H  .21132486540519 RND        2DB6H -13.682370241503
-    2D01H  .40649651372358            2DBEH  8.5167319872389
-    2D09H  .43429448190324 LOG(e)     2DC6H  5               LOG
-    2D11H  .50000000000000            2DC7H  1.0000000000000
-    2D13H  .00000000000000            2DCFH -13.210478350156
-    2D1BH  1.0000000000000            2DD7H  47.925256043873
-    2D23H  .25000000000000            2DDFH -64.906682740943
-    2D2BH  3.1622776601684 SQR(10)    2DE7H  29.415750172323
-    2D33H  .86858896380650 2^LOG(e)   2DEFH  8               SIN
-    2D3BH  2.3025850929940 1/LOG(e)   2DF0H -.69215692291809
-    2D43H  1.5707963267949 PI/2       2DF8H  3.8172886385771
-    2D4BH  .26794919243112 TAN(PI/12) 2E00H -15.094499474801
-    2D53H  1.7320508075689 TAN(PI/3)  2E08H  42.058689667355
-    2D5BH  .52359877559830 PI/6       2E10H -76.705859683291
-    2D63H  .15915494309190 1/(2^PI)   2E18H  81.605249275513
-    2D6BH  4               EXP        2E20H -41.341702240398
-    2D6CH  1.0000000000000            2E28H  6.2831853071796
-    2D74H  159.37415236031            2E30H 8                ATN
-    2D7CH  2709.3169408516            2E31H -.05208693904000
-    2D84H  4497.6335574058            2E39H  .07530714913480
-    2D8CH  3               EXP        2E41H -.09081343224705
-    2D8DH  18.312360159275            2E49H  .11110794184029
-    2D95H  831.40672129371            2E51H -.14285708554884
-    2D9DH  5178.0919915162            2E59H  .19999999948967
-    2DA5H  4               LOG        2E61H -.33333333333160
-    2DA6H -.71433382153226            2E69H  1.0000000000000
+|ADDRESS|CONSTANT           |           |ADDR.  |CONSTANT           |
+|-------|-------------------|-----------|-------|----------------------
+|2CF1H  |.14389820420821    |RND        |2DAEH  |6.2503651127908    |
+|2CF9H  |.21132486540519    |RND        |2DB6H  |-13.682370241503   |
+|2D01H  |.40649651372358    |           |2DBEH  |8.5167319872389    |
+|2D09H  |.43429448190324    |LOG(e)     |2DC6H  |5                  |LOG
+|2D11H  |.50000000000000    |           |2DC7H  |1.0000000000000    |
+|2D13H  |.00000000000000    |           |2DCFH  |-13.210478350156   |
+|2D1BH  |1.0000000000000    |           |2DD7H  |47.925256043873    |
+|2D23H  |.25000000000000    |           |2DDFH  |-64.906682740943   |
+|2D2BH  |3.1622776601684    |SQR(10)    |2DE7H  |29.415750172323    |
+|2D33H  |.86858896380650    |2^LOG(e)   |2DEFH  |8                  |SIN
+|2D3BH  |2.3025850929940    |1/LOG(e)   |2DF0H  |-.69215692291809   |
+|2D43H  |1.5707963267949    |PI/2       |2DF8H  | 3.8172886385771   |
+|2D4BH  |.26794919243112    |TAN(PI/12) |2E00H  |-15.094499474801   |
+|2D53H  |1.7320508075689    |TAN(PI/3)  |2E08H  | 42.058689667355   |
+|2D5BH  |.52359877559830    |PI/6       |2E10H  |-76.705859683291   |
+|2D63H  |.15915494309190    |1/(2^PI)   |2E18H  | 81.605249275513   |
+|2D6BH  |4                  |EXP        |2E20H  |-41.341702240398   |
+|2D6CH  |1.0000000000000    |           |2E28H  | 6.2831853071796   |
+|2D74H  |159.37415236031    |           |2E30H  |8                  |ATN
+|2D7CH  |2709.3169408516    |           |2E31H  |-.05208693904000   |
+|2D84H  |4497.6335574058    |           |2E39H  |.07530714913480    |
+|2D8CH  |3                  |EXP        |2E41H  |-.09081343224705   |
+|2D8DH  |18.312360159275    |           |2E49H  |.11110794184029    |
+|2D95H  |831.40672129371    |           |2E51H  |-.14285708554884   |
+|2D9DH  |5178.0919915162    |           |2E59H  |.19999999948967    |
+|2DA5H  |4                  |LOG        |2E61H  |-.33333333333160   |
+|2DA6H  |-.71433382153226   |           |2E69H  |1.0000000000000    |
 
 </a>
 
@@ -3942,17 +3942,17 @@ This routine is used by the "`READ`" statement handler when an error is found in
 
 This is a group of nine error generators, register E is loaded with the relevant error code and control drops into the error handler:
 
-    ADDR. ERROR
-    -------------------------------
-    4055H Syntax error
-    4058H Division by zero
-    405BH NEXT without FOR
-    405EH Redimensioned array
-    4061H Undefined user function
-    4064H RESUME without error
-    4067H Overflow error
-    406AH Missing operand
-    406DH Type mismatch
+|ADDRESS|ERROR
+|-------|-----------------------
+|4055H  |Syntax error
+|4058H  |Division by zero
+|405BH  |NEXT without FOR
+|405EH  |Redimensioned array
+|4061H  |Undefined user function
+|4064H  |RESUME without error
+|4067H  |Overflow error
+|406AH  |Missing operand
+|406DH  |Type mismatch
 
 </a>
 
@@ -5055,23 +5055,23 @@ This is the "`DRAW`" statement handler. Register pair DE is set to point to the 
 
 This table contains the valid command letters and associated addresses for the "`DRAW`" statement commands. Those commands which takes a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
 
-    CMD TO
-    -----------
-    U*  5DB1H
-    D*  5DB4H
-    L*  5DB9H
-    R*  5DBCH
-    M   5DD8H
-    E*  5DCAH
-    F*  5DC6H
-    G*  5DD1H
-    H*  5DC3H
-    A*  5E4EH
-    B   5E46H
-    N   5E42H
-    X   5782H
-    C*  5E87H
-    S*  5E59H
+|CMD    |TO
+|-------|-------
+|U\*    |5DB1H
+|D\*    |5DB4H
+|L\*    |5DB9H
+|R\*    |5DBCH
+|M      |5DD8H
+|E\*    |5DCAH
+|F\*    |5DC6H
+|G\*    |5DD1H
+|H\*    |5DC3H
+|A\*    |5E4EH
+|B      |5E46H
+|N      |5E42H
+|X      |5782H
+|C\*    |5E87H
+|S\*    |5E59H
 
 </a>
 
@@ -5722,18 +5722,18 @@ Once the input string has been accepted the terminating delimiter is examined to
 
 This is a group of ten file I/O related error generators.  Register E is loaded with the relevant error code and control transfers to the error handler (406FH):
 
-    ADDR. ERROR
-    -------------------------------
-    6E6BH Bad file name
-    6E6EH File already open
-    6E71H Direct statement in file
-    6E74H File not found
-    6E77H File not open
-    6E7AH Field overflow
-    6E7DH Bad file number
-    6E80H Internal error
-    6E83H Input past end
-    6E86H Sequential I/O only
+|ADDRESS|ERROR
+|-------|------------------------
+|6E6BH  |Bad file name
+|6E6EH  |File already open
+|6E71H  |Direct statement in file
+|6E74H  |File not found
+|6E77H  |File not open
+|6E7AH  |Field overflow
+|6E7DH  |Bad file number
+|6E80H  |Internal error
+|6E83H  |Input past end
+|6E86H  |Sequential I/O only
 
 </a>
 
@@ -5891,18 +5891,18 @@ This routine is used by the "`CLOAD`" and "`CLOAD?`" statement handlers to read 
 
 This table is used by the dispatcher when decoding function codes for the GRP device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
-    TO    FUNCTION
-    -------------------------------
-    71B6H  0, open
-    71C2H  2, close
-    6E86H  4, random
-    7196H  6, sequential output
-    475AH  8, sequential input
-    475AH 10, loc
-    475AH 12, lof
-    475AH 14, eof
-    475AH 16, fpos
-    475AH 18, putback
+|TO     |FUNCTION
+|-------|---------------------
+|71B6H  | 0, open
+|71C2H  | 2, close
+|6E86H  | 4, random
+|7196H  | 6, sequential output
+|475AH  | 8, sequential input
+|475AH  |10, loc
+|475AH  |12, lof
+|475AH  |14, eof
+|475AH  |16, fpos
+|475AH  |18, putback
 
 </a>
 
@@ -5918,18 +5918,18 @@ This is the dispatcher sequential output routine for the GRP device. [SCRMOD](#s
 
 This table is used by the device dispatcher when decoding function codes for the CRT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
-    TO    FUNCTION
-    -------------------------------
-    71B6H  0, open
-    71C2H  2, close
-    6E86H  4, random
-    71C3H  6, sequential output
-    475AH  8, sequential input
-    475AH 10, loc
-    475AH 12, lof
-    475AH 14, eof
-    475AH 16, fpos
-    475AH 18, putback
+|TO     |FUNCTION
+|-------|---------------------
+|71B6H  | 0, open
+|71C2H  | 2, close
+|6E86H  | 4, random
+|71C3H  | 6, sequential output
+|475AH  | 8, sequential input
+|475AH  |10, loc
+|475AH  |12, lof
+|475AH  |14, eof
+|475AH  |16, fpos
+|475AH  |18, putback
 
 </a>
 
@@ -5951,18 +5951,18 @@ This is the dispatcher sequential output routine for the CRT device. The charact
 
 This table is used by the dispatcher when decoding function codes for the CAS device. It contains the address of the handler for each of the function codes, several are error generators:
 
-    TO    FUNCTION
-    -------------------------------
-    71DBH  0, open
-    7205H  2, close
-    6E86H  4, random
-    722AH  6, sequential output
-    723FH  8, sequential input
-    475AH 10, loc
-    475AH 12, lof
-    726DH 14, eof
-    475AH 16, fpos
-    727CH 18, putback
+|TO     |FUNCTION
+|-------|---------------------
+|71DBH  | 0, open
+|7205H  | 2, close
+|6E86H  | 4, random
+|722AH  | 6, sequential output
+|723FH  | 8, sequential input
+|475AH  |10, loc
+|475AH  |12, lof
+|726DH  |14, eof
+|475AH  |16, fpos
+|727CH  |18, putback
 
 </a>
 
@@ -6026,18 +6026,18 @@ This routine is used by the dispatcher sequential input function to collect the 
 
 This table is used by the dispatcher when decoding function codes for the LPT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
-    TO    FUNCTION
-    -------------------------------
-    71B6H  0, open
-    71C2H  2, close
-    6E86H  4, random
-    72BAH  6, sequential output
-    475AH  8, sequential input
-    475AH 10, loc
-    475AH 12, lof
-    475AH 14, eof
-    475AH 16, fpos
-    475AH 18, putback
+|TO     |FUNCTION
+|-------|---------------------
+|71B6H  | 0, open
+|71C2H  | 2, close
+|6E86H  | 4, random
+|72BAH  | 6, sequential output
+|475AH  | 8, sequential input
+|475AH  |10, loc
+|475AH  |12, lof
+|475AH  |14, eof
+|475AH  |16, fpos
+|475AH  |18, putback
 
 </a>
 
@@ -6179,24 +6179,24 @@ This routine is used by the "`PLAY`" statement handler to check how much space r
 
 This table contains the valid command letters and associated addresses for the "`PLAY`" statement commands. Those commands which take a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
 
-    CMD  TO
-    -----------
-    A    763EH
-    B    763EH
-    C    763EH
-    D    763EH
-    E    763EH
-    F    763EH
-    G    763EH
-    M*   759EH
-    V*   7586H
-    S*   75BEH
-    N*   7621H
-    O*   75EFH
-    R*   75FCH
-    T*   75E2H
-    L*   75C8H
-    X    5782H
+|CMD    |TO
+|-------|-----
+|A      |763EH
+|B      |763EH
+|C      |763EH
+|D      |763EH
+|E      |763EH
+|F      |763EH
+|G      |763EH
+|M\*    |759EH
+|V\*    |7586H
+|S\*    |75BEH
+|N\*    |7621H
+|O\*    |75EFH
+|R\*    |75FCH
+|T\*    |75E2H
+|L\*    |75C8H
+|X      |5782H
 
 </a>
 
@@ -6373,13 +6373,13 @@ This routine checks for the presence of one of the interrupt switching tokens an
 
 This routine is used by the "`ON DEVICE GOSUB`" statement handler (490DH) to check the program text for a device token.  Unless none of the device tokens is present, in which case Flag C is returned, the device's [TRPTBL](#trptbl) entry number is returned in register B and the maximum allowable line number operand count in register C:
 
-    DEVICE     TRPTBL#   LINE NUMBERS
-    ------------------------------------
-    KEY        00        10
-    STOP       10        01
-    SPRITE     11        01
-    STRIG      12        05
-    INTERVAL   17        01
+|DEVICE     |TRPTBL#    |LINE NUMBERS
+|-----------|-----------|------------
+|KEY        |00         |10
+|STOP       |10         |01
+|SPRITE     |11         |01
+|STRIG      |12         |05
+|INTERVAL   |17         |01
 
 Additionally, for "`INTERVAL`" only, the interval operand is evaluated (542FH) and placed in [INTVAL](#intval) and [INTCNT](#intcnt).
 
@@ -6548,28 +6548,28 @@ Note also that this routine contains a bug. While [SETTXT](#settxt) is correctly
 
 This masking table is used by the "`BASE`" statement handler to ensure that only legal VDP base addresses are accepted. The table number and corresponding Workspace Area variable are shown with each mask:
 
-    MASK   TABLE
-    ---------------------
-    03FFH  00, TXTNAM
-    003FH  01, TXTCOL
-    07FFH  02, TXTCGP
-    007FH  03, TXTATR
-    07FFH  04, TXTPAT
-    03FFH  05, T32NAM
-    003FH  06, T32COL
-    07FFH  07, T32CGP
-    007FH  08, T32ATR
-    07FFH  09, T32PAT
-    03FFH  10, GRPNAM
-    1FFFH  11, GRPCOL
-    1FFFH  12, GRPCGP
-    007FH  13, GRPATR
-    07FFH  14, GRPPAT
-    03FFH  15, MLTNAM
-    003FH  16, MLTCOL
-    07FFH  17, MLTCGP
-    007FH  18, MLTATR
-    07FFH  19, MLTPAT
+|MASK   |TABLE
+|-------|----------
+|03FFH  |00, TXTNAM
+|003FH  |01, TXTCOL
+|07FFH  |02, TXTCGP
+|007FH  |03, TXTATR
+|07FFH  |04, TXTPAT
+|03FFH  |05, T32NAM
+|003FH  |06, T32COL
+|07FFH  |07, T32CGP
+|007FH  |08, T32ATR
+|07FFH  |09, T32PAT
+|03FFH  |10, GRPNAM
+|1FFFH  |11, GRPCOL
+|1FFFH  |12, GRPCGP
+|007FH  |13, GRPATR
+|07FFH  |14, GRPPAT
+|03FFH  |15, MLTNAM
+|003FH  |16, MLTCOL
+|07FFH  |17, MLTCGP
+|007FH  |18, MLTATR
+|07FFH  |19, MLTPAT
 
 </a>
 
