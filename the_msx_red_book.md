@@ -832,7 +832,7 @@ Standard routine to perform memory initialization at power- up. It non-destructi
 
 Standard routine to check whether the CTRL-STOP or STOP keys have been pressed. It is used by the BASIC Interpreter at the end of each statement to check for program termination. [BASROM](#basrom) is first examined to see if it contains a non-zero value, if so the routine terminates immediately. This is to prevent users breaking into any extension ROM containing a BASIC program.
 
-INTFLG is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on ([09DAH](#09dah)) and [INTFLG](#intflg) continually checked until one of the two key codes reappears. The cursor is then turned off ([0A27H](#0a27h)) and, if the key is STOP, the routine terminates.
+[INTFLG](#intflg) is then checked to determine whether the interrupt handler has placed the CTRL-STOP or STOP key codes (03H or 04H) there. If STOP has been detected then the cursor is turned on ([09DAH](#09dah)) and [INTFLG](#intflg) continually checked until one of the two key codes reappears. The cursor is then turned off ([0A27H](#0a27h)) and, if the key is STOP, the routine terminates.
 
 If CTRL-STOP has been detected then the keyboard buffer is first cleared via the [KILBUF](#kilbuf) standard routine and [TRPTBL](#trptbl) is checked to see whether an "`ON STOP GOSUB`" statement is active.  If so the relevant entry in [TRPTBL](#trptbl) is updated ([0EF1H](#0ef1h)) and the routine terminates as the event will be handled by the Interpreter Runloop. Otherwise the [ENASLT](#enaslt) standard routine is used to switch in page 1 from the MSX ROM, in case an extension ROM is using the routine, and control transfers to the "`STOP`" statement handler (63E6H).
 
@@ -1713,7 +1713,7 @@ Standard routine to turn the Caps Lock LED on or off as determined by the conten
 
     Address... 0F46H
 
-This section of the keyboard decoder processes the STOP key. The state of the CTRL key is determined via row 6 of [NEWKEY](#newkey) and the key code for STOP (04H) or CTRL/STOP (03H) produced as appropriate. If the CTRL/STOP code is produced it is copied to [INTFLG](#intflg), for use by the [ISCNTC](#iscntc) standard routine, and then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the STOP code is produced it is also copied to INTFLG but is not placed in [KEYBUF](#keybuf), instead only a click is generated (0F64H). This means that an application program cannot read the STOP key code via the ROM BIOS standard routines.
+This section of the keyboard decoder processes the STOP key. The state of the CTRL key is determined via row 6 of [NEWKEY](#newkey) and the key code for STOP (04H) or CTRL/STOP (03H) produced as appropriate. If the CTRL/STOP code is produced it is copied to [INTFLG](#intflg), for use by the [ISCNTC](#iscntc) standard routine, and then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the STOP code is produced it is also copied to [INTFLG](#intflg) but is not placed in [KEYBUF](#keybuf), instead only a click is generated (0F64H). This means that an application program cannot read the STOP key code via the ROM BIOS standard routines.
 
 <a name="0f55h"></a>
 
@@ -5219,7 +5219,7 @@ This routine is used by the Runloop interrupt processor (6389H) to clear an inte
 
     Address... 636EH
 
-This routine is used by the run-clear routine (629AH) to clear all interrupts. The seventy-eight bytes of [TRPTBL](#trptbl) and the ten bytes of FNKFLG are zeroed.
+This routine is used by the run-clear routine (629AH) to clear all interrupts. The seventy-eight bytes of [TRPTBL](#trptbl) and the ten bytes of [FNKFLG](#fnkflg) are zeroed.
 
 <a name="6389h"></a>
 
@@ -5599,7 +5599,7 @@ This routine is used by the file I/O handlers to sequentially input a single cha
 
     Address... 6C87H
 
-This routine is used by the Factor Evaluator to apply the "INPUT$" function. The program text is checked for the "$" and "(" characters and the length operand evaluated (521CH). If an I/O buffer number is present it is evaluated, the FCB located (6A9EH) and the mode byte examined. An "Input past end" error is generated (6E83H) if the buffer is not in input or random mode. After checking that sufficient space is available (6627H) the required number of characters are sequentially input (6C71H), or collected via the CHGET standard routine, and copied to the String Storage Area. Finally the result descriptor is created (6654H).
+This routine is used by the Factor Evaluator to apply the "INPUT$" function. The program text is checked for the "$" and "(" characters and the length operand evaluated (521CH). If an I/O buffer number is present it is evaluated, the FCB located (6A9EH) and the mode byte examined. An "Input past end" error is generated (6E83H) if the buffer is not in input or random mode. After checking that sufficient space is available (6627H) the required number of characters are sequentially input (6C71H), or collected via the [CHGET](#chget) standard routine, and copied to the String Storage Area. Finally the result descriptor is created (6654H).
 
 <a name="6ceah"></a>
 
@@ -5752,13 +5752,13 @@ The device code is taken from byte 4 of the FCB and examined to determine whethe
 
     Address... 6FB7H
 
-This is the "CSAVE" statement handler. The filename is evaluated (7098H) followed by the optional baud rate operand (7A2DH). The identification block is then written to cassette (7125H) with a filetype byte of D3H. The contents of the Program Text Area are written directly to cassette as a single data block (713EH). Note that no error checking information accompanies the data.
+This is the "`CSAVE`" statement handler. The filename is evaluated (7098H) followed by the optional baud rate operand (7A2DH). The identification block is then written to cassette (7125H) with a filetype byte of D3H. The contents of the Program Text Area are written directly to cassette as a single data block (713EH). Note that no error checking information accompanies the data.
 
 <a name="6fd7h"></a>
 
     Address... 6FD7H
 
-Control transfers to this routine from the "BSAVE" statement handler to write a block of memory to cassette. The identification block is first written to cassette (7125H) with a filetype byte of D0H. The motor is then turned on and a short header written to cassette (72F8H) The starting address is popped from the Z80 stack and written to cassette LSB first, MSB second (7003H). The stop address is taken from [SAVEND](#savend) and written to cassette LSB first, MSB second (7003H). The entry address is taken from [SAVENT](#savent) and written to cassette LSB first, MSB second (7003H). The required area of memory is then written to cassette one byte at a time (72DEH) and the cassette motor turned off via the TAPOOF standard routine. Note that no error checking information accompanies the data.
+Control transfers to this routine from the "`BSAVE`" statement handler to write a block of memory to cassette. The identification block is first written to cassette (7125H) with a filetype byte of D0H. The motor is then turned on and a short header written to cassette (72F8H) The starting address is popped from the Z80 stack and written to cassette LSB first, MSB second (7003H). The stop address is taken from [SAVEND](#savend) and written to cassette LSB first, MSB second (7003H). The entry address is taken from [SAVENT](#savent) and written to cassette LSB first, MSB second (7003H). The required area of memory is then written to cassette one byte at a time (72DEH) and the cassette motor turned off via the [TAPOOF](#tapoof) standard routine. Note that no error checking information accompanies the data.
 
 <a name="7003h"></a>
 
@@ -5776,65 +5776,65 @@ This routine reads two bytes from cassette and places the first in register L (7
 
     Address... 7014H
 
-Control transfers to this routine from the "BLOAD" statement handler to load data from the cassette into memory. The cassette is read until an identification block with a file type of D0H and the correct filename is found (70B8H). The data block header is then located on the cassette (72E9H). The offset value is popped from the Z80 stack and added to the start address from the cassette (700BH). The stop address is read from cassette (700BH) and the offset added to this as well. The entry address is read from cassette (700BH) and placed in [SAVENT](#savent) in case auto-run is required. Successive data bytes are then read from cassette (72D4H) and placed in memory, at the start address initially, until the stop address is reached. Finally the motor is turned off via the TAPIOF standard routine and control transfers to the "BLOAD" termination point (6EF4H).
+Control transfers to this routine from the "`BLOAD`" statement handler to load data from the cassette into memory. The cassette is read until an identification block with a file type of D0H and the correct filename is found (70B8H). The data block header is then located on the cassette (72E9H). The offset value is popped from the Z80 stack and added to the start address from the cassette (700BH). The stop address is read from cassette (700BH) and the offset added to this as well. The entry address is read from cassette (700BH) and placed in [SAVENT](#savent) in case auto-run is required. Successive data bytes are then read from cassette (72D4H) and placed in memory, at the start address initially, until the stop address is reached. Finally the motor is turned off via the [TAPIOF](#tapiof) standard routine and control transfers to the "`BLOAD`" termination point (6EF4H).
 
 <a name="703fh"></a>
 
     Address... 703FH
 
-This is the "CLOAD" and "CLOAD?" statement handler. The program text is first checked for a trailing "PRINT" token (91H) which is how the "?" character is tokenized. The filename is then evaluated (708CH) and the cassette read until an identification block with a filetype of D3H and the correct filename is found (70B8H). For "CLOAD" a "NEW" operation is then performed (6287H) to erase the current program text. For "CLOAD?" all pointers in the Program Text Area are converted to line numbers (54EAH) to match the cassette data.
+This is the "`CLOAD`" and "`CLOAD?`" statement handler. The program text is first checked for a trailing "`PRINT`" token (91H) which is how the "`?`" character is tokenized. The filename is then evaluated (708CH) and the cassette read until an identification block with a filetype of D3H and the correct filename is found (70B8H). For "`CLOAD`" a "`NEW`" operation is then performed (6287H) to erase the current program text. For "CLOAD?" all pointers in the Program Text Area are converted to line numbers (54EAH) to match the cassette data.
 
-The data block header is located on the cassette and successive data bytes read from cassette and placed in memory or compared with the current memory contents (715DH). When the data block has been completely read the message "OK" is displayed (6678H) and control transfers directly to the end of the Interpreter Mainloop (4237H) to reset the Variable storage pointers. For "CLOAD?" reading of the data block will terminate if the cassette byte is not the same as the program text byte in memory. If the address where this occurred is above the end of the Program Text Area then the handler terminates with an "OK" message as before. Otherwise a "Verify error" is generated.
+The data block header is located on the cassette and successive data bytes read from cassette and placed in memory or compared with the current memory contents (715DH). When the data block has been completely read the message "`OK`" is displayed (6678H) and control transfers directly to the end of the Interpreter Mainloop (4237H) to reset the Variable storage pointers. For "`CLOAD?`" reading of the data block will terminate if the cassette byte is not the same as the program text byte in memory. If the address where this occurred is above the end of the Program Text Area then the handler terminates with an "`OK`" message as before. Otherwise a "`Verify error`" is generated.
 
 <a name="708ch"></a>
 
     Address... 708CH
 
-This routine is used by the "CLOAD" and "CSAVE" statement handlers to evaluate a filename in the program text. The two handlers use different entry points so that a null filename is allowed for "CLOAD" but not for "CSAVE". The filename string is evaluated (4C64H), its storage freed (680FH) and the first six characters copied to [FILNAM](#filnam). If the filename is longer than six characters the excess is ignored. If the filename is shorter than six characters then [FILNAM](#filnam) is padded with spaces.
+This routine is used by the "`CLOAD`" and "`CSAVE`" statement handlers to evaluate a filename in the program text. The two handlers use different entry points so that a null filename is allowed for "`CLOAD`" but not for "`CSAVE`". The filename string is evaluated (4C64H), its storage freed (680FH) and the first six characters copied to [FILNAM](#filnam). If the filename is longer than six characters the excess is ignored. If the filename is shorter than six characters then [FILNAM](#filnam) is padded with spaces.
 
 <a name="70b8h"></a>
 
     Address... 70B8H
 
-This routine is used by the "CLOAD" and "BLOAD" statement handlers and for the dispatcher open function (when the device is CAS and the mode is input) to locate an identification block on the cassette. On entry the filename is in [FILNAM](#filnam) and the file type in register C, D3H for a tokenized BASIC (CLOAD) file, D0H for a binary (BLOAD) file and EAH for an ASCII (LOAD or data) file.
+This routine is used by the "`CLOAD`" and "`BLOAD`" statement handlers and for the dispatcher open function (when the device is CAS and the mode is input) to locate an identification block on the cassette. On entry the filename is in [FILNAM](#filnam) and the file type in register C, D3H for a tokenized BASIC (`CLOAD`) file, D0H for a binary (`BLOAD`) file and EAH for an ASCII (`LOAD` or data) file.
 
-The cassette motor is turned on and the cassette read until a header is found (72E9H). Each identification block is prefixed by ten file type characters so successive characters are read from cassette (72D4H) and compared to the required file type. If the file type characters do not match control transfers back to the start of the routine to find the next header. Otherwise the next six characters are read in (72D4H) and placed in [FILNAM](#filnam). If [FILNAM](#filnam) is full of spaces no filename match is attempted and the identification block has been found.  Otherwise the contents of [FILNAM](#filnam) and [FILNM2](#filnm2) are compared to determine whether this is the required file. If the match is unsuccessful, and the Interpreter is in direct mode, the message "Skip:" is displayed (710DH) followed by the filename.  Control then transfers back to the start of the routine to try the next header. If the match is successful, and the Interpreter is in direct mode, the message "Found:" is displayed (710DH) followed by the filename and the routine terminates.
+The cassette motor is turned on and the cassette read until a header is found (72E9H). Each identification block is prefixed by ten file type characters so successive characters are read from cassette (72D4H) and compared to the required file type. If the file type characters do not match control transfers back to the start of the routine to find the next header. Otherwise the next six characters are read in (72D4H) and placed in [FILNAM](#filnam). If [FILNAM](#filnam) is full of spaces no filename match is attempted and the identification block has been found.  Otherwise the contents of [FILNAM](#filnam) and [FILNM2](#filnm2) are compared to determine whether this is the required file. If the match is unsuccessful, and the Interpreter is in direct mode, the message "`Skip:`" is displayed (710DH) followed by the filename.  Control then transfers back to the start of the routine to try the next header. If the match is successful, and the Interpreter is in direct mode, the message "`Found:`" is displayed (710DH) followed by the filename and the routine terminates.
 
 <a name="70ffh"></a>
 
     Address... 70FFH
 
-This is the plain text message "Found:" terminated by a zero byte.
+This is the plain text message "`Found:`" terminated by a zero byte.
 
 <a name="7106h"></a>
 
     Address... 7106H
 
-This is the plain text message "Skip :" terminated by a zero byte.
+This is the plain text message "`Skip :`" terminated by a zero byte.
 
 <a name="710dh"></a>
 
     Address... 710DH
 
-Unless [CURLIN](#curlin) shows the Interpreter to be in program mode this routine first displays (6678H) the message whose address is supplied in register pair HL, followed by the six characters contained in FILENAM2.
+Unless [CURLIN](#curlin) shows the Interpreter to be in program mode this routine first displays (6678H) the message whose address is supplied in register pair HL, followed by the six characters contained in [FILNM2](#filnm2).
 
 <a name="7125h"></a>
 
     Address... 7125H
 
-This routine is used by the "CSAVE" and "BSAVE" statement handlers and for the dispatcher open function (when the device is CAS and the mode is output) to write an identification block to cassette. On entry the filename is in [FILNAM](#filnam) and the filetype in register A, D3H for a tokenized BASIC (CSAVE) file, D0H for a binary (BSAVE) file and EAH for an ASCII (SAVE or data) file. The cassette motor is turned on and a long header written to cassette (72F8H) The filetype byte is then written to cassette (72DEH) ten times followed by the first six characters from [FILNAM](#filnam) (72DEH). The cassette motor is turned off via the TAPOOF standard routine and the routine terminates.
+This routine is used by the "`CSAVE`" and "`BSAVE`" statement handlers and for the dispatcher open function (when the device is CAS and the mode is output) to write an identification block to cassette. On entry the filename is in [FILNAM](#filnam) and the filetype in register A, D3H for a tokenized BASIC (`CSAVE`) file, D0H for a binary (`BSAVE`) file and EAH for an ASCII (`SAVE` or data) file. The cassette motor is turned on and a long header written to cassette (72F8H) The filetype byte is then written to cassette (72DEH) ten times followed by the first six characters from [FILNAM](#filnam) (72DEH). The cassette motor is turned off via the [TAPOOF](#tapoof) standard routine and the routine terminates.
 
 <a name="713eh"></a>
 
     Address... 713EH
 
-This routine is used by the "CSAVE" statement handler to write the Program Text Area to cassette as a single data block.  All pointers in the program text are converted back to line numbers (54EAH) to make the text address independent. The cassette motor is turned on and a short header written to cassette (72F8H) The entire Program Text Area is then written to cassette a byte at a time (72DEH) and followed with seven zero bytes (72DEH) as a terminator. The cassette motor is then turned off via the TAPOOF standard routine and the routine terminates.
+This routine is used by the "`CSAVE`" statement handler to write the Program Text Area to cassette as a single data block. All pointers in the program text are converted back to line numbers (54EAH) to make the text address independent. The cassette motor is turned on and a short header written to cassette (72F8H) The entire Program Text Area is then written to cassette a byte at a time (72DEH) and followed with seven zero bytes (72DEH) as a terminator. The cassette motor is then turned off via the [TAPOOF](#tapoof) standard routine and the routine terminates.
 
 <a name="715dh"></a>
 
     Address... 715DH
 
-This routine is used by the "CLOAD" and "CLOAD?" statement handlers to read a single data block into the Program Text Area or to compare it with the current contents. On entry register A contains a flag to distinguish between the two statements, 00H for "CLOAD" and FFH for "CLOAD?". The cassette motor is turned on and the first header located (72E9H). Successive characters are read from cassette (72D4H) and placed in the Program Text Area or compared with the current contents. If the current statement is "CLOAD?" the routine will terminate with FLAG NZ if the cassette character is not the same as the memory character. Otherwise data will be read until ten successive zeroes are found. This sequence of zeroes is composed of the last program line end of line character, the end link and the seven terminator zeroes added by "CSAVE". Note that the routine will probably terminate during this sequence, when used by "CLOAD?", as memory comparison is still in progress. This accounts for the rather peculiar coding of the "CLOAD?" handler terminating conditions.
+This routine is used by the "`CLOAD`" and "`CLOAD?`" statement handlers to read a single data block into the Program Text Area or to compare it with the current contents. On entry register A contains a flag to distinguish between the two statements, 00H for "`CLOAD`" and FFH for "`CLOAD?`". The cassette motor is turned on and the first header located (72E9H). Successive characters are read from cassette (72D4H) and placed in the Program Text Area or compared with the current contents. If the current statement is "`CLOAD?`" the routine will terminate with FLAG NZ if the cassette character is not the same as the memory character. Otherwise data will be read until ten successive zeroes are found. This sequence of zeroes is composed of the last program line end of line character, the end link and the seven terminator zeroes added by "`CSAVE`". Note that the routine will probably terminate during this sequence, when used by "`CLOAD?`", as memory comparison is still in progress. This accounts for the rather peculiar coding of the "`CLOAD?`" handler terminating conditions.
 
 <a name="7182h"></a>
 
@@ -5861,13 +5861,13 @@ This table is used by the dispatcher when decoding function codes for the GRP de
 
     Address... 7196H
 
-This is the dispatcher sequential output routine for the GRP device. [SCRMOD](#scrmod) is first checked and an "Illegal function call" error generated (475AH) if the screen is in either text mode.  The character to output is taken from register C and control transfers to the [GRPPRT](#grpprt) standard routine.
+This is the dispatcher sequential output routine for the GRP device. [SCRMOD](#scrmod) is first checked and an "`Illegal function call`" error generated (475AH) if the screen is in either text mode.  The character to output is taken from register C and control transfers to the [GRPPRT](#grpprt) standard routine.
 
 <a name="71a2h"></a>
 
     Address... 71A2H
 
-This table is used by the DEVICE DISPATCHER when decoding function codes for the CRT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
+This table is used by the device dispatcher when decoding function codes for the CRT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
     TO    FUNCTION
     -------------------------------
@@ -5888,13 +5888,13 @@ This table is used by the DEVICE DISPATCHER when decoding function codes for the
 
     Address... 71B6H
 
-This is the dispatcher open routine for the CRT, LPT and GRP devices. The required mode, in register E, is checked and a "Bad file name" error generated (6E6BH) for input or append.  The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates. Note that the Z80 RET instruction at the end of this routine (71C2H) is the dispatcher close routine for the CRT, LPT and GRP devices.
+This is the dispatcher open routine for the CRT, LPT and GRP devices. The required mode, in register E, is checked and a "`Bad file name`" error generated (6E6BH) for input or append. The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates. Note that the Z80 RET instruction at the end of this routine (71C2H) is the dispatcher close routine for the CRT, LPT and GRP devices.
 
 <a name="71c3h"></a>
 
     Address... 71C3H
 
-This is the dispatcher sequential output routine for the CRT device. The character to output is taken from register C and control transfers to the CHPUT standard routine.
+This is the dispatcher sequential output routine for the CRT device. The character to output is taken from register C and control transfers to the [CHPUT](#chput) standard routine.
 
 <a name="71c7h"></a>
 
@@ -5921,37 +5921,37 @@ This table is used by the dispatcher when decoding function codes for the CAS de
 
     Address... 71DBH
 
-This is the dispatcher open routine for the CAS device. The current I/O buffer position, held in byte 6 of the FCB, and CASPRV, which holds any putback character are both zeroed. The required mode, supplied in register E, is examined and a "Bad file name" error generated (6E6BH) for append or random modes.  For output mode the identification block is then written to cassette (7125H) while for input mode the correct identification block is located on the cassette (70B8H). The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates.
+This is the dispatcher open routine for the CAS device. The current I/O buffer position, held in byte 6 of the FCB, and [CASPRV](#casprv), which holds any putback character are both zeroed. The required mode, supplied in register E, is examined and a "`Bad file name`" error generated (6E6BH) for append or random modes.  For output mode the identification block is then written to cassette (7125H) while for input mode the correct identification block is located on the cassette (70B8H). The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates.
 
 <a name="7205h"></a>
 
     Address... 7205H
 
-This is the dispatcher close routine for the CAS device.  Byte 0 of the FCB is examined and, if the mode is input, CASPRV is zeroed and the routine terminates. Otherwise the remainder of the I/O buffer is filled with end of file characters (1AH) and the I/O buffer contents written to cassette (722FH). CASPRV is then zeroed and the routine terminates.
+This is the dispatcher close routine for the CAS device. Byte 0 of the FCB is examined and, if the mode is input, [CASPRV](#casprv) is zeroed and the routine terminates. Otherwise the remainder of the I/O buffer is filled with end of file characters (1AH) and the I/O buffer contents written to cassette (722FH). [CASPRV](#casprv) is then zeroed and the routine terminates.
 
 <a name="722ah"></a>
 
     Address... 722AH
 
-This is the dispatcher sequential output routine for the CAS device. The character to output is taken from register C and placed in the next free position in the I/O buffer (728BH).  Byte 6 of the FCB, the I/O buffer position, is then incremented. If the I/O buffer position has wrapped round to zero this means that there are two hundred and fifty-six characters in the I/O buffer and it has to be written to cassette. The cassette motor is turned on, a short header is written to cassette (72F8H) followed by the I/O buffer contents (72DEH), and the motor is turned off via the TAPOOF standard routine.
+This is the dispatcher sequential output routine for the CAS device. The character to output is taken from register C and placed in the next free position in the I/O buffer (728BH). Byte 6 of the FCB, the I/O buffer position, is then incremented. If the I/O buffer position has wrapped round to zero this means that there are two hundred and fifty-six characters in the I/O buffer and it has to be written to cassette. The cassette motor is turned on, a short header is written to cassette (72F8H) followed by the I/O buffer contents (72DEH), and the motor is turned off via the [TAPOOF](#tapoof) standard routine.
 
 <a name="723fh"></a>
 
     Address... 723FH
 
-This is the dispatcher sequential input routine for the CAS device. CASPRV is first checked (72BEH) to determine whether it contains a character which has been putback, in which case its contents will be non-zero. If so the routine terminates with the character in register A. Otherwise the I/O buffer position is checked (729BH) to determine whether it contains any characters. If the I/O buffer is empty the cassette motor is turned on and the header located (72E9H). Two hundred and fifty-six characters are then read in (72D4H), the cassette motor turned off via the TAPION standard routine and the I/O buffer position reset to zero. The character is then taken from the current I/O buffer position and the position incremented.  Finally the character is checked to see if it is the end of file character (1AH). If it is not the routine terminates with the character in register A and FLAG NC. Otherwise the end of file character is placed in CASPRV, so that succeeding sequential input requests will always return the end of file condition, and the routine terminates with FLAG C.
+This is the dispatcher sequential input routine for the CAS device. [CASPRV](#casprv) is first checked (72BEH) to determine whether it contains a character which has been putback, in which case its contents will be non-zero. If so the routine terminates with the character in register A. Otherwise the I/O buffer position is checked (729BH) to determine whether it contains any characters. If the I/O buffer is empty the cassette motor is turned on and the header located (72E9H). Two hundred and fifty-six characters are then read in (72D4H), the cassette motor turned off via the [TAPION](#tapion) standard routine and the I/O buffer position reset to zero. The character is then taken from the current I/O buffer position and the position incremented.  Finally the character is checked to see if it is the end of file character (1AH). If it is not the routine terminates with the character in register A and FLAG NC. Otherwise the end of file character is placed in [CASPRV](#casprv), so that succeeding sequential input requests will always return the end of file condition, and the routine terminates with FLAG C.
 
 <a name="726dh"></a>
 
     Address... 726DH
 
-This is the dispatcher eof routine for the CAS device. The next character is input (723FH) and placed in CASPRV. It is then tested for the end of file code (1AH) and the result placed in [DAC](#dac) as an integer, zero for false, FFFFH for true.
+This is the dispatcher eof routine for the CAS device. The next character is input (723FH) and placed in [CASPRV](#casprv). It is then tested for the end of file code (1AH) and the result placed in [DAC](#dac) as an integer, zero for false, FFFFH for true.
 
 <a name="727ch"></a>
 
     Address... 727CH
 
-This is the dispatcher putback routine for the CAS device.  The character is simply placed in CASPRV to be picked up at the next sequential input request.
+This is the dispatcher putback routine for the CAS device.  The character is simply placed in [CASPRV](#casprv) to be picked up at the next sequential input request.
 
 <a name="7281h"></a>
 
@@ -5996,49 +5996,49 @@ This table is used by the dispatcher when decoding function codes for the LPT de
 
     Address... 72BAH
 
-This is the dispatcher sequential output routine for the LPT device. The character to output is taken from register C and control transfers to the OUTDLP standard routine.
+This is the dispatcher sequential output routine for the LPT device. The character to output is taken from register C and control transfers to the [OUTDLP](#outdlp) standard routine.
 
 <a name="72beh"></a>
 
     Address... 72BEH
 
-This routine is used by the dispatcher sequential input function to check if a putback character exists in CASPRV, and if not to return Flag Z. Otherwise CASPRV is zeroed and the character tested to see if it is the end of file character (1AH). If not it returns with the character in register A and FLAG NZ,NC. Otherwise the end of file character is placed back in CASPRV and the routine returns with FLAG Z,C.
+This routine is used by the dispatcher sequential input function to check if a putback character exists in [CASPRV](#casprv), and if not to return Flag Z. Otherwise [CASPRV](#casprv) is zeroed and the character tested to see if it is the end of file character (1AH). If not it returns with the character in register A and FLAG NZ,NC. Otherwise the end of file character is placed back in [CASPRV](#casprv) and the routine returns with FLAG Z,C.
 
 <a name="72cdh"></a>
 
     Address... 72CDH
 
-This routine is used by various dispatcher functions to check if the mode in register E is append, if so a "Bad file name" error is generated (6E6BH).
+This routine is used by various dispatcher functions to check if the mode in register E is append, if so a "`Bad file name`" error is generated (6E6BH).
 
 <a name="72d4h"></a>
 
     Address... 72D4H
 
-This routine is used by various dispatcher functions to read a character from the cassette. The character is read via the TAPIN standard routine and a "Device I/O error" generated (73B2H) if FLAG C is returned.
+This routine is used by various dispatcher functions to read a character from the cassette. The character is read via the [TAPIN](#tapin) standard routine and a "`Device I/O error`" generated (73B2H) if FLAG C is returned.
 
 <a name="72deh"></a>
 
     Address... 72DEH
 
-This routine is used by various dispatcher functions to write a character to cassette. The character is written via the TAPOUT standard routine and a "Device I/O error" generated (73B2H) if FLAG C is returned.
+This routine is used by various dispatcher functions to write a character to cassette. The character is written via the [TAPOUT](#tapout) standard routine and a "`Device I/O error`" generated (73B2H) if FLAG C is returned.
 
 <a name="72e9h"></a>
 
     Address... 72E9H
 
-This routine is used by various dispatcher functions to turn the cassette motor on for input. The motor is turned on via the TAPION standard routine and a "Device I/O error" generated (73B2H) if FLAG C is returned.
+This routine is used by various dispatcher functions to turn the cassette motor on for input. The motor is turned on via the [TAPION](#tapion) standard routine and a "`Device I/O error`" generated (73B2H) if FLAG C is returned.
 
 <a name="72f8h"></a>
 
     Address... 72F8H
 
-This routine is used by various dispatcher functions to turn the cassette motor on for output, control simply transfers to the TAPOON standard routine.
+This routine is used by various dispatcher functions to turn the cassette motor on for output, control simply transfers to the [TAPOON](#tapoon) standard routine.
 
 <a name="7304h"></a>
 
     Address... 7304H
 
-This routine is used by the Interpreter Mainloop "OK" point, the "END" statement handler and the run-clear routine to shut down the printer. [PRTFLG](#prtflg) is first zeroed and then [LPTPOS](#lptpos) tested to see if any characters have been output but left hanging in the printer's line buffer. If so a CR,LF sequence is issued to flush the printer and [LPTPOS](#lptpos) zeroed.
+This routine is used by the Interpreter Mainloop "`OK`" point, the "`END`" statement handler and the run-clear routine to shut down the printer. [PRTFLG](#prtflg) is first zeroed and then [LPTPOS](#lptpos) tested to see if any characters have been output but left hanging in the printer's line buffer. If so a CR,LF sequence is issued to flush the printer and [LPTPOS](#lptpos) zeroed.
 
 <a name="7323h"></a>
 
@@ -6050,19 +6050,19 @@ This routine issues a CR,LF sequence to the current output device via the [OUTDO
 
     Address... 7347H
 
-This routine is used by the Factor Evaluator to apply the "INKEY$" function. The state of the keyboard buffer is examined via the CHSNS standard routine. If the buffer is empty the address of a dummy null string descriptor is returned in [DAC](#dac).  Otherwise the next character is read from the keyboard buffer via the CHGET standard routine. After checking that sufficient space is available (6625H) the character is copied to the String Storage Area and the result descriptor created (6821H).
+This routine is used by the Factor Evaluator to apply the "`INKEY$`" function. The state of the keyboard buffer is examined via the [CHSNS](#chsns) standard routine. If the buffer is empty the address of a dummy null string descriptor is returned in [DAC](#dac).  Otherwise the next character is read from the keyboard buffer via the [CHGET](#chget) standard routine. After checking that sufficient space is available (6625H) the character is copied to the String Storage Area and the result descriptor created (6821H).
 
 <a name="7367h"></a>
 
     Address... 7367H
 
-This routine is used by the "LIST" statement handler to output a character to the current output device via the [OUTDO](#outdo) standard routine. If the character is a LF code then a CR code is also issued.
+This routine is used by the "`LIST`" statement handler to output a character to the current output device via the [OUTDO](#outdo) standard routine. If the character is a LF code then a CR code is also issued.
 
 <a name="7374h"></a>
 
     Address... 7374H
 
-This routine is used by the Interpreter Mainloop to collect a line of text when input is from an I/O buffer rather than the keyboard, that is when a "LOAD" statement is active. Characters are sequentially input (6C71H) and placed in [BUF](#buf) until [BUF](#buf) fills up, a CR is detected or the end of file is reached. All characters are accepted apart from LF codes which are filtered out. If [BUF](#buf) fills up or a CR is detected the routine simply returns the line to the Mainloop. If the end of file is reached while some characters are in [BUF](#buf) the line is returned to the Mainloop. When end of file is reached with no characters in [BUF](#buf) then I/O buffer 0 is closed (6D7BH) and [FILNAM](#filnam) checked to determine whether auto-run is required. If not control returns to the Interpreter "OK" point (411EH). Otherwise the system is cleared (629AH) and control transfers to the Runloop (4601H) to execute the program.
+This routine is used by the Interpreter Mainloop to collect a line of text when input is from an I/O buffer rather than the keyboard, that is when a "`LOAD`" statement is active. Characters are sequentially input (6C71H) and placed in [BUF](#buf) until [BUF](#buf) fills up, a CR is detected or the end of file is reached. All characters are accepted apart from LF codes which are filtered out. If [BUF](#buf) fills up or a CR is detected the routine simply returns the line to the Mainloop. If the end of file is reached while some characters are in [BUF](#buf) the line is returned to the Mainloop. When end of file is reached with no characters in [BUF](#buf) then I/O buffer 0 is closed (6D7BH) and [FILNAM](#filnam) checked to determine whether auto-run is required. If not control returns to the Interpreter "`OK`" point (411EH). Otherwise the system is cleared (629AH) and control transfers to the Runloop (4601H) to execute the program.
 
 <a name="73b2h"></a>
 
@@ -6074,25 +6074,25 @@ This is the "Device I/O error" generator.
 
     Address... 73B7H
 
-This is the "MOTOR" statement handler. If no operand is present control transfers to the STMOTR standard routine with FFH in register A. If the "OFF" token (EBH) follows control transfers with 00H in register A. If the "ON" token (95H) follows control transfers with 01H in register A.
+This is the "`MOTOR`" statement handler. If no operand is present control transfers to the [STMOTR](#stmotr) standard routine with FFH in register A. If the "`OFF`" token (EBH) follows control transfers with 00H in register A. If the "`ON`" token (95H) follows control transfers with 01H in register A.
 
 <a name="73cah"></a><a name="sound"></a>
 
     Address... 73CAH
 
-This is the "SOUND" statement handler. The register number operand, which must be less than fourteen, is evaluated (521CH) and placed in register A. The data operand is evaluated (521CH) and bit 7 set, bit 6 reset to avoid altering the PSG auxiliary I/O port modes' The data operand is placed in register E and control transfers to the WRTPSG standard routine.
+This is the "`SOUND`" statement handler. The register number operand, which must be less than fourteen, is evaluated (521CH) and placed in register A. The data operand is evaluated (521CH) and bit 7 set, bit 6 reset to avoid altering the PSG auxiliary I/O port modes' The data operand is placed in register E and control transfers to the [WRTPSG](#wrtpsg) standard routine.
 
 <a name="73e4h"></a>
 
     Address... 73E4H
 
-This is a single ASCII space used by the "PLAY" statement handler to replace a null string operand with a one character blank string.
+This is a single ASCII space used by the "`PLAY`" statement handler to replace a null string operand with a one character blank string.
 
 <a name="73e5h"></a><a name="play"></a>
 
     Address... 73E5H
 
-This is the "PLAY" statement handler. The address of the "PLAY" command table at 752EH is placed in [MCLTAB](#mcltab) for the macro language parser and PRSCNT zeroed. The first string operand, which is obligatory, is evaluated (4C64H), its storage freed (67D0H) and its length and address placed in VCBA at bytes 2, 3 and 4. The channel's stack pointer is initialized to VCBA+33 and placed in VCBA at bytes 5 and 6' If further text is present in the statement this process is repeated for voices B and C until a maximum of three operands have been evaluated, after this a "Syntax error" is generated (4055H). If there are less than three string operands present an end of queue mark (FFH) is placed in the queue (7507H) of each unused voice. Register A is then zeroed, to select voice A, and control drops into the play mainloop.
+This is the "`PLAY`" statement handler. The address of the "`PLAY`" command table at 752EH is placed in [MCLTAB](#mcltab) for the macro language parser and [PRSCNT](#prscnt) zeroed. The first string operand, which is obligatory, is evaluated (4C64H), its storage freed (67D0H) and its length and address placed in [VCBA](#vcba) at bytes 2, 3 and 4. The channel's stack pointer is initialized to [VCBA](#vcba)+33 and placed in [VCBA](#vcba) at bytes 5 and 6' If further text is present in the statement this process is repeated for voices B and C until a maximum of three operands have been evaluated, after this a "`Syntax error`" is generated (4055H). If there are less than three string operands present an end of queue mark (FFH) is placed in the queue (7507H) of each unused voice. Register A is then zeroed, to select voice A, and control drops into the play mainloop.
 
 <a name="744dh"></a>
 
@@ -6100,7 +6100,7 @@ This is the "PLAY" statement handler. The address of the "PLAY" command table at
 
 This is the play mainloop. The number of free bytes in the current queue is checked (7521H) and, if less than eight bytes remain, the next voice is selected (74D6H) to avoid waiting for the queue to empty. The remaining length of the operand string is then taken from the current voice buffer and, if zero bytes remain to be parsed, the loop again skips to the next voice (74D6H). Otherwise the current string length and address are taken from the voice buffer and placed in [MCLLEN](#mcllen) and [MCLPTR](#mclptr) for the macro language parser. The old stack contents are copied from the voice buffer to the Z80 stack (6253H), [MCLFLG](#mclflg) is made non-zero and control transfers to the macro language parser (56A2H).
 
-The macro language parser will normally scan along the string, using the "PLAY" statement command handlers, until the string is exhausted. However, if a music queue fills up during note generation an abnormal termination is forced back to the play mainloop (748EH) so that the next voice can be processed without waiting for the queue to empty. When control returns normally an end of queue mark is placed in the current queue (7507H) and PRSCNT is incremented to show the number of strings completed. If control returns abnormally then anything left on the Z80 stack is copied into the current voice buffer (6253H).  Because of the recursive nature of the macro language parser where the "X" command is involved there may be a number of four byte string descriptors, marking the point where the original string was suspended, left on the Z80 stack at termination.  Saving the stack contents in the voice buffer means they can be restored when the loop gets around to that voice again. Note that as there are only sixteen bytes available in each voice buffer an "Illegal function call" error is generated (475AH) if too much data remains on the stack. This will occur when a queue fills up and multiple, nested "X" commands exist, for example:
+The macro language parser will normally scan along the string, using the "`PLAY`" statement command handlers, until the string is exhausted. However, if a music queue fills up during note generation an abnormal termination is forced back to the play mainloop (748EH) so that the next voice can be processed without waiting for the queue to empty. When control returns normally an end of queue mark is placed in the current queue (7507H) and [PRSCNT](#prscnt) is incremented to show the number of strings completed. If control returns abnormally then anything left on the Z80 stack is copied into the current voice buffer (6253H).  Because of the recursive nature of the macro language parser where the "`X`" command is involved there may be a number of four byte string descriptors, marking the point where the original string was suspended, left on the Z80 stack at termination. Saving the stack contents in the voice buffer means they can be restored when the loop gets around to that voice again. Note that as there are only sixteen bytes available in each voice buffer an "`Illegal function call`" error is generated (475AH) if too much data remains on the stack. This will occur when a queue fills up and multiple, nested "X" commands exist, for example:
 
     10 A$="XB$;"
     20 B$="XC$;"
@@ -6110,25 +6110,25 @@ The macro language parser will normally scan along the string, using the "PLAY" 
 
 There seems to be a slight bug in this section as only fifteen bytes of stack data are allowed, instead of sixteen, before an error is generated.
 
-When control returns from the macro language parser register A is incremented to select the next voice for processing. When all three voices have been processed INTFLG is checked and, if CTRL-STOP has been detected by the interrupt handler, control transfers to the GICINI standard routine to halt all music and terminate. Assuming bit 7 of PRSCNT shows this to be the first pass through the mainloop, that is no voice has been temporarily suspended because of a full queue, PLYCNT is incremented and interrupt dequeueing started via the STRTMS standard routine. PRSCNT is then checked to determine the number of strings completed by the macro language parser. If all three operand strings have been completed the handler terminates, otherwise control transfers back to the start of the play mainloop to try each voice again.
+When control returns from the macro language parser register A is incremented to select the next voice for processing. When all three voices have been processed [INTFLG](#intflg) is checked and, if CTRL-STOP has been detected by the interrupt handler, control transfers to the [GICINI](#gicini) standard routine to halt all music and terminate. Assuming bit 7 of [PRSCNT](#prscnt) shows this to be the first pass through the mainloop, that is no voice has been temporarily suspended because of a full queue, PLYCNT is incremented and interrupt dequeueing started via the [STRTMS](#strtms) standard routine. [PRSCNT](#prscnt) is then checked to determine the number of strings completed by the macro language parser. If all three operand strings have been completed the handler terminates, otherwise control transfers back to the start of the play mainloop to try each voice again.
 
 <a name="7507h"></a>
 
     Address... 7507H
 
-This routine is used by the "PLAY" statement handler to place an end of queue mark (FFH) in the current queue via the PUTQ standard routine. If the queue is full it waits until space becomes available.
+This routine is used by the "`PLAY`" statement handler to place an end of queue mark (FFH) in the current queue via the [PUTQ](#putq) standard routine. If the queue is full it waits until space becomes available.
 
 <a name="7521h"></a>
 
     Address... 7521H
 
-This routine is used by the "PLAY" statement handler to check how much space remains in the current queue via the LFTQ standard routine. If less than eight bytes remain (the largest possible music data packet is seven bytes long) FLAG C is returned.
+This routine is used by the "`PLAY`" statement handler to check how much space remains in the current queue via the [LFTQ](#lftq) standard routine. If less than eight bytes remain (the largest possible music data packet is seven bytes long) FLAG C is returned.
 
 <a name="752eh"></a>
 
     Address... 752EH
 
-This table contains the valid command letters and associated addresses for the "PLAY" statement commands. Those commands which take a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
+This table contains the valid command letters and associated addresses for the "`PLAY`" statement commands. Those commands which take a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
 
     CMD  TO
     -----------
@@ -6155,7 +6155,7 @@ This table contains the valid command letters and associated addresses for the "
 
     Address... 755FH
 
-This table is used by the "PLAY" statement "A" to "G" command handler to translate a note number from zero to fourteen to an offset into the tone divider table at 756EH. The note itself, rather than the note number, is shown below with each offset value:
+This table is used by the "`PLAY`" statement "`A`" to "`G`" command handler to translate a note number from zero to fourteen to an offset into the tone divider table at 756EH. The note itself, rather than the note number, is shown below with each offset value:
 
     16 ... A-
     18 ... A
@@ -6200,63 +6200,63 @@ This table contains the twelve PSG divider constants required to produce the ton
 
     Address... 7586H
 
-This is the "PLAY" statement "V" command handler. The parameter, with a default value of eight, is placed in byte 18 of the current voice buffer without altering bit 6 of the existing contents. No music data is generated.
+This is the "`PLAY`" statement "`V`" command handler. The parameter, with a default value of eight, is placed in byte 18 of the current voice buffer without altering bit 6 of the existing contents. No music data is generated.
 
 <a name="759eh"></a>
 
     Address... 759EH
 
-This is the "PLAY" statement "M" command handler. The parameter, with a default value of two hundred and fifty-five, is compared with the existing modulation period contained in bytes 19 and 20 of the current voice buffer. If they are the same the routine terminates with no action. Otherwise the new modulation period is placed in the voice buffer and bit 6 set in byte 18 of the voice buffer to indicate that the new value must be incorporated into the next music data packet produced.  No music data is generated.
+This is the "`PLAY`" statement "`M`" command handler. The parameter, with a default value of two hundred and fifty-five, is compared with the existing modulation period contained in bytes 19 and 20 of the current voice buffer. If they are the same the routine terminates with no action. Otherwise the new modulation period is placed in the voice buffer and bit 6 set in byte 18 of the voice buffer to indicate that the new value must be incorporated into the next music data packet produced.  No music data is generated.
 
 <a name="75beh"></a>
 
     Address... 75BEH
 
-This is the "PLAY" statement "S" command handler. The parameter is placed in byte 18 of the current voice buffer and bit 4 of the same byte set to indicate that the new value must be incorporated into the next music data packet produced. No music data is generated. Because of the PSG characteristics the shape and volume parameters are mutually exclusive so the same byte of the voice buffers is used for both.
+This is the "`PLAY`" statement "`S`" command handler. The parameter is placed in byte 18 of the current voice buffer and bit 4 of the same byte set to indicate that the new value must be incorporated into the next music data packet produced. No music data is generated. Because of the PSG characteristics the shape and volume parameters are mutually exclusive so the same byte of the voice buffers is used for both.
 
 <a name="75c8h"></a>
 
     Address... 75C8H
 
-This is the "PLAY" statement "L" command handler. The parameter, with a default value of four, is placed in byte 16 of the current voice buffer where it is used in the computation of succeeding note durations. No music data is generated.
+This is the "`PLAY`" statement "`L`" command handler. The parameter, with a default value of four, is placed in byte 16 of the current voice buffer where it is used in the computation of succeeding note durations. No music data is generated.
 
 <a name="75e2h"></a>
 
     Address... 75E2H
 
-This is the "PLAY" statement "T" command handler. The parameter, with a default value of one hundred and twenty, is placed in byte 17 of the current voice buffer where it will be used in the computation of succeeding note durations. ho music data is generated.
+This is the "`PLAY`" statement "`T`" command handler. The parameter, with a default value of one hundred and twenty, is placed in byte 17 of the current voice buffer where it will be used in the computation of succeeding note durations. ho music data is generated.
 
 <a name="75efh"></a>
 
     Address... 75EFH
 
-This is the "PLAY" statement "O" command handler. The parameter, with a default value of four, is placed in byte 15 of the current voice buffer where it is used in the computation of succeeding note frequencies. No music data is generated.
+This is the "`PLAY`" statement "`O`" command handler. The parameter, with a default value of four, is placed in byte 15 of the current voice buffer where it is used in the computation of succeeding note frequencies. No music data is generated.
 
 <a name="75fch"></a>
 
     Address... 75FCH
 
-This is the "PLAY" statement "R" command handler. The length parameter, with a default value of four, is left in register pair DE and a zero tone divider value placed in register pair HL. The existing volume value is taken from byte 18 of the current voice buffer, temporarily replaced with a zero value and control transferred to the note generator (769CH).
+This is the "`PLAY`" statement "`R`" command handler. The length parameter, with a default value of four, is left in register pair DE and a zero tone divider value placed in register pair HL. The existing volume value is taken from byte 18 of the current voice buffer, temporarily replaced with a zero value and control transferred to the note generator (769CH).
 
 <a name="7621h"></a>
 
     Address... 7621H
 
-This is the "PLAY" statement "N" command handler. The obligatory parameter is first examined, if it is zero a rest is generated (760BH). If it is greater than ninety-six an "Illegal function call" error is generated (475AH). Otherwise twelve is repeatedly subtracted from the note number until underflow to obtain an octave number from one to nine in register E and a note number from zero to eleven in register C. Control then transfers to the note generator (7673H).
+This is the "`PLAY`" statement "`N`" command handler. The obligatory parameter is first examined, if it is zero a rest is generated (760BH). If it is greater than ninety-six an "`Illegal function call`" error is generated (475AH). Otherwise twelve is repeatedly subtracted from the note number until underflow to obtain an octave number from one to nine in register E and a note number from zero to eleven in register C. Control then transfers to the note generator (7673H).
 
 <a name="763eh"></a>
 
     Address... 763EH
 
-This is the "PLAY" statement "A" to "G" command handler. The note letter is first converted into a note number from zero to fourteen, this extended range being necessary because of the redundancy implicit in the notation. The table at 755FH is then used to obtain the offset into the tone divider table and the divider constant for the note placed in register pair DE. The octave value is taken from byte 15 of the current voice buffer and the divider constant halved until the correct octave is reached. The string operand is then examined directly (56EEH) to determine whether a trailing note length parameter exists.  If so it is converted (572FH) and placed in register C. If no parameter exists the default length is taken from byte 16 of the current voice buffer. The duration of the note is then computed from:
+This is the "`PLAY`" statement "`A`" to "`G`" command handler. The note letter is first converted into a note number from zero to fourteen, this extended range being necessary because of the redundancy implicit in the notation. The table at 755FH is then used to obtain the offset into the tone divider table and the divider constant for the note placed in register pair DE. The octave value is taken from byte 15 of the current voice buffer and the divider constant halved until the correct octave is reached. The string operand is then examined directly (56EEH) to determine whether a trailing note length parameter exists.  If so it is converted (572FH) and placed in register C. If no parameter exists the default length is taken from byte 16 of the current voice buffer. The duration of the note is then computed from:
 
     Duration (Interrupt ticks) = 12,000/(LENGTH*TEMPO)
 
-With the normal length value (4) and tempo value (120) this gives a note duration of twenty-five interrupt ticks of 20 ms each or 0.5 seconds. The string operand is then examined (56EEH) for trailing "." characters and, for each one, the duration multiplied by one and a half. Finally the resulting duration is checked and, if it is less than five interrupt ticks, it is replaced with a value of five. Thus the shortest note that can be generated on a UK machine is 0.10 seconds whatever the tempo or note length.
+With the normal length value (4) and tempo value (120) this gives a note duration of twenty-five interrupt ticks of 20 ms each or 0.5 seconds. The string operand is then examined (56EEH) for trailing "`.`" characters and, for each one, the duration multiplied by one and a half. Finally the resulting duration is checked and, if it is less than five interrupt ticks, it is replaced with a value of five. Thus the shortest note that can be generated on a UK machine is 0.10 seconds whatever the tempo or note length.
 
 The music data packet, which will be three, five or seven bytes long, is then assembled in bytes 8 to 14 of the current voice buffer prior to placing it in the queue. The duration is placed in bytes 8 and 9 of the voice buffer. The volume and flag byte is taken from byte 18 and placed in byte 10 of the voice buffer with bit 7 set to indicate a volume change to the interrupt dequeuing routine. If bit 6 of the volume byte is set then the modulation period is taken from bytes 19 and 20 and added to the data packet at bytes 11 and 12. If the tone divider value is non-zero then it is added to the data packet at bytes 11 and 12 (without a modulation period) or bytes 13 and 14 (with a modulation period). Finally the byte count is mixed into the three highest bits of byte 8 of the voice buffer to complete the preparation of the music data packet.
 
-If the tone divider value is zero, indicating a rest, the contents of SAVVOL are restored to byte 18 of the static buffer. The music data packet is then placed in the current queue via the PUTQ standard routine and the number of free bytes remaining checked (7521H). If less than eight bytes remain control transfers directly to the "PLAY" statement handler (748EH), otherwise control returns normally to the macro language parser.
+If the tone divider value is zero, indicating a rest, the contents of SAVVOL are restored to byte 18 of the static buffer. The music data packet is then placed in the current queue via the [PUTQ](#putq) standard routine and the number of free bytes remaining checked (7521H). If less than eight bytes remain control transfers directly to the "`PLAY`" statement handler (748EH), otherwise control returns normally to the macro language parser.
 
 <a name="7754h"></a>
 
@@ -6268,61 +6268,61 @@ This is the single precision constant 12,000 used in the computation of note dur
 
     Address... 7758H
 
-This is the "PUT" statement handler. Register B is set to 80H and control drops into the "GET" statement handler.
+This is the "`PUT`" statement handler. Register B is set to 80H and control drops into the "`GET`" statement handler.
 
 <a name="775bh"></a><a name="get"></a>
 
     Address... 775BH
 
-This is the "GET" statement handler. Register B is zeroed, to distinguish "GET" from "PUT" and the next program token examined. Control then transfers to the "PUT SPRITE" statement handler (7AAFH) or the Disk BASIC "GET/PUT" statement handler (6C35H).
+This is the "`GET`" statement handler. Register B is zeroed, to distinguish "`GET`" from "`PUT`" and the next program token examined. Control then transfers to the "`PUT SPRITE`" statement handler (7AAFH) or the Disk BASIC "`GET/PUT`" statement handler (6C35H).
 
 <a name="7766h"></a><a name="locate"></a>
 
     Address... 7766H
 
-This is the "LOCATE" statement handler. If a column coordinate is present it is evaluated (521CH) and placed in register D, otherwise the current column is taken from [CSRX](#csrx). If a row coordinate is present it is evaluated (521CH) and placed in register E, otherwise the current row is taken from [CSRY](#csry). If a cursor switch operand exists it is evaluated (521CH) and register A loaded with 78H for a zero operand (OFF) and 79H for any non-zero operand (ON). The cursor is then switched by outputting ESC, 78H/79H, "5" via the [OUTDO](#outdo) standard routine.  The row and column coordinates are placed in register pair HL and the cursor position set via the POSIT standard routine.
+This is the "`LOCATE`" statement handler. If a column coordinate is present it is evaluated (521CH) and placed in register D, otherwise the current column is taken from [CSRX](#csrx). If a row coordinate is present it is evaluated (521CH) and placed in register E, otherwise the current row is taken from [CSRY](#csry). If a cursor switch operand exists it is evaluated (521CH) and register A loaded with 78H for a zero operand (OFF) and 79H for any non-zero operand (ON). The cursor is then switched by outputting ESC, 78H/79H, "`5`" via the [OUTDO](#outdo) standard routine. The row and column coordinates are placed in register pair HL and the cursor position set via the POSIT standard routine.
 
 <a name="77a5h"></a>
 
     Address... 77A5H
 
-This is the "STOP ON/OFF/STOP" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "ON/OFF/STOP" routine (77CFH).
+This is the "`STOP ON/OFF/STOP`" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77abh"></a>
 
     Address... 77ABH
 
-This is the "SPRITE ON/OFF/STOP" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "ON/OFF/STOP" routine (77CFH).
+This is the "`SPRITE ON/OFF/STOP`" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77b1h"></a>
 
     Address... 77B1H
 
-This is the "INTERVAL ON/OFF/STOP" statement handler. As there is no specific "INTERVAL" token (control transfers here when an "INT" token is found) a check is first made on the program text for the characters "E" and "R" then the "VAL" token (94H). The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "ON/OFF/STOP" routine (77CFH).
+This is the "`INTERVAL ON/OFF/STOP`" statement handler. As there is no specific "`INTERVAL`" token (control transfers here when an "`INT`" token is found) a check is first made on the program text for the characters "`E`" and "`R`" then the "`VAL`" token (94H). The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77bfh"></a>
 
     Address... 77BFH
 
-This is the "STRIG ON/OFF/STOP" statement handler. The trigger number, from zero to four, is evaluated (7C08H) and the address of the device's [TRPTBL](#trptbl) status byte placed in register pair HL. The "ON/OFF/STOP" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Control then transfers directly to the Runloop (4612H) to avoid testing for pending interrupts until the end of the next statement.
+This is the "`STRIG ON/OFF/STOP`" statement handler. The trigger number, from zero to four, is evaluated (7C08H) and the address of the device's [TRPTBL](#trptbl) status byte placed in register pair HL. The "`ON/OFF/STOP`" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Control then transfers directly to the Runloop (4612H) to avoid testing for pending interrupts until the end of the next statement.
 
 <a name="77d4h"></a>
 
     Address... 77D4H
 
-This is the "KEY(n) ON/OFF/STOP" statement handler. The key number, from one to ten, is evaluated (521CH) and the address of the devices' [TRPTBL](#trptbl) status byte placed in register pair HL.  The "ON/OFF/STOP" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Bit 0 of the [TRPTBL](#trptbl) status byte, the ON bit, is then copied into the corresponding entry in FNKFLG for use during the interrupt keyscan and control transfers directly to the Runloop (4612H).
+This is the "`KEY(n) ON/OFF/STOP`" statement handler. The key number, from one to ten, is evaluated (521CH) and the address of the devices' [TRPTBL](#trptbl) status byte placed in register pair HL.  The "`ON/OFF/STOP`" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Bit 0 of the [TRPTBL](#trptbl) status byte, the ON bit, is then copied into the corresponding entry in [FNKFLG](#fnkflg) for use during the interrupt keyscan and control transfers directly to the Runloop (4612H).
 
 <a name="77feh"></a>
 
     Address... 77FEH
 
-This routine checks for the presence of one of the interrupt switching tokens and transfers control to the appropriate routine: "ON" (631BH), "OFF" (632BH) or "STOP" (6331H). If no token is present a "Syntax error" is generated (4055H).
+This routine checks for the presence of one of the interrupt switching tokens and transfers control to the appropriate routine: "`ON`" (631BH), "`OFF`" (632BH) or "`STOP`" (6331H). If no token is present a "`Syntax error`" is generated (4055H).
 
 <a name="7810h"></a>
 
     Address... 7810H
 
-This routine is used by the "ON DEVICE GOSUB" statement handler (490DH) to check the program text for a device token.  Unless none of the device tokens is present, in which case Flag C is returned, the device's [TRPTBL](#trptbl) entry number is returned in register B and the maximum allowable line number operand count in register C:
+This routine is used by the "`ON DEVICE GOSUB`" statement handler (490DH) to check the program text for a device token.  Unless none of the device tokens is present, in which case Flag C is returned, the device's [TRPTBL](#trptbl) entry number is returned in register B and the maximum allowable line number operand count in register C:
 
     DEVICE     TRPTBL#   LINE NUMBERS
     ------------------------------------
@@ -6332,109 +6332,109 @@ This routine is used by the "ON DEVICE GOSUB" statement handler (490DH) to check
     STRIG      12        05
     INTERVAL   17        01
 
-Additionally, for "INTERVAL" only, the interval operand is evaluated (542FH) and placed in INTVAL and INTCNT.
+Additionally, for "`INTERVAL`" only, the interval operand is evaluated (542FH) and placed in [INTVAL](#intval) and [INTCNT](#intcnt).
 
 <a name="785ch"></a>
 
     Address... 785CH
 
-This routine is used by the "ON DEVICE GOSUB" statement handler (490DH) to place the address of a program line in [TRPTBL](#trptbl). The [TRPTBL](#trptbl) entry number, supplied in register B, is multiplied by three and added to the table base to point to the relevant entry. The address, supplied in register pair DE, is then placed there LSB first, MSB second.
+This routine is used by the "`ON DEVICE GOSUB`" statement handler (490DH) to place the address of a program line in [TRPTBL](#trptbl). The [TRPTBL](#trptbl) entry number, supplied in register B, is multiplied by three and added to the table base to point to the relevant entry. The address, supplied in register pair DE, is then placed there LSB first, MSB second.
 
 <a name="786ch"></a><a name="key"></a>
 
     Address... 786CH
 
-This is the "KEY" statement handler. If the following character is anything other than the "LIST" token (93H) control transfers to the "KEY n" statement handler (78AEH). Each of the ten function key strings is then taken from [FNKSTR](#fnkstr) and displayed via the [OUTDO](#outdo) standard routine with a CR,LF (7328H) after each one. The DEL character (7FH) or any control character smaller than 20H is replaced with a space.
+This is the "`KEY`" statement handler. If the following character is anything other than the "`LIST`" token (93H) control transfers to the "`KEY n`" statement handler (78AEH). Each of the ten function key strings is then taken from [FNKSTR](#fnkstr) and displayed via the [OUTDO](#outdo) standard routine with a CR,LF (7328H) after each one. The DEL character (7FH) or any control character smaller than 20H is replaced with a space.
 
 <a name="78aeh"></a>
 
     Address... 78AEH
 
-This is the "KEY n", "KEY(n) ON/OFF/STOP", "KEY ON" and "KEY OFF" statement handler. If the next program text character is "(" control transfers to the "KEY(n) ON/OFF/STOP" statement handler (77D4H). If it is an "ON" token (95H) control transfers to the [DSPFNK](#dspfnk) standard routine and if it is an "OFF" token (EBH) to the [ERAFNK](#erafnk) standard routine. Otherwise the function key number is evaluated (521CH) and the key's [FNKSTR](#fnkstr) address placed in register pair DE' The string operand is evaluated (4C64H) and its storage freed (67D0H)' Up to fifteen characters are copied from the string to [FNKSTR](#fnkstr) and unused positions padded with zero bytes. If a zero byte is found in the operand string an "Illegal function call" error is generated (475AH).  Control then transfers to the [FNKSB](#fnksb) standard routine to update the function key display if it is enabled.
+This is the "`KEY n`", "`KEY(n) ON/OFF/STOP`", "`KEY ON`" and "`KEY OFF`" statement handler. If the next program text character is "(" control transfers to the "`KEY(n) ON/OFF/STOP`" statement handler (77D4H). If it is an "ON" token (95H) control transfers to the [DSPFNK](#dspfnk) standard routine and if it is an "`OFF`" token (EBH) to the [ERAFNK](#erafnk) standard routine. Otherwise the function key number is evaluated (521CH) and the key's [FNKSTR](#fnkstr) address placed in register pair DE' The string operand is evaluated (4C64H) and its storage freed (67D0H)' Up to fifteen characters are copied from the string to [FNKSTR](#fnkstr) and unused positions padded with zero bytes. If a zero byte is found in the operand string an "Illegal function call" error is generated (475AH).  Control then transfers to the [FNKSB](#fnksb) standard routine to update the function key display if it is enabled.
 
 <a name="7900h"></a>
 
     Address... 7900H
 
-This routine is used by the Factor Evaluator to apply the "TIME" function. The contents of [JIFFY](#jiffy) are placed in [DAC](#dac) as a single precision number (3236H).
+This routine is used by the Factor Evaluator to apply the "`TIME`" function. The contents of [JIFFY](#jiffy) are placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="790ah"></a>
 
     Address... 790AH
 
-This routine is used by the Factor Evaluator to apply the "CSRLIN" function. The contents of [CSRY](#csry) are decremented and placed in [DAC](#dac) as an integer (2E9AH).
+This routine is used by the Factor Evaluator to apply the "`CSRLIN`" function. The contents of [CSRY](#csry) are decremented and placed in [DAC](#dac) as an integer (2E9AH).
 
 <a name="7911h"></a><a name="time"></a>
 
     Address... 7911H
 
-This is the "TIME" statement handler. The operand is evaluated (542FH) and placed in [JIFFY](#jiffy).
+This is the "`TIME`" statement handler. The operand is evaluated (542FH) and placed in [JIFFY](#jiffy).
 
 <a name="791bh"></a>
 
     Address... 791BH
 
-This routine is used by the Factor Evaluator to apply the "PLAY" function. The numeric channel selection operand is evaluated (7C08H). If this is zero the contents of [MUSICF](#musicf) are placed in [DAC](#dac) as an integer of value zero or FFFFH. Otherwise the channel number is used to select the appropriate bit of [MUSICF](#musicf) and this is then converted to an integer as before.
+This routine is used by the Factor Evaluator to apply the "`PLAY`" function. The numeric channel selection operand is evaluated (7C08H). If this is zero the contents of [MUSICF](#musicf) are placed in [DAC](#dac) as an integer of value zero or FFFFH. Otherwise the channel number is used to select the appropriate bit of [MUSICF](#musicf) and this is then converted to an integer as before.
 
 <a name="7940h"></a>
 
     Address... 7940H
 
-This routine is used by the Factor Evaluator to apply the "STICK" function to an operand contained in [DAC](#dac). The stick number is checked (521FH) and passed to the [GTSTCK](#gtstck) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH ) .
+This routine is used by the Factor Evaluator to apply the "`STICK`" function to an operand contained in [DAC](#dac). The stick number is checked (521FH) and passed to the [GTSTCK](#gtstck) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH ) .
 
 <a name="794ch"></a>
 
     Address... 794CH
 
-This routine is used by the Factor Evaluator to apply the "STRIG" function to an operand contained in [DAC](#dac). The trigger number is checked (521FH) and passed to the [GTTRIG](#gttrig) standard routine in register A. The result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
+This routine is used by the Factor Evaluator to apply the "`STRIG`" function to an operand contained in [DAC](#dac). The trigger number is checked (521FH) and passed to the [GTTRIG](#gttrig) standard routine in register A. The result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="795ah"></a>
 
     Address... 795AH
 
-This routine is used by the Factor Evaluator to apply the "PDL" function to an operand contained in [DAC](#dac). The paddle number is checked (521FH) and passed to the [GTPDL](#gtpdl) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "`PDL`" function to an operand contained in [DAC](#dac). The paddle number is checked (521FH) and passed to the [GTPDL](#gtpdl) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7969h"></a>
 
     Address... 7969H
 
-This routine is used by the Factor Evaluator to apply the "PAD" function to an operand contained in [DAC](#dac). The pad number is checked (521F) and passed to the [GTPAD](#gtpad) standard routine in register A. The result is placed in [DAC](#dac) as an integer for pads 1, 2, 5 or 6. For pads 0, 3, 4 or 7 the result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
+This routine is used by the Factor Evaluator to apply the "`PAD`" function to an operand contained in [DAC](#dac). The pad number is checked (521F) and passed to the [GTPAD](#gtpad) standard routine in register A. The result is placed in [DAC](#dac) as an integer for pads 1, 2, 5 or 6. For pads 0, 3, 4 or 7 the result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="7980h"></a><a name="color"></a>
 
     Address... 7980H
 
-This is the "COLOR" statement handler. If a foreground colour operand exists it is evaluated (521CH) and placed in register E, otherwise the current foreground colour is taken from [FORCLR](#forclr). If a background colour operand exists it is evaluated (521CH) and placed in register D, otherwise the current background colour is taken from [BAKCLR](#bakclr). If a border colour operand exists it is evaluated (521CH) and placed in [BDRCLR](#bdrclr). The foreground colour is placed in [FORCLR](#forclr) and [ATRBYT](#atrbyt), the background colour in [BAKCLR](#bakclr) and control transfers to the [CHGCLR](#chgclr) standard routine to modify the VDP.
+This is the "`COLOR`" statement handler. If a foreground colour operand exists it is evaluated (521CH) and placed in register E, otherwise the current foreground colour is taken from [FORCLR](#forclr). If a background colour operand exists it is evaluated (521CH) and placed in register D, otherwise the current background colour is taken from [BAKCLR](#bakclr). If a border colour operand exists it is evaluated (521CH) and placed in [BDRCLR](#bdrclr). The foreground colour is placed in [FORCLR](#forclr) and [ATRBYT](#atrbyt), the background colour in [BAKCLR](#bakclr) and control transfers to the [CHGCLR](#chgclr) standard routine to modify the VDP.
 
 <a name="79cch"></a><a name="screen"></a>
 
     Address... 79CCH
 
-This is the "SCREEN" statement handler. If a mode operand exists it is evaluated (521CH) and passed to the [CHGMOD](#chgmod) standard routine in register A. If a sprite size operand exists it is evaluated (521CH) and placed in bits 0 and 1 of [RG1SAV](#rg1sav), the Workspace Area copy of VDP Mode Register 1. The VDP sprite parameters are then cleared via the [CLRSPR](#clrspr) standard routine. If a key click operand exists it is evaluated (521CH) and placed in [CLIKSW](#cliksw), zero to disable the click and non-zero to enable it.  If a baud rate operand exists it is evaluated and the baud rate set (7A2DH). If a printer mode operand exists it is evaluated (521CH) and placed in [NTMSXP](#ntmsxp), zero for an MSX printer and non- zero for a general purpose printer.
+This is the "`SCREEN`" statement handler. If a mode operand exists it is evaluated (521CH) and passed to the [CHGMOD](#chgmod) standard routine in register A. If a sprite size operand exists it is evaluated (521CH) and placed in bits 0 and 1 of [RG1SAV](#rg1sav), the Workspace Area copy of VDP Mode Register 1. The VDP sprite parameters are then cleared via the [CLRSPR](#clrspr) standard routine. If a key click operand exists it is evaluated (521CH) and placed in [CLIKSW](#cliksw), zero to disable the click and non-zero to enable it. If a baud rate operand exists it is evaluated and the baud rate set (7A2DH). If a printer mode operand exists it is evaluated (521CH) and placed in [NTMSXP](#ntmsxp), zero for an MSX printer and non- zero for a general purpose printer.
 
 <a name="7a2dh"></a>
 
     Address... 7A2DH
 
-This routine is used to set the cassette baud rate. The operand is evaluated (521CH) and five bytes copied from CS1200 or CS2400 to LOW as appropriate.
+This routine is used to set the cassette baud rate. The operand is evaluated (521CH) and five bytes copied from [CS1200](#cs1200) or [CS2400](#cs2400) to [LOW](#low) as appropriate.
 
 <a name="7a48h"></a><a name="sprite"></a>
 
     Address... 7A48H
 
-This is the "SPRITE" statement handler. If the next character is anything other than a "$" control transfers to the "SPRITE ON/OFF/STOP" statement handler (77ABH). [SCRMOD](#scrmod) is then checked and an "Illegal function call" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7AA0H). The string operand is then evaluated (4C5FH) and its storage freed (67D0H). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is compared with the string length and, if the string is shorter than the sprite, the Sprite Pattern Table entry is first filled with zeroes via the [FILVRM](#filvrm) standard routine. Characters are then copied from the string body to the Sprite Pattern Table via the [LDIRVM](#ldirvm) standard routine until the string is exhausted or the sprite is full. If the string is longer than the sprite size any excess characters are ignored.
+This is the "`SPRITE`" statement handler. If the next character is anything other than a "$" control transfers to the "`SPRITE ON/OFF/STOP`" statement handler (77ABH). [SCRMOD](#scrmod) is then checked and an "`Illegal function call`" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7AA0H). The string operand is then evaluated (4C5FH) and its storage freed (67D0H). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is compared with the string length and, if the string is shorter than the sprite, the Sprite Pattern Table entry is first filled with zeroes via the [FILVRM](#filvrm) standard routine. Characters are then copied from the string body to the Sprite Pattern Table via the [LDIRVM](#ldirvm) standard routine until the string is exhausted or the sprite is full. If the string is longer than the sprite size any excess characters are ignored.
 
     Address... 7A84H
 
-This routine is used by the Factor Evaluator to apply the "SPRITE$" function. The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7A9FH). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is then placed in register pair BC to control the number of bytes copied. After checking that sufficient space is available in the String Storage Area (6627H) the sprite pattern is copied from VRAM via the [LDIRMV](#ldirmv) standard routine and the result descriptor created (6654H). Note that as no check is made on the screen mode during this function some interesting side effects can be found, see below.
+This routine is used by the Factor Evaluator to apply the "`SPRITE$`" function. The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7A9FH). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is then placed in register pair BC to control the number of bytes copied. After checking that sufficient space is available in the String Storage Area (6627H) the sprite pattern is copied from VRAM via the [LDIRMV](#ldirmv) standard routine and the result descriptor created (6654H). Note that as no check is made on the screen mode during this function some interesting side effects can be found, see below.
 
 <a name="7a9fh"></a>
 
     Address... 7A9FH
 
-This routine is used by the "SPRITE$" statement and function to locate a sprite pattern in the VRAM Sprite Pattern Table.  The pattern number operand is evaluated (7C08H) and passed to the CALPAT standard routine in register A. The pattern address is placed in register pair DE and the routine terminates.
+This routine is used by the "`SPRITE$`" statement and function to locate a sprite pattern in the VRAM Sprite Pattern Table. The pattern number operand is evaluated (7C08H) and passed to the [CALPAT](#calpat) standard routine in register A. The pattern address is placed in register pair DE and the routine terminates.
 
-Note that no check is made on the pattern number magnitude for differing sprite sizes. Pattern numbers up to two hundred and fifty-five are accepted even in 16x16 sprite mode when the maximum pattern number should be sixty-three. As a result VRAM addresses greater than 3FFFH will be produced which will wrap around into low VRAM. With the "SPRITE$" statement this will corrupt the Character Generator Table, for example:
+Note that no check is made on the pattern number magnitude for differing sprite sizes. Pattern numbers up to two hundred and fifty-five are accepted even in 16x16 sprite mode when the maximum pattern number should be sixty-three. As a result VRAM addresses greater than 3FFFH will be produced which will wrap around into low VRAM. With the "`SPRITE$`" statement this will corrupt the Character Generator Table, for example:
 
     10 SCREEN 3,2
     20 SPRITE$(0)=STRING$(32,255)
@@ -6442,7 +6442,7 @@ Note that no check is made on the pattern number magnitude for differing sprite 
     40 SPRITE$(65)=STRING$(32,255)
     50 GOTO 50
 
-The above puts a real sprite in the top left of the screen and then uses an illegal statement in line 40 to corrupt the VRAM just to the right of it. The "SPRITE$" function can also be manipulated in this way and, as there is no screen mode check, up to thirty-two bytes of the Name Table can be read in [40x24 Text Mode](#40x24_text_mode), for example:
+The above puts a real sprite in the top left of the screen and then uses an illegal statement in line 40 to corrupt the VRAM just to the right of it. The "`SPRITE$`" function can also be manipulated in this way and, as there is no screen mode check, up to thirty-two bytes of the Name Table can be read in [40x24 Text Mode](#40x24_text_mode), for example:
 
     10 SCREEN 0,2
     20 PRINT"something"
@@ -6455,35 +6455,35 @@ The above puts a real sprite in the top left of the screen and then uses an ille
 
     Address... 7AAFH
 
-This is the "GET/PUT SPRITE" statement handler, control is transferred here from the general "GET/PUT" statement handler (775BH). Register B is first checked to make sure that the statement is "PUT" and an "Illegal function call" error generated (475AH) if otherwise. [SCRMOD](#scrmod) is then checked and an "Illegal function call" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite number operand, from zero to thirty-one, is evaluated (521CH) and passed to the [CALATR](#calatr) standard routine to locate the four byte attribute block in the Sprite Attribute Table. If a coordinate operand exists it is evaluated and the X coordinate placed in register pair BC, the Y coordinate in register pair DE (579CH).
+This is the "`GET/PUT SPRITE`" statement handler, control is transferred here from the general "`GET/PUT`" statement handler (775BH). Register B is first checked to make sure that the statement is "PUT" and an "`Illegal function call`" error generated (475AH) if otherwise. [SCRMOD](#scrmod) is then checked and an "`Illegal function call`" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite number operand, from zero to thirty-one, is evaluated (521CH) and passed to the [CALATR](#calatr) standard routine to locate the four byte attribute block in the Sprite Attribute Table. If a coordinate operand exists it is evaluated and the X coordinate placed in register pair BC, the Y coordinate in register pair DE (579CH).
 
 The Y coordinate LSB is written to byte 0 of the attribute block in VRAM via the [WRTVRM](#wrtvrm) standard routine. Bit 7 of the X coordinate is then examined to determine whether it is negative, that is off the left hand side of the screen. If so thirty two is added to the X coordinate and register B is set to 80H to set the early clock bit in the attribute block. For example an X coordinate of -1 (FFFFH) would be changed to +31 with an early clock. The X coordinate LSB is then written to byte 1 of the attribute block via the [WRTVRM](#wrtvrm) standard routine. Byte 3 of the attribute block is read in via the RDVRM standard routine, the new early clock bit is mixed in and it is then written back to VRAM via the [WRTVRM](#wrtvrm) standard routine.
 
-If a colour operand is present it is evaluated (521CH), byte 3 of the attribute block is read in via the RDVRM standard routine the new colour code is mixed into the lowest four bits and it is written back to VRAM via the [WRTVRM](#wrtvrm) standard routine.  If a pattern number operand exists it is evaluated (521CH) and checked for magnitude against the current sprite size provided by the [GSPSIZ](#gspsiz) standard routine. The maximum allowable pattern number is two hundred and fifty-five for 8x8 sprites and sixty- three for 16x16 sprites. The pattern number is written to byte 2 of the attribute block via the [WRTVRM](#wrtvrm) standard routine and the handler terminates.
+If a colour operand is present it is evaluated (521CH), byte 3 of the attribute block is read in via the RDVRM standard routine the new colour code is mixed into the lowest four bits and it is written back to VRAM via the [WRTVRM](#wrtvrm) standard routine. If a pattern number operand exists it is evaluated (521CH) and checked for magnitude against the current sprite size provided by the [GSPSIZ](#gspsiz) standard routine. The maximum allowable pattern number is two hundred and fifty-five for 8x8 sprites and sixty- three for 16x16 sprites. The pattern number is written to byte 2 of the attribute block via the [WRTVRM](#wrtvrm) standard routine and the handler terminates.
 
 <a name="7b37h"></a>
 
     Address... 7B37H
 
-This is the "VDP" statement handler. The register number operand, from zero to seven, is evaluated (7C08H) followed by the data operand (521CH). The register number is placed in register C, the data value in register B and control transferred to the WRTVDP standard routine.
+This is the "`VDP`" statement handler. The register number operand, from zero to seven, is evaluated (7C08H) followed by the data operand (521CH). The register number is placed in register C, the data value in register B and control transferred to the WRTVDP standard routine.
 
 <a name="7b47h"></a>
 
     Address... 7B47H
 
-This routine is used by the Factor Evaluator to apply the "VDP" function. The register number operand, from zero to eight, is evaluated (7C08H) and added to [RG0SAV](#rg0sav) to locate the corresponding register image in the Workspace Area. The VDP register image is then read and placed in [DAC](#dac) as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "`VDP`" function. The register number operand, from zero to eight, is evaluated (7C08H) and added to [RG0SAV](#rg0sav) to locate the corresponding register image in the Workspace Area. The VDP register image is then read and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7b5ah"></a><a name="base"></a>
 
     Address... 7B5AH
 
-This is the "BASE" statement handler. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) followed by the base address operand (4C64H). After checking that the base address is less than 4000H (7BFEH) the VDP table number is used to locate the associated entry in the masking table at 7BA3H. The base address is ANDed with the mask and an "Illegal function call" error generated (475AH) if any illegal bits are set. The VDP table number is then added to [TXTNAM](#txtnam) to locate the current base address in the Workspace Area and the new base address placed there. The VDP table number is divided by five to determine which of the four screen modes the table belongs to. If this is the same as the current screen mode the new base address is also written to the VDP (7B99H).
+This is the "`BASE`" statement handler. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) followed by the base address operand (4C64H). After checking that the base address is less than 4000H (7BFEH) the VDP table number is used to locate the associated entry in the masking table at 7BA3H. The base address is ANDed with the mask and an "`Illegal function call`" error generated (475AH) if any illegal bits are set. The VDP table number is then added to [TXTNAM](#txtnam) to locate the current base address in the Workspace Area and the new base address placed there. The VDP table number is divided by five to determine which of the four screen modes the table belongs to. If this is the same as the current screen mode the new base address is also written to the VDP (7B99H).
 
 <a name="7b99h"></a>
 
     Address... 7B99H
 
-This routine is used by the "BASE" statement handler to update the VDP base addresses. The current screen mode, in register A, is examined and control transfers to the SETTXT, SETT32, SETGRP or SETMLT standard routine as appropriate. Note that this is not a full VDP initialization and that the four current table addresses (NAMBAS, CGPBAS, PATBAS and ATRBAS) which are the ones actually used by the screen routines, are not updated. This can be demonstrated with the following, where the Interpreter carries on outputting to the old VRAM Name Table:
+This routine is used by the "`BASE`" statement handler to update the VDP base addresses. The current screen mode, in register A, is examined and control transfers to the [SETTXT](#settxt), [SETT32](#sett32), [SETGRP](#setgrp) or [SETMLT](#setmlt) standard routine as appropriate. Note that this is not a full VDP initialization and that the four current table addresses ([NAMBAS](#nambas), [CGPBAS](#cgpbas), [PATBAS](#patbas) and [ATRBAS](#atrbas)) which are the ones actually used by the screen routines, are not updated. This can be demonstrated with the following, where the Interpreter carries on outputting to the old VRAM Name Table:
 
     10 SCREEN 0
     20 BASE(0)=&H400
@@ -6491,13 +6491,13 @@ This routine is used by the "BASE" statement handler to update the VDP base addr
     40 FOR N=1 TO 2000:NEXT
     50 BASE(0)=0
 
-Note also that this routine contains a bug. While SETTXT is correctly used for [40x24 Text Mode](#40x24_text_mode), SETGRP is used for [32x24 Text Mode](#32x24_text_mode) and SETMLT for [Graphics Mode](#graphics_mode) and [Multicolour Mode](#multicolour_mode). Any "BASE" statement should therefore be immediately followed by a "SCREEN" statement to perform a full initialization.
+Note also that this routine contains a bug. While [SETTXT](#settxt) is correctly used for [40x24 Text Mode](#40x24_text_mode), [SETGRP](#setgrp) is used for [32x24 Text Mode](#32x24_text_mode) and [SETMLT](#setmlt) for [Graphics Mode](#graphics_mode) and [Multicolour Mode](#multicolour_mode). Any "`BASE`" statement should therefore be immediately followed by a "`SCREEN`" statement to perform a full initialization.
 
 <a name="7ba3h"></a>
 
     Address... 7BA3H
 
-This masking table is used by the "BASE" statement handler to ensure that only legal VDP base addresses are accepted. The table number and corresponding Workspace Area variable are shown with each mask:
+This masking table is used by the "`BASE`" statement handler to ensure that only legal VDP base addresses are accepted. The table number and corresponding Workspace Area variable are shown with each mask:
 
     MASK   TABLE
     ---------------------
@@ -6528,153 +6528,153 @@ This masking table is used by the "BASE" statement handler to ensure that only l
 
     Address... 7BCBH
 
-This routine is used by the Factor Evaluator to apply the "BASE" function. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) and added to [TXTNAM](#txtnam) to locate the required Workspace Area base address. This is then placed in [DAC](#dac) as a single precision number (3236H).
+This routine is used by the Factor Evaluator to apply the "`BASE`" function. The VDP table number operand, from zero to nineteen, is evaluated (7C08H) and added to [TXTNAM](#txtnam) to locate the required Workspace Area base address. This is then placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="7be2h"></a><a name="vpoke"></a>
 
     Address... 7BE2H
 
-This is the "VPOKE" statement handler. The VRAM address operand is evaluated (4C64H) and checked to ensure that it is less than 4000H (7BFEH). The data operand is then evaluated (521CH) and passed to the [WRTVRM](#wrtvrm) standard routine in register A to write to the required address.
+This is the "`VPOKE`" statement handler. The VRAM address operand is evaluated (4C64H) and checked to ensure that it is less than 4000H (7BFEH). The data operand is then evaluated (521CH) and passed to the [WRTVRM](#wrtvrm) standard routine in register A to write to the required address.
 
 <a name="7bf5h"></a>
 
     Address... 7BF5H
 
-This routine is used by the Factor Evaluator to apply the "VPEEK" function to an operand contained in [DAC](#dac). The VRAM address operand is checked to ensure it is less than 4000H (7BFEH). VRAM is then read via the RDVRM standard routine and the result placed in [DAC](#dac) as an integer (4FCFH).
+This routine is used by the Factor Evaluator to apply the "`VPEEK`" function to an operand contained in [DAC](#dac). The VRAM address operand is checked to ensure it is less than 4000H (7BFEH). VRAM is then read via the RDVRM standard routine and the result placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7bfeh"></a>
 
     Address... 7BFEH
 
-This routine converts a numeric operand in [DAC](#dac) to an integer (2F8AH) and places it in register pair HL. If the operand is equal to or greater than 4000H, and thus outside the allowable VRAM range, an "Illegal function call" error is generated (475AH).
+This routine converts a numeric operand in [DAC](#dac) to an integer (2F8AH) and places it in register pair HL. If the operand is equal to or greater than 4000H, and thus outside the allowable VRAM range, an "`Illegal function call`" error is generated (475AH).
 
 <a name="7c08h"></a>
 
     Address... 7C08H
 
-This routine evaluates (521CH) a parenthesized numeric operand and returns it as an integer in register A. If the operand is greater than the maximum allowable value initially supplied in register A an "Illegal function call" error is generated (475AH).
+This routine evaluates (521CH) a parenthesized numeric operand and returns it as an integer in register A. If the operand is greater than the maximum allowable value initially supplied in register A an "`Illegal function call`" error is generated (475AH).
 
 <a name="7c16h"></a><a name="dsko$"></a>
 
     Address... 7C16H
 
-This is the "DSKO$" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`DSKO$`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c1bh"></a><a name="set"></a>
 
     Address... 7C1BH
 
-This is the "SET" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`SET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c20h"></a><a name="name"></a>
 
     Address... 7C20H
 
-This is the "NAME" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`NAME`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c25h"></a><a name="kill"></a>
 
     Address... 7C25H
 
-This is the "KILL" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`KILL`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c2ah"></a><a name="ipl"></a>
 
     Address... 7C2AH
 
-This is the "IPL" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`IPL`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c2fh"></a><a name="copy"></a>
 
     Address... 7C2FH
 
-This is the "COPY" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`COPY`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c34h"></a><a name="cmd"></a>
 
     Address... 7C34H
 
-This is the "CMD" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`CMD`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c39h"></a>
 
     Address... 7C39H
 
-This routine is used by the Factor Evaluator to apply the "DSKF" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`DSKF`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c3eh"></a>
 
     Address... 7C3EH
 
-This routine is used by the Factor Evaluator to apply the "DSKI$" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`DSKI$`" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c43h"></a>
 
     Address... 7C43H
 
-This routine is used by the Factor Evaluator to apply the "ATTR$" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`ATTR$`" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c48h"></a><a name="lset"></a>
 
     Address... 7C48H
 
-This is the "LSET" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`LSET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c4dh"></a><a name="rset"></a>
 
     Address... 7C4DH
 
-This is the "RSET" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`RSET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c52h"></a><a name="field"></a>
 
     Address... 7C52H
 
-This is the "FIELD" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This is the "`FIELD`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c57h"></a>
 
     Address... 7C57H
 
-This routine is used by the Factor Evaluator to apply the "MKI$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`MKI$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c5ch"></a>
 
     Address... 7C5CH
 
-This routine is used by the Factor Evaluator to apply the "MKS$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`MKS$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c61h"></a>
 
     Address... 7C61H
 
-This routine is used by the Factor Evaluator to apply the "MKD$" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`MKD$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c66h"></a>
 
     Address... 7C66H
 
-This routine is used by the Factor Evaluator to apply the "CVI" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`CVI`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c6bh"></a>
 
     Address... 7C6BH
 
-This routine is used by the Factor Evaluator to apply the "CVS" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`CVS`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c70h"></a>
 
     Address... 7C70H
 
-This routine is used by the Factor Evaluator to apply the "CVD" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
+This routine is used by the Factor Evaluator to apply the "`CVD`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c76h"></a>
 
     Address... 7C76H
 
-This routine completes the power-up initialization. At this point the entire Workspace Area is zeroed and only [EXPTBL](#exptbl) and [SLTTBL](#slttbl) have been initialized. A temporary stack is set at F376H and all one hundred and twelve hooks (560 bytes) filled with Z80 RET opcodes (C9H). [HIMEM](#himem) is set to F380H and the lowest RAM location found (7D5DH) and placed in [BOTTOM](#bottom). The one hundred and forty-four bytes of data commencing at 7F27H are copied to the Workspace Area from F380H to F40FH The function key strings are initialized via the INIFNK standard routine, [ENDBUF](#endbuf) and [NLONLY](#nlonly) are zeroed and a comma is placed in [BUFMIN](#bufmin) and a colon in KBFMIN. The address of the MSX ROM character set is taken from locations 0004H and 0005H and placed in CGPNT+1 and PRMPRV is set to point to [PRMSTK](#prmstk). Dummy values are placed in [STKTOP](#stktop), [MEMSIZ](#memsiz) and [VARTAB](#vartab) (their correct values are not known yet), one I/O buffer is allocated (7E6BH) and the Z80 SP set (62E5H). A zero byte is placed at the base of RAM, [TXTTAB](#txttab) is set to the following location and a "NEW" executed (6287H).
+This routine completes the power-up initialization. At this point the entire Workspace Area is zeroed and only [EXPTBL](#exptbl) and [SLTTBL](#slttbl) have been initialized. A temporary stack is set at F376H and all one hundred and twelve hooks (560 bytes) filled with Z80 RET opcodes (C9H). [HIMEM](#himem) is set to F380H and the lowest RAM location found (7D5DH) and placed in [BOTTOM](#bottom). The one hundred and forty-four bytes of data commencing at 7F27H are copied to the Workspace Area from F380H to F40FH The function key strings are initialized via the [INIFNK](#inifnk) standard routine, [ENDBUF](#endbuf) and [NLONLY](#nlonly) are zeroed and a comma is placed in [BUFMIN](#bufmin) and a colon in [KBFMIN](#kbfmin). The address of the MSX ROM character set is taken from locations 0004H and 0005H and placed in [CGPNT](#cgpnt)+1 and [PRMPRV](#prmprv) is set to point to [PRMSTK](#prmstk). Dummy values are placed in [STKTOP](#stktop), [MEMSIZ](#memsiz) and [VARTAB](#vartab) (their correct values are not known yet), one I/O buffer is allocated (7E6BH) and the Z80 SP set (62E5H). A zero byte is placed at the base of RAM, [TXTTAB](#txttab) is set to the following location and a "NEW" executed (6287H).
 
-The VDP is then initialized via the [INITIO](#initio), [INIT32](#init32) and [CLRSPR](#clrspr) standard routines, the cursor coordinates are set to row 11, column 10 and the sign on message "MSX system etc." is displayed (6678H). After a three second delay a search is carried out for any extension ROMs (7D75H) and a further "NEW" executed (6287H) in case a BASIC program has been run from ROM.
+The VDP is then initialized via the [INITIO](#initio), [INIT32](#init32) and [CLRSPR](#clrspr) standard routines, the cursor coordinates are set to row 11, column 10 and the sign on message "`MSX system etc.`" is displayed (6678H). After a three second delay a search is carried out for any extension ROMs (7D75H) and a further "`NEW`" executed (6287H) in case a BASIC program has been run from ROM.
 
 Finally the identification message "MSX BASIC etc." is displayed (7D29H) and control transfers to the Interpreter Mainloop "OK" point 411FH.
 
@@ -6694,7 +6694,7 @@ This routine is used during power-up to find the lowest RAM location. Starting a
 
     Address... 7D75H
 
-This routine is used during power-up to perform an extension ROM search. Pages 1 and 2 (4000H to BFFFH) of each slot are examined and the results placed in [SLTATR](#sltatr). An extension ROM has the two identification characters "AB" in the first two bytes to distinguish it from RAM. Information about its properties is also present in the first sixteen bytes as follows:
+This routine is used during power-up to perform an extension ROM search. Pages 1 and 2 (4000H to BFFFH) of each slot are examined and the results placed in [SLTATR](#sltatr). An extension ROM has the two identification characters "`AB`" in the first two bytes to distinguish it from RAM. Information about its properties is also present in the first sixteen bytes as follows:
 
     +------------------------+
     ¦ Reserved               ¦  Byte 10-15
@@ -6712,7 +6712,7 @@ This routine is used during power-up to perform an extension ROM search. Pages 1
 
 **Figure 48:** ROM Header
 
-Each page in a given slot is examined by reading the first two bytes (7E1AH) and checking for the "AB" characters. If a ROM is present the initialization address is read (7E1AH) and control passed to it via the [CALSLT](#calslt) standard routine. With a games ROM there may be no return to BASIC from this point. The "CALL" extended statement handler address is then read (7E1AH) and bit 5 of register B set if it is valid, that is non-zero. The extended device handler address is read (7E1AH) and bit 6 of register B set if it is valid. Finally the BASIC program text address is read (7E1AH) and bit 7 of register B set if it is valid. Register B is then copied to the relevant position in [SLTATR](#sltatr) and the search continued until no more slots remain.
+Each page in a given slot is examined by reading the first two bytes (7E1AH) and checking for the "`AB`" characters. If a ROM is present the initialization address is read (7E1AH) and control passed to it via the [CALSLT](#calslt) standard routine. With a games ROM there may be no return to BASIC from this point. The "`CALL`" extended statement handler address is then read (7E1AH) and bit 5 of register B set if it is valid, that is non-zero. The extended device handler address is read (7E1AH) and bit 6 of register B set if it is valid. Finally the BASIC program text address is read (7E1AH) and bit 7 of register B set if it is valid. Register B is then copied to the relevant position in [SLTATR](#sltatr) and the search continued until no more slots remain.
 
 [SLTATR](#sltatr) is then examined for any extension ROM flagged as containing BASIC program text. If one is found its position in [SLTATR](#sltatr) is converted to a Slot ID (7E2AH) and the ROM permanently switched in via the [ENASLT](#enaslt) standard routine. [VARTAB](#vartab) is set to C000H, as it is not known how large the Program Text Area is, [TXTTAB](#txttab) is set to 8008H and [BASROM](#basrom) made non-zero to disable the CTRL-STOP key. The system is cleared (629AH) and control transfers to the Runloop (4601H) to execute the BASIC program.
 
@@ -6741,13 +6741,13 @@ Bits 0 and 1 are shifted into the highest two bits of register H to form the add
 
     Address... 7E4BH
 
-This is the "MAXFILES" statement handler. As control transfers here when a "MAX" token (CDH) is detected the program text is first checked for a trailing "FILES" token (B7H). The buffer count operand, from zero to fifteen, is then evaluated (521CH) and any existing buffers closed (6C1CH). The required number of I/O buffers are allocated (7E6BH), the system is cleared (62A7H) and control transfers directly to the Runloop (4601H).
+This is the "`MAXFILES`" statement handler. As control transfers here when a "`MAX`" token (CDH) is detected the program text is first checked for a trailing "FILES" token (B7H). The buffer count operand, from zero to fifteen, is then evaluated (521CH) and any existing buffers closed (6C1CH). The required number of I/O buffers are allocated (7E6BH), the system is cleared (62A7H) and control transfers directly to the Runloop (4601H).
 
 <a name="7e6bh"></a>
 
     Address... 7E6BH
 
-This is the I/O buffer allocation routine. It is used during power-up and by the "MAXFILES" and "CLEAR" statement handlers to allocate storage for the number of I/O buffers supplied in register A. Two hundred and sixty-seven bytes are subtracted from the contents of [HIMEM](#himem) for every buffer to produce a new [MEMSIZ](#memsiz) value. The size of the existing String Storage Area (initially two hundred bytes) is computed by subtracting the old contents of [STKTOP](#stktop) from the old contents of [MEMSIZ](#memsiz), this is then subtracted from the new [MEMSIZ](#memsiz) value to produce the new [STKTOP](#stktop) value. A further one hundred and forty bytes are subtracted for the Z80 stack and an "`Out of memory`" error generated (6275H) if this address is lower than the start of the Variable Storage Area. Otherwise the buffer count is placed in [MAXFIL](#maxfil) and [MEMSIZ](#memsiz) and [STKTOP](#stktop) set to their new values. The caller's return address is popped, the Z80 SP set to the new position and the return address pushed back onto the stack.  [FILTAB](#filtab) is then set to the start of the I/O buffer pointer block and each pointer set to point to the associated FCB. Finally the address of I/O buffer 0, the Interpreter's "LOAD" and "SAVE" buffer, is placed in [NULBUF](#nulbuf) and the routine terminates.
+This is the I/O buffer allocation routine. It is used during power-up and by the "`MAXFILES`" and "`CLEAR`" statement handlers to allocate storage for the number of I/O buffers supplied in register A. Two hundred and sixty-seven bytes are subtracted from the contents of [HIMEM](#himem) for every buffer to produce a new [MEMSIZ](#memsiz) value. The size of the existing String Storage Area (initially two hundred bytes) is computed by subtracting the old contents of [STKTOP](#stktop) from the old contents of [MEMSIZ](#memsiz), this is then subtracted from the new [MEMSIZ](#memsiz) value to produce the new [STKTOP](#stktop) value. A further one hundred and forty bytes are subtracted for the Z80 stack and an "`Out of memory`" error generated (6275H) if this address is lower than the start of the Variable Storage Area. Otherwise the buffer count is placed in [MAXFIL](#maxfil) and [MEMSIZ](#memsiz) and [STKTOP](#stktop) set to their new values. The caller's return address is popped, the Z80 SP set to the new position and the return address pushed back onto the stack.  [FILTAB](#filtab) is then set to the start of the I/O buffer pointer block and each pointer set to point to the associated FCB. Finally the address of I/O buffer 0, the Interpreter's "`LOAD`" and "`SAVE`" buffer, is placed in [NULBUF](#nulbuf) and the routine terminates.
 
 <a name="7ed8h"></a>
 
@@ -6847,7 +6847,7 @@ A maximum of 32 KB of RAM is available to the BASIC Interpreter to hold the prog
 
 **Figure 50:** Memory Map 8000H to FFFFH
 
-The Program Text Area is composed of tokenized program lines stored in line number order and terminated by a zero end link, when in the "NEW" state only the end link is present. The zero byte at 8000H is a dummy end of line character needed to synchronize the Runloop at the start of a program.
+The Program Text Area is composed of tokenized program lines stored in line number order and terminated by a zero end link, when in the "`NEW`" state only the end link is present. The zero byte at 8000H is a dummy end of line character needed to synchronize the Runloop at the start of a program.
 
 The Variable and Array Storage Areas are composed of string or numeric Variables and Arrays stored in the order in which they are found in the program text. Execution speed improves marginally if Variables are declared before Arrays in a program as this reduces the amount of memory to be moved upwards.
 
@@ -8449,119 +8449,122 @@ The section of the Workspace Area from FD9AH to FFC9H contains one hundred and t
 
 The hooks are listed on the following pages together with the address they are called from and a brief note as to their function.
 
-    FD9AH HKEYI:  DEFS 5       ; 0C4AH Interrupt handler
-    FD9FH HTIMI:  DEFS 5       ; 0C53H Interrupt handler
-    FDA4H HCHPU:  DEFS 5       ; 08C0H CHPUT standard routine
-    FDA9H HDSPC:  DEFS 5       ; 09E6H Display cursor
-    FDAEH HERAC:  DEFS 5       ; 0A33H Erase cursor
-    FDB3H HDSPF:  DEFS 5       ; 0B2BH DSPFNK standard routine
-    FDB8H HERAF:  DEFS 5       ; 0B15H ERAFNK standard routine
-    FDBDH HTOTE:  DEFS 5       ; 0842H TOTEXT standard routine
-    FDC2H HCHGE:  DEFS 5       ; 10CEH CHGET standard routine
-    FDC7H HINIP:  DEFS 5       ; 071EH Copy character set to VDP
-    FDCCH HKEYC:  DEFS 5       ; 1025H Keyboard decoder
-    FDD1H HKYEA:  DEFS 5       ; 0F10H Keyboard decoder
-    FDD6H HNMI:   DEFS 5       ; 1398H NMI standard routine
-    FDDBH HPINL:  DEFS 5       ; 23BFH PINLIN standard routine
-    FDE0H HQINL:  DEFS 5       ; 23CCH QINLIN standard routine
-    FDE5H HINLI:  DEFS 5       ; 23D5H INLIN standard routine
-    FDEAH HONGO:  DEFS 5       ; 7810H "ON DEVICE GOSUB"
-    FDEFH HDSKO:  DEFS 5       ; 7C16H "DSKO$"
-    FDF4H HSETS:  DEFS 5       ; 7C1BH "SET"
-    FDF9H HNAME:  DEFS 5       ; 7C20H "NAME"
-    FDFEH HKILL:  DEFS 5       ; 7C25H "KILL"
-    FE03H HIPL:   DEFS 5       ; 7C2AH "IPL"
-    FE08H HCOPY:  DEFS 5       ; 7C2FH "COPY"
-    FE0DH HCMD:   DEFS 5       ; 7C34H "CMD"
-    FE12H HDSKF:  DEFS 5       ; 7C39H "DSKF"
-    FE17H HDSKI:  DEFS 5       ; 7C3EH "DSKI$"
-    FE1CH HATTR:  DEFS 5       ; 7C43H "ATTR$"
-    FE21H HLSET:  DEFS 5       ; 7C48H "LSET"
-    FE26H HRSET:  DEFS 5       ; 7C4DH "RSET"
-    FE2BH HFIEL:  DEFS 5       ; 7C52H "FIELD"
-    FE30H HMKI$:  DEFS 5       ; 7C57H "MKI$"
-    FE35H HMKS$:  DEFS 5       ; 7C5CH "MKS$"
-    FE3AH HMKD$:  DEFS 5       ; 7C61H "MKD$"
-    FE3FH HCVI:   DEFS 5       ; 7C66H "CVI"
-    FE44H HCVS:   DEFS 5       ; 7C6BH "CVS"
-    FE49H HCVD:   DEFS 5       ; 7C70H "CVD"
-    FE4EH HGETP:  DEFS 5       ; 6A93H Locate FCB
-    FE53H HSETF:  DEFS 5       ; 6AB3H Locate FCB
-    FE58H HNOFO:  DEFS 5       ; 6AF6H "OPEN"
-    FE5DH HNULO:  DEFS 5       ; 6B0FH "OPEN"
-    FE62H HNTFL:  DEFS 5       ; 6B3BH Close I/O buffer 0
-    FE67H HMERG:  DEFS 5       ; 6B63H "MERGE/LOAD"
-    FE6CH HSAVE:  DEFS 5       ; 6BA6H "SAVE"
-    FE71H HBINS:  DEFS 5       ; 6BCEH "SAVE"
-    FE76H HBINL:  DEFS 5       ; 6BD4H "MERGE/LOAD"
-    FE7BH HFILE:  DEFS 5       ; 6C2FH "FILES"
-    FE80H HDGET:  DEFS 5       ; 6C3BH "GET/PUT"
-    FE85H HFILO:  DEFS 5       ; 6C51H Sequential output
-    FE8AH HINDS:  DEFS 5       ; 6C79H Sequential input
-    FE8FH HRSLF:  DEFS 5       ; 6CD8H "INPUT$"
-    FE94H HSAVD:  DEFS 5       ; 6D03H "LOC", 6D14H "LOF",
-                               ; 6D25H "EOF", 6D39H "FPOS"
-    FE99H HLOC:   DEFS 5       ; 6D0FH "LOC"
-    FE9EH HLOF:   DEFS 5       ; 6D20H "LOF"
-    FEA3H HEOF:   DEFS 5       ; 6D33H "EOF"
-    FEA8H HFPOS:  DEFS 5       ; 6D43H "FPOS"
-    FEADH HBAKU:  DEFS 5       ; 6E36H "LINE INPUT#"
-    FEB2H HPARD:  DEFS 5       ; 6F15H Parse device name
-    FEB7H HNODE:  DEFS 5       ; 6F33H Parse device name
-    FEBCH HPOSD:  DEFS 5       ; 6F37H Parse device name
-    FEC1H HDEVN:  DEFS 5       ; This hook is not used.
-    FEC6H HGEND:  DEFS 5       ; 6F8FH I/O function dispatcher
-    FECBH HRUNC:  DEFS 5       ; 629AH Run-clear
-    FED0H HCLEA:  DEFS 5       ; 62A1H Run-clear
-    FED5H HLOPD:  DEFS 5       ; 62AFH Run-clear
-    FEDAH HSTKE:  DEFS 5       ; 62F0H Reset stack
-    FEDFH HISFL:  DEFS 5       ; 145FH ISFLIO standard routine
-    FEE4H HOUTD:  DEFS 5       ; 1B46H OUTDO standard routine
-    FEE9H HCRDO:  DEFS 5       ; 7328H CR,LF to OUTDO
-    FEEEH HDSKC:  DEFS 5       ; 7374H Mainloop line input
-    FEF3H HDOGR:  DEFS 5       ; 593CH Line draw
-    FEF8H HPRGE:  DEFS 5       ; 4039H Program end
-    FEFDH HERRP:  DEFS 5       ; 40DCH Error handler
-    FF02H HERRF:  DEFS 5       ; 40FDH Error handler
-    FF07H HREAD:  DEFS 5       ; 4128H Mainloop "OK"
-    FF0CH HMAIN:  DEFS 5       ; 4134H Mainloop
-    FF11H HDIRD:  DEFS 5       ; 41A8H Mainloop direct statement
-    FF16H HFINI:  DEFS 5       ; 4237H Mainloop finished
-    FF1BH HFINE:  DEFS 5       ; 4247H Mainloop finished
-    FF20H HCRUN:  DEFS 5       ; 42B9H Tokenize
-    FF25H HCRUS:  DEFS 5       ; 4353H Tokenize
-    FF2AH HISRE:  DEFS 5       ; 437CH Tokenize
-    FF2FH HNTFN:  DEFS 5       ; 43A4H Tokenize
-    FF34H HNOTR:  DEFS 5       ; 44EBH Tokenize
-    FF39H HSNGF:  DEFS 5       ; 45D1H "FOR"
-    FF3EH HNEWS:  DEFS 5       ; 4601H Runloop new statement
-    FF43H HGONE:  DEFS 5       ; 4646H Runloop execute
-    FF48H HCHRG:  DEFS 5       ; 4666H CHRGTR standard routine
-    FF4DH HRETU:  DEFS 5       ; 4821H "RETURN"
-    FF52H HPRTF:  DEFS 5       ; 4A5EH "PRINT"
-    FF57H HCOMP:  DEFS 5       ; 4A54H "PRINT"
-    FF5CH HFINP:  DEFS 5       ; 4AFFH "PRINT"
-    FF61H HTRMN:  DEFS 5       ; 4B4DH "READ/INPUT" error
-    FF66H HFRME:  DEFS 5       ; 4C6DH Expression Evaluator
-    FF6BH HNTPL:  DEFS 5       ; 4CA6H Expression Evaluator
-    FF70H HEVAL:  DEFS 5       ; 4DD9H Factor Evaluator
-    FF75H HOKNO:  DEFS 5       ; 4F2CH Factor Evaluator
-    FF7AH HFING:  DEFS 5       ; 4F3EH Factor Evaluator
-    FF7FH HISMI:  DEFS 5       ; 51C3H Runloop execute
-    FF84H HWIDT:  DEFS 5       ; 51CCH "WIDTH"
-    FF89H HLIST:  DEFS 5       ; 522EH "LIST"
-    FF8EH HBUFL:  DEFS 5       ; 532DH Detokenize
-    FF93H HFRQI:  DEFS 5       ; 543FH Convert to integer
-    FF98H HSCNE:  DEFS 5       ; 5514H Line number to pointer
-    FF9DH HFRET:  DEFS 5       ; 67EEH Free descriptor
-    FFA2H HPTRG:  DEFS 5       ; 5EA9H Variable search
-    FFA7H HPHYD:  DEFS 5       ; 148AH PHYDIO standard routine
-    FFACH HFORM:  DEFS 5       ; 148EH FORMAT standard routine
-    FFB1H HERRO:  DEFS 5       ; 406FH Error handler
-    FFB6H HLPTO:  DEFS 5       ; 085DH LPTOUT standard routine
-    FFBBH HLPTS:  DEFS 5       ; 0884H LPTSTT standard routine
-    FFC0H HSCRE:  DEFS 5       ; 79CCH "SCREEN"
-    FFC5H HPLAY:  DEFS 5       ; 73E5H "PLAY" statement
+|:------|:------|:------|:------|:--------------------------------|
+|FD9AH  |HKEYI: |DEFS 5 |0C4AH  |Interrupt handler
+|FD9FH  |HTIMI: |DEFS 5 |0C53H  |Interrupt handler
+|FDA4H  |HCHPU: |DEFS 5 |08C0H  |[CHPUT](#chput) standard routine
+|FDA9H  |HDSPC: |DEFS 5 |09E6H  |Display cursor
+|FDAEH  |HERAC: |DEFS 5 |0A33H  |Erase cursor
+|FDB3H  |HDSPF: |DEFS 5 |0B2BH  |[DSPFNK](#dspfnk) standard routine
+|FDB8H  |HERAF: |DEFS 5 |0B15H  |[ERAFNK](#erafnk) standard routine
+|FDBDH  |HTOTE: |DEFS 5 |0842H  |[TOTEXT](#totext) standard routine
+|FDC2H  |HCHGE: |DEFS 5 |10CEH  |[CHGET](#chget) standard routine
+|FDC7H  |HINIP: |DEFS 5 |071EH  |Copy character set to VDP
+|FDCCH  |HKEYC: |DEFS 5 |1025H  |Keyboard decoder
+|FDD1H  |HKYEA: |DEFS 5 |0F10H  |Keyboard decoder
+|FDD6H  |HNMI:  |DEFS 5 |1398H  |[NMI](#nmi) standard routine
+|FDDBH  |HPINL: |DEFS 5 |23BFH  |[PINLIN](#pinlin) standard routine
+|FDE0H  |HQINL: |DEFS 5 |23CCH  |[QINLIN](#qinlin) standard routine
+|FDE5H  |HINLI: |DEFS 5 |23D5H  |[INLIN](#inlin) standard routine
+|FDEAH  |HONGO: |DEFS 5 |7810H  |"`ON DEVICE GOSUB`"
+|FDEFH  |HDSKO: |DEFS 5 |7C16H  |"`DSKO$`"
+|FDF4H  |HSETS: |DEFS 5 |7C1BH  |"`SET`"
+|FDF9H  |HNAME: |DEFS 5 |7C20H  |"`NAME`"
+|FDFEH  |HKILL: |DEFS 5 |7C25H  |"`KILL`"
+|FE03H  |HIPL:  |DEFS 5 |7C2AH  |"`IPL`"
+|FE08H  |HCOPY: |DEFS 5 |7C2FH  |"`COPY`"
+|FE0DH  |HCMD:  |DEFS 5 |7C34H  |"`CMD`"
+|FE12H  |HDSKF: |DEFS 5 |7C39H  |"`DSKF`"
+|FE17H  |HDSKI: |DEFS 5 |7C3EH  |"`DSKI$`"
+|FE1CH  |HATTR: |DEFS 5 |7C43H  |"`ATTR$`"
+|FE21H  |HLSET: |DEFS 5 |7C48H  |"`LSET`"
+|FE26H  |HRSET: |DEFS 5 |7C4DH  |"`RSET`"
+|FE2BH  |HFIEL: |DEFS 5 |7C52H  |"`FIELD`"
+|FE30H  |HMKI$: |DEFS 5 |7C57H  |"`MKI$`"
+|FE35H  |HMKS$: |DEFS 5 |7C5CH  |"`MKS$`"
+|FE3AH  |HMKD$: |DEFS 5 |7C61H  |"`MKD$`"
+|FE3FH  |HCVI:  |DEFS 5 |7C66H  |"`CVI`"
+|FE44H  |HCVS:  |DEFS 5 |7C6BH  |"`CVS`"
+|FE49H  |HCVD:  |DEFS 5 |7C70H  |"`CVD`"
+|FE4EH  |HGETP: |DEFS 5 |6A93H  |Locate FCB
+|FE53H  |HSETF: |DEFS 5 |6AB3H  |Locate FCB
+|FE58H  |HNOFO: |DEFS 5 |6AF6H  |"`OPEN`"
+|FE5DH  |HNULO: |DEFS 5 |6B0FH  |"`OPEN`"
+|FE62H  |HNTFL: |DEFS 5 |6B3BH  |Close I/O buffer 0
+|FE67H  |HMERG: |DEFS 5 |6B63H  |"`MERGE/LOAD`"
+|FE6CH  |HSAVE: |DEFS 5 |6BA6H  |"`SAVE`"
+|FE71H  |HBINS: |DEFS 5 |6BCEH  |"`SAVE`"
+|FE76H  |HBINL: |DEFS 5 |6BD4H  |"`MERGE/LOAD`"
+|FE7BH  |HFILE: |DEFS 5 |6C2FH  |"`FILES`"
+|FE80H  |HDGET: |DEFS 5 |6C3BH  |"`GET/PUT`"
+|FE85H  |HFILO: |DEFS 5 |6C51H  |Sequential output
+|FE8AH  |HINDS: |DEFS 5 |6C79H  |Sequential input
+|FE8FH  |HRSLF: |DEFS 5 |6CD8H  |"`INPUT$`"
+|FE94H  |HSAVD: |DEFS 5 |6D03H, 6D14H|"`LOC`", "`LOF`",
+|       |       |       |6D25H, 6D39H|"`EOF`", "`FPOS`"
+|FE99H  |HLOC:  |DEFS 5 |6D0FH  |"`LOC`"
+|FE9EH  |HLOF:  |DEFS 5 |6D20H  |"`LOF`"
+|FEA3H  |HEOF:  |DEFS 5 |6D33H  |"`EOF`"
+|FEA8H  |HFPOS: |DEFS 5 |6D43H  |"`FPOS`"
+|FEADH  |HBAKU: |DEFS 5 |6E36H  |"`LINE INPUT#`"
+|FEB2H  |HPARD: |DEFS 5 |6F15H  |Parse device name
+|FEB7H  |HNODE: |DEFS 5 |6F33H  |Parse device name
+|FEBCH  |HPOSD: |DEFS 5 |6F37H  |Parse device name
+|FEC1H  |HDEVN: |DEFS 5 |<center>This hook is not used.</center>||
+|FEC6H  |HGEND: |DEFS 5 |6F8FH  |I/O function dispatcher
+|FECBH  |HRUNC: |DEFS 5 |629AH  |Run-clear
+|FED0H  |HCLEA: |DEFS 5 |62A1H  |Run-clear
+|FED5H  |HLOPD: |DEFS 5 |62AFH  |Run-clear
+|FEDAH  |HSTKE: |DEFS 5 |62F0H  |Reset stack
+|FEDFH  |HISFL: |DEFS 5 |145FH  |[ISFLIO](#isflio) standard routine
+|FEE4H  |HOUTD: |DEFS 5 |1B46H  |[OUTDO](#outdo) standard routine
+|FEE9H  |HCRDO: |DEFS 5 |7328H  |CR,LF to [OUTDO](#outdo)
+|FEEEH  |HDSKC: |DEFS 5 |7374H  |Mainloop line input
+|FEF3H  |HDOGR: |DEFS 5 |593CH  |Line draw
+|FEF8H  |HPRGE: |DEFS 5 |4039H  |Program end
+|FEFDH  |HERRP: |DEFS 5 |40DCH  |Error handler
+|FF02H  |HERRF: |DEFS 5 |40FDH  |Error handler
+|FF07H  |HREAD: |DEFS 5 |4128H  |Mainloop "`OK`"
+|FF0CH  |HMAIN: |DEFS 5 |4134H  |Mainloop
+|FF11H  |HDIRD: |DEFS 5 |41A8H  |Mainloop direct statement
+|FF16H  |HFINI: |DEFS 5 |4237H  |Mainloop finished
+|FF1BH  |HFINE: |DEFS 5 |4247H  |Mainloop finished
+|FF20H  |HCRUN: |DEFS 5 |42B9H  |Tokenize
+|FF25H  |HCRUS: |DEFS 5 |4353H  |Tokenize
+|FF2AH  |HISRE: |DEFS 5 |437CH  |Tokenize
+|FF2FH  |HNTFN: |DEFS 5 |43A4H  |Tokenize
+|FF34H  |HNOTR: |DEFS 5 |44EBH  |Tokenize
+|FF39H  |HSNGF: |DEFS 5 |45D1H  |"`FOR`"
+|FF3EH  |HNEWS: |DEFS 5 |4601H  |Runloop new statement
+|FF43H  |HGONE: |DEFS 5 |4646H  |Runloop execute
+|FF48H  |HCHRG: |DEFS 5 |4666H  |[CHRGTR](#chrgtr) standard routine
+|FF4DH  |HRETU: |DEFS 5 |4821H  |"`RETURN`"
+|FF52H  |HPRTF: |DEFS 5 |4A5EH  |"`PRINT`"
+|FF57H  |HCOMP: |DEFS 5 |4A54H  |"`PRINT`"
+|FF5CH  |HFINP: |DEFS 5 |4AFFH  |"`PRINT`"
+|FF61H  |HTRMN: |DEFS 5 |4B4DH  |"`READ/INPUT`" error
+|FF66H  |HFRME: |DEFS 5 |4C6DH  |Expression Evaluator
+|FF6BH  |HNTPL: |DEFS 5 |4CA6H  |Expression Evaluator
+|FF70H  |HEVAL: |DEFS 5 |4DD9H  |Factor Evaluator
+|FF75H  |HOKNO: |DEFS 5 |4F2CH  |Factor Evaluator
+|FF7AH  |HFING: |DEFS 5 |4F3EH  |Factor Evaluator
+|FF7FH  |HISMI: |DEFS 5 |51C3H  |Runloop execute
+|FF84H  |HWIDT: |DEFS 5 |51CCH  |"WIDTH"
+|FF89H  |HLIST: |DEFS 5 |522EH  |"`LIST`"
+|FF8EH  |HBUFL: |DEFS 5 |532DH  |Detokenize
+|FF93H  |HFRQI: |DEFS 5 |543FH  |Convert to integer
+|FF98H  |HSCNE: |DEFS 5 |5514H  |Line number to pointer
+|FF9DH  |HFRET: |DEFS 5 |67EEH  |Free descriptor
+|FFA2H  |HPTRG: |DEFS 5 |5EA9H  |Variable search
+|FFA7H  |HPHYD: |DEFS 5 |148AH  |[PHYDIO](#phydio) standard routine
+|FFACH  |HFORM: |DEFS 5 |148EH  |[FORMAT](#format) standard routine
+|FFB1H  |HERRO: |DEFS 5 |406FH  |Error handler
+|FFB6H  |HLPTO: |DEFS 5 |085DH  |[LPTOUT](#lptout) standard routine
+|FFBBH  |HLPTS: |DEFS 5 |0884H  |[LPTSTT](#lptstt) standard routine
+|FFC0H  |HSCRE: |DEFS 5 |79CCH  |"`SCREEN`"
+|FFC5H  |HPLAY: |DEFS 5 |73E5H  |"`PLAY`" statement
+
+</a>
 
     The Workspace Area from FFCAH to FFFFH is unused. (on MSX 1 )
 
