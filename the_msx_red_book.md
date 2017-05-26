@@ -8449,120 +8449,120 @@ The section of the Workspace Area from FD9AH to FFC9H contains one hundred and t
 
 The hooks are listed on the following pages together with the address they are called from and a brief note as to their function.
 
-|:------|:------|:------|:------|:--------------------------------|
-|FD9AH  |HKEYI: |DEFS 5 |0C4AH  |Interrupt handler
-|FD9FH  |HTIMI: |DEFS 5 |0C53H  |Interrupt handler
-|FDA4H  |HCHPU: |DEFS 5 |08C0H  |[CHPUT](#chput) standard routine
-|FDA9H  |HDSPC: |DEFS 5 |09E6H  |Display cursor
-|FDAEH  |HERAC: |DEFS 5 |0A33H  |Erase cursor
-|FDB3H  |HDSPF: |DEFS 5 |0B2BH  |[DSPFNK](#dspfnk) standard routine
-|FDB8H  |HERAF: |DEFS 5 |0B15H  |[ERAFNK](#erafnk) standard routine
-|FDBDH  |HTOTE: |DEFS 5 |0842H  |[TOTEXT](#totext) standard routine
-|FDC2H  |HCHGE: |DEFS 5 |10CEH  |[CHGET](#chget) standard routine
-|FDC7H  |HINIP: |DEFS 5 |071EH  |Copy character set to VDP
-|FDCCH  |HKEYC: |DEFS 5 |1025H  |Keyboard decoder
-|FDD1H  |HKYEA: |DEFS 5 |0F10H  |Keyboard decoder
-|FDD6H  |HNMI:  |DEFS 5 |1398H  |[NMI](#nmi) standard routine
-|FDDBH  |HPINL: |DEFS 5 |23BFH  |[PINLIN](#pinlin) standard routine
-|FDE0H  |HQINL: |DEFS 5 |23CCH  |[QINLIN](#qinlin) standard routine
-|FDE5H  |HINLI: |DEFS 5 |23D5H  |[INLIN](#inlin) standard routine
-|FDEAH  |HONGO: |DEFS 5 |7810H  |"`ON DEVICE GOSUB`"
-|FDEFH  |HDSKO: |DEFS 5 |7C16H  |"`DSKO$`"
-|FDF4H  |HSETS: |DEFS 5 |7C1BH  |"`SET`"
-|FDF9H  |HNAME: |DEFS 5 |7C20H  |"`NAME`"
-|FDFEH  |HKILL: |DEFS 5 |7C25H  |"`KILL`"
-|FE03H  |HIPL:  |DEFS 5 |7C2AH  |"`IPL`"
-|FE08H  |HCOPY: |DEFS 5 |7C2FH  |"`COPY`"
-|FE0DH  |HCMD:  |DEFS 5 |7C34H  |"`CMD`"
-|FE12H  |HDSKF: |DEFS 5 |7C39H  |"`DSKF`"
-|FE17H  |HDSKI: |DEFS 5 |7C3EH  |"`DSKI$`"
-|FE1CH  |HATTR: |DEFS 5 |7C43H  |"`ATTR$`"
-|FE21H  |HLSET: |DEFS 5 |7C48H  |"`LSET`"
-|FE26H  |HRSET: |DEFS 5 |7C4DH  |"`RSET`"
-|FE2BH  |HFIEL: |DEFS 5 |7C52H  |"`FIELD`"
-|FE30H  |HMKI$: |DEFS 5 |7C57H  |"`MKI$`"
-|FE35H  |HMKS$: |DEFS 5 |7C5CH  |"`MKS$`"
-|FE3AH  |HMKD$: |DEFS 5 |7C61H  |"`MKD$`"
-|FE3FH  |HCVI:  |DEFS 5 |7C66H  |"`CVI`"
-|FE44H  |HCVS:  |DEFS 5 |7C6BH  |"`CVS`"
-|FE49H  |HCVD:  |DEFS 5 |7C70H  |"`CVD`"
-|FE4EH  |HGETP: |DEFS 5 |6A93H  |Locate FCB
-|FE53H  |HSETF: |DEFS 5 |6AB3H  |Locate FCB
-|FE58H  |HNOFO: |DEFS 5 |6AF6H  |"`OPEN`"
-|FE5DH  |HNULO: |DEFS 5 |6B0FH  |"`OPEN`"
-|FE62H  |HNTFL: |DEFS 5 |6B3BH  |Close I/O buffer 0
-|FE67H  |HMERG: |DEFS 5 |6B63H  |"`MERGE/LOAD`"
-|FE6CH  |HSAVE: |DEFS 5 |6BA6H  |"`SAVE`"
-|FE71H  |HBINS: |DEFS 5 |6BCEH  |"`SAVE`"
-|FE76H  |HBINL: |DEFS 5 |6BD4H  |"`MERGE/LOAD`"
-|FE7BH  |HFILE: |DEFS 5 |6C2FH  |"`FILES`"
-|FE80H  |HDGET: |DEFS 5 |6C3BH  |"`GET/PUT`"
-|FE85H  |HFILO: |DEFS 5 |6C51H  |Sequential output
-|FE8AH  |HINDS: |DEFS 5 |6C79H  |Sequential input
-|FE8FH  |HRSLF: |DEFS 5 |6CD8H  |"`INPUT$`"
-|FE94H  |HSAVD: |DEFS 5 |6D03H, 6D14H|"`LOC`", "`LOF`",
-|       |       |       |6D25H, 6D39H|"`EOF`", "`FPOS`"
-|FE99H  |HLOC:  |DEFS 5 |6D0FH  |"`LOC`"
-|FE9EH  |HLOF:  |DEFS 5 |6D20H  |"`LOF`"
-|FEA3H  |HEOF:  |DEFS 5 |6D33H  |"`EOF`"
-|FEA8H  |HFPOS: |DEFS 5 |6D43H  |"`FPOS`"
-|FEADH  |HBAKU: |DEFS 5 |6E36H  |"`LINE INPUT#`"
-|FEB2H  |HPARD: |DEFS 5 |6F15H  |Parse device name
-|FEB7H  |HNODE: |DEFS 5 |6F33H  |Parse device name
-|FEBCH  |HPOSD: |DEFS 5 |6F37H  |Parse device name
+|:------|:------|:------|:--------------|:--------------------------------|
+|FD9AH  |HKEYI: |DEFS 5 |0C4AH          |Interrupt handler|
+|FD9FH  |HTIMI: |DEFS 5 |0C53H          |Interrupt handler|
+|FDA4H  |HCHPU: |DEFS 5 |08C0H          |[CHPUT](#chput) standard routine|
+|FDA9H  |HDSPC: |DEFS 5 |09E6H          |Display cursor|
+|FDAEH  |HERAC: |DEFS 5 |0A33H          |Erase cursor|
+|FDB3H  |HDSPF: |DEFS 5 |0B2BH          |[DSPFNK](#dspfnk) standard routine|
+|FDB8H  |HERAF: |DEFS 5 |0B15H          |[ERAFNK](#erafnk) standard routine|
+|FDBDH  |HTOTE: |DEFS 5 |0842H          |[TOTEXT](#totext) standard routine|
+|FDC2H  |HCHGE: |DEFS 5 |10CEH          |[CHGET](#chget) standard routine|
+|FDC7H  |HINIP: |DEFS 5 |071EH          |Copy character set to VDP|
+|FDCCH  |HKEYC: |DEFS 5 |1025H          |Keyboard decoder|
+|FDD1H  |HKYEA: |DEFS 5 |0F10H          |Keyboard decoder|
+|FDD6H  |HNMI:  |DEFS 5 |1398H          |[NMI](#nmi) standard routine|
+|FDDBH  |HPINL: |DEFS 5 |23BFH          |[PINLIN](#pinlin) standard routine|
+|FDE0H  |HQINL: |DEFS 5 |23CCH          |[QINLIN](#qinlin) standard routine|
+|FDE5H  |HINLI: |DEFS 5 |23D5H          |[INLIN](#inlin) standard routine|
+|FDEAH  |HONGO: |DEFS 5 |7810H          |"`ON DEVICE GOSUB`"|
+|FDEFH  |HDSKO: |DEFS 5 |7C16H          |"`DSKO$`"|
+|FDF4H  |HSETS: |DEFS 5 |7C1BH          |"`SET`"|
+|FDF9H  |HNAME: |DEFS 5 |7C20H          |"`NAME`"|
+|FDFEH  |HKILL: |DEFS 5 |7C25H          |"`KILL`"|
+|FE03H  |HIPL:  |DEFS 5 |7C2AH          |"`IPL`"|
+|FE08H  |HCOPY: |DEFS 5 |7C2FH          |"`COPY`"|
+|FE0DH  |HCMD:  |DEFS 5 |7C34H          |"`CMD`"|
+|FE12H  |HDSKF: |DEFS 5 |7C39H          |"`DSKF`"|
+|FE17H  |HDSKI: |DEFS 5 |7C3EH          |"`DSKI$`"|
+|FE1CH  |HATTR: |DEFS 5 |7C43H          |"`ATTR$`"|
+|FE21H  |HLSET: |DEFS 5 |7C48H          |"`LSET`"|
+|FE26H  |HRSET: |DEFS 5 |7C4DH          |"`RSET`"|
+|FE2BH  |HFIEL: |DEFS 5 |7C52H          |"`FIELD`"|
+|FE30H  |HMKI$: |DEFS 5 |7C57H          |"`MKI$`"|
+|FE35H  |HMKS$: |DEFS 5 |7C5CH          |"`MKS$`"|
+|FE3AH  |HMKD$: |DEFS 5 |7C61H          |"`MKD$`"|
+|FE3FH  |HCVI:  |DEFS 5 |7C66H          |"`CVI`"|
+|FE44H  |HCVS:  |DEFS 5 |7C6BH          |"`CVS`"|
+|FE49H  |HCVD:  |DEFS 5 |7C70H          |"`CVD`"|
+|FE4EH  |HGETP: |DEFS 5 |6A93H          |Locate FCB|
+|FE53H  |HSETF: |DEFS 5 |6AB3H          |Locate FCB|
+|FE58H  |HNOFO: |DEFS 5 |6AF6H          |"`OPEN`"|
+|FE5DH  |HNULO: |DEFS 5 |6B0FH          |"`OPEN`"|
+|FE62H  |HNTFL: |DEFS 5 |6B3BH          |Close I/O buffer 0|
+|FE67H  |HMERG: |DEFS 5 |6B63H          |"`MERGE/LOAD`"|
+|FE6CH  |HSAVE: |DEFS 5 |6BA6H          |"`SAVE`"|
+|FE71H  |HBINS: |DEFS 5 |6BCEH          |"`SAVE`"|
+|FE76H  |HBINL: |DEFS 5 |6BD4H          |"`MERGE/LOAD`"|
+|FE7BH  |HFILE: |DEFS 5 |6C2FH          |"`FILES`"|
+|FE80H  |HDGET: |DEFS 5 |6C3BH          |"`GET/PUT`"|
+|FE85H  |HFILO: |DEFS 5 |6C51H          |Sequential output|
+|FE8AH  |HINDS: |DEFS 5 |6C79H          |Sequential input|
+|FE8FH  |HRSLF: |DEFS 5 |6CD8H          |"`INPUT$`"|
+|FE94H  |HSAVD: |DEFS 5 |6D03H, 6D14H   |"`LOC`", "`LOF`",|
+|       |       |       |6D25H, 6D39H   |"`EOF`", "`FPOS`"|
+|FE99H  |HLOC:  |DEFS 5 |6D0FH          |"`LOC`"|
+|FE9EH  |HLOF:  |DEFS 5 |6D20H          |"`LOF`"|
+|FEA3H  |HEOF:  |DEFS 5 |6D33H          |"`EOF`"|
+|FEA8H  |HFPOS: |DEFS 5 |6D43H          |"`FPOS`"|
+|FEADH  |HBAKU: |DEFS 5 |6E36H          |"`LINE INPUT#`"|
+|FEB2H  |HPARD: |DEFS 5 |6F15H          |Parse device name|
+|FEB7H  |HNODE: |DEFS 5 |6F33H          |Parse device name|
+|FEBCH  |HPOSD: |DEFS 5 |6F37H          |Parse device name|
 |FEC1H  |HDEVN: |DEFS 5 |<center>This hook is not used.</center>||
-|FEC6H  |HGEND: |DEFS 5 |6F8FH  |I/O function dispatcher
-|FECBH  |HRUNC: |DEFS 5 |629AH  |Run-clear
-|FED0H  |HCLEA: |DEFS 5 |62A1H  |Run-clear
-|FED5H  |HLOPD: |DEFS 5 |62AFH  |Run-clear
-|FEDAH  |HSTKE: |DEFS 5 |62F0H  |Reset stack
-|FEDFH  |HISFL: |DEFS 5 |145FH  |[ISFLIO](#isflio) standard routine
-|FEE4H  |HOUTD: |DEFS 5 |1B46H  |[OUTDO](#outdo) standard routine
-|FEE9H  |HCRDO: |DEFS 5 |7328H  |CR,LF to [OUTDO](#outdo)
-|FEEEH  |HDSKC: |DEFS 5 |7374H  |Mainloop line input
-|FEF3H  |HDOGR: |DEFS 5 |593CH  |Line draw
-|FEF8H  |HPRGE: |DEFS 5 |4039H  |Program end
-|FEFDH  |HERRP: |DEFS 5 |40DCH  |Error handler
-|FF02H  |HERRF: |DEFS 5 |40FDH  |Error handler
-|FF07H  |HREAD: |DEFS 5 |4128H  |Mainloop "`OK`"
-|FF0CH  |HMAIN: |DEFS 5 |4134H  |Mainloop
-|FF11H  |HDIRD: |DEFS 5 |41A8H  |Mainloop direct statement
-|FF16H  |HFINI: |DEFS 5 |4237H  |Mainloop finished
-|FF1BH  |HFINE: |DEFS 5 |4247H  |Mainloop finished
-|FF20H  |HCRUN: |DEFS 5 |42B9H  |Tokenize
-|FF25H  |HCRUS: |DEFS 5 |4353H  |Tokenize
-|FF2AH  |HISRE: |DEFS 5 |437CH  |Tokenize
-|FF2FH  |HNTFN: |DEFS 5 |43A4H  |Tokenize
-|FF34H  |HNOTR: |DEFS 5 |44EBH  |Tokenize
-|FF39H  |HSNGF: |DEFS 5 |45D1H  |"`FOR`"
-|FF3EH  |HNEWS: |DEFS 5 |4601H  |Runloop new statement
-|FF43H  |HGONE: |DEFS 5 |4646H  |Runloop execute
-|FF48H  |HCHRG: |DEFS 5 |4666H  |[CHRGTR](#chrgtr) standard routine
-|FF4DH  |HRETU: |DEFS 5 |4821H  |"`RETURN`"
-|FF52H  |HPRTF: |DEFS 5 |4A5EH  |"`PRINT`"
-|FF57H  |HCOMP: |DEFS 5 |4A54H  |"`PRINT`"
-|FF5CH  |HFINP: |DEFS 5 |4AFFH  |"`PRINT`"
-|FF61H  |HTRMN: |DEFS 5 |4B4DH  |"`READ/INPUT`" error
-|FF66H  |HFRME: |DEFS 5 |4C6DH  |Expression Evaluator
-|FF6BH  |HNTPL: |DEFS 5 |4CA6H  |Expression Evaluator
-|FF70H  |HEVAL: |DEFS 5 |4DD9H  |Factor Evaluator
-|FF75H  |HOKNO: |DEFS 5 |4F2CH  |Factor Evaluator
-|FF7AH  |HFING: |DEFS 5 |4F3EH  |Factor Evaluator
-|FF7FH  |HISMI: |DEFS 5 |51C3H  |Runloop execute
-|FF84H  |HWIDT: |DEFS 5 |51CCH  |"WIDTH"
-|FF89H  |HLIST: |DEFS 5 |522EH  |"`LIST`"
-|FF8EH  |HBUFL: |DEFS 5 |532DH  |Detokenize
-|FF93H  |HFRQI: |DEFS 5 |543FH  |Convert to integer
-|FF98H  |HSCNE: |DEFS 5 |5514H  |Line number to pointer
-|FF9DH  |HFRET: |DEFS 5 |67EEH  |Free descriptor
-|FFA2H  |HPTRG: |DEFS 5 |5EA9H  |Variable search
-|FFA7H  |HPHYD: |DEFS 5 |148AH  |[PHYDIO](#phydio) standard routine
-|FFACH  |HFORM: |DEFS 5 |148EH  |[FORMAT](#format) standard routine
-|FFB1H  |HERRO: |DEFS 5 |406FH  |Error handler
-|FFB6H  |HLPTO: |DEFS 5 |085DH  |[LPTOUT](#lptout) standard routine
-|FFBBH  |HLPTS: |DEFS 5 |0884H  |[LPTSTT](#lptstt) standard routine
-|FFC0H  |HSCRE: |DEFS 5 |79CCH  |"`SCREEN`"
-|FFC5H  |HPLAY: |DEFS 5 |73E5H  |"`PLAY`" statement
+|FEC6H  |HGEND: |DEFS 5 |6F8FH          |I/O function dispatcher|
+|FECBH  |HRUNC: |DEFS 5 |629AH          |Run-clear|
+|FED0H  |HCLEA: |DEFS 5 |62A1H          |Run-clear|
+|FED5H  |HLOPD: |DEFS 5 |62AFH          |Run-clear|
+|FEDAH  |HSTKE: |DEFS 5 |62F0H          |Reset stack|
+|FEDFH  |HISFL: |DEFS 5 |145FH          |[ISFLIO](#isflio) standard routine |
+|FEE4H  |HOUTD: |DEFS 5 |1B46H          |[OUTDO](#outdo) standard routine|
+|FEE9H  |HCRDO: |DEFS 5 |7328H          |CR,LF to [OUTDO](#outdo)|
+|FEEEH  |HDSKC: |DEFS 5 |7374H          |Mainloop line input|
+|FEF3H  |HDOGR: |DEFS 5 |593CH          |Line draw|
+|FEF8H  |HPRGE: |DEFS 5 |4039H          |Program end|
+|FEFDH  |HERRP: |DEFS 5 |40DCH          |Error handler|
+|FF02H  |HERRF: |DEFS 5 |40FDH          |Error handler|
+|FF07H  |HREAD: |DEFS 5 |4128H          |Mainloop "`OK`"|
+|FF0CH  |HMAIN: |DEFS 5 |4134H          |Mainloop|
+|FF11H  |HDIRD: |DEFS 5 |41A8H          |Mainloop direct statement|
+|FF16H  |HFINI: |DEFS 5 |4237H          |Mainloop finished|
+|FF1BH  |HFINE: |DEFS 5 |4247H          |Mainloop finished|
+|FF20H  |HCRUN: |DEFS 5 |42B9H          |Tokenize|
+|FF25H  |HCRUS: |DEFS 5 |4353H          |Tokenize|
+|FF2AH  |HISRE: |DEFS 5 |437CH          |Tokenize|
+|FF2FH  |HNTFN: |DEFS 5 |43A4H          |Tokenize|
+|FF34H  |HNOTR: |DEFS 5 |44EBH          |Tokenize|
+|FF39H  |HSNGF: |DEFS 5 |45D1H          |"`FOR`"|
+|FF3EH  |HNEWS: |DEFS 5 |4601H          |Runloop new statement|
+|FF43H  |HGONE: |DEFS 5 |4646H          |Runloop execute|
+|FF48H  |HCHRG: |DEFS 5 |4666H          |[CHRGTR](#chrgtr) standard routine|
+|FF4DH  |HRETU: |DEFS 5 |4821H          |"`RETURN`"|
+|FF52H  |HPRTF: |DEFS 5 |4A5EH          |"`PRINT`"|
+|FF57H  |HCOMP: |DEFS 5 |4A54H          |"`PRINT`"|
+|FF5CH  |HFINP: |DEFS 5 |4AFFH          |"`PRINT`"|
+|FF61H  |HTRMN: |DEFS 5 |4B4DH          |"`READ/INPUT`" error|
+|FF66H  |HFRME: |DEFS 5 |4C6DH          |Expression Evaluator|
+|FF6BH  |HNTPL: |DEFS 5 |4CA6H          |Expression Evaluator|
+|FF70H  |HEVAL: |DEFS 5 |4DD9H          |Factor Evaluator|
+|FF75H  |HOKNO: |DEFS 5 |4F2CH          |Factor Evaluator|
+|FF7AH  |HFING: |DEFS 5 |4F3EH          |Factor Evaluator|
+|FF7FH  |HISMI: |DEFS 5 |51C3H          |Runloop execute|
+|FF84H  |HWIDT: |DEFS 5 |51CCH          |"WIDTH"|
+|FF89H  |HLIST: |DEFS 5 |522EH          |"`LIST`"|
+|FF8EH  |HBUFL: |DEFS 5 |532DH          |Detokenize|
+|FF93H  |HFRQI: |DEFS 5 |543FH          |Convert to integer|
+|FF98H  |HSCNE: |DEFS 5 |5514H          |Line number to pointer|
+|FF9DH  |HFRET: |DEFS 5 |67EEH          |Free descriptor|
+|FFA2H  |HPTRG: |DEFS 5 |5EA9H          |Variable search|
+|FFA7H  |HPHYD: |DEFS 5 |148AH          |[PHYDIO](#phydio) standard routine|
+|FFACH  |HFORM: |DEFS 5 |148EH          |[FORMAT](#format) standard routine|
+|FFB1H  |HERRO: |DEFS 5 |406FH          |Error handler|
+|FFB6H  |HLPTO: |DEFS 5 |085DH          |[LPTOUT](#lptout) standard routine|
+|FFBBH  |HLPTS: |DEFS 5 |0884H          |[LPTSTT](#lptstt) standard routine|
+|FFC0H  |HSCRE: |DEFS 5 |79CCH          |"`SCREEN`"|
+|FFC5H  |HPLAY: |DEFS 5 |73E5H          |"`PLAY`" statement|
 
 </a>
 
