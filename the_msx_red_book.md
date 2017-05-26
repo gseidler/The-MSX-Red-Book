@@ -8449,7 +8449,8 @@ The section of the Workspace Area from FD9AH to FFC9H contains one hundred and t
 
 The hooks are listed on the following pages together with the address they are called from and a brief note as to their function.
 
-|:------|:------|:------|:--------------|:--------------------------------|
+|       |       |       |               |                                 |
+|-------|-------|-------|---------------|---------------------------------|
 |FD9AH  |HKEYI: |DEFS 5 |0C4AH          |Interrupt handler|
 |FD9FH  |HTIMI: |DEFS 5 |0C53H          |Interrupt handler|
 |FDA4H  |HCHPU: |DEFS 5 |08C0H          |[CHPUT](#chput) standard routine|
