@@ -588,131 +588,131 @@ Note that these data areas are for the UK ROM, there are slight differences in t
 
 Reference is frequently made in this chapter to the standard routines and to Workspace Area variables. Whenever this is done the Microsoft-recommended name is used in upper case letters, for example "the [FILVRM](#filvrm) standard routine" and "[SCRMOD](#scrmod) is set". Subroutines which are not named are referred to by a parenthesized address, "the screen is cleared ([0777H](#0777h))" for example. When reference is made to the Z80 status flags assembly language conventions are used, for example "Flag C" would mean that the carry flag is set while "Flag NZ" means that the zero flag is reset. The terms "EI" and "DI" mean enabled interrupts and disabled interrupts respectively.
 
-|ADDR. |NAME             |TO                |FUNCTION
-|:----:|:---------------:|:----------------:|--------------------------------------
-|0000H |[CHKRAM](#chkram)|[02D7H](#02d7h)   |Power-up, check RAM
-|0004H |......           |.....             |Two bytes, address of ROM character set
-|0006H |......           |.....             |One byte, VDP Data Port number
-|0007H |......           |.....             |One byte, VDP Data Port number
-|0008H |[SYNCHR](#synchr)|[2683H](#2683h)   |Check BASIC program character
-|000BH |......           |.....             |NOP
-|000CH |[RDSLT](#rdslt)  |[01B6H](#01b6h)   |Read RAM in any slot
-|000FH |......           |.....             |NOP
-|0010H |[CHRGTR](#chrgtr)|[2686H](#2686h)   |Get next BASIC program character
-|0013H |......           |.....             |NOP
-|0014H |[WRSLT](#wrslt)  |[01D1H](#01d1h)   |Write to RAM in any slot
-|0017H |......           |.....             |NOP
-|0018H |[OUTDO](#outdo)  |[1B45H](#1b45h)   |Output to current device
-|001BH |......           |.....             |NOP
-|001CH |[CALSLT](#calslt)|[0217H](#0217h)   |Call routine in any slot
-|001FH |......           |.....             |NOP
-|0020H |[DCOMPR](#dcompr)|[146AH](#146ah)   |Compare register pairs HL and DE
-|0023H |......           |.....             |NOP
-|0024H |[ENASLT](#enaslt)|[025EH](#025eh)   |Enable any slot permanently
-|0027H |......           |.....             |NOP
-|0028H |[GETYPR](#getypr)|[2689H](#2689h)   |Get BASIC operand type
-|002BH |......           |.....             |Five bytes Version Number
-|0030H |[CALLF](#callf)  |[0205H](#0205h)   |Call routine in any slot
-|0033H |......           |.....             |Five NOPs
-|0038H |[KEYINT](#keyint)|[0C3CH](#0c3ch)   |Interrupt handler, keyboard scan
-|003BH |[INITIO](#initio)|[049DH](#049dh)   |Initialize I/O devices
-|003EH |[INIFNK](#inifnk)|[139DH](#139dh)   |Initialize function key strings
-|0041H |[DISSCR](#disscr)|[0577H](#0577h)   |Disable screen
-|0044H |[ENASCR](#enascr)|[0570H](#0570h)   |Enable screen
-|0047H |[WRTVDP](#wrtvdp)|[057FH](#057fh)   |Write to any VDP register
-|004AH |[RDVRM](#rdvrm)  |[07D7H](#07d7h)   |Read byte from VRAM
-|004DH |[WRTVRM](#wrtvrm)|[07CDH](#07cdh)   |Write byte to VRAM
-|0050H |[SETRD](#setrd)  |[07ECH](#07ech)   |Set up VDP for read
-|0053H |[SETWRT](#setwrt)|[07DFH](#07dfh)   |Set up VDP for write
-|0056H |[FILVRM](#filvrm)|[0815H](#0815h)   |Fill block of VRAM with data byte
-|0059H |[LDIRMV](#ldirmv)|[070FH](#070fh)   |Copy block to memory from VRAM
-|005CH |[LDIRVM](#ldirvm)|[0744H](#0744h)   |Copy block to VRAM, from memory
-|005FH |[CHGMOD](#chgmod)|[084FH](#084fh)   |Change VDP mode
-|0062H |[CHGCLR](#chgclr)|[07F7H](#07f7h)   |Change VDP colours
-|0065H |......           |.....             |NOP
-|0066H |[NMI](#nmi)      |[1398H](#1398h)   |Non Maskable Interrupt handler
-|0069H |[CLRSPR](#clrspr)|[06A8H](#06a8h)   |Clear all sprites
-|006CH |[INITXT](#initxt)|[050EH](#050eh)   |Initialize VDP to [40x24 Text Mode](#40x24_text_mode)
-|006FH |[INIT32](#init32)|[0538H](#0538h)   |Initialize VDP to [32x24 Text Mode](#32x24_text_mode)
-|0072H |[INIGRP](#inigrp)|[05D2H](#05d2h)   |Initialize VDP to [Graphics Mode](#graphics_mode)
-|0075H |[INIMLT](#inimlt)|[061FH](#061fh)   |Initialize VDP to [Multicolour Mode](#multicolor_mode)
-|0078H |[SETTXT](#settxt)|[0594H](#0594h)   |Set VDP to [40x24 Text Mode](#40x24_text_mode)
-|007BH |[SETT32](#sett32)|[05B4H](#05b4h)   |Set VDP to [32x24 Text Mode](#32x24_text_mode)
-|007EH |[SETGRP](#setgrp)|[0602H](#0602h)   |Set VDP to [Graphics Mode](#graphics_mode)
-|0081H |[SETMLT](#setmlt)|[0659H](#0659h)   |Set VDP to [Multicolour Mode](#multicolour_mode)
-|0084H |[CALPAT](#calpat)|[06E4H](#06e4h)   |Calculate address of sprite pattern
-|0087H |[CALATR](#calatr)|[06F9H](#06f9h)   |Calculate address of sprite attribute
-|008AH |[GSPSIZ](#gspsiz)|[0704H](#0704h)   |Get sprite size
-|008DH |[GRPPRT](#grpprt)|[1510H](#1510h)   |Print character on graphic screen
-|0090H |[GICINI](#gicini)|[04BDH](#04bdh)   |Initialize PSG (GI Chip)
-|0093H |[WRTPSG](#wrtpsg)|[1102H](#1102h)   |Write to any PSG register
-|0096H |[RDPSG](#rdpsg)  |[110EH](#110eh)   |Read from any PSG register
-|0099H |[STRTMS](#strtms)|[11C4H](#11c4h)   |Start music dequeueing
-|009CH |[CHSNS](#chsns)  |[0D6AH](#0d6ah)   |Sense keyboard buffer for character
-|009FH |[CHGET](#chget)  |[10CBH](#10cbh)   |Get character from keyboard buffer (wait)
-|00A2H |[CHPUT](#chput)  |[08BCH](#08bch)   |Screen character output
-|00A5H |[LPTOUT](#lptout)|[085DH](#085dh)   |Line printer character output
-|00A8H |[LPTSTT](#lptstt)|[0884H](#0884h)   |Line printer status test
-|00ABH |[CNVCHR](#cnvchr)|[089DH](#089dh)   |Convert character with graphic header
-|00AEH |[PINLIN](#pinlin)|[23BFH](#23bfh)   |Get line from console (editor)
-|00B1H |[INLIN](#inlin)  |[23D5H](#23d5h)   |Get line from console (editor)
-|00B4H |[QINLIN](#qinlin)|[23CCH](#23cch)   |Display "?", get line from console (editor)
-|00B7H |[BREAKX](#breakx)|[046FH](#046fh)   |Check CTRL-STOP key directly
-|00BAH |[ISCNTC](#iscntc)|[03FBH](#03fbh)   |Check CRTL-STOP key
-|00BDH |[CKCNTC](#ckcntc)|[10F9H](#10f9h)   |Check CTRL-STOP key
-|00C0H |[BEEP](#beep)    |[1113H](#1113h)   |Go beep
-|00C3H |[CLS](#cls)      |[0848H](#0848h)   |Clear screen
-|00C6H |[POSIT](#posit)  |[088EH](#088eh)   |Set cursor position
-|00C9H |[FNKSB](#fnksb)  |[0B26H](#0b26h)   |Check if function key display on
-|00CCH |[ERAFNK](#erafnk)|[0B15H](#0b15h)   |Erase function key display
-|00CFH |[DSPFNK](#dspfnk)|[0B2BH](#0b2bh)   |Display function keys
-|00D2H |[TOTEXT](#totext)|[083BH](#083bh)   |Return VDP to text mode
-|00D5H |[GTSTCK](#gtstck)|[11EEH](#11eeh)   |Get joystick status
-|00D8H |[GTTRIG](#gttrig)|[1253H](#1253h)   |Get trigger status
-|00DBH |[GTPAD](#gtpad)  |[12ACH](#12ach)   |Get touch pad status
-|00DEH |[GTPDL](#gtpdl)  |[1273H](#1273h)   |Get paddle status
-|00E1H |[TAPION](#tapion)|[1A63H](#1a63h)   |Tape input ON
-|00E4H |[TAPIN](#tapin)  |[1ABCH](#1abch)   |Tape input
-|00E7H |[TAPIOF](#tapiof)|[19E9H](#19e9h)   |Tape input OFF
-|00EAH |[TAPOON](#tapoon)|[19F1H](#19f1h)   |Tape output ON
-|00EDH |[TAPOUT](#tapout)|[1A19H](#1a19h)   |Tape output
-|00F0H |[TAPOOF](#tapoof)|[19DDH](#19ddh)   |Tape output OFF
-|00F3H |[STMOTR](#stmotr)|[1384H](#1384h)   |Turn motor ON/OFF
-|00F6H |[LFTQ](#lftq)    |[14EBH](#14ebh)   |Space left in music queue
-|00F9H |[PUTQ](#putq)    |[1492H](#1492h)   |Put byte in music queue
-|00FCH |[RIGHTC](#rightc)|[16C5H](#16c5h)   |Move current pixel physical address right
-|00FFH |[LEFTC](#leftc)  |[16EEH](#16eeh)   |Move current pixel physical address left
-|0102H |[UPC](#upc)      |[175DH](#175dh)   |Move current pixel physical address up
-|0105H |[TUPC](#tupc)    |[173CH](#173ch)   |Test then [UPC](#upc) if legal
-|0108H |[DOWNC](#downc)  |[172AH](#172ah)   |Move current pixel physical address down
-|010BH |[TDOWNC](#tdownc)|[170AH](#170ah)   |Test then [DOWNC](#downc) if legal
-|010EH |[SCALXY](#scalxy)|[1599H](#1599h)   |Scale graphics coordinates
-|0111H |[MAPXYC](#mapxyc)|[15DFH](#15dfh)   |Map graphic coordinates to physical address
-|0114H |[FETCHC](#fetchc)|[1639H](#1639h)   |Fetch current pixel physical address
-|0117H |[STOREC](#storec)|[1640H](#1640h)   |Store current pixel physical address
-|011AH |[SETATR](#setatr)|[1676H](#1676h)   |Set attribute byte
-|011DH |[READC](#readc)  |[1647H](#1647h)   |Read attribute of current pixel
-|0120H |[SETC](#setc)    |[167EH](#167eh)   |Set attribute of current pixel
-|0123H |[NSETCX](#nsetcx)|[1809H](#1809h)   |Set attribute of number of pixels
-|0126H |[GTASPC](#gtaspc)|[18C7H](#18c7h)   |Get aspect ratio
-|0129H |[PNTINI](#pntini)|[18CFH](#18cfh)   |Paint initialize
-|012CH |[SCANR](#scanr)  |[18E4H](#18e4h)   |Scan pixels to right
-|012FH |[SCANL](#scanl)  |[197AH](#197ah)   |Scan pixels to left
-|0132H |[CHGCAP](#chgcap)|[0F3DH](#0f3dh)   |Change Caps Lock LED
-|0135H |[CHGSND](#chgsnd)|[0F7AH](#0f7ah)   |Change Key Click sound output
-|0138H |[RSLREG](#rslreg)|[144CH](#144ch)   |Read Primary Slot Register
-|013BH |[WSLREG](#wslreg)|[144FH](#144fh)   |Write to Primary Slot Register
-|013EH |[RDVDP](#rdvdp)  |[1449H](#1449h)   |Read VDP Status Register
-|0141H |[SNSMAT](#snsmat)|[1452H](#1452h)   |Read row of keyboard matrix
-|0144H |[PHYDIO](#phydio)|[148AH](#148ah)   |Disk, no action
-|0147H |[FORMAT](#format)|[148EH](#148eh)   |Disk, no action
-|014AH |[ISFLIO](#isflio)|[145FH](#145fh)   |Check for file I/O
-|014DH |[OUTDLP](#outdlp)|[1B63H](#1b63h)   |Formatted output to line printer
-|0150H |[GETVCP](#getvcp)|[1470H](#1470h)   |Get music voice pointer
-|0153H |[GETVC2](#getvc2)|[1474H](#1474h)   |Get music voice pointer
-|0156H |[KILBUF](#kilbuf)|[0468H](#0468h)   |Clear keyboard buffer
-|0159H |[CALBAS](#calbas)|[01FFH](#01ffh)   |Call to BASIC from any slot
-|015CH |......           |.....             |NOPs to 01B5H for expansion
+|ADDRESS    |NAME               |TO                 |FUNCTION
+|:---------:|:-----------------:|:-----------------:|--------------------------------------
+|0000H      |[CHKRAM](#chkram)  |[02D7H](#02d7h)    |Power-up, check RAM
+|0004H      |......             |.....              |Two bytes, address of ROM character set
+|0006H      |......             |.....              |One byte, VDP Data Port number
+|0007H      |......             |.....              |One byte, VDP Data Port number
+|0008H      |[SYNCHR](#synchr)  |[2683H](#2683h)    |Check BASIC program character
+|000BH      |......             |.....              |NOP
+|000CH      |[RDSLT](#rdslt)    |[01B6H](#01b6h)    |Read RAM in any slot
+|000FH      |......             |.....              |NOP
+|0010H      |[CHRGTR](#chrgtr)  |[2686H](#2686h)    |Get next BASIC program character
+|0013H      |......             |.....              |NOP
+|0014H      |[WRSLT](#wrslt)    |[01D1H](#01d1h)    |Write to RAM in any slot
+|0017H      |......             |.....              |NOP
+|0018H      |[OUTDO](#outdo)    |[1B45H](#1b45h)    |Output to current device
+|001BH      |......             |.....              |NOP
+|001CH      |[CALSLT](#calslt)  |[0217H](#0217h)    |Call routine in any slot
+|001FH      |......             |.....              |NOP
+|0020H      |[DCOMPR](#dcompr)  |[146AH](#146ah)    |Compare register pairs HL and DE
+|0023H      |......             |.....              |NOP
+|0024H      |[ENASLT](#enaslt)  |[025EH](#025eh)    |Enable any slot permanently
+|0027H      |......             |.....              |NOP
+|0028H      |[GETYPR](#getypr)  |[2689H](#2689h)    |Get BASIC operand type
+|002BH      |......             |.....              |Five bytes Version Number
+|0030H      |[CALLF](#callf)    |[0205H](#0205h)    |Call routine in any slot
+|0033H      |......             |.....              |Five NOPs
+|0038H      |[KEYINT](#keyint)  |[0C3CH](#0c3ch)    |Interrupt handler, keyboard scan
+|003BH      |[INITIO](#initio)  |[049DH](#049dh)    |Initialize I/O devices
+|003EH      |[INIFNK](#inifnk)  |[139DH](#139dh)    |Initialize function key strings
+|0041H      |[DISSCR](#disscr)  |[0577H](#0577h)    |Disable screen
+|0044H      |[ENASCR](#enascr)  |[0570H](#0570h)    |Enable screen
+|0047H      |[WRTVDP](#wrtvdp)  |[057FH](#057fh)    |Write to any VDP register
+|004AH      |[RDVRM](#rdvrm)    |[07D7H](#07d7h)    |Read byte from VRAM
+|004DH      |[WRTVRM](#wrtvrm)  |[07CDH](#07cdh)    |Write byte to VRAM
+|0050H      |[SETRD](#setrd)    |[07ECH](#07ech)    |Set up VDP for read
+|0053H      |[SETWRT](#setwrt)  |[07DFH](#07dfh)    |Set up VDP for write
+|0056H      |[FILVRM](#filvrm)  |[0815H](#0815h)    |Fill block of VRAM with data byte
+|0059H      |[LDIRMV](#ldirmv)  |[070FH](#070fh)    |Copy block to memory from VRAM
+|005CH      |[LDIRVM](#ldirvm)  |[0744H](#0744h)    |Copy block to VRAM, from memory
+|005FH      |[CHGMOD](#chgmod)  |[084FH](#084fh)    |Change VDP mode
+|0062H      |[CHGCLR](#chgclr)  |[07F7H](#07f7h)    |Change VDP colours
+|0065H      |......             |.....              |NOP
+|0066H      |[NMI](#nmi)        |[1398H](#1398h)    |Non Maskable Interrupt handler
+|0069H      |[CLRSPR](#clrspr)  |[06A8H](#06a8h)    |Clear all sprites
+|006CH      |[INITXT](#initxt)  |[050EH](#050eh)    |Initialize VDP to [40x24 Text Mode](#40x24_text_mode)
+|006FH      |[INIT32](#init32)  |[0538H](#0538h)    |Initialize VDP to [32x24 Text Mode](#32x24_text_mode)
+|0072H      |[INIGRP](#inigrp)  |[05D2H](#05d2h)    |Initialize VDP to [Graphics Mode](#graphics_mode)
+|0075H      |[INIMLT](#inimlt)  |[061FH](#061fh)    |Initialize VDP to [Multicolour Mode](#multicolor_mode)
+|0078H      |[SETTXT](#settxt)  |[0594H](#0594h)    |Set VDP to [40x24 Text Mode](#40x24_text_mode)
+|007BH      |[SETT32](#sett32)  |[05B4H](#05b4h)    |Set VDP to [32x24 Text Mode](#32x24_text_mode)
+|007EH      |[SETGRP](#setgrp)  |[0602H](#0602h)    |Set VDP to [Graphics Mode](#graphics_mode)
+|0081H      |[SETMLT](#setmlt)  |[0659H](#0659h)    |Set VDP to [Multicolour Mode](#multicolour_mode)
+|0084H      |[CALPAT](#calpat)  |[06E4H](#06e4h)    |Calculate address of sprite pattern
+|0087H      |[CALATR](#calatr)  |[06F9H](#06f9h)    |Calculate address of sprite attribute
+|008AH      |[GSPSIZ](#gspsiz)  |[0704H](#0704h)    |Get sprite size
+|008DH      |[GRPPRT](#grpprt)  |[1510H](#1510h)    |Print character on graphic screen
+|0090H      |[GICINI](#gicini)  |[04BDH](#04bdh)    |Initialize PSG (GI Chip)
+|0093H      |[WRTPSG](#wrtpsg)  |[1102H](#1102h)    |Write to any PSG register
+|0096H      |[RDPSG](#rdpsg)    |[110EH](#110eh)    |Read from any PSG register
+|0099H      |[STRTMS](#strtms)  |[11C4H](#11c4h)    |Start music dequeueing
+|009CH      |[CHSNS](#chsns)    |[0D6AH](#0d6ah)    |Sense keyboard buffer for character
+|009FH      |[CHGET](#chget)    |[10CBH](#10cbh)    |Get character from keyboard buffer (wait)
+|00A2H      |[CHPUT](#chput)    |[08BCH](#08bch)    |Screen character output
+|00A5H      |[LPTOUT](#lptout)  |[085DH](#085dh)    |Line printer character output
+|00A8H      |[LPTSTT](#lptstt)  |[0884H](#0884h)    |Line printer status test
+|00ABH      |[CNVCHR](#cnvchr)  |[089DH](#089dh)    |Convert character with graphic header
+|00AEH      |[PINLIN](#pinlin)  |[23BFH](#23bfh)    |Get line from console (editor)
+|00B1H      |[INLIN](#inlin)    |[23D5H](#23d5h)    |Get line from console (editor)
+|00B4H      |[QINLIN](#qinlin)  |[23CCH](#23cch)    |Display "?", get line from console (editor)
+|00B7H      |[BREAKX](#breakx)  |[046FH](#046fh)    |Check CTRL-STOP key directly
+|00BAH      |[ISCNTC](#iscntc)  |[03FBH](#03fbh)    |Check CRTL-STOP key
+|00BDH      |[CKCNTC](#ckcntc)  |[10F9H](#10f9h)    |Check CTRL-STOP key
+|00C0H      |[BEEP](#beep)      |[1113H](#1113h)    |Go beep
+|00C3H      |[CLS](#cls)        |[0848H](#0848h)    |Clear screen
+|00C6H      |[POSIT](#posit)    |[088EH](#088eh)    |Set cursor position
+|00C9H      |[FNKSB](#fnksb)    |[0B26H](#0b26h)    |Check if function key display on
+|00CCH      |[ERAFNK](#erafnk)  |[0B15H](#0b15h)    |Erase function key display
+|00CFH      |[DSPFNK](#dspfnk)  |[0B2BH](#0b2bh)    |Display function keys
+|00D2H      |[TOTEXT](#totext)  |[083BH](#083bh)    |Return VDP to text mode
+|00D5H      |[GTSTCK](#gtstck)  |[11EEH](#11eeh)    |Get joystick status
+|00D8H      |[GTTRIG](#gttrig)  |[1253H](#1253h)    |Get trigger status
+|00DBH      |[GTPAD](#gtpad)    |[12ACH](#12ach)    |Get touch pad status
+|00DEH      |[GTPDL](#gtpdl)    |[1273H](#1273h)    |Get paddle status
+|00E1H      |[TAPION](#tapion)  |[1A63H](#1a63h)    |Tape input ON
+|00E4H      |[TAPIN](#tapin)    |[1ABCH](#1abch)    |Tape input
+|00E7H      |[TAPIOF](#tapiof)  |[19E9H](#19e9h)    |Tape input OFF
+|00EAH      |[TAPOON](#tapoon)  |[19F1H](#19f1h)    |Tape output ON
+|00EDH      |[TAPOUT](#tapout)  |[1A19H](#1a19h)    |Tape output
+|00F0H      |[TAPOOF](#tapoof)  |[19DDH](#19ddh)    |Tape output OFF
+|00F3H      |[STMOTR](#stmotr)  |[1384H](#1384h)    |Turn motor ON/OFF
+|00F6H      |[LFTQ](#lftq)      |[14EBH](#14ebh)    |Space left in music queue
+|00F9H      |[PUTQ](#putq)      |[1492H](#1492h)    |Put byte in music queue
+|00FCH      |[RIGHTC](#rightc)  |[16C5H](#16c5h)    |Move current pixel physical address right
+|00FFH      |[LEFTC](#leftc)    |[16EEH](#16eeh)    |Move current pixel physical address left
+|0102H      |[UPC](#upc)        |[175DH](#175dh)    |Move current pixel physical address up
+|0105H      |[TUPC](#tupc)      |[173CH](#173ch)    |Test then [UPC](#upc) if legal
+|0108H      |[DOWNC](#downc)    |[172AH](#172ah)    |Move current pixel physical address down
+|010BH      |[TDOWNC](#tdownc)  |[170AH](#170ah)    |Test then [DOWNC](#downc) if legal
+|010EH      |[SCALXY](#scalxy)  |[1599H](#1599h)    |Scale graphics coordinates
+|0111H      |[MAPXYC](#mapxyc)  |[15DFH](#15dfh)    |Map graphic coordinates to physical address
+|0114H      |[FETCHC](#fetchc)  |[1639H](#1639h)    |Fetch current pixel physical address
+|0117H      |[STOREC](#storec)  |[1640H](#1640h)    |Store current pixel physical address
+|011AH      |[SETATR](#setatr)  |[1676H](#1676h)    |Set attribute byte
+|011DH      |[READC](#readc)    |[1647H](#1647h)    |Read attribute of current pixel
+|0120H      |[SETC](#setc)      |[167EH](#167eh)    |Set attribute of current pixel
+|0123H      |[NSETCX](#nsetcx)  |[1809H](#1809h)    |Set attribute of number of pixels
+|0126H      |[GTASPC](#gtaspc)  |[18C7H](#18c7h)    |Get aspect ratio
+|0129H      |[PNTINI](#pntini)  |[18CFH](#18cfh)    |Paint initialize
+|012CH      |[SCANR](#scanr)    |[18E4H](#18e4h)    |Scan pixels to right
+|012FH      |[SCANL](#scanl)    |[197AH](#197ah)    |Scan pixels to left
+|0132H      |[CHGCAP](#chgcap)  |[0F3DH](#0f3dh)    |Change Caps Lock LED
+|0135H      |[CHGSND](#chgsnd)  |[0F7AH](#0f7ah)    |Change Key Click sound output
+|0138H      |[RSLREG](#rslreg)  |[144CH](#144ch)    |Read Primary Slot Register
+|013BH      |[WSLREG](#wslreg)  |[144FH](#144fh)    |Write to Primary Slot Register
+|013EH      |[RDVDP](#rdvdp)    |[1449H](#1449h)    |Read VDP Status Register
+|0141H      |[SNSMAT](#snsmat)  |[1452H](#1452h)    |Read row of keyboard matrix
+|0144H      |[PHYDIO](#phydio)  |[148AH](#148ah)    |Disk, no action
+|0147H      |[FORMAT](#format)  |[148EH](#148eh)    |Disk, no action
+|014AH      |[ISFLIO](#isflio)  |[145FH](#145fh)    |Check for file I/O
+|014DH      |[OUTDLP](#outdlp)  |[1B63H](#1b63h)    |Formatted output to line printer
+|0150H      |[GETVCP](#getvcp)  |[1470H](#1470h)    |Get music voice pointer
+|0153H      |[GETVC2](#getvc2)  |[1474H](#1474h)    |Get music voice pointer
+|0156H      |[KILBUF](#kilbuf)  |[0468H](#0468h)    |Clear keyboard buffer
+|0159H      |[CALBAS](#calbas)  |[01FFH](#01ffh)    |Call to BASIC from any slot
+|015CH      |......             |.....              |NOPs to 01B5H for expansion
 
 <a name="01b6h"></a><a name="rdslt"></a>
 
@@ -8449,7 +8449,7 @@ The section of the Workspace Area from FD9AH to FFC9H contains one hundred and t
 
 The hooks are listed on the following pages together with the address they are called from and a brief note as to their function.
 
-|ADDRESS|NAME   |BYTES  |FROM ADDRESS   |DESCRIPTION|
+|ADDRESS|NAME   |SIZE   |FROM           |FUNCTION|
 |-------|-------|-------|---------------|---------------------------------|
 |FD9AH  |HKEYI: |DEFS 5 |0C4AH          |Interrupt handler|
 |FD9FH  |HTIMI: |DEFS 5 |0C53H          |Interrupt handler|
