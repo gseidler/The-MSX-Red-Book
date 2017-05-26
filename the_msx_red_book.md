@@ -3182,7 +3182,7 @@ This routine pops an eight byte double precision operand from the Z80 stack into
 This table contains the double precision constants used by the math routines. The first three constants have zero in the exponent position as they are in a special intermediate form used by the random number generator.
 
 |ADDRESS|CONSTANT           |           |ADDR.  |CONSTANT           |
-|-------|-------------------|-----------|-------|----------------------
+|-------|-------------------|-----------|-------|-------------------|---
 |2CF1H  |.14389820420821    |RND        |2DAEH  |6.2503651127908    |
 |2CF9H  |.21132486540519    |RND        |2DB6H  |-13.682370241503   |
 |2D01H  |.40649651372358    |           |2DBEH  |8.5167319872389    |
