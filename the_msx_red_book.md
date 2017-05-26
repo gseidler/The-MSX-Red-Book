@@ -8510,7 +8510,7 @@ The hooks are listed on the following pages together with the address they are c
 |FEB2H  |HPARD: |DEFS 5 |6F15H          |Parse device name|
 |FEB7H  |HNODE: |DEFS 5 |6F33H          |Parse device name|
 |FEBCH  |HPOSD: |DEFS 5 |6F37H          |Parse device name|
-|FEC1H  |HDEVN: |DEFS 5 |<center>This hook is not used.</center>||
+|FEC1H  |HDEVN: |DEFS 5 |This hook is not used.||
 |FEC6H  |HGEND: |DEFS 5 |6F8FH          |I/O function dispatcher|
 |FECBH  |HRUNC: |DEFS 5 |629AH          |Run-clear|
 |FED0H  |HCLEA: |DEFS 5 |62A1H          |Run-clear|
