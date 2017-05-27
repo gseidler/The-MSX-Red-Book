@@ -4331,10 +4331,10 @@ An expression is a list of factors ([4DC7H](#4dc7h)) linked together by operator
 
     3+250\2^2*3^3+1,
 
-    STACK:    3+   (\ follows)
-    STACK:    250\ ( follows)
+    STACK:    3+        (\ follows)
+    STACK:    250\      (^ follows)
     APPLY:    2^2=4     (* follows)
-    STACK:    4*   ( follows)
+    STACK:    4*        (^ follows)
     APPLY:    3^3=27    (+ follows)
     APPLY:    4*27=108  (+ follows)
     APPLY:    250\108=2 (+ follows)
