@@ -704,7 +704,7 @@ Reference is frequently made in this chapter to the standard routines and to Wor
 |00ABH      |[CNVCHR](#cnvchr)  |[089DH](#089dh)    |Convert character with graphic header
 |00AEH      |[PINLIN](#pinlin)  |[23BFH](#23bfh)    |Get line from console (editor)
 |00B1H      |[INLIN](#inlin)    |[23D5H](#23d5h)    |Get line from console (editor)
-|00B4H      |[QINLIN](#qinlin)  |[23CCH](#23cch)    |Display "?", get line from console (editor)
+|00B4H      |[QINLIN](#qinlin)  |[23CCH](#23cch)    |Display "`?`", get line from console (editor)
 |00B7H      |[BREAKX](#breakx)  |[046FH](#046fh)    |Check CTRL-STOP key directly
 |00BAH      |[ISCNTC](#iscntc)  |[03FBH](#03fbh)    |Check CRTL-STOP key
 |00BDH      |[CKCNTC](#ckcntc)  |[10F9H](#10f9h)    |Check CTRL-STOP key
@@ -4020,7 +4020,7 @@ This routine searches the Program Text Area for the program line whose line numb
 
 This routine is used by the Interpreter Mainloop to tokenize a line of text. On entry register pair HL points to the first text character in [BUF](#buf). On exit the tokenized line is in [KBUF](#kbuf), register pair BC holds its length and register pair HL points to its start.
 
-Except after opening quotes or after the "`REM`", "`CALL`" or "`DATA`" keywords any string of characters matching a keyword is replaced by that keyword's token. Lower case alphabetics are changed to upper case for keyword comparison. The character "?" is replaced by the "`PRINT`" token (91H) and the character "'" by ":" (3AH), "`REM`" token (8FH), "'" token (E6H). The "`ELSE`" token (A1H) is preceded by a statement separator (3AH). Any other miscellaneous characters in the text are copied without alteration except that lower case alphabetics are converted to upper case. Those tokens smaller than 80H, the function tokens, cannot be stored directly in [KBUF](#kbuf) as they will conflict with ordinary text. Instead the sequence FFH, token+80H is used.
+Except after opening quotes or after the "`REM`", "`CALL`" or "`DATA`" keywords any string of characters matching a keyword is replaced by that keyword's token. Lower case alphabetics are changed to upper case for keyword comparison. The character "`?`" is replaced by the "`PRINT`" token (91H) and the character "'" by ":" (3AH), "`REM`" token (8FH), "'" token (E6H). The "`ELSE`" token (A1H) is preceded by a statement separator (3AH). Any other miscellaneous characters in the text are copied without alteration except that lower case alphabetics are converted to upper case. Those tokens smaller than 80H, the function tokens, cannot be stored directly in [KBUF](#kbuf) as they will conflict with ordinary text. Instead the sequence FFH, token+80H is used.
 
 Numeric constants are first converted into one of the standard types in [DAC](#dac) ([3299H](#3299h)). They are then stored in one of several ways depending upon their type and magnitude, the general idea being to minimize memory usage:
 
@@ -4275,13 +4275,13 @@ Any following prompt string is evaluated and displayed (4B7BH) and the Variable 
 
     Address... 4B3AH
 
-This is the plain text message "?Redo from start", CR, LF terminated by a zero byte.
+This is the plain text message "`?Redo from start`", CR, LF terminated by a zero byte.
 
 <a name="4b4dh"></a>
 
     Address... 4B4DH
 
-This routine is used by the "`READ/INPUT`" statement handler if it has failed to convert a data item to numeric form. If in "`READ`" mode ([FLGINP](#flginp) is non-zero) a "`Syntax error`" is generated ([404FH](#404fh)). Otherwise the message "?Redo from start" is displayed ([6678H](#6678h)) and control returns to the statement handler.
+This routine is used by the "`READ/INPUT`" statement handler if it has failed to convert a data item to numeric form. If in "`READ`" mode ([FLGINP](#flginp) is non-zero) a "`Syntax error`" is generated ([404FH](#404fh)). Otherwise the message "`?Redo from start`" is displayed ([6678H](#6678h)) and control returns to the statement handler.
 
 <a name="4b62h"></a>
 
@@ -4301,13 +4301,13 @@ This is the "`INPUT`" statement handler. If the next program text character is a
 
 This is the "`READ`" statement handler, a large section is also used by the "`INPUT`" and "`INPUT#`" statements so the structure is rather awkward. Each Variable found in the program text is located in turn ([5EA4H](#5ea4h)), for each one the corresponding data item is obtained and assigned to the Variable by the "`LET`" handler (4893H). When in "`READ`" mode the data items are taken from the program text using the initial contents of [DATPTR](#datptr) ([4C40H](#4c40h)). When in "`INPUT`" or "`INPUT#`" mode the data items are taken from the text buffer [BUF](#buf).
 
-If the data items are exhausted in "`READ`" mode an "`Out of DATA`" error is generated. If they are exhausted in "`INPUT`" mode two question marks are displayed and another line fetched from the console via the [QINLIN](#qinlin) standard routine. If they are exhausted in "`INPUT#`" mode another line of text is copied to [BUF](#buf) from the relevant I/O buffer ([6D83H](#6d83h)). If the Variable list is exhausted while in "`INPUT`" mode the message "`Extra ignored`" is displayed ([6678H](#6678h)) and the handler terminates ([4AFFH](#4affh)). In "`INPUT#`" mode no message is displayed while in "`READ`" mode control terminates by updating [DATPTR](#datptr) (63DEH). If a data item cannot be converted to numeric form ([3299H](#3299h)) to match a numeric Variable control transfers to the "?Redo from start" routine ([4B4DH](#4b4dh)).
+If the data items are exhausted in "`READ`" mode an "`Out of DATA`" error is generated. If they are exhausted in "`INPUT`" mode two question marks are displayed and another line fetched from the console via the [QINLIN](#qinlin) standard routine. If they are exhausted in "`INPUT#`" mode another line of text is copied to [BUF](#buf) from the relevant I/O buffer ([6D83H](#6d83h)). If the Variable list is exhausted while in "`INPUT`" mode the message "`Extra ignored`" is displayed ([6678H](#6678h)) and the handler terminates ([4AFFH](#4affh)). In "`INPUT#`" mode no message is displayed while in "`READ`" mode control terminates by updating [DATPTR](#datptr) (63DEH). If a data item cannot be converted to numeric form ([3299H](#3299h)) to match a numeric Variable control transfers to the "`?Redo from start`" routine ([4B4DH](#4b4dh)).
 
 <a name="4c2fh"></a>
 
     Address... 4C2FH
 
-The is the plain text message "?Extra ignored", CR, LF terminated by a zero byte.
+The is the plain text message "`?Extra ignored`", CR, LF terminated by a zero byte.
 
 <a name="4c40h"></a>
 
