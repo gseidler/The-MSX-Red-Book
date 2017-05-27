@@ -8619,7 +8619,87 @@ The hooks are listed on the following pages together with the address they are c
 
 </a>
 
-    The Workspace Area from FFCAH to FFFFH is unused. (on MSX 1 )
+The Workspace Area from FFCAH to FFFFH is unused. (on MSX 1)
+
+<br><br><br>
+
+<a name="chapter_7"></a>
+# 7. Machine Code Programs
+
+This chapter contains a number of machine code programs to illustrate the use of MSX system resources. Although prepared with the ZEN Assembler they are designed t o run from BASIC and if necessary, may be entered in hex form using the loader shown below. The code should then be saved on cassette before any attempt is made to run it.
+
+    10 CLEAR 200,&HE000
+    20 ADDR=&HE000
+    30 PRINT RIGHT$ ("000"+HEX$(ADDR),4);
+    40 INPUT D$
+    50 POKE ADDR,VAL("&H"+D$)
+    60 ADDR=ADDR+l 
+    70 GOTO 30 
+
+All the programs start at address E000H and are entered at the same point. Unless stated otherwise no parameter need be passed to a program, execution may therefore be initiated with a simple `DEFUSR=&HE000:?USR(0)` statement.
+
+<a name="keyboard_matrix"></a>
+## Keyboard Matrix
+
+This program displays the keyboard matrix on the screen so that key depressions may be directly observed. The program may be terminated by pressing the CTRL and STOP keys. Note that spurious key depressions can be produced under certain circumstances if more than three or four keys are pressed at one time. This is a characteristic of all matrix type keyboards.
+
+                                ORG     0E000H
+                                LOAD    0E000H 
+
+                        ; ******************************
+                        ; *   BIOS STANDARD ROUTINES   *
+                        ; ******************************
+
+                        INITXT: EQU     006CH
+                        CHPUT:  EQU     00A2H
+                        SNSMAT: EQU     0141H
+                        BREAKX: EQU     00B7H
+
+                        ; ******************************
+                        ; *     WORKSPACE VARIABLES    *
+                        ; ******************************
+
+                        INTFLG: EQU     0FC9BH
+
+                        ; ******************************
+                        ; *      CONTROL CHARACTERS    *
+                        ; ******************************
+
+                        LF:     EQU     10
+                        HOME:   EQU     11
+                        CR:     EQU     13
+
+    E000    CD6C00      MATRIX: CALL    INITXT              ; SCREEN 0
+    E003    3E0B        MX1:    LD      A,HOME              ;
+    E005    CDA200              CALL    CHPUT               ; Home Cursor
+    E008    AF                  XOR     A                   ; A=KBD row
+    E009    F5          MX2:    PUSH    AF                  ;
+    E00A    CD4101              CALL    SNSMAT              ; Read a row
+    E00D    0608                LD      B,6                 ; Eight cols
+    E00F    07          MX3:    RLCA                        ; Select col
+    E010    F5                  PUSH    AF                  ;
+    E011    E601                AND     1                   ;
+    E013    C630                ADD     A,"0"               ; Result
+    E015    CDA200              CALL    CHPUT               ; Display col
+    E018    F1                  POP     AF                  ;
+    E019    10F4                DJNZ    MX3                 ;
+    E01B    3E0D                LD      A,CR                ; Newline
+    E01D    CDA200              CALL    CHPUT               ;
+    E020    3E0A                LD      A,LF                ;
+    E022    CDA200              CALL    CHPUT               ;
+    E025    F1                  POP     AF                  ; A=KBD row
+    E026    3C                  INC     A                   ; Next row
+    E027    FE0B                CP      11                  ; Finished?
+    E029    20DE                JR      NZ,MX2              ;
+    E02B    CDB700              CALL    BREAKX              ; CTRL-STOP
+    E02E    30D3                JR      NC,MX1              ; Continue
+    E030    AF                  XOR     A                   ;
+    E031    329BFC              LD      (INTFLG),A          ; Clear possible STOP
+    E034    C9                  RET                         ; Back to BASIC
+
+                                END
+
+
 
 [CH01F01]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH01F01.svg
 [CH01F02]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH01F02.svg
