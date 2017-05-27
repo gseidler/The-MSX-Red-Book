@@ -53,6 +53,7 @@
     + [Workspace Area](#workspace_area)
     + [The Hooks](#the_hooks)
 7. [Machine Code Programs](#chapter_7)
+    + [Keyboard Matrix](#keyboard_matrix)
 
 [Index](#index)
 
