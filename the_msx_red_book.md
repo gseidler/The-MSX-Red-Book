@@ -8706,7 +8706,7 @@ This program displays the keyboard matrix on the screen so that key depressions 
 
 This program prints text on the [Graphics Mode](#graphics_mode) screen at forty characters per line. The string to be displayed is passed as the `USR` call parameter, for example `A$=USR("something")`. There us no need to open a GRP file beforehand, the only requirement of the program is that the screen be in the correct mode. The heart of the program is functionally equivalent to the [GRPPRT](#grpprt) standard routine but only the first six dot columns of a given character pattern are placed on the screen instead of eight. As the [GRPPRT](#grpprt) the pattern is placed at the current graphics position and the only control character recognised is ASCII CR (13) which functions as a combined CR, LF. Unlike the [GRPPRT](#grpprt) standard routine characters printed at negative coordinates, but which overlap the screen, will be correctly displayed. The program is currently set up to perform an auto linefeed after dot column 239, thus giving exactly forty characters per line. If required this may be changed, via the constant in the RMDCOL subroutine, so that the full width of the screen is usable.
 
-                                ORG     OE000H
+                                ORG     0E000H
                                 LOAD    0E000H
 
                         ; ******************************
