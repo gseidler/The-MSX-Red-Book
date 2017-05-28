@@ -1,3 +1,6 @@
+; The MSX Red Book
+; Chapter 7 - String Bubble Sort
+
                             ORG     0E000H
                             LOAD    0E000H
 

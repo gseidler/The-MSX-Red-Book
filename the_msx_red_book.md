@@ -56,6 +56,7 @@
     + [Keyboard Matrix](#keyboard_matrix)
     + [40 Column Graphics Text](#40_column_graphics_text)
     + [String Bubble Sort](#string_bubble_sort)
+    + [Graphics Screen Dump](#graphics_screen_dump)
 
 [Index](#index)
 
@@ -8957,6 +8958,69 @@ This program will sort the contents os a string Array into ascending alphabetic 
     E064    C9                  RET                         ;
 
                                 END
+
+<a name="graphics_screen_dump"></a>
+## Graphics Screen Dump
+
+This program will dump the screen contents, in any mode, to the printer. When first activated via a `USR` call the program merely patches itself into the interrupt handler keyscan hook.
+
+Once the program has installed itself it effectively becomes an extension of the interrupt handler and a screen dump may then be initiated from any part of the system simply by pressing the ESC key. If necessary the dump can be terminated by pressing the CTRL and STOP keys. An example of a [Graphics Mode](#graphics_mode) screen, in which all thirty-two sprites are active, is shown below:
+
+The simplest method of generating a screen dump is to copy all the character codes from the Name Table to the printer. However this would only work in the two text modes, the sprites could not be displayed and the result would reflect the printer's internal character set rather than the VDP character set. The program therefore reproduces the screen as a 240/256x192 bit image on the printer in all modes, each point in the image being derived from the colour code of the corresponding point on the screen. No dot for colours 0 to 7 and a dot for colours 8 to 15.
+
+The colour code for a given point is obtained by first examining the thirty-two sprites in sequence to determine whether any one overlaps it. If every sprite is transparent at the point then the character plane is examined. This is done by using the point coordinates to locate the corresponding entry in the Name Table then, via the character code, to isolate the relevant bit in the associated pattern. If the bit's colour code is found to be transparent the background plane colour is returned.
+
+Note that the control code sequences used in the program are the Epson FX80 printer. These are marked in the listings in case another printer is to be used. One sequence is used to enter bit image mode at the start of a 240/256 byte line (each byte defines eight vertical dots) and one sequence is used to initiate a paper feed at the end of the line. The program is generally optimised for speed, rather than for minimal code, and takes about five seconds plus printer time to produce the 46,080/49,152 dots in the image.
+
+                                ORG     0E000H
+                                LOAD    0E000H
+
+                        ; ******************************
+                        ; *   BIOS STANDARD ROUTINES   *
+                        ; ******************************
+
+                        RDVRM:  EQU     004AH
+                        CALATR: EQU     0087H
+                        LPTOUT: EQU     00A5H 
+
+                        ; ******************************
+                        ; *     WORKSPACE VARIABLES    *
+                        ; ******************************
+
+                        T32COL: EQU     0F3BFH
+                        GRPNAM: EQU     0F3C7H
+                        GRPCOL: EQU     0F3C9H
+                        GRPCGP: EQU     0F3CBH
+                        MLTNAM: EQU     0F3D1H
+                        MLTCGP: EQU     0F3D5H
+                        RG1SAV: EQU     0F3E0H
+                        RG7SAV: EQU     0F3E6H
+                        NAMBAS: EQU     0F922H
+                        CGPBAS: EQU     0F924H
+                        PATBAS: EQU     0F926H
+                        ATRBAS: EQU     0F928H
+                        SCRMOD: EQU     0FCAFH
+                        HKEYC:  EQU     0FDCCH
+
+                        ; ******************************
+                        ; *      CONTROL CHARACTERS    *
+                        ; ******************************
+
+                        CR:     EQU     13
+                        ESC:    EQU     27
+
+    E000    3ACCFD      ENTRY:  LD      A,(HKEYC)           ; Hook
+    E003    FEC9                CP      0C9H                ; Free to use?
+    E005    C0                  RET     NZ                  ;
+    E006    2112E0              LD      HL,DUMP             ; Where to go
+    E009    22CDFD              LD      (HKEYC+1),HL        ; Redirect hook
+    E00C    3ECD                LD      A,0CDH              ; CALL
+    E00E    32CCFD              LD      (HKEYC),A           ;
+    E011    C9                  RET                         ;
+
+    E012    FE3A        DUMP:   CP      3AH                 ; ESC key number?
+    E014    C0                  RET     NZ                  ;
+    E015    F5                  PUSH    AF                  ;
 
 
 
