@@ -9021,6 +9021,74 @@ Note that the control code sequences used in the program are the Epson FX80 prin
     E012    FE3A        DUMP:   CP      3AH                 ; ESC key number?
     E014    C0                  RET     NZ                  ;
     E015    F5                  PUSH    AF                  ;
+    E016    C5                  PUSH    BC                  ;
+    E017    D5                  PUSH    DE                  ;
+    E018    E5                  PUSH    HL                  ;
+    E019    ED734FE2            LD      (BRKSTK),SP         ; For CTRL-STOP
+    E01D    0E00                LD      C,0                 ; C=Row
+    E01F    3AAFFC      DU1:    LD      A,(SCRMOD)          ; Mode
+    E022    B7                  OR      A                   ;
+    E023    21F000              LD      HL,240              ; T40 Dots per row
+    E026    112B06              LD      DE,6*256+40         ;
+    E029    2806                JR      Z,DU2               ; 
+    E02B    210001              LD      HL,256              ; T32,GRP,MLT Dots
+    E02E    112008              LD      DE,8*256+32         ;
+    E031    3E1B        DU2:    LD      A,ESC               ; ***** FX80 *****
+    E033    CD8DE0              CALL    PRINT               ; *              *
+    E036    3E4B                LD      A,"K"               ; *   Bit mode   *
+    E038    CD8DE0              CALL    PRINT               ; *              *
+    E03B    7D                  LD      A,L                 ; *  Bytes  LSB  *
+    E03C    CD8DE0              CALL    PRINT               ; *              *
+    E03F    7C                  LD      A,H                 ; *  Bytes  MSB  *
+    E040    CD8DE0              CALL    PRINT               ; ****************
+    E043    0600                LD      B,0                 ; B=Column
+    E045    CD97E0      DU3:    CALL    CELL                ; Do an 8x8 cell
+    E048    D5                  PUSH    DE                  ;
+    E049    C5                  PUSH    BC                  ;
+    E04A    2151E2              LD      HL,CBUFF            ; HL->Colours
+    E04D    42                  LD      B,D                 ; B=Dot cols (6 or 8)
+    E04E    110800              LD      DE,8                ; CBUFF offset
+    E051    C5          DU4:    PUSH    BC                  ;
+    E052    E5                  PUSH    HL                  ;
+    E053    0608                LD      B,8                 ; B=Dot rows
+    E055    7E          DU5:    LD      A,(HL)              ; A=Colour code
+    E056    FE08                CP      8                   ; Dark or light?
+    E058    3F                  CCF                         ; Light=Print dot
+    E059    CB11                RL      C                   ; Build result
+    E05B    19                  ADD     HL,DE               ; Next dot row
+    E05C    10F7                DJNZ    DU5                 ;
+    E05E    79                  LD      A,C                 ; 8 Vertical dots
+    E05F    CD8DE0              CALL    PRINT               ;
+    E062    E1                  POP     HL                  ;
+    E063    C1                  POP     BC                  ;
+    E064    23                  INC     HL                  ; Next dot col
+    E065    10EA                DJNZ    DU4                 ;
+    E067    C1                  POP     BC                  ;
+    E068    D1                  POP     DE                  ;
+    E069    04                  INC     B                   ; Next column
+    E06A    78                  LD      A,B                 ;
+    E06B    BB                  CP      E                   ; End of row?
+    E06C    20D7                JR      NZ,DU3              ;
+    E06E    3E0D                LD      A,CR                ; Head left
+    E070    CD8DE0              CALL    PRINT               ;
+    E073    3E1B                LD      A,ESC               ; ***** FX80 *****
+    E075    CD8DE0              CALL    PRINT               ; *              *
+    E078    3E4A                LD      A,"J"               ; *  Paper feed  *
+    E07A    CD8DE0              CALL    PRINT               ; *              *
+    E07D    3E18                LD      A,24                ; * 24/216= 1/9" *
+    E07F    CD8DE0              CALL    PRINT               ; ****************
+    E082    0C                  INC     C                   ; Next row
+    E083    79                  LD      A,C                 ;
+    E084    FE18                CP      24                  ; Finished screen?
+    E086    2097                JR      NZ,DU1              ;
+    E088    E1          DU6:    POP     HL                  ;
+    E089    D1                  POP     DE                  ;
+    E08A    C1                  POP     BC                  ;
+    E08B    F1                  POP     AF                  ;
+    E08C    C9                  RET                         ;
+
+    E08D    CDA500      PRINT:  CALL    LPTOUT              ; To printer
+
 
 
 
