@@ -9088,6 +9088,156 @@ Note that the control code sequences used in the program are the Epson FX80 prin
     E08C    C9                  RET                         ;
 
     E08D    CDA500      PRINT:  CALL    LPTOUT              ; To printer
+    E090    D0                  RET     NC                  ; CTRL-STOP?
+    E091    ED7B4FE2            LD      SP,(BRKSTK)         ; Restore stack
+    E095    18F1                JR      DU6                 ; Terminate program
+
+    E097    C5          CELL:   PUSH    BC                  ;
+    E098    D5                  PUSH    DE                  ;
+    E099    E5                  PUSH    HL                  ;
+    E09A    FDE5                PUSH    IY                  ;
+    E09C    2151E2              LD      HL,CBUFF            ; For results
+    E09F    3E40                LD      A,64                ;
+    E0A1    3600        CL1:    LD      (HL),0              ; Transparent
+    E0A3    23                  INC     HL                  ;
+    E0A4    3D                  DEC     A                   ; Fill
+    E0A5    20FA                JR      NZ,CL1              ;
+    E0A7    3AAFFC              LD      A,(SCRMOD)          ; Mode
+    E0AA    B7                  OR      A                   ; T40?
+    E0AB    F5                  PUSH    AF                  ;
+    E0AC    C5                  PUSH    BC                  ;
+    E0AD    C469E1              CALL    NZ,SPRTES           ; Sprites first
+    E0B0    C1                  POP     BC                  ;
+    E0B1    69                  LD      L,C                 ;
+    E0B2    2600                LD      H,0                 ; HL=Row
+    E0B4    29                  ADD     HL,HL               ;
+    E0B5    29                  ADD     HL,HL               ;
+    E0B6    29                  ADD     HL,HL               ; HL=Row*8
+    E0B7    5D                  LD      E,L                 ;
+    E0B8    54                  LD      D,H                 ; DE=Row*8
+    E0B9    29                  ADD     HL,HL               ;
+    E0BA    29                  ADD     HL,HL               ; HL=Row*32
+    E0BB    F1                  POP     AF                  ; Mode
+    E0BC    F5                  PUSH    AF                  ;
+    E0BD    2001                JR      NZ,CL2              ; T40?
+    E0BF    19                  ADD     HL,DE               ; HL=Row*40
+    E0C0    58          CL2:    LD      E,B                 ; DE=Column
+    E0C1    19                  ADD     HL,DE               ;
+    E0C2    EB                  EX      DE,HL               ; DE=NAMTAB offset
+    E0C3    D602                SUB     2                   ; Mode
+    E0C5    79                  LD      A,C                 ; A=Row
+    E0C6    010000              LD      BC,0                ; BC=CGPTAB offset
+    E0C9    2A24F9              LD      HL,(CGPBAS)         ;
+    E0CC    E5                  PUSH    HL                  ;
+    E0CD    2A22F9              LD      HL,(NAMBAS)         ;
+    E0D0    3819                JR      C,CL4               ; C=T40 or T32
+    E0D2    200C                JR      NZ,CL3              ; NZ=MLT
+    E0D4    2ACBF3              LD      HL,(GRPCGP)         ; Else GRP
+    E0D7    E3                  EX      (SP),HL             ;
+    E0D8    2AC7F3              LD      HL,(GRPNAM)         ;
+    E0DB    E618                AND     18H                 ; Row MSBs
+    E0DD    47                  LD      B,A                 ; 1/3=2kB CGP offset
+    E0DE    180B                JR      CL4                 ;
+    E0E0    2AD5F3      CL3:    LD      HL,(MLTCGP)         ;
+    E0E3    E3                  EX      (SP),HL             ;
+    E0E4    2AD1F3              LD      HL,(MLTNAM)         ;
+    E0E7    07                  RLCA                        ; Row*2
+    E0E8    E606                AND     6                   ;
+    E0EA    4F                  LD      C,A                 ; 1/6=2B CGP offset
+    E0EB    19          CL4:    ADD     HL,DE               ; HL->NAMTAB
+    E0EC    CD4A00              CALL    RDVRM               ; Get chr code
+    E0EF    6F                  LD      L,A                 ;
+    E0F0    2600                LD      H,0                 ; HL=Chr code
+    E0F2    29                  ADD     HL,HL               ;
+    E0F3    29                  ADD     HL,HL               ;
+    E0F4    29                  ADD     HL,HL               ; HL=Chr*8
+    E0F5    09                  ADD     HL,BC               ; GRP,MLT offsets
+    E0F6    EB                  EX      DE,HL               ; DE=CGPTAB offset
+    E0F7    FDE1                POP     IY                  ; IY=CGPTAB base
+    E0F9    FD19                ADD     IY,DE               ; IY->Pattern
+    E0FB    2AC9F3              LD      HL,(GRPCOL)         ;
+    E0FE    19                  ADD     HL,DE               ; HL->GRP colours
+    E0FF    0F                  RRCA                        ;
+    E100    0F                  RRCA                        ;
+    E101    0F                  RRCA                        ; Chr code/8
+    E102    E61F                AND     1FH                 ;
+    E104    4F                  LD      C,A                 ;
+    E105    0600                LD      B,0                 ;
+    E107    3AE6F3              LD      A,(RG7SAV)          ; T40 Colours
+    E10A    57                  LD      D,A                 ; D=T40 Colours
+    E10B    E60F                AND     0FH                 ;
+    E10D    5F                  LD      E,A                 ; E=Background colour
+    E10E    F1                  POP     AF                  ; Mode
+    E10F    E5                  PUSH    HL                  ; STK->GRP Colours
+    E110    3D                  DEC     A                   ;
+    E111    2008                JR      NZ,CL5              ; Z=T32
+    E113    2ABFF3              LD      HL,(T32COL)         ;
+    E116    09                  ADD     HL,BC               ; HL->T32 Colours
+    E117    CD4A00              CALL    RDVRM               ; Get T32 Colours
+    E11A    57                  LD      D,A                 ; D=T32 Colours
+    E11B    2151E2      CL5:    LD      HL,CBUFF            ; Results
+    E11E    0608                LD      B,8                 ; Dot rows
+    E120    FDE5        CL6:    PUSH    IY                  ;
+    E122    E3                  EX      (SP),HL             ; HL->Pattern
+    E123    CD4A00              CALL    RDVRM               ; Get pattern
+    E126    4F                  LD      C,A                 ; C=Pattern
+    E127    E1                  POP     HL                  ;
+    E128    FD23                INC     IY                  ; Next dot row
+    E12A    3AAFFC              LD      A,(SCRMOD)          ; Mode
+    E12D    D602                SUB     2                   ;
+    E12F    3815                JR      C,CL8               ; C=T40 or T32
+    E131    280C                JR      Z,CL7               ; Z=GRP
+    E133    51                  LD      D,C                 ; MLT Colours=Pattern
+    E134    0EF0                LD      C,0F0H              ; Dummy MLT pattern
+    E136    78                  LD      A,B                 ; Dot row
+    E137    FE05                CP      5                   ; Cell halfway mark?
+    E139    280B                JR      Z,CL8               ;
+    E13B    FD2B                DEC     IY                  ; Back up pattern
+    E13D    1807                JR      CL8                 ;
+    E13F    E3          CL7:    EX      (SP),HL             ; HL->GRP Colours
+    E140    CD4A00              CALL    RDVRM               ; Get colours
+    E143    57                  LD      D,A                 ; D=GRP Colours
+    E144    23                  INC     HL                  ; Next dot row
+    E145    E3                  EX      (SP),HL             ; STK->GRP Colours
+    E146    C5          CL8:    PUSH    BC                  ;
+    E147    0608                LD      B,8                 ; Dot cols
+    E149    CB11        CL9:    RL      C                   ; Dot from pattern
+    E14B    34                  INC     (HL)                ;
+    E14C    35                  DEC     (HL)                ; Check CBUFF clear
+    E14D    200D                JR      NZ,CL12             ; NZ=Sprite above
+    E14F    7A                  LD      A,D                 ; A=Colours
+    E150    3004                JR      NC,CL10             ; NC=0 Pixel
+    E152    0F                  RRCA                        ;
+    E153    0F                  RRCA                        ;
+    E154    0F                  RRCA                        ;
+    E155    0F                  RRCA                        ; Select 1 colour
+    E156    E60F        CL10:   AND     0FH                 ;
+    E158    2001                JR      NZ,CL11             ; Z=Transparent
+    E15A    7B                  LD      A,E                 ; Use background
+    E15B    77          CL11:   LD      (HL),A              ; Colour in CBUFF
+    E15C    23          CL12:   INC     HL                  ;
+    E15D    10EA                DJNZ    CL9                 ; Next dot col
+    E15F    C1                  POP     BC                  ;
+    E160    10BE                DJNZ    CL6                 ; Next dot row
+    E162    E1                  POP     HL                  ;
+    E163    FDE1                POP     IY                  ;
+    E165    E1                  POP     HL                  ;
+    E166    D1                  POP     DE                  ;
+    E167    C1                  POP     BC                  ;
+    E168    C9                  RET                         ;
+
+    E169    78          SPRTES: LD      A,B                 ; A=Column
+    E16A    07                  RLCA                        ;
+    E16B    07                  RLCA                        ;
+    E16C    07                  RLCA                        ; A=X coord
+    E16D    C607                ADD     A,7                 ; RH edge of cell
+    E16F    47                  LD      B,A                 ; B=X coord
+    E170    79                  LD      A,C                 ; A=Row
+    E171    07                  RLCA                        ;
+    E172    07                  RLCA                        ;
+    E173    07                  RLCA                        ; A=Y coord
+    E174    C607                ADD     A,7                 ; Bottom of cell
+
 
 
 
