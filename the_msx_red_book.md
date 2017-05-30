@@ -9451,6 +9451,21 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
                         DOWN:   EQU     31
 
     E000    CDF6E0      CHEDIT: CALL    INIT                ; Cold start
+    E003    CDBDE0      CH1:    CALL    CHRMAG              ; Magnify chr
+    E006    CDFEE1              CALL    CHRXY               ; Chr coords
+    E009    1608                LD      D,8                 ; Cursor size
+    E00B    CD2FE2              CALL    GETKEY              ; Get command
+    E00E    FE51                CP      "Q"                 ; Quit
+    E010    C8                  RET     Z                   ;
+    E011    2103E0              LD      HL,CH1              ; Set up return
+    E014    E5                  PUSH    HL                  ;
+    E015    FE41                CP      "A"                 ; Adopt
+    E017    CA6EE2              JP      Z,ADOPT             ;
+    E01A    FE0D                CP      CR                  ; Edit
+    E01C    281F                JR      Z,EDIT              ;
+    E01E    0E01                LD      C,1                 ; C=Offset
+    E020    FE1C                CP      RIGHT               ; Right
+    
 
 
 
