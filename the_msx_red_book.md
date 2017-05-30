@@ -9571,6 +9571,60 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
     E0E6    D1                  POP     DE                  ; D=CMASK
     E0E7    C1                  POP     BC                  ;
     E0E8    CDB8E1              CALL    DOWNP               ; Down a pixel
+    E0EB    0D                  DEC     C                   ;
+    E0EC    20DD                JR      NZ,CM2              ;
+    E0EE    CDB8E1              CALL    DOWNP               ; Skip grid
+    E0F1    FD23                INC     IY                  ;
+    E0F3    10D4                DJNZ    CM1                 ;
+    E0F5    C9                  RET                         ;
+
+    E0F6    100008      INIT:   LD      BC,2048             ; Size
+    E0F9    11A3E2              LD      DE,CHRTAB           ; Destination
+    E0FC    2A20F9              LD      HL,(CGPNT+1)        ; Source
+    E0FF    C5          IN1:    PUSH    BC                  ;
+    E100    D5                  PUSH    DE                  ;
+    E101    3A1FF9              LD      A,(CGPNT)           ; Slot ID
+    E104    CD0C00              CALL    RDSLT               ; Read chr  pattern
+    E107    FB                  EI                          ;
+    E108    D1                  POP     DE                  ;
+    E109    C1                  POP     BC                  ;
+    E10A    12                  LD      (DE),A              ; Put in buffer
+    E10B    13                  INC     DE                  ;
+    E10C    23                  INC     HL                  ;
+    E10D    0B                  DEC     BC                  ;
+    E10E    78                  LD      A,B                 ;
+    E10F    B1                  OR      C                   ;
+    E110    20ED                JR      NZ,IN1              ;
+    E112    CD7200              CALL    INIGRP              ; SCREEN 2
+    E115    3AE9F3              LD      A,(FORCLR)          ; Colour 1
+    E118    07                  RLCA                        ;
+    E119    07                  RLCA                        ;
+    E11A    07                  RLCA                        ;
+    E11B    07                  RLCA                        ;
+    E11C    4F                  LD      C,A                 ; C=Colour 1
+    E11D    3AEAF3              LD      A,(BAKCLR)          ; Colour 0
+    E120    B1                  OR      C                   ; Mix
+    E121    010018              LD      BC,6144             ; Colour table size
+    E124    2AC9F3              LD      HL,(GRPCOL)         ; Colour table
+    E127    CD5600              CALL    FILVRM              ; Fill colours
+    E12A    210BB1              LD      HL,177*256+11       ;
+    E12D    010AFF              LD      BC,0FFH*256+10      ;
+    E130    1E06                LD      E,6                 ;
+    E132    3E11                LD      A,17                ;
+    E134    CD62E1              CALL    GRID                ; Draw chr grid
+    E137    210631              LD      HL,49*256+6         ;
+    E13A    01BEAA              LD      BC,0AAH*256+190     ;
+    E13D    1E06                LD      E,6                 ;
+    E13F    3E09                LD      A,9                 ;
+    E141    CD62E1              CALL    GRID                ; Draw mag grid
+    E144    213031              LD      HL,49*256+48        ;
+    E147    01BEFF              LD      BC,0FFH*256+190     ;
+    E14A    1E06                LD      E,6                 ;
+    E14C    3E02                LD      A,2                 ;
+    E14E    CD62E1              CALL    GRID                ; Draw mag box
+    E151    AF                  XOR     A                   ;
+    E152    32A2E2              LD      (DOTNUM),A          ; Current dot
+    E155    21A1E2              LD      HL,CHRNUM           ;
 
 
 
