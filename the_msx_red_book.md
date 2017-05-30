@@ -59,8 +59,6 @@
     + [Graphics Screen Dump](#graphics_screen_dump)
     + [Character Editor](#character_editor)
 
-[Index](#index)
-
 Contents Copyright 1985 Avalon Software
 Iver Lane, Cowley, Middx, UB8 2JD
 
@@ -8638,8 +8636,8 @@ This chapter contains a number of machine code programs to illustrate the use of
     30 PRINT RIGHT$ ("000"+HEX$(ADDR),4);
     40 INPUT D$
     50 POKE ADDR,VAL("&H"+D$)
-    60 ADDR=ADDR+l 
-    70 GOTO 30 
+    60 ADDR=ADDR+l
+    70 GOTO 30
 
 All the programs start at address E000H and are entered at the same point. Unless stated otherwise no parameter need be passed to a program, execution may therefore be initiated with a simple `DEFUSR=&HE000:?USR(0)` statement.
 
@@ -8649,7 +8647,7 @@ All the programs start at address E000H and are entered at the same point. Unles
 This program displays the keyboard matrix on the screen so that key depressions may be directly observed. The program may be terminated by pressing the CTRL and STOP keys. Note that spurious key depressions can be produced under certain circumstances if more than three or four keys are pressed at one time. This is a characteristic of all matrix type keyboards.
 
                                 ORG     0E000H
-                                LOAD    0E000H 
+                                LOAD    0E000H
 
                         ; ******************************
                         ; *   BIOS STANDARD ROUTINES   *
@@ -8982,7 +8980,7 @@ Note that the control code sequences used in the program are the Epson FX80 prin
 
                         RDVRM:  EQU     004AH
                         CALATR: EQU     0087H
-                        LPTOUT: EQU     00A5H 
+                        LPTOUT: EQU     00A5H
 
                         ; ******************************
                         ; *     WORKSPACE VARIABLES    *
@@ -9031,7 +9029,7 @@ Note that the control code sequences used in the program are the Epson FX80 prin
     E022    B7                  OR      A                   ;
     E023    21F000              LD      HL,240              ; T40 Dots per row
     E026    112B06              LD      DE,6*256+40         ;
-    E029    2806                JR      Z,DU2               ; 
+    E029    2806                JR      Z,DU2               ;
     E02B    210001              LD      HL,256              ; T32,GRP,MLT Dots
     E02E    112008              LD      DE,8*256+32         ;
     E031    3E1B        DU2:    LD      A,ESC               ; ***** FX80 *****
@@ -9465,7 +9463,7 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
     E01C    281F                JR      Z,EDIT              ;
     E01E    0E01                LD      C,1                 ; C=Offset
     E020    FE1C                CP      RIGHT               ; Right
-    
+
 
 
 
