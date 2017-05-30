@@ -9237,6 +9237,180 @@ Note that the control code sequences used in the program are the Epson FX80 prin
     E172    07                  RLCA                        ;
     E173    07                  RLCA                        ; A=Y coord
     E174    C607                ADD     A,7                 ; Bottom of cell
+    E176    4F                  LD      C,A                 ; C=Y coord
+    E177    AF                  XOR     A                   ; Sprite number
+    E178    CD8700      SS1:    CALL    CALATR              ; HL->Attributes
+    E17B    57                  LD      D,A                 ; D=Sprite number
+    E17C    CD4A00              CALL    RDVRM               ; Get Sprite Y
+    E17F    FED0                CP      208                 ; Terminator?
+    E181    C8                  RET     Z                   ;
+    E182    D5                  PUSH    DE                  ;
+    E183    C5                  PUSH    BC                  ;
+    E184    CD8FE1              CALL    SPRITE              ; Do a sprite
+    E187    C1                  POP     BC                  ;
+    E188    F1                  POP     AF                  ;
+    E189    3C                  INC     A                   ; Next sprite number
+    E18A    FE20                CP      32                  ; Done all?
+    E18C    20EA                JR      NZ,SS1              ;
+    E18E    C9                  RET                         ;
+
+    E18F    91          SPRITE: SUB     C                   ; (SY-Y)
+    E190    2F                  CPL                         ; Make (Y-SY)
+    E191    FE27                CP      39                  ; Possible overlap?
+    E193    D0                  RET     NC                  ;
+    E194    4F                  LD      C,A                 ; C=(Y-SY)
+    E195    23                  INC     HL                  ;
+    E196    CD4A00              CALL    RDVRM               ; Get Sprite X
+    E199    5F                  LD      E,A                 ;
+    E19A    78                  LD      A,B                 ; A=X coord
+    E19B    93                  SUB     E                   ;
+    E19C    5F                  LD      E,A                 ; E=(X-SX)
+    E19D    9F                  SBC     A,A                 ; Make 16 bit
+    E19E    57                  LD      D,A                 ; DE=(X-SX)
+    E19F    23                  INC     HL                  ;
+    E1A0    CD4A00              CALL    RDVRM               ; Get pattern#
+    E1A3    47                  LD      B,A                 ;
+    E1A4    23                  INC     HL                  ;
+    E1A5    CD4A00              CALL    RDVRM               ; Get EC & Colour
+    E1A8    CB7F                BIT     7,A                 ; Early clock?
+    E1AA    2805                JR      Z,SP1               ;
+    E1AC    212000              LD      HL,32               ;
+    E1AF    19                  ADD     HL,DE               ; Increase (X-SX)
+    E1B0    EB                  EX      DE,HL               ;
+    E1B1    14          SP1:    INC     D                   ;
+    E1B2    15                  DEC     D                   ; (X-SX)>255 or neg?
+    E1B3    C0                  RET     NZ                  ; NZ-Outside cell
+    E1B4    E60F                AND     0FH                 ; Colour
+    E1B6    C8                  RET     Z                   ; Z=Transparent
+    E1B7    57                  LD      D,A                 ; D=Colour
+    E1B8    3AE0F3              LD      A,(RG1SAV)          ; Flags
+    E1BB    DB4F                BIT     1,A                 ; SIZE
+    E1BD    0F                  RRCA                        ; MAG
+    E1BE    3E08                LD      A,8                 ; Minimum size
+    E1C0    3001                JR      NC,SP2              ;
+    E1C2    87                  ADD     A,A                 ; Double for MAG
+    E1C3    2800        SP2:    JR      Z,SP3               ;
+    E1C5    CB80                RES     0,B                 ; Change pattern#
+    E1C7    CB88                RES     1,B                 ;
+    E1C9    87                  ADD     A,A                 ; Double for SIZE
+    E1CA    6F          SP3:    LD      L,A                 ; L=Sprite size
+    E1CB    C606                ADD     A,6                 ; Allow cell size
+    E1CD    B9                  CP      C                   ;
+    E1CE    D8                  RET     C                   ; Sprite above
+    E1CF    BB                  CP      E                   ;
+    E1D0    D8                  RET     C                   ; Sprite to left
+    E1D1    79                  LD      A,C                 ;
+    E1D2    D607                SUB     7                   ; (Y-SY) from top
+    E1D4    4F                  LD      C,A                 ;
+    E1D5    7D                  LD      A,L                 ; A=Sprite size
+    E1D6    2608                LD      H,8                 ; Max dot rows
+    E1D8    3800                JR      C,SP5               ; C=Below cell top
+    E1DA    91                  SUB     C                   ; A=Dot row overlap
+    E1DB    FE09                CP      9                   ;
+    E1DD    3802                JR      C,SP4               ;
+    E1DF    3E08                LD      A,8                 ;
+    E1E1    67          SP4:    LD      H,A                 ; H=Row overlap
+    E1E2    7B          SP5:    LD      A,E                 ;
+    E1E3    D607                SUB     7                   ; (X-SX) from cell LH
+    E1E5    5F                  LD      E,A                 ;
+    E1E6    7D                  LD      A,L                 ; A=Sprite size
+    E1E7    2E08                LD      L,8                 ; Max dot cols
+    E1E9    3808                JR      C,SP7               ; C=Past cell LH
+    E1EB    93                  SUB     E                   ; A=Dot col overlap
+    E1EC    FE09                CP      9                   ;
+    E1EE    3802                JR      C,SP6               ;
+    E1F0    3E08                LD      A,8                 ;
+    E1F2    6F          SP6:    LD      L,A                 ; L=Col overlap
+    E1F3    FD2151E2    SP7:    LD      IY,CBUFF            ; Results
+    E1F7    D5          SP8:    PUSH    DE                  ;
+    E1F8    CB79                BIT     7,C                 ; Reached sprite?
+    E1FA    2048                JR      NZ,SP15             ;
+    E1FC    E5                  PUSH    HL                  ;
+    E1FD    FDE5                PUSH    IY                  ;
+    E1FF    CB7B        SP9:    BIT     7,E                 ; Reached sprite?
+    E201    2038                JR      NZ,SP14             ;
+    E203    FD7E00              LD      A,(IY+0)            ; CBUFF
+    E206    B7                  OR      A                   ; Transparent?
+    E207    2032                JR      NZ,SP14             ;
+    E209    C5                  PUSH    BC                  ;
+    E20A    D5                  PUSH    DE                  ;
+    E20B    E5                  PUSH    HL                  ;
+    E20C    3AE0F3              LD      A,(RG1SAV)          ; Flags
+    E10F    0F                  RRCA                        ; MAG
+    E210    3004                JR      NC,SP10             ;
+    E212    CB39                SRL     C                   ; (Y-SY)/2
+    E214    CB3B                SRL     E                   ; (X-SX)/2
+    E216    CB5B        SP10:   BIT     3,E                 ; (X-SX)>7?
+    E218    2804                JR      Z,SP11              ;
+    E21A    CB9B                RES     3,E                 ; (X-SX)-8
+    E21C    CBE1                SET     4,C                 ; (Y-SY)+16
+    E21E    68          SP11:   LD      L,B                 ;
+    E21F    2600                LD      H,0                 ; HL=Pattern#
+    E221    44                  LD      B,H                 ; BC=Y offset
+    E222    29                  ADD     HL,HL               ;
+    E223    29                  ADD     HL,HL               ;
+    E224    29                  ADD     HL,HL               ; HL=Pattern*8
+    E225    09                  ADD     HL,BC               ; Select dot row
+    E226    ED4B26F9            LD      BC,(PATBAS)         ;
+    E22A    09                  ADD     HL,BC               ; HL->Pattern
+    E22B    CD4A00              CALL    RDVRM               ; Get dot row
+    E22E    1C                  INC     E                   ;
+    E22F    07          SP12:   RLCA                        ; Select dot col
+    E230    1D                  DEC     E                   ;
+    E231    20FC                JR      NZ,SP12             ;
+    E233    3003                JR      NC,SP13             ; NC=0 Pixel
+    E235    FD7200              LD      (IY+0),D            ; Colour in CBUFF
+    E238    E1          SP13:   POP     HL                  ;
+    E239    D1                  POP     DE                  ;
+    E23A    C1                  POP     BC                  ;
+    E23B    FD23        SP14:   INC     IY                  ;
+    E23D    1C                  INC     E                   ; Right a dot col
+    E23E    2D                  DEC     L                   ; Finished cols?
+    E23F    20BE                JR      NZ,SP9              ;
+    E241    FDE1                POP     IY                  ;
+    E243    E1                  POP     HL                  ;
+    E244    110800      SP15:   LD      DE,8                ;
+    E247    FD19                ADD     IY,DE               ;
+    E249    D1                  POP     DE                  ;
+    E24A    0C                  INC     C                   ; Down a dot row
+    E24B    25                  DEC     H                   ; Finished?
+    E24C    20A9                JR      NZ,SP8              ;
+    E24E    C9                  RET                         ;
+
+    E24F    0000        BRKSTK: DEFW    0                   ; Break stack
+
+                        ; ****************************
+                        ; * This buffer holds the 64 *
+                        ; * colour codes produced by *
+                        ; *       a cell scan:       *
+                        ; *                          *
+                        ; *   CCCCCCCC Bytes 00-07   *
+                        ; *   CCCCCCCC Bytes 08-15   *
+                        ; *   CCCCCCCC Bytes 16-23   *
+                        ; *   CCCCCCCC Bytes 24-31   *
+                        ; *   CCCCCCCC Bytes 32-39   *
+                        ; *   CCCCCCCC Bytes 40-47   *
+                        ; *   CCCCCCCC Bytes 48-55   *
+                        ; *   CCCCCCCC Bytes 56-64   *
+                        ; *                          *
+                        ; ****************************
+
+    E251                CBUFF:  DEFS    64                  ; Cell buffer
+
+                                END
+
+<a name="character_editor"></a>
+## Character Editor
+
+This program allows the MSX character patterns to be modified. When the program is first entered it copies the 2KB character set from its present location (usually the MSX ROM) to the [CHRTAB](#chrtab) buffer (E2A3H to EAA2H) and sets up the screen as shown below:
+
+The program has two levels of operation, command and edit, with the RETURN key being used to toggle between them. In command mode the four arrow keys are used to select the character for editing. This is marked by a large cursor an is also displayed in magnified form on the right hand side of the screen. The "Q" key will quit the program and return to BASIC. The "A" key is used to adopt the character set, that is, to make it the system character set. When the character set is adopted it is copied to the highest part of memory (EB80H to F37FH) and its Slot ID and address placed in [CGPNT](#cgpnt).
+
+In edit mode the four arrow keys are used to select the dot for editing, this is marked by a small cursor. The SPACE key will erase the current dot and the "." key set it. As the patter is modified the character menu on the left hand side of the screen is updated.
+
+The character set in the [CHRTAB](#chrtab) may be saved on the cassette using a "BSAVE" statement and later re-loaded with a "BLOAD" statement. The ADOPT subroutine should be saved with the patterns and executed upon re-loading so that the system adopts the new character set. Alternatively the character set alone can be saved and its Slot ID and address placed in [CGPNT](#cgpnt) upon re-loading using BASIC statements. Note that altering the character patterns does not affect the operation of the MSX system un the slightest.
+
+
 
 
 
