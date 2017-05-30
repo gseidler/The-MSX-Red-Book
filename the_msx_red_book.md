@@ -57,6 +57,7 @@
     + [40 Column Graphics Text](#40_column_graphics_text)
     + [String Bubble Sort](#string_bubble_sort)
     + [Graphics Screen Dump](#graphics_screen_dump)
+    + [Character Editor](#character_editor)
 
 [Index](#index)
 
@@ -9402,17 +9403,54 @@ Note that the control code sequences used in the program are the Epson FX80 prin
 <a name="character_editor"></a>
 ## Character Editor
 
-This program allows the MSX character patterns to be modified. When the program is first entered it copies the 2KB character set from its present location (usually the MSX ROM) to the [CHRTAB](#chrtab) buffer (E2A3H to EAA2H) and sets up the screen as shown below:
+This program allows the MSX character patterns to be modified. When the program is first entered it copies the 2KB character set from its present location (usually the MSX ROM) to the CHRTAB buffer (E2A3H to EAA2H) and sets up the screen as shown below:
 
 The program has two levels of operation, command and edit, with the RETURN key being used to toggle between them. In command mode the four arrow keys are used to select the character for editing. This is marked by a large cursor an is also displayed in magnified form on the right hand side of the screen. The "Q" key will quit the program and return to BASIC. The "A" key is used to adopt the character set, that is, to make it the system character set. When the character set is adopted it is copied to the highest part of memory (EB80H to F37FH) and its Slot ID and address placed in [CGPNT](#cgpnt).
 
 In edit mode the four arrow keys are used to select the dot for editing, this is marked by a small cursor. The SPACE key will erase the current dot and the "." key set it. As the patter is modified the character menu on the left hand side of the screen is updated.
 
-The character set in the [CHRTAB](#chrtab) may be saved on the cassette using a "BSAVE" statement and later re-loaded with a "BLOAD" statement. The ADOPT subroutine should be saved with the patterns and executed upon re-loading so that the system adopts the new character set. Alternatively the character set alone can be saved and its Slot ID and address placed in [CGPNT](#cgpnt) upon re-loading using BASIC statements. Note that altering the character patterns does not affect the operation of the MSX system un the slightest.
+The character set in the CHRTAB may be saved on the cassette using a "BSAVE" statement and later re-loaded with a "BLOAD" statement. The ADOPT subroutine should be saved with the patterns and executed upon re-loading so that the system adopts the new character set. Alternatively the character set alone can be saved and its Slot ID and address placed in [CGPNT](#cgpnt) upon re-loading using BASIC statements. Note that altering the character patterns does not affect the operation of the MSX system un the slightest.
 
+                                ORG     0E000H
+                                LOAD    0E000H
 
+                        ; ******************************
+                        ; *   BIOS STANDARD ROUTINES   *
+                        ; ******************************
 
+                        RDSLT:  EQU     000CH
+                        RDVRM:  EQU     004AH
+                        WRTVRM: EQU     004AH
+                        FILVRM: EQU     0056H
+                        INIGRP: EQU     0072H
+                        CHSNS:  EQU     009CH
+                        CHGET:  EQU     009FH
+                        MAPXYC: EQU     0111H
+                        FETCHC: EQU     0114H
+                        RSLREG: EQU     0138H
 
+                        ; ******************************
+                        ; *     WORKSPACE VARIABLES    *
+                        ; ******************************
+
+                        GRPCOL: EQU     0F3D9H
+                        FORCLR: EQU     0F3E9H
+                        BAKCLR: EQU     0F3EAH
+                        CGPNT:  EQU     0F91FH
+                        EXPTBL: EQU     0FCC1H
+                        SLTTBL: EQU     0FCC5H
+
+                        ; ******************************
+                        ; *      CONTROL CHARACTERS    *
+                        ; ******************************
+
+                        CR:     EQU     13
+                        RIGHT:  EQU     28
+                        LEFT:   EQU     29
+                        UP:     EQU     30
+                        DOWN:   EQU     31
+
+    E000    CDF6E0      CHEDIT: CALL    INIT                ; Cold start
 
 
 
