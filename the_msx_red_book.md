@@ -9533,6 +9533,45 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
     E09E    CD1EE2      CHROUT: CALL    PATPOS              ; IY->Pattern
     E0A1    CDFEE1              CALL    CHRXY               ; Get coords
     E0A4    CDA3E1              CALL    MAP                 ; Map
+    E0A7    0608                LD      B,8                 ; Dot rows
+    E0A9    D5          CO1:    PUSH    DE                  ;
+    E0AA    E5                  PUSH    HL                  ;
+    E0AB    3E08                LD      A,8                 ; Dot cols
+    E0AD    FD5E00              LD      E,(IY+0)            ; E=Pattern
+    E0B0    CDC4E1              CALL    SETROW              ; Set row
+    E0B3    E1                  POP     HL                  ; HL=CLOC
+    E0B4    D1                  POP     DE                  ; D=CMASK
+    E0B5    CDB8E1              CALL    DOWNP               ; Down a pixel
+    E0B8    FD23                INC     IY                  ;
+    E0BA    10ED                DJNZ    CO1                 ;
+    E0BC    C9                  RET                         ;
+
+    E0BD    CD1EE2      CHRMAG: CALL    PATPOS              ; IY->Pattern
+    E0C0    0EBF                LD      C,191               ; Start X
+    E0C2    1E07                LD      E,7                 ; Start Y
+    E0C4    CDA3E1              CALL    MAP                 ; Map
+    E0C7    0608                LD      B,8                 ; Dot rows
+    E0C9    0E05        CM1:    LD      C,5                 ; Row mag
+    E0CB    C5          CM2:    PUSH    BC                  ;
+    E0CC    D5                  PUSH    DE                  ;
+    E0CD    E5                  PUSH    HL                  ;
+    E0CE    0608                LD      B,8                 ; Dot columns
+    E0D0    FD7E00              LD      A,(IY+0)            ; A=Pattern
+    E0D3    07          CM3:    RLCA                        ; Test bit
+    E0D4    F5                  PUSH    AF                  ;
+    E0D5    9F                  SBC     A,A                 ; 0=00H, 1=FFH
+    E0D6    5F                  LD      E,A                 ; E=Mag pattern
+    E0D7    3E05                LD      A,5                 ; Column mag
+    E0D9    CDC4E1              CALL    SETROW              ; Set row
+    E0DC    CDAEE1              CALL    RIGHTP              ; Right a pixel
+    E0DF    CDAEE1              CALL    RIGHTP              ; Skip grid
+    E0E2    F1                  POP     AF                  ;
+    E0E3    10EE                DJNZ    CM3                 ;
+    E0E5    E1                  POP     HL                  ; HL=CLOC
+    E0E6    D1                  POP     DE                  ; D=CMASK
+    E0E7    C1                  POP     BC                  ;
+    E0E8    CDB8E1              CALL    DOWNP               ; Down a pixel
+
 
 
 
