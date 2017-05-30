@@ -9517,7 +9517,23 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
     E083    5F                  LD      E,A                 ;
     E084    1600                LD      D,0                 ; DE=Row
     E086    FD19                ADD     IY,DE               ; IY->Row
-    
+    E088    F1                  POP     AF                  ;
+    E089    E607                AND     7                   ; A=Column
+    E08B    3C                  INC     A                   ;
+    E08C    CB08        ED4:    RRC     B                   ; AND mask
+    E08E    CB09                RRC     C                   ; OR mask
+    E090    3D                  DEC     A                   ; Count columns
+    E091    20F9                JR      NZ,ED4              ;
+    E093    FD7E00              LD      A,(IY+0)            ; A=Pattern
+    E096    A0                  AND     B                   ; Strip old bit
+    E097    B1                  OR      C                   ; New bit
+    E098    FD7700              LD      (IY+0),A            ; New pattern
+    E09B    CDBDE0              CALL    CHRMAG              ; Update magnified
+
+    E09E    CD1EE2      CHROUT: CALL    PATPOS              ; IY->Pattern
+    E0A1    CDFEE1              CALL    CHRXY               ; Get coords
+    E0A4    CDA3E1              CALL    MAP                 ; Map
+
 
 
 
