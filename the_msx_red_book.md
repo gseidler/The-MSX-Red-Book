@@ -360,10 +360,12 @@ The Border Colour bits determine the colour of the region surrounding the active
 
 The Text Colour 1 bits determine the colour of all 1 pixels in [40x24 Text Mode](#40x24_text_mode). They have no effect in the other three modes where greater flexibility is provided through the use of the Colour Table. The VDP colour codes are:
 
-    0 Transparent  4 Dark Blue   8 Red           12 Dark Green
-    1 Black        5 Light Blue  9 Bright Red    13 Purple
-    2 Green        6 Dark Red   10 Yellow        14 Grey
-    3 Light Green  7 Sky Blue   11 Light Yellow  15 White
+```
+0 Transparent   4 Dark Blue      8 Red              12 Dark Green
+1 Black         5 Light Blue     9 Bright Red       13 Purple
+2 Green         6 Dark Red      10 Yellow           14 Grey
+3 Light Green   7 Sky Blue      11 Light Yellow     15 White
+```
 
 <a name="screen_modes"></a>
 ## Screen Modes
@@ -426,12 +428,14 @@ The border colour is defined by VDP [Mode Register 7](#mode_register_7) and is i
 
 The Name Table occupies 768 bytes of VRAM from 0800H to 0AFFH, the screen mapping is the same as in [32x24 Text Mode](#32x24_text_mode). The table is initialized with the following character code pattern:
 
-    00H to 1FH (Repeated four times)
-    20H to 3FH (Repeated four times)
-    40H to 5FH (Repeated four times)
-    60H to 7FH (Repeated four times)
-    80H to 9FH (Repeated four times)
-    A0H to BFH (Repeated four times)
+```
+00H to 1FH (Repeated four times)
+20H to 3FH (Repeated four times)
+40H to 5FH (Repeated four times)
+60H to 7FH (Repeated four times)
+80H to 9FH (Repeated four times)
+A0H to BFH (Repeated four times)
+```
 
 As with [Graphics Mode](#graphics_mode) this is just a character code "driver" pattern, it is the Character Pattern Table which is modified during normal operation.
 
@@ -443,10 +447,12 @@ The Character Pattern table occupies 1536 bytes of VRAM from 0000H to 05FFH. As 
 
 As can be seen from [Figure 21](#figure21) each four bit section of the two byte block contains a colour code and thus defines the colour of a quadrant of the 8x8 pixel pattern. So that the entire eight bytes of the pattern block can be utilized a given character code will use a different two byte section depending upon the character code's screen location (i.e. its position in the Name Table):
 
-    Video row 0, 4, 8, 12, 16, 20   Uses bytes 0 and 1
-    Video row 1, 5, 9, 13, 17, 21   Uses bytes 2 and 3
-    Video row 2, 6, 10, 14, 18, 22  Uses bytes 4 and 5
-    Video row 3, 7, 11, 15, 19, 23  Uses bytes 6 and 7
+```
+Video row 0, 4, 8, 12, 16, 20   Uses bytes 0 and 1
+Video row 1, 5, 9, 13, 17, 21   Uses bytes 2 and 3
+Video row 2, 6, 10, 14, 18, 22  Uses bytes 4 and 5
+Video row 3, 7, 11, 15, 19, 23  Uses bytes 6 and 7
+```
 
 When the Name Table is filled with the special driver sequence of character codes shown above the Character Pattern Table will be read out linearly during a video frame:
 
@@ -623,16 +629,18 @@ This chapter gives a functional description of every recognizably separate routi
 
 It is expected that most users will wish to disassemble the ROM to some extent (the full listing runs to nearly four hundred pages). In order to ease this process the data areas, which do not contain executable Z80 code, are shown below:
 
-    0004H-0007H    185DH-1863H 4B3AH-4B4CH    73E4H-73E4H
-    002BH-002FH    1B97H-1BAAH 4C2FH-4C3FH    752EH-7585H
-    0508H-050DH    1BBFH-23BEH 555AH-5569H    7754H-7757H
-    092FH-097FH    2439H-2459H 5D83H-5DB0H    7BA3H-7BCAH
-    0DA5H-0EC4H    2CF1H-2E70H 6F76H-6F8EH    7ED8H-7F26H
-    1033H-105AH    3030H-3039H 70FFH-710CH    7F41H-7FB6H
-    1061H-10C1H    3710H-3719H 7182H-7195H    7FBEH-7FFFH
-    1233H-1252H    392EH-3FE1H 71A2H-71B5H
-    13A9H-1448H    43B5H-43C3H 71C7H-71DAH
-    160BH-1612H    46E6H-46E7H 72A6H-72B9H
+```
+0004H-0007H     185DH-1863H     4B3AH-4B4CH     73E4H-73E4H
+002BH-002FH     1B97H-1BAAH     4C2FH-4C3FH     752EH-7585H
+0508H-050DH     1BBFH-23BEH     555AH-5569H     7754H-7757H
+092FH-097FH     2439H-2459H     5D83H-5DB0H     7BA3H-7BCAH
+0DA5H-0EC4H     2CF1H-2E70H     6F76H-6F8EH     7ED8H-7F26H
+1033H-105AH     3030H-3039H     70FFH-710CH     7F41H-7FB6H
+1061H-10C1H     3710H-3719H     7182H-7195H     7FBEH-7FFFH
+1233H-1252H     392EH-3FE1H     71A2H-71B5H
+13A9H-1448H     43B5H-43C3H     71C7H-71DAH
+160BH-1612H     46E6H-46E7H     72A6H-72B9H
+```
 
 Note that these data areas are for the UK ROM, there are slight differences in the Japanese ROM relating to the keyboard decoder and the video character set. Disparities between the ROMs are restricted to these regions with the bulk of the code being identical in both cases.
 
@@ -769,11 +777,13 @@ Reference is frequently made in this chapter to the standard routines and to Wor
 
 <a name="01b6h"></a><a name="rdslt"></a>
 
-    Address... 01B6H
-    Name...... RDSLT
-    Entry..... A=Slot ID, HL=Address
-    Exit...... A=Byte read
-    Modifies.. AF, BC, DE, DI
+```
+Address... 01B6H
+Name...... RDSLT
+Entry..... A=Slot ID, HL=Address
+Exit...... A=Byte read
+Modifies.. AF, BC, DE, DI
+```
 
 Standard routine to read a single byte from memory in any slot. The Slot Identifier is composed of a Primary Slot number a Secondary Slot number and a flag:
 
