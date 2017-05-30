@@ -289,11 +289,13 @@ The Size bit determines whether each sprite pattern will be 8x8 bits or 16x16 bi
 
 The M1 and M2 bits determine the VDP operating mode in conjunction with the M3 bit from [Mode Register 0](#mode_register_0):
 
-    M1 M2 M3
-    0  0  0  32x24 Text Mode
-    0  0  1  Graphics Mode
-    0  1  0  Multicolour Mode
-    1  0  0  40x24 Text Mode
+```
+M1 M2 M3
+0  0  0  32x24 Text Mode
+0  0  1  Graphics Mode
+0  1  0  Multicolour Mode
+1  0  0  40x24 Text Mode
+```
 
 The Interrupt Enable bit enables or disables the interrupt output signal from the VDP: 0=Disable, 1=Enable.
 
@@ -2969,7 +2971,7 @@ This routine shifts a double precision mantissa right. The number of digits to s
 
     Address... 27E6H
 
-This routine is used by the Expression Evaluator to multiply two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If either operand is zero the routine terminates with a zero result ([2E7DH](#2e7dh)). Otherwise the two exponents are added to produce the result exponent. If this is smaller than 10^-63 the routine terminates with a zero result, if it is greater than 10^63 an "`Overflow error`" is generated (4067H). The two mantissa signs are then processed to yield the sign of the result, if they are the same the result is positive, if they differ it is negative.
+This routine is used by the Expression Evaluator to multiply two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If either operand is zero the routine terminates with a zero result ([2E7DH](#2e7dh)). Otherwise the two exponents are added to produce the result exponent. If this is smaller than 10^-63 the routine terminates with a zero result, if it is greater than 10^63 an "`Overflow error`" is generated ([4067H](#4067h)). The two mantissa signs are then processed to yield the sign of the result, if they are the same the result is positive, if they differ it is negative.
 
 Even though the mantissae are in BCD format they are multiplied using the normal binary add and shift method. To accomplish this the first operand is successively multiplied by two ([288AH](#288ah)) to produce the constants X\*80, X\*40, X\*20, X\*10, X\*8, X\*4, X\*2, and X in the [HOLD8](#hold8) buffer. The second operand remains in [ARG](#arg) and [DAC](#dac) is zeroed to function as the product accumulator. Multiplication proceeds by taking successive pairs of digits from the second operand starting with the least significant pair. For each 1 bit in the digit pair the appropriate multiple of the first operand is added to the product. As an example the single multiplication 1823\*96 would produce:
 
@@ -2989,7 +2991,7 @@ This routine doubles a double precision mantissa three successive times to produ
 
     Address... 289FH
 
-This routine is used by the Expression Evaluator to divide two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the first operand is zero the routine terminates with a zero result if the second operand is zero a "`Division by zero`" error is generated (4058H). Otherwise the two exponents are subtracted to produce the result exponent and the two mantissa signs processed to yield the sign of the result. If they are the same the result is positive, if they differ it is negative.
+This routine is used by the Expression Evaluator to divide two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the first operand is zero the routine terminates with a zero result if the second operand is zero a "`Division by zero`" error is generated ([4058H](#4058h)). Otherwise the two exponents are subtracted to produce the result exponent and the two mantissa signs processed to yield the sign of the result. If they are the same the result is positive, if they differ it is negative.
 
 The mantissae are divided using the normal long division method. The second operand is repeatedly subtracted from the first until underflow to produce a single digit of the result. The second operand is then added back to restore the remainder (2761H), the digit is stored in [HOLD](#hold) and the first operand is shifted one digit left. When the first operand has been completely shifted out the result is copied from [HOLD](#hold) to [DAC](#dac) then renormalized and rounded up (2883H). The time required for a division reaches a maximum of approximately 25 ms when the first operand is composed largely of nines and the second operand of ones. This will require the greatest number of subtractions.
 
@@ -3238,7 +3240,7 @@ This routine simply zeroes the exponent byte in [DAC](#dac).
 
     Address... 2E82H
 
-This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in [DAC](#dac). The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
+This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in [DAC](#dac). The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
 
 <a name="2e97h"></a>
 
@@ -3256,7 +3258,7 @@ This routine is used by the Factor Evaluator to apply the "`SGN`" function to an
 
     Address... 2EA1H
 
-This routine returns the sign of an operand contained in [DAC](#dac). The operands type is first checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand the mantissa sign is examined ([2E71H](#2e71h)). If it is an integer its value is taken from [DAC](#dac)+2 and translated into the flags shown at [2E71H](#2e71h).
+This routine returns the sign of an operand contained in [DAC](#dac). The operands type is first checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is a single precision or double precision operand the mantissa sign is examined ([2E71H](#2e71h)). If it is an integer its value is taken from [DAC](#dac)+2 and translated into the flags shown at [2E71H](#2e71h).
 
 <a name="2eb1h"></a>
 
@@ -3340,7 +3342,7 @@ This routine is used by the Expression Evaluator to find the relation (<>=) betw
 
     Address... 2F8AH
 
-This routine is used by the Factor Evaluator to apply the "`CINT`" function to an operand contained in [DAC](#dac). The operand type is first checked via the [GETYPR](#getypr) standard routine, if it is already integer the routine simply terminates. If it is a string a "`Type mismatch`" error is generated (406DH). If it is a single precision or double precision operand it is converted to a signed binary integer in register pair DE ([305DH](#305dh)) and then placed in [DAC](#dac) as an integer. Out of range values result in an "`Overflow`" error (4067H).
+This routine is used by the Factor Evaluator to apply the "`CINT`" function to an operand contained in [DAC](#dac). The operand type is first checked via the [GETYPR](#getypr) standard routine, if it is already integer the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is a single precision or double precision operand it is converted to a signed binary integer in register pair DE ([305DH](#305dh)) and then placed in [DAC](#dac) as an integer. Out of range values result in an "`Overflow`" error ([4067H](#4067h)).
 
 <a name="2fa2h"></a>
 
@@ -3352,7 +3354,7 @@ This routine checks whether [DAC](#dac) contains the single precision operand -3
 
     Address... 2FB2H
 
-This routine is used by the Factor Evaluator to apply the "`CSNG`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already single precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated (406DH). If it is double precision [VALTYP](#valtyp) is changed (3053H) and the mantissa rounded up from the seventh digit (2741H). If the operand is an integer it is converted from binary to a maximum of five BCD digits by successive divisions using the constants 10000, 1000, 100, 10, 1. These are placed in [DAC](#dac) to form the single precision mantissa. The exponent is equal to the number of significant digits in the mantissa. For example if there are five the exponent would be 10^5.
+This routine is used by the Factor Evaluator to apply the "`CSNG`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already single precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is double precision [VALTYP](#valtyp) is changed (3053H) and the mantissa rounded up from the seventh digit (2741H). If the operand is an integer it is converted from binary to a maximum of five BCD digits by successive divisions using the constants 10000, 1000, 100, 10, 1. These are placed in [DAC](#dac) to form the single precision mantissa. The exponent is equal to the number of significant digits in the mantissa. For example if there are five the exponent would be 10^5.
 
 <a name="3030h"></a>
 
@@ -3364,13 +3366,13 @@ This table contains the five constants used by the "`CSNG`" routine: -10000, -10
 
     Address... 303AH
 
-This routine is used by the Factor Evaluator to apply the "`CDBL`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already double precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated (406DH). If it is an integer it is first converted to single precision (2FC8H), the eight least significant digits are then zeroed and [VALTYP](#valtyp) set to 8.
+This routine is used by the Factor Evaluator to apply the "`CDBL`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already double precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is an integer it is first converted to single precision (2FC8H), the eight least significant digits are then zeroed and [VALTYP](#valtyp) set to 8.
 
 <a name="3058h"></a>
 
     Address... 3058H
 
-This routine checks that the current operand is a string type, if not a "`Type mismatch`" error is generated (406DH).
+This routine checks that the current operand is a string type, if not a "`Type mismatch`" error is generated ([406DH](#406dh)).
 
 <a name="305dh"></a>
 
@@ -3424,7 +3426,7 @@ This routine is used by the Expression Evaluator to multiply two integer operand
 
     Address... 31E6H
 
-This routine is used by the Expression Evaluator to integer divide (\) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). If the second operand is zero a "`Division by zero`" error is generated (4058H), otherwise the two operand signs are saved and both operands made positive ([3215H](#3215h)). Division proceeds using the standard binary shift and subtract method with register pair HL containing the remainder, register pair BC the second operand and register pair DE the first operand and the product. When division is complete the initial signs are restored and, if they differ, the product is negated before being placed in [DAC](#dac) as an integer (321DH).
+This routine is used by the Expression Evaluator to integer divide (\) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). If the second operand is zero a "`Division by zero`" error is generated ([4058H](#4058h)), otherwise the two operand signs are saved and both operands made positive ([3215H](#3215h)). Division proceeds using the standard binary shift and subtract method with register pair HL containing the remainder, register pair BC the second operand and register pair DE the first operand and the product. When division is complete the initial signs are restored and, if they differ, the product is negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="3215h"></a>
 
@@ -3940,6 +3942,14 @@ This routine is used by the Runloop when it encounters the end of the program te
 This routine is used by the "`READ`" statement handler when an error is found in a "`DATA`" statement. The line number contained in [DATLIN](#datlin) is copied to [CURLIN](#curlin) so the error handler will flag the "`DATA`" line as the illegal statement rather than the program line. Control then drops into the "`Syntax error`" generator.
 
 <a name="4055h"></a>
+<a name="4058h"></a>
+<a name="405bh"></a>
+<a name="405eh"></a>
+<a name="4061h"></a>
+<a name="4064h"></a>
+<a name="4067h"></a>
+<a name="406ah"></a>
+<a name="406dh"></a>
 
     Address... 4055H
 
@@ -4226,7 +4236,7 @@ This is the "`ON EXPRESSION`" statement handler. The operand is evaluated (521CH
 
     Address... 495DH
 
-This is the "`RESUME`" statement handler. [ONEFLG](#oneflg) is first checked to make sure that an error condition already exists, if not a "`RESUME without error`" is generated (4064H). If a non- zero line number operand follows control transfers to the "`GOTO`" handler (47EBH). If a "`NEXT`" token (83H) follows the position of the error is restored from [ERRTXT](#errtxt) and [ERRLIN](#errlin), the start of the next statement is found ([485BH](#485bh)) and the routine terminates. If there is no line number operand or if it is zero the position of the error is found from [ERRTXT](#errtxt) and [ERRLIN](#errlin) and the routine terminates.
+This is the "`RESUME`" statement handler. [ONEFLG](#oneflg) is first checked to make sure that an error condition already exists, if not a "`RESUME without error`" is generated ([4064H](#4064h)). If a non- zero line number operand follows control transfers to the "`GOTO`" handler (47EBH). If a "`NEXT`" token (83H) follows the position of the error is restored from [ERRTXT](#errtxt) and [ERRLIN](#errlin), the start of the next statement is found ([485BH](#485bh)) and the routine terminates. If there is no line number operand or if it is zero the position of the error is found from [ERRTXT](#errtxt) and [ERRLIN](#errlin) and the routine terminates.
 
 <a name="49aah"></a>
 
@@ -4286,19 +4296,19 @@ This is the plain text message "`?Redo from start`", CR, LF terminated by a zero
 
 This routine is used by the "`READ/INPUT`" statement handler if it has failed to convert a data item to numeric form. If in "`READ`" mode ([FLGINP](#flginp) is non-zero) a "`Syntax error`" is generated ([404FH](#404fh)). Otherwise the message "`?Redo from start`" is displayed ([6678H](#6678h)) and control returns to the statement handler.
 
-<a name="4b62h"></a>
+<a name="4b62h"></a><a name="input#"></a>
 
     Address... 4B62H
 
 This is the "`INPUT#`" Statement handler. The buffer number is evaluated and [PTRFIL](#ptrfil) set to direct input from the required I/O buffer (6D55H), control then transfers to the combined "`READ/INPUT`" statement handler (4B9BH).
 
-<a name="4b6ch"></a>
+<a name="4b6ch"></a><a name="input"></a>
 
     Address... 4B6CH
 
 This is the "`INPUT`" statement handler. If the next program text character is a "#" control transfers to the "`INPUT#`" statement handler ([4B62H](#4b62h)). Otherwise the screen is forced to text mode, via the [TOTXT](#totxt) standard routine, and any prompt string analyzed ([6636H](#6636h)) and displayed (667BH). A question mark is then displayed and a line of text collected from the console via the [QINLIN](#qinlin) standard routine. If this returns Flag C (CTRL-STOP) control transfers to the "`STOP`" handler (63FEH). If the first character in [BUF](#buf) is zero (null input) the handler terminates by skipping to the end of the statement (485AH), otherwise control drops into the combined "`READ/INPUT`" handler.
 
-<a name="4b9fh"></a>
+<a name="4b9fh"></a><a name="read"></a>
 
     Address... 4B9FH
 
@@ -4370,7 +4380,7 @@ This is the Factor Evaluator. On entry register pair HL points to the character 
 4. A monadic operator (+-NOT)
 5. A parenthesized expression
 
-The first character is taken from the program text via the [CHRGTR](#chrgtr) standard routine and examined. If it is an end of Statement character a "`Missing operand`" error is generated (406AH). If it is an ASCII digit it is converted from textual form to one of the standard numeric types in [DAC](#dac) ([3299H](#3299h)).
+The first character is taken from the program text via the [CHRGTR](#chrgtr) standard routine and examined. If it is an end of Statement character a "`Missing operand`" error is generated ([406AH](#406ah)). If it is an ASCII digit it is converted from textual form to one of the standard numeric types in [DAC](#dac) ([3299H](#3299h)).
 
 If it is upper case alphabetic (64A8H) it is a Variable and its current value is returned ([4E9BH](#4e9bh)). If it is a numeric token the number is copied from [CONLO](#conlo) to [DAC](#dac) (46B8H). If it is one of the FFH prefixed function tokens shown in the table at 39DEH it is decoded to transfer control to the relevant function handler (4ECFH). If it is the monadic "+" operator it is simply skipped over, only the monadic "-" operator ([4E8DH](#4e8dh)) and monadic "`NOT`" operator ([4F63H](#4f63h)) require any action.
 
@@ -4428,7 +4438,7 @@ This routine returns the single character pointed to by register pair HL in regi
 
     Address... 4EB8H
 
-This routine is used by the Factor Evaluator and the numeric input routine ([3299H](#3299h)) to convert an ampersand ("&") Prefixed number from textual form to an integer in [DAC](#dac). As each legal character is found the product is multiplied by 2, 8 or 16, depending upon the character which initially followed the ampersand, and the new digit added to it. If the product overflows an "`Overflow`" error is generated (4067H). The routine terminates when an unacceptable character is found.
+This routine is used by the Factor Evaluator and the numeric input routine ([3299H](#3299h)) to convert an ampersand ("&") Prefixed number from textual form to an integer in [DAC](#dac). As each legal character is found the product is multiplied by 2, 8 or 16, depending upon the character which initially followed the ampersand, and the new digit added to it. If the product overflows an "`Overflow`" error is generated ([4067H](#4067h)). The routine terminates when an unacceptable character is found.
 
 <a name="4efch"></a>
 
@@ -4506,13 +4516,13 @@ Line 10 results in twelve bytes of the String Storage Area being permanently all
 
 A point worth noting is that a "`CLEAR`" operation is not strictly necessary before a machine language program is loaded. The region between the top of the Array Storage Area and the base of the Z80 stack is never used by the Interpreter. A program can exist in this region provided that the two enclosing areas do not overlap it.
 
-<a name="500eh"></a>
+<a name="500eh"></a><a name="defusr"></a>
 
     Address... 500EH
 
 This is the "`DEFUSR`" statement handler. The user number is collected directly from the program text, it cannot be an expression, and the associated entry in [USRTAB](#usrtab) located (4FF4H). The address operand is then evaluated ([542FH](#542fh)) and placed in [USRTAB](#usrtab).
 
-<a name="501dh"></a>
+<a name="501dh"></a><a name="def fn"></a>
 
     Address... 501DH
 
@@ -4554,7 +4564,7 @@ This routine checks the program text for an "`FN`" token (DEH) and then creates 
 
 Control transfers to this routine from the Runloop execution point ([4640H](#4640h)) if a token greater than D8H is found at the start of a statement. If the token is not an FFH prefixed function token a "`Syntax error`" is generated ([4055H](#4055h)). If the function token is one of those which double as statements control transfers to the relevant handler, otherwise a "`Syntax error`" is generated. The statements in question are "`MID$`" ([696EH](#696eh)), "`STRIG`" ([77BFH](#77bfh)) and "`INTERVAL`" ([77B1H](#77b1h)). There is actually no separate token for "`INTERVAL`", the "`INT`" token (85H) suffices with the remaining characters being checked by the statement handler.
 
-<a name="51c9h"></a>
+<a name="51c9h"></a><a name="width"></a>
 
     Address... 51C9H
 
@@ -4572,13 +4582,13 @@ This routine evaluates the next expression in the program text ([4C64H](#4c64h))
 
 This routine evaluates the next operand in the program text ([4C64H](#4c64h)) and converts it to an integer (5212H). If the operand is greater than 255 an "`Illegal function call`" error is generated (475AH).
 
-<a name="5229h"></a>
+<a name="5229h"></a><a name="llist"></a>
 
     Address... 5229H
 
 This is the "`LLIST`" statement handler. [PRTFLG](#prtflg) is set to 01H, to direct output to the printer, and control drops into the "`LIST`" statement handler.
 
-<a name="522eh"></a>
+<a name="522eh"></a><a name="list"></a>
 
     Address... 522EH
 
@@ -4594,7 +4604,7 @@ Any normal or FFH prefixed token is converted to the corresponding keyword by a 
 
 If one of the numeric tokens is found its value and type are first copied from [CONLO](#conlo) and [CONTYP](#contyp) to [DAC](#dac) and [VALTYP](#valtyp) ([46E8H](#46e8h)). It is then converted to textual form in [FBUFFR](#fbuffr) by the decimal ([3425H](#3425h)), octal ([371EH](#371eh)) or hex ([3722H](#3722h)) conversion routines. For octal and hex types the number is prefixed by an ampersand and an "`O`" or "`H`" letter. A type suffix, "'" or "#", is added to single precision or double precision numbers only if there is no decimal part and no exponent part ("`E`" or "`D`").
 
-<a name="53e2h"></a>
+<a name="53e2h"></a><a name="delete"></a>
 
     Address... 53E2H
 
@@ -4606,7 +4616,7 @@ This is the "`DELETE`" statement handler. The optional start and termination lin
 
 This routine is used by the Factor Evaluator to apply the "`PEEK`" function to an operand contained in [DAC](#dac). The address operand is checked ([5439H](#5439h)) then the byte read from memory and placed in [DAC](#dac) as an integer (4FCFH).
 
-<a name="5423h"></a>
+<a name="5423h"></a><a name="poke"></a>
 
     Address... 5423H
 
@@ -4624,7 +4634,7 @@ This routine evaluates the next operand in the program text ([4C64H](#4c64h)) an
 
 This routine converts the numeric operand contained in [DAC](#dac) into an integer in register pair HL. The operand must be in the range -32768 to +65535 and is normally an address as required by "`POKE`", "`PEEK`", "`BLOAD`", etc. The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already an integer it is simply placed in register pair HL ([2F8AH](#2f8ah)). Assuming the operand is single precision or double precision its sign is checked, if it is negative it is converted to integer ([2F8AH](#2f8ah)). Otherwise it is converted to single precision ([2FB2H](#2fb2h)) and its magnitude checked ([2F21H](#2f21h)). If it is greater than 32767 and smaller than 65536 then -65536 is added ([324EH](#324eh)) before it is converted to integer ([2F8AH](#2f8ah)).
 
-<a name="5468h"></a>
+<a name="5468h"></a><a name="renum"></a>
 
     Address... 5468H
 
@@ -4678,7 +4688,7 @@ Standard routine to return the type of the current operand, determined by [VALTY
 
 </a>
 
-<a name="55a8h"></a>
+<a name="55a8h"></a><a name="call"></a>
 
     Address... 55A8H
 
@@ -4775,13 +4785,13 @@ This routine is used by various graphics statements to evaluate a coordinate pai
 
 There are two entry points to the routine, the one which is used depends on whether the caller is expecting more than one coordinate pair. The "`LINE`" statement, for example, expects two coordinate pairs the first of which is the more flexible. The entry point at 579CH is used to collect the first coordinate pair and will accept the characters "-" or "@-" as representing the current graphics coordinates. The entry point at 57ABH is used for the second coordinate pair and requires an explicit operand.
 
-<a name="57e5h"></a>
+<a name="57e5h"></a><a name="preset"></a>
 
     Address... 57E5H
 
 This is the "`PRESET`" statement handler. The current background colour is taken from [BAKCLR](#bakclr) and control drops into the "`PSET`" handler.
 
-<a name="57eah"></a>
+<a name="57eah"></a><a name="pset"></a>
 
     Address... 57EAH
 
@@ -4823,7 +4833,7 @@ This graphics routine swaps the contents of [GYPOS](#gypos) and register pair DE
 
 This graphics routine first swaps the contents of [GYPOS](#gypos) and register pair DE ([588EH](#588eh)) then swaps the contents of [GXPOS](#gxpos) and register pair BC. When entered at 589BH only the second operation is performed.
 
-<a name="58a7h"></a>
+<a name="58a7h"></a><a name="line"></a>
 
     Address... 58A7H
 
@@ -4896,7 +4906,7 @@ This graphics routine shifts the contents of register pair DE one bit to the rig
 
 This routine generates an "`Illegal function call`" error (475AH) if the screen is not in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode).
 
-<a name="59c5h"></a>
+<a name="59c5h"></a><a name="paint"></a>
 
     Address... 59C5H
 
@@ -4959,7 +4969,7 @@ This routine is used by the "`PAINT`" statement handler to locate the left hand 
 
 This routine is used by the "`CIRCLE`" statement handler to negate the contents of register pair DE.
 
-<a name="5b11h"></a>
+<a name="5b11h"></a><a name="circle"></a>
 
     Address... 5B11H
 
@@ -5046,7 +5056,7 @@ The result that the routine should produce is the number of points that must be 
 
 Unfortunately the routine computes the number of points within a segment by linear approximation from the total segment size on the mistaken assumption that successive points subtend equal angles. Thus in the above example the point count computed for the angle is 30/45\*(80\*0.707107)=37 instead of the correct value of forty. The error produced by the routine is therefore at a maximum at the centre of each forty-five degree segment and reduces to zero at the end points.
 
-<a name="5d6eh"></a>
+<a name="5d6eh"></a><a name="draw"></a>
 
     Address... 5D6EH
 
@@ -5132,7 +5142,7 @@ This is the "`DRAW`" statement "`C`" command handler. The parameter is placed in
 
 This routine is used by the "`PAINT`" statement handler to check, via the [SCALXY](#scalxy) standard routine, that the coordinates in register pairs BC and DE are within the screen. If not an "`Illegal function call`" error is generated (475AH).
 
-<a name="5e9fh"></a>
+<a name="5e9fh"></a><a name="dim"></a>
 
     Address... 5E9FH
 
@@ -5199,7 +5209,7 @@ This is the Array search routine. There are four types of Array each composed of
 
 **Figure 47:** Integer Array
 
-Each subscript is evaluated, converted to an integer ([4755H](#4755h)) and pushed onto the Z80 stack until a closing parenthesis is found, it need not match the opening one. A linear search is then carried out on the Array Storage Area for a match with the two name characters and the type. If the search is successful [DIMFLG](#dimflg) is checked and a "`Redimensioned array`" error generated (405EH) if it shows a "`DIM`" statement to be active. Unless an "`ERASE`" statement is active, in which case the routine terminates with register pair BC pointing to the start of the Array (3297H), the dimensionality of the Array is then checked against the subscript count and a "`Subscript out of range`" error generated if they fail to match. Assuming these tests are passed control transfers to the element address computation point (607DH).
+Each subscript is evaluated, converted to an integer ([4755H](#4755h)) and pushed onto the Z80 stack until a closing parenthesis is found, it need not match the opening one. A linear search is then carried out on the Array Storage Area for a match with the two name characters and the type. If the search is successful [DIMFLG](#dimflg) is checked and a "`Redimensioned array`" error generated ([405EH](#405eh)) if it shows a "`DIM`" statement to be active. Unless an "`ERASE`" statement is active, in which case the routine terminates with register pair BC pointing to the start of the Array (3297H), the dimensionality of the Array is then checked against the subscript count and a "`Subscript out of range`" error generated if they fail to match. Assuming these tests are passed control transfers to the element address computation point (607DH).
 
 If the search is unsuccessful and an "`ERASE`" statement is active an "`Illegal function call`" error is generated (475AH), otherwise the new Array is added to the end of the existing Array Storage Area. Initialization of the new Array proceeds by storing the two name characters, the type code and the dimensionality (the subscript count) followed by the element count for each dimension. If [DIMFLG](#dimflg) shows a "`DIM`" statement to be active the element counts are determined by the subscripts. If the Array is being created by default, with a statement such as "`A(1,2,3)=5`" for example, a default value of eleven is used. As each element count is stored the total size of the Array is accumulated in register pair DE by successive multiplications ([314AH](#314ah)) of the element counts and the element size (the Array type). After a check that this amount of memory is available (6267H) [STREND](#strend) is increased the new area is zeroed and the Array size is stored, in slightly modified form, immediately after the two name characters. Unless the Array is being created by default, in which case the element address must be computed, the routine then terminates.
 
@@ -5319,7 +5329,7 @@ This is the "`TROFF`" statement handler, [TRCFLG](#trcflg) is simply made zero.
 
     Address... 643EH
 
-This is the "`SWAP`" statement handler. The first Variable is located ([5EA4H](#5ea4h)) and its contents copied to [SWPTMP](#swptmp). The location of this Variable and of the end of the Variable Storage Area are temporarily saved. The second Variable is then located ([5EA4H](#5ea4h)) and its type compared with that of the first. If the types fail to match a "`Type mismatch`" error is generated (406DH). The current end of the Variable Storage Area is then compared with the old end and an "`Illegal function call`" error generated (475AH) if they differ. Finally the contents of the second Variable are copied to the location of the first Variable (2EF3H) and the contents of [SWPTMP](#swptmp) to the location of the second Variable (2EF3H).
+This is the "`SWAP`" statement handler. The first Variable is located ([5EA4H](#5ea4h)) and its contents copied to [SWPTMP](#swptmp). The location of this Variable and of the end of the Variable Storage Area are temporarily saved. The second Variable is then located ([5EA4H](#5ea4h)) and its type compared with that of the first. If the types fail to match a "`Type mismatch`" error is generated ([406DH](#406dh)). The current end of the Variable Storage Area is then compared with the old end and an "`Illegal function call`" error generated (475AH) if they differ. Finally the contents of the second Variable are copied to the location of the first Variable (2EF3H) and the contents of [SWPTMP](#swptmp) to the location of the second Variable (2EF3H).
 
 The checks performed by the handler mean that the second Variable, if it is simple and not an Array, must always be in existence before a "`SWAP`" Statement is encountered or an error will be generated. The reason for this is that, supposing the first Variable was an Array, then the creation of a second (simple) Variable would move the Array Storage Area upwards invalidating its saved location. Note that the perfectly legal case of a simple first Variable and a newly created simple second Variable is also rejected.
 
@@ -5359,7 +5369,7 @@ This routine computes the difference between the contents of register pairs HL a
 
     Address... 6527H
 
-This is the "`NEXT`" statement handler. Assuming further text is present in the statement the loop Variable is located ([5EA4H](#5ea4h)), otherwise a default address of zero is taken. The stack is then searched for the corresponding "`FOR`" parameter block ([3FE2H](#3fe2h)). If no parameter block is found, or if a "`GOSUB`" parameter block is found first, a "`NEXT without FOR`" error is generated (405BH). Assuming the parameter block is found the intervening section of stack, together with any "`FOR`" blocks it may contain, is discarded. The loop Variable type is then taken from the parameter block and examined to determine the precision required during subsequent operations.
+This is the "`NEXT`" statement handler. Assuming further text is present in the statement the loop Variable is located ([5EA4H](#5ea4h)), otherwise a default address of zero is taken. The stack is then searched for the corresponding "`FOR`" parameter block ([3FE2H](#3fe2h)). If no parameter block is found, or if a "`GOSUB`" parameter block is found first, a "`NEXT without FOR`" error is generated ([405BH](#405bh)). Assuming the parameter block is found the intervening section of stack, together with any "`FOR`" blocks it may contain, is discarded. The loop Variable type is then taken from the parameter block and examined to determine the precision required during subsequent operations.
 
 The STEP value is taken from the parameter block and added (3172H, 324EH or 2697H) to the current contents of the loop Variable which is then updated. The new value is compared (2F4DH, 2F21H or 2F5CH) with the termination value from the parameter block to determine whether the loop has terminated (65B6H). The loop will terminate for a positive STEP if the new loop value is GREATER than the termination value. The loop will terminate for a negative step if the new loop value is LESS than the termination value. If the loop has not terminated the original program text position and line number are taken from the parameter block and control transfers to the Runloop (45FDH). If the loop has terminated the parameter block is discarded from the stack and, unless further program text is present in which control transfers back to the start of the handler, control transfers to the Runloop to execute the next statement ([4601H](#4601h)).
 
@@ -5561,19 +5571,19 @@ The filespec string is evaluated ([4C64H](#4c64h)) and its storage freed ([67D0H
 
     Address... 6A6DH
 
-This routine is used by the file I/O handlers to locate the I/O buffer FCB whose number is supplied in register A. The buffer number is first checked against [MAXFIL](#maxfil) and a "`Bad file number`" error generated (6E7DH) if it is too large. Otherwise the required address is taken from the file pointer block and placed in register pair HL and the buffer's mode taken from byte 0 of the FCB and placed in register A.
+This routine is used by the file I/O handlers to locate the I/O buffer FCB whose number is supplied in register A. The buffer number is first checked against [MAXFIL](#maxfil) and a "`Bad file number`" error generated ([6E7DH](#6e7dh)) if it is too large. Otherwise the required address is taken from the file pointer block and placed in register pair HL and the buffer's mode taken from byte 0 of the FCB and placed in register A.
 
 <a name="6a9eh"></a>
 
     Address... 6A9EH
 
-This routine is used by the file I/O handlers to evaluate an I/O buffer number and to locate its FCB. Any "#" character is skipped ([4666H](#4666h)) and the buffer number evaluated (521CH). The FCB is located ([6A6DH](#6a6dh)) and a "`File not open`" error generated (6E77H) if the buffer mode byte is zero. Otherwise the FCB address is placed in [PTRFIL](#ptrfil) to redirect the Interpreter's output.
+This routine is used by the file I/O handlers to evaluate an I/O buffer number and to locate its FCB. Any "#" character is skipped ([4666H](#4666h)) and the buffer number evaluated (521CH). The FCB is located ([6A6DH](#6a6dh)) and a "`File not open`" error generated ([6E77H](#6e77h)) if the buffer mode byte is zero. Otherwise the FCB address is placed in [PTRFIL](#ptrfil) to redirect the Interpreter's output.
 
 <a name="6ab7h"></a>
 
     Address... 6AB7H
 
-This is the "`OPEN`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and any following mode converted to the corresponding mode byte, these are: "`FOR INPUT`" (01H), "`FOR OUTPUT`" (02H) and "`FOR APPEND`" (08H). If no mode is explicitly stated random mode (04H) is assumed. The "`AS`" characters are checked and the buffer number evaluated (521CH), if this is zero a "`Bad file number`" error is generated (6E7DH). The FCB is then located ([6A6DH](#6a6dh)) and a "`File already open`" error generated (6E6EH) if the buffer's mode byte is anything other than zero. The device code is placed in byte 4 of the FCB, the open function dispatched ([6F8FH](#6f8fh)) and the Interpreter's output reset to the screen ([4AFFH](#4affh)).
+This is the "`OPEN`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and any following mode converted to the corresponding mode byte, these are: "`FOR INPUT`" (01H), "`FOR OUTPUT`" (02H) and "`FOR APPEND`" (08H). If no mode is explicitly stated random mode (04H) is assumed. The "`AS`" characters are checked and the buffer number evaluated (521CH), if this is zero a "`Bad file number`" error is generated ([6E7DH](#6e7dh)). The FCB is then located ([6A6DH](#6a6dh)) and a "`File already open`" error generated ([6E6EH](#6e6eh)) if the buffer's mode byte is anything other than zero. The device code is placed in byte 4 of the FCB, the open function dispatched ([6F8FH](#6f8fh)) and the Interpreter's output reset to the screen ([4AFFH](#4affh)).
 
 <a name="6b24h"></a>
 
@@ -5633,7 +5643,7 @@ This is the "`FILES`" statement handler, an "`Illegal function call`" error is g
 
     Address... 6C35H
 
-Control transfers here from the general "`PUT`" and "`GET`" handlers ([7758H](#7758h)) when the program text contains anything other than a "`SPRITE`" token. A "`Sequential I/O only`" error is generated (6E86H) on a standard MSX machine.
+Control transfers here from the general "`PUT`" and "`GET`" handlers ([7758H](#7758h)) when the program text contains anything other than a "`SPRITE`" token. A "`Sequential I/O only`" error is generated ([6E86H](#6e86h)) on a standard MSX machine.
 
 <a name="6c48h"></a>
 
@@ -5651,7 +5661,7 @@ This routine is used by the file I/O handlers to sequentially input a single cha
 
     Address... 6C87H
 
-This routine is used by the Factor Evaluator to apply the "`INPUT$`" function. The program text is checked for the "$" and "(" characters and the length operand evaluated (521CH). If an I/O buffer number is present it is evaluated, the FCB located ([6A9EH](#6a9eh)) and the mode byte examined. An "`Input past end`" error is generated (6E83H) if the buffer is not in input or random mode. After checking that sufficient space is available ([6627H](#6627h)) the required number of characters are sequentially input ([6C71H](#6c71h)), or collected via the [CHGET](#chget) standard routine, and copied to the String Storage Area. Finally the result descriptor is created ([6654H](#6654h)).
+This routine is used by the Factor Evaluator to apply the "`INPUT$`" function. The program text is checked for the "$" and "(" characters and the length operand evaluated (521CH). If an I/O buffer number is present it is evaluated, the FCB located ([6A9EH](#6a9eh)) and the mode byte examined. An "`Input past end`" error is generated ([6E83H](#6e83h)) if the buffer is not in input or random mode. After checking that sufficient space is available ([6627H](#6627h)) the required number of characters are sequentially input ([6C71H](#6c71h)), or collected via the [CHGET](#chget) standard routine, and copied to the String Storage Area. Finally the result descriptor is created ([6654H](#6654h)).
 
 <a name="6ceah"></a>
 
@@ -5693,13 +5703,13 @@ This routine is used by the Factor Evaluator to apply the "`FPOS`" function to t
 
     Address... 6D48H
 
-Control transfers to this routine when the Interpreter Mainloop encounters a direct statement, that is one with no line number. The [ISFLIO](#isflio) standard routine is first used to determine whether a "`LOAD`" statement is active. If input is coming from the keyboard control transfers to the Runloop execution point ([4640H](#4640h)) to execute the statement. If input is coming from the cassette buffer 0 is closed ([6B24H](#6b24h)) and a "`Direct statement in file`" error generated (6E71H). This could happen on a standard MSX machine either through a cassette error or by attempting to load a text file with no line numbers.
+Control transfers to this routine when the Interpreter Mainloop encounters a direct statement, that is one with no line number. The [ISFLIO](#isflio) standard routine is first used to determine whether a "`LOAD`" statement is active. If input is coming from the keyboard control transfers to the Runloop execution point ([4640H](#4640h)) to execute the statement. If input is coming from the cassette buffer 0 is closed ([6B24H](#6b24h)) and a "`Direct statement in file`" error generated ([6E71H](#6e71h)). This could happen on a standard MSX machine either through a cassette error or by attempting to load a text file with no line numbers.
 
 <a name="6d57h"></a>
 
     Address... 6D57H
 
-This routine is used by the "`INPUT`", "`LINE INPUT`" and "`PRINT`" statement handlers to check for the presence of a "#" character in the program text. If one is found the I/O buffer number is evaluated ([521BH](#521bh)), the FCB located and its address placed in [PTRFIL](#ptrfil) (6AAAH). The mode byte of the FCB is then compared with the mode number supplied by the statement handler in register C, if they do not match a "`Bad file number`" error is generated (6E7DH). With "`PRINT`" the allowable modes are output, random and append. With "`INPUT`" and "`LINE INPUT`" the allowable modes are input and random. Note that on a standard MSX machine not all these modes are supported at lower levels. Some sort of error will consequently be generated at a later stage for illegal modes.
+This routine is used by the "`INPUT`", "`LINE INPUT`" and "`PRINT`" statement handlers to check for the presence of a "#" character in the program text. If one is found the I/O buffer number is evaluated ([521BH](#521bh)), the FCB located and its address placed in [PTRFIL](#ptrfil) (6AAAH). The mode byte of the FCB is then compared with the mode number supplied by the statement handler in register C, if they do not match a "`Bad file number`" error is generated ([6E7DH](#6e7dh)). With "`PRINT`" the allowable modes are output, random and append. With "`INPUT`" and "`LINE INPUT`" the allowable modes are input and random. Note that on a standard MSX machine not all these modes are supported at lower levels. Some sort of error will consequently be generated at a later stage for illegal modes.
 
 <a name="6d83h"></a>
 
@@ -5720,6 +5730,15 @@ For "`LINE INPUT`" all characters are accepted until a CR code is reached. Note 
 Once the input string has been accepted the terminating delimiter is examined to see if any special action is required with respect to trailing characters. If the input string was delimited by a double quote character or a space then any succeeding spaces will be read in and ignored until a non-space character is found. If this character is a comma or CR code then it is accepted and ignored. Otherwise a putback function is dispatched ([6F8FH](#6f8fh)) to return the character to the I/O buffer. If the input string was delimited by a CR code then the next character is read in and checked. If this is a LF code it will be accepted but ignored. If it is not a LF code then a putback function is dispatched ([6F8FH](#6f8fh)) to return the character to the I/O buffer.
 
 <a name="6e6bh"></a>
+<a name="6e6eh"></a>
+<a name="6e71h"></a>
+<a name="6e74h"></a>
+<a name="6e77h"></a>
+<a name="6e7ah"></a>
+<a name="6e7dh"></a>
+<a name="6e80h"></a>
+<a name="6e83h"></a>
+<a name="6e86h"></a>
 
     Address... 6E6BH
 
