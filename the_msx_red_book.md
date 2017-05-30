@@ -9463,6 +9463,61 @@ The character set in the CHRTAB may be saved on the cassette using a "BSAVE" sta
     E01C    281F                JR      Z,EDIT              ;
     E01E    0E01                LD      C,1                 ; C=Offset
     E020    FE1C                CP      RIGHT               ; Right
+    E022    2811                JR      Z,CH2               ;
+    E024    0EFF                LD      C,0FFH              ;
+    E026    FE1D                CP      LEFT                ; Left
+    E028    280B                JR      Z,CH2               ;
+    E02A    0EF0                LD      C,0F0H              ;
+    E02C    FE1E                CP      UP                  ; Up
+    E02E    2805                JR      Z,CH2               ;
+    E030    0E10                LD      C,16                ;
+    E032    FE1F                CP      DOWN                ; Down
+    E034    C0                  RET     NZ                  ;
+    E035    3AA1E2      CH2:    LD      A,(CHRNUM)          ; Current chr
+    E038    81                  ADD     A,C                 ; Add offset
+    E039    32A1E2              LD      (CHRNUM),A          ; New chr
+    E03C    C9                  RET                         ;
+
+    E03D    CDE6E1      EDIT:   CALL    DOTXY               ; Dot coords
+    E040    1602                LD      D,2                 ; Cursor size
+    E042    CD2FE2              CALL    GETKEY              ; Get command
+    E045    FE0D                CP      CR                  ; Quit
+    E047    C8                  RET     Z                   ;
+    E048    213DE0              LD      HL,EDIT             ; Set up return
+    E04B    E5                  PUSH    HL                  ;
+    E04C    0100FE              LD      BC,0FE00H           ; AND/OR masks
+    E04F    FE20                CP      " "                 ; Space
+    E051    2824                JR      Z,ED3               ;
+    E053    0C                  INC     C                   ; New OR mask
+    E054    FE2E                CP      "."                 ; Dot
+    E056    281F                JR      Z,ED3               ;
+    E058    FE1C                CP      RIGHT               ; Right
+    E05A    2811                JR      Z,ED2               ;
+    E05C    0EFF                LD      C,0FFH              ; C=Offset
+    E05E    FE1D                CP      LEFT                ; Left
+    E060    280B                JR      Z,ED2               ;
+    E062    0EF8                LD      C,0F8H              ;
+    E064    FE1E                CP      UP                  ; Up
+    E066    2805                JR      Z,ED2               ;
+    E068    0E08                LD      C,8                 ;
+    E06A    FE1F                CP      DOWN                ; Down
+    E06C    C0                  RET     NZ                  ;
+    E06D    3AA2E2      ED2:    LD      A,(DOTNUM)          ; Current dot
+    E070    81                  ADD     A,C                 ; Add offset
+    E071    E63F                AND     63                  ; Wrap round
+    E073    32A2E2              LD      (DOTNUM),A          ; New dot
+    E076    C9                  RET                         ;
+    E077    CD1EE2      ED3:    CALL    PATPOS              ; IY->Pattern
+    E07A    3AA2E2              LD      A,(DOTNUM)          ; Current dot
+    E07D    F5                  PUSH    AF                  ;
+    E07E    0F                  RRCA                        ;
+    E07F    0F                  RRCA                        ;
+    E080    0F                  RRCA                        ;
+    E081    E607                AND     7                   ; A=Row
+    E083    5F                  LD      E,A                 ;
+    E084    1600                LD      D,0                 ; DE=Row
+    E086    FD19                ADD     IY,DE               ; IY->Row
+    
 
 
 
