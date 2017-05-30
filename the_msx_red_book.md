@@ -11634,9 +11634,60 @@ E14E    CD62E1              CALL    GRID                ; Draw mag box
 E151    AF                  XOR     A                   ;
 E152    32A2E2              LD      (DOTNUM),A          ; Current dot
 E155    21A1E2              LD      HL,CHRNUM           ;
+E158    77                  LD      (HL),A              ; Current chr
+E159    E5          IN2:    PUSH    HL                  ;
+E15A    CD9EE0              CALL    CHROUT              ; Display chr
+E15D    E1                  POP     HL                  ;
+E15E    34                  INC     (HL)                ; Next chr
+E15F    20F8                JR      NZ,IN2              ; Do 256
+E161    C9                  RET                         ;
 
-
-
+E162    F5          GRID:   PUSH    AF                  ;
+E163    C5                  PUSH    BC                  ;
+E164    E5                  PUSH    HL                  ;
+E165    CDA3E1              CALL    MAP                 ; Map
+E168    C1                  POP     BC                  ; B=Len,C=Step
+E169    F1                  POP     AF                  ;
+E16A    5F                  LD      E,A                 ; E=Pattern
+E16B    F1                  POP     AF                  ; A=Count
+E16C    F5                  PUSH    AF                  ;
+E16D    D5                  PUSH    DE                  ;
+E16E    E5                  PUSH    HL                  ;
+E16F    F5          GR1:    PUSH    AF                  ;
+E170    C5                  PUSH    BC                  ;
+E171    D5                  PUSH    DE                  ;
+E172    E5                  PUSH    HL                  ;
+E173    78                  LD      A,B                 ; A=Len
+E174    CDC4E1              CALL    SETROW              ; Horizontal line
+E177    E1                  POP     HL                  ; HL=CLOC
+E178    D1                  POP     DE                  ; D=CMASK
+E179    CDB8E1      GR3:    CALL    DOWNP               ; Down a pixel
+E17C    0D                  DEC     C                   ; Done step?
+E17D    20FA                JR      NZ,GR3              ;
+E17F    C1                  POP     BC                  ;
+E180    F1                  POP     AF                  ; A=Count
+E181    3D                  DEC     A                   ; Done lines?
+E182    20EB                JR      NZ,GR1              ;
+E184    E1                  POP     HL                  ; HL=Initial CLOC
+E185    D1                  POP     DE                  ; D=Initial CMASK
+E186    F1                  POP     AF                  ; A=Count
+E187    F5          GR4:    PUSH    AF                  ;
+E188    C5                  PUSH    BC                  ;
+E189    D5                  PUSH    DE                  ;
+E18A    E5                  PUSH    HL                  ;
+E18B    3E01        GR5:    LD      A,1                 ; Line width
+E18D    CDC4E1              CALL    SETROW              ; Thin line
+E190    CDB8E1              CALL    DOWNP               ; Down a pixel
+E193    10F6                DJNZ    GR5                 ; Vertical len
+E195    E1                  POP     HL                  ; HL=CLOC
+E196    D1                  POP     DE                  ; D=CMASK
+E197    CDAEE1      GR6:    CALL    RIGHTP              ; Right a pixel
+E19A    0D                  DEC     C                   ; Done step?
+E19B    20FA                JR      NZ,GR6              ;
+E19D    C1                  POP     BC                  ;
+E19E    F1                  POP     AF                  ; A=Count
+E19F    3D                  DEC     A                   ; Done lines?
+E1A0    20E5                JR      NZ,GR4              ;
 
 ```
 
