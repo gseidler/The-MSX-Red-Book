@@ -1,3 +1,6 @@
+; The MSX Red Book
+; Chapter 7 - Graphics Screen Dump
+
         ORG     0E000H
         LOAD    0E000H
 

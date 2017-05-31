@@ -11796,7 +11796,72 @@ E231    C5          GE1:    PUSH    BC                  ; C=X coord
 E232    D5                  PUSH    DE                  ; E=Y coord
 E233    CD50E2              CALL    INVERT              ; Flip cursor
 E236    D1                  POP     DE                  ;
+E237    C1                  POP     BC                  ;
+E238    04                  INC     B                   ; Flip flag
+E239    21401F              LD      HL,8000             ; Blink rate
+E23C    CD9C00      GE2:    CALL    CHSNS               ; Check KEYBUF
+E23F    2007                JR      NZ,GE3              ; NZ=Got key
+E241    2B                  DEC     HL                  ;
+E242    7C                  LD      A,H                 ;
+E243    B5                  OR      L                   ;
+E244    20F6                JR      NZ,GE2              ;
+E246    18E9                JR      GE1                 ; Time for cursor
+E248    CB40        GE3:    BIT     0,B                 ; Cursor state
+E24A    C450E2              CALL    NZ,INVERT           ; Remove cursor
+E24D    C39F00              JP      CHGET               ; Collect character
 
+E250    D5          INVERT: PUSH    DE                  ;
+E251    CDA3E1              CALL    MAP                 ; Map coords
+E254    F1                  POP     AF                  ; A=Cursor size
+E255    47                  LD      B,A                 ; B=Rows
+E256    5F                  LD      E,A                 ; E=Cols
+E257    D5          IV1:    PUSH    DE                  ;
+E258    E5                  PUSH    HL                  ;
+E259    CD4A00      IV2:    CALL    RDVRM               ; Old pattern
+E25C    AA                  XOR     D                   ; Flip a bit
+E25D    CD4D00              CALL    WRTVGM              ; Put it back
+E260    CDAEE1              CALL    RIGHTP              ; Right a pixel
+E263    1D                  DEC     E                   ;
+E264    20F3                JR      NZ,IV2              ;
+E266    E1                  POP     HL                  ; HL=CLOC
+E267    D1                  POP     DE                  ; D=CMASK
+E268    CDB8E1              CALL    DOWNP               ; Down a pixel
+E26B    10EA                DJNZ    IV1                 ;
+E26D    C9                  RET                         ;
+
+E26E    010008      ADOPT:  LD      BC,2048             ; Size
+E271    1180EB              LD      DE,0EB80H           ; Destination
+E274    ED5320F9            LD      (CGPNT+1),DE        ;
+E278    21A3E2              LD      HL,CHRTAB           ; Source
+E27B    EDB0                LDIR                        ; Copy up high
+E27D    CD3801              CALL    RSLREG              ; Read PSLOT reg
+E280    07                  RLCA                        ;
+E281    07                  RLCA                        ;
+E282    E603                AND     3                   ; Select Page 3
+E284    4F                  LD      C,A                 ;
+E285    0600                LD      B,0                 ; BC=Page 3 PSLOT#
+E287    21C1FC              LD      HL,EXPTBL           ; Expanders
+E28A    09                  ADD     HL,BC               ;
+E28B    CB7E                BIT     7,(HL)              ; PSLOT expanded?
+E28D    280E                JR      Z,AD1               ; A=Normal
+E28F    21C5FC              LD      HL,SLTTBL           ; Secondary regs
+E292    09                  ADD     HL,BC               ;
+E293    7E                  LD      A,(HL)              ; A=Secondary reg
+E294    07                  RLCA                        ;
+E295    07                  RLCA                        ;
+E296    07                  RLCA                        ;
+E297    07                  RLCA                        ;
+E298    E60C                AND     0CH                 ; A=Page 3 SSLOT#
+E29A    B1                  OR      C                   ; Mix Page 3 PSLOT#
+E29B    CBFF                SET     7,A                 ; A=Slot ID
+E29D    321FF9      AD1:    LD      (CGPNT),A           ;
+E2A0    C9                  RET                         ;
+
+E2A1    00          CHRNUM: DEFB    0                   ; Current chr
+E2A2    00          DOTNUM: DEFB    0                   ; Current dot
+E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
+
+                            END
 ```
 
 [CH01F01]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH01F01.svg
