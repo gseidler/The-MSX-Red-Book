@@ -11742,6 +11742,60 @@ E1EA    E607                AND     7                   ; Column
 E1EC    07                  RLCA                        ;
 E1ED    4F                  LD      C,A                 ; C=Col*2
 E1EE    07                  RLCA                        ; A=Col*4
+E1EF    81                  ADD     A,C                 ; A=Col*6
+E1F0    C6BF                ADD     A,191               ; Grid atart
+E1F2    4F                  LD      C,A                 ; C=X coord
+E1F3    F1                  POP     AF                  ;
+E1F4    E638                AND     38H                 ; Row*8
+E1F6    0F                  RRCA                        ;
+E1F7    5F                  LD      E,A                 ; E=Row*4
+E1F8    0F                  RRCA                        ; A=Row*2
+E1F9    83                  ADD     A,E                 ; A=Row*6
+E1FA    C607                ADD     A,7                 ; Grid start
+E1FC    5F                  LD      E,A                 ; E=Y coord
+E1FD    C9                  RET                         ;
+
+E1FE    3AA1E2      CHRXY:  LD      A,(CHRNUM)          ; Current chr
+E201    F5                  PUSH    AF                  ;
+E202    CD14E2              CALL    MULT11              ; Column*11
+E205    C60C                ADD     A,12                ; Grid start
+E207    4F                  LD      C,A                 ; C=X coord
+E208    F1                  POP     AF                  ;
+E209    0F                  RRCA                        ;
+E20A    0F                  RRCA                        ;
+E20B    0F                  RRCA                        ;
+E20C    0F                  RRCA                        ;
+E20D    CD14E2              CALL    MULT11              ; Row*11
+E210    C608                ADD     A,8                 ; Grid start
+E212    5F                  LD      E,A                 ; E=Y coord
+E213    C9                  RET                         ;
+
+E214    E60F        MULT11: AND     0FH                 ;
+EF16    57                  LD      D,A                 ; D=N
+E217    07                  RLCA                        ;
+E218    47                  LD      B,A                 ; B=N*2
+E219    07                  RLCA                        ;
+E21A    07                  RLCA                        ; A=N*8
+E21B    80                  ADD     A,B                 ;
+E21C    82                  ADD     A,D                 ; A=N*11
+E21D    C9                  RET                         ;
+
+E21E    3AA1E2      PATPOS: LD      A,(CHRNUM)          ; Current chr
+E221    6F                  LD      L,A                 ;
+E222    2600                LD      H,0                 ; HL=Chr
+E224    29                  ADD     HL,HL               ;
+E225    29                  ADD     HL,HL               ;
+E226    29                  ADD     HL,HL               ; HL=Chr*8
+E227    EB                  EX      DE,HL               ; DE=Chr*8
+E228    FD21A3E2            LD      IY,CHRTAB           ; Patterns
+E22C    FD19                ADD     IY,DE               ; IY->Pattern
+E22E    C9                  RET                         ;
+
+E22F    0600        GETKEY: LD      B,0                 ; Cursor flag
+E231    C5          GE1:    PUSH    BC                  ; C=X coord
+E232    D5                  PUSH    DE                  ; E=Y coord
+E233    CD50E2              CALL    INVERT              ; Flip cursor
+E236    D1                  POP     DE                  ;
 
 ```
 
