@@ -11688,6 +11688,60 @@ E19D    C1                  POP     BC                  ;
 E19E    F1                  POP     AF                  ; A=Count
 E19F    3D                  DEC     A                   ; Done lines?
 E1A0    20E5                JR      NZ,GR4              ;
+E1A2    C9                  RET                         ;
+
+E1A3    0600        MAP:    LD      B,0                 ; X MSB
+E1A5    50                  LD      D,B                 ; Y MSB
+E1A6    CD1101              CALL    MAPXYC              ; Map coords
+E1A9    CD1401              CALL    FETCHC              ; HL=CLOC
+E1AC    57                  LD      D,A                 ; D=CMASK
+E1AD    C9                  RET                         ;
+
+E1AE    CB0A        RIGHTP: RRC     D                   ; Shift CMASK
+E1B0    D0                  RET     NC                  ; NC=Same cell
+E1B1    C5          RP1:    PUSH    BC                  ;
+E1B2    010800              LD      BC,8                ; Offset
+E1B5    09                  ADD     HL,BC               ; HL=Next cell
+E1B6    C1                  POP     BC                  ;
+E1B7    C9                  RET                         ;
+
+E1B8    23          DOWNP:  INC     HL                  ; CLOC down
+E1B9    7D                  LD      A,L                 ;
+E1BA    E607                AND     7                   ; Select pixel row
+E1BC    C0                  RET     NZ                  ; NZ=Same cell
+E1BD    C5                  PUSH    BC                  ;
+E1BE    01F800              LD      BC,00F8H            ; Offset
+E1C1    09                  ADD     HL,BC               ; HL=Next cell
+E1C2    C1                  POP     BC                  ;
+E1C3    C9                  RET                         ;
+
+E1C4    C5          SETROW: PUSH    BC                  ;
+E1C5    47                  LD      B,A                 ; B=Count
+E1C6    CD4A00      SE1:    CALL    RDVRM               ; Get old pattern
+E1C9    4F          SE2:    LD      C,A                 ; C=Old
+E1CA    7A                  LD      A,D                 ; A=CMASK
+E1CB    2F                  CPL                         ; AND mask
+E1CC    A1                  AND     C                   ; Strip old bit
+E1CD    CB03                RLC     E                   ; Shift pattern
+E1CF    3001                JR      NC,SE3              ; NC=0 Pixel
+E1D1    B2                  OR      D                   ; Set 1 Pixel
+E1D2    05          SE3:    DEC     B                   ; Finished?
+E1D3    280C                JR      Z,SE4               ;
+E1D5    CB0A                RRC     D                   ; CMASK right
+E1D7    30F0                JR      NC,SE2              ; NC=Same cell
+E1D9    CD4D00              CALL    WRTVRM              ; Update cell
+E1DC    CDB1E1              CALL    RP1                 ; Next cell
+E1DF    18E5                JR      SE1                 ; Start again
+E1E1    CD4D00      SE4:    CALL    WRTVRM              ; Update cell
+E1E4    C1                  POP     BC                  ;
+E1E5    C9                  RET                         ;
+
+E1E6    3AA2E2      DOTXY:  LD      A,(DOTNUM)          ; Current dot
+E1E9    F5                  PUSH    AF                  ;
+E1EA    E607                AND     7                   ; Column
+E1EC    07                  RLCA                        ;
+E1ED    4F                  LD      C,A                 ; C=Col*2
+E1EE    07                  RLCA                        ; A=Col*4
 
 ```
 
