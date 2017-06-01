@@ -4121,7 +4121,7 @@ Address... 3299H
 
 This routine converts a number in textual form to one of the standard internal numeric types, it is used during tokenization and by the "`VAL`", "`INPUT`" and "`READ`" Statement handlers. On entry register pair HL points to the first character of the text string to be converted. On exit register pair HL points to the character following the string, the numeric operand is in [DAC](#dac) and the type code in [VALTYP](#valtyp). Examples of the three types are:
 
-<a name="figure1"></a>![][CH05F41]
+<a name="figure41"></a>![][CH05F41]
 
 **Figure 41:** Numeric Types in DAC
 
@@ -4170,10 +4170,7 @@ If the exponent is outside the range 10^-1 to 10^14 the number is presented in e
 
 An alternative entry point to the routine exists at 3426H for the "`PRINT USING`" statement handler. With this entry point the number of characters to prefix the decimal point is supplied in register B, the number of characters to point fix it in register C and a format byte in register A:
 
-       7     6     5     4     3     2     1     0
-    +-----------------------------------------------+
-    ¦  1  ¦  ,  ¦  *  ¦  $  ¦  +  ¦Sign ¦  0  ¦^^^^ ¦
-    +-----------------------------------------------+
+<a name="figure42"></a>![][CH05F42]
 
 **Figure 42:** Format Byte
 
@@ -4741,9 +4738,7 @@ This routine recalculates the Program Text Area links after a program modificati
 
 An example of a typical program line is shown below, in this case the line "`10 PRINT 9`" situated at the start of the Program Text Area (8001H):
 
-    +-------------------------------------------+
-    ¦ 09H 80H ¦ 0AH 00H ¦ 91H ¦ 20H ¦ 1AH ¦ 00H ¦
-    +-------------------------------------------+
+<a name="figure43"></a>![][CH05F43]
 
 **Figure 43:** Program Line
 
@@ -11893,3 +11888,5 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH04F39b]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH04F39b.svg
 [CH04F40]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH04F40.svg
 [CH05F41]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F41.svg
+[CH05F42]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F42.svg
+[CH05F43]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F43.svg
