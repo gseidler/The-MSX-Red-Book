@@ -10,7 +10,7 @@
                 <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="125" y="17">FFH</text>
                     <text x="175" y="17">7FH</text>
-                    <text x="0" y="40" text-anchor="start">Interger +32767</text>
+                    <text x="0" y="40" text-anchor="start">Integer +32767</text>
                 </g>
         </g>
     </g>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="570" height="240">
+    <g transform="translate(10,10)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="250px" height ="25px"/>
+            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="17">02H</text>
+                    <text x="75" y="17">"A"</text>
+                    <text x="125" y="17">"B"</text>
+                    <text x="175" y="17">LSB</text>
+                    <text x="225" y="17">MSB</text>
+                    <text x="0" y="40" text-anchor="start">Integer</text>
+                </g>
+        </g>
+    </g>
+    <g transform="translate(10,70)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="300px" height ="25px"/>
+            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="17">03H</text>
+                    <text x="75" y="17">"A"</text>
+                    <text x="125" y="17">"B"</text>
+                    <text x="175" y="17">LEN</text>
+                    <text x="225" y="17">LSB</text>
+                    <text x="275" y="17">MSB</text>
+                    <text x="0" y="40" text-anchor="start">String</text>
+                </g>
+        </g>
+    </g>
+    <g transform="translate(10,130)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="350px" height ="25px"/>
+            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="17">04H</text>
+                    <text x="75" y="17">"A"</text>
+                    <text x="125" y="17">"B"</text>
+                    <text x="175" y="17">EE</text>
+                    <text x="225" y="17">DD</text>
+                    <text x="275" y="17">DD</text>
+                    <text x="325" y="17">DD</text>
+                    <text x="0" y="40" text-anchor="start">Single Precision</text>
+                </g>
+        </g>
+    </g>
+    <g transform="translate(10,190)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="550px" height ="25px"/>
+            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25 M400,0 v25 M450,0 v25 M500,0 v25"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="17">08H</text>
+                    <text x="75" y="17">"A"</text>
+                    <text x="125" y="17">"B"</text>
+                    <text x="175" y="17">EE</text>
+                    <text x="225" y="17">DD</text>
+                    <text x="275" y="17">DD</text>
+                    <text x="325" y="17">DD</text>
+                    <text x="375" y="17">DD</text>
+                    <text x="425" y="17">DD</text>
+                    <text x="475" y="17">DD</text>
+                    <text x="525" y="17">DD</text>
+                    <text x="0" y="40" text-anchor="start">Double Precision</text>
+                </g>
+        </g>
+    </g>
+</svg>

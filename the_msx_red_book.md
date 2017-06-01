@@ -6186,25 +6186,7 @@ Address... 5F08H
 
 This is the simple Variable search routine. There are four types of simple Variable each composed of a header followed by the Variable contents. The first byte of the header contains the type code and the next two bytes the Variable name. The contents of the Variable will be one of the three standard numeric forms or, for the string type, the length and address of the string. Each of the four types is shown below:
 
-    +-----------------------------+
-    ¦ 02H ¦ "A" ¦ "B" ¦ LSB ¦ MSB ¦
-    +-----------------------------+
-    Integer
-
-    +-----------------------------------+
-    ¦ 03H ¦ "A" ¦ "B" ¦ LEN ¦ LSB ¦ MSB ¦
-    +-----------------------------------+
-    String
-
-    +-------------------------------------+
-    ¦ 04H ¦ "A" ¦ "B" ¦ EE ¦ DD ¦ DD ¦ DD ¦
-    +-------------------------------------+
-    Single Precision
-
-    +---------------------------------------------------------+
-    ¦ 08H ¦ "A" ¦ "B" ¦ EE ¦ DD ¦ DD ¦ DD ¦ DD ¦ DD ¦ DD ¦ DD ¦
-    +---------------------------------------------------------+
-    Double Precision
+<a name="figure46"></a>![][CH01F46]
 
 **Figure 46:** Simple Variables
 
@@ -11875,3 +11857,4 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH05F43]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F43.svg
 [CH05F44]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F44.svg
 [CH05F45]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F45.svg
+[CH05F46]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F46.svg
