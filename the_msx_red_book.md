@@ -5894,15 +5894,7 @@ This is the paint mainloop. The zone width is held in register pair DE, the pain
 
 There are four types of inflection, LH or RH incursive, where the relevant boundary moves inward, and LH or RH excursive, where it moves outward. An example of each type is shown below with numbered zones indicating the order of painting during upward movement. A secondary zone is shown within each inflective region for completeness:
 
-             +-+   +-+            +----------+   +----------+
-             ¦ ¦   ¦ ¦            ¦     3    ¦   ¦    3     ¦
-        +-+  ¦2¦   ¦3¦  +-+       ¦          ¦   ¦          ¦
-        ¦3¦  ¦ ¦   ¦ ¦  ¦2¦       +---+ +--+ ¦   ¦ +--+ +---+
-    +---+ +--+ ¦   ¦ +--+ +---+       ¦2¦  ¦ ¦   ¦ ¦  ¦2¦
-    ¦          ¦   ¦          ¦       +-+  ¦1¦   ¦1¦  +-+
-    ¦     1    ¦   ¦    1     ¦            ¦ ¦   ¦ ¦
-    +----------+   +----------+            +-+   +-+
-    LH Incursion   RH Incursion   LH Excursion   RH Excursion
+<a name="figure45"></a>![][CH05F45]
 
 **Figure 45:** Boundary Inflections
 
@@ -11882,3 +11874,4 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH05F42]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F42.svg
 [CH05F43]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F43.svg
 [CH05F44]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F44.svg
+[CH05F45]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F45.svg
