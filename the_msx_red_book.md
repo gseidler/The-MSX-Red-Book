@@ -5631,16 +5631,7 @@ This routine is used by the device name parser ([6F15H](#6f15h)) when it cannot 
 
 The ROM will examine the device name and return Flag C if it does not recognize it, otherwise it returns its own internal code from zero to three. If the ROM call fails the search of [SLTATR](#sltatr) continues until the table is exhausted whereupon a "`Bad file name`" error is generated ([6E6BH](#6e6bh)). If the ROM call is successful the ROM's internal code is added to its [SLTATR](#sltatr) position, multiplied by a factor of four, to produce a global device code' The base code for each entry in [SLTATR](#sltatr) is shown below in hexadecimal. The "SS" and "PS" markers show the corresponding Secondary and Primary Slot numbers, each slot is composed of four pages:
 
-          SS0           SS1           SS2           SS3
-    +-------------------------------------------------------+
-    ¦ 00 04 08 0C ¦ 10 14 18 1C ¦ 20 24 28 2C ¦ 30 34 38 3C ¦ PS0
-    +-------------+-------------+-------------+-------------¦
-    ¦ 40 44 48 4C ¦ 50 54 58 5C ¦ 60 64 68 6C ¦ 70 74 78 7C ¦ PS1
-    +-------------+-------------+-------------+-------------¦
-    ¦ 80 84 88 8C ¦ 90 94 98 9C ¦ A0 A4 A8 AC ¦ B0 B4 B8 BC ¦ PS2
-    +-------------+-------------+-------------+-------------¦
-    ¦ C0 C4 C8 CC ¦ D0 D4 D8 DC ¦ E0 E4 E8 EC ¦ F0 F4 F8 FC ¦ PS3
-    +-------------------------------------------------------+
+<a name="figure44"></a>![][CH05F44]
 
 **Figure 44:** Device Codes
 
@@ -11890,3 +11881,4 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH05F41]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F41.svg
 [CH05F42]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F42.svg
 [CH05F43]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F43.svg
+[CH05F44]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F44.svg
