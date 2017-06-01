@@ -4121,20 +4121,7 @@ Address... 3299H
 
 This routine converts a number in textual form to one of the standard internal numeric types, it is used during tokenization and by the "`VAL`", "`INPUT`" and "`READ`" Statement handlers. On entry register pair HL points to the first character of the text string to be converted. On exit register pair HL points to the character following the string, the numeric operand is in [DAC](#dac) and the type code in [VALTYP](#valtyp). Examples of the three types are:
 
-    +-----------------------------------------------+
-    ¦     ¦     ¦ FFH ¦ 7FH ¦     ¦     ¦     ¦     ¦
-    +-----------------------------------------------+
-    Integer +32767
-
-    +-----------------------------------------------+
-    ¦ 42H ¦ 17H ¦ 39H ¦ 04H ¦     ¦     ¦     ¦     ¦
-    +-----------------------------------------------+
-    Single Precision .173904*10^2
-
-    +-----------------------------------------------+
-    ¦ C2H ¦ 17H ¦ 39H ¦ 04H ¦ 62H ¦ 70H ¦ 93H ¦ 13H ¦
-    +-----------------------------------------------+
-    Double Precision -.17390462709313*10^2
+<a name="figure1"></a>![][CH05F41]
 
 **Figure 41:** Numeric Types in DAC
 
@@ -11905,3 +11892,4 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH04F39a]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH04F39a.svg
 [CH04F39b]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH04F39b.svg
 [CH04F40]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH04F40.svg
+[CH05F41]: https://rawgit.com/oraculo666/the_msx_red_book/master/images/CH05F41.svg
