@@ -59,11 +59,11 @@
     + [Graphics Screen Dump](#graphics_screen_dump)
     + [Character Editor](#character_editor)
 
-Contents Copyright 1985 Avalon Software
+Contents Copyright 1985 Avalon Software<br>
 Iver Lane, Cowley, Middx, UB8 2JD
 
-MSX is a trademark of Microsoft Corp.
-Z80 is a trademark of Zilog Corp.
+MSX is a trademark of Microsoft Corp.<br>
+Z80 is a trademark of Zilog Corp.<br>
 ACADEMY is trademark of Alfred.
 
 <br><br><br>
