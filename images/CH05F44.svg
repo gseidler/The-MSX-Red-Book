@@ -5,7 +5,7 @@
     width="860" height="180">
     <g transform="translate(10,10)">
         <g fill="none" stroke="black">
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="100" y="17">SS0</text>
                     <text x="300" y="17">SS1</text>
                     <text x="500" y="17">SS2</text>
@@ -17,7 +17,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="800px" height ="25px"/>
             <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">00</text>
                     <text x="75" y="17">04</text>
                     <text x="125" y="17">08</text>
@@ -42,7 +42,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="800px" height ="25px"/>
             <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">40</text>
                     <text x="75" y="17">44</text>
                     <text x="125" y="17">48</text>
@@ -67,7 +67,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="800px" height ="25px"/>
             <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">80</text>
                     <text x="75" y="17">84</text>
                     <text x="125" y="17">88</text>
@@ -92,7 +92,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="800px" height ="25px"/>
             <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">C0</text>
                     <text x="75" y="17">C4</text>
                     <text x="125" y="17">C8</text>

@@ -32,7 +32,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
             <path d="M400,5 v5"/>
             <path d="M440,5 v10"/>
         </g>
-        <g font-family="SFMono-Regular" font-size="10" fill="black" stroke="none" text-anchor="middle">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="10" fill="black" stroke="none" text-anchor="middle">
             <text x="20" y="25">Start</text>
             <text x="60" y="25">0</text>
             <text x="100" y="25">1</text>

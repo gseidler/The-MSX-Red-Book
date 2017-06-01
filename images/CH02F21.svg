@@ -13,7 +13,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
         <path d="M180,62 h125"/>
     </g>
     <g transform="translate(7,15)">
-        <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="start">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="start">
             <text x="0" y="0" >A</text>
             <text x="15" y="0" >A</text>
             <text x="30" y="0" >A</text>

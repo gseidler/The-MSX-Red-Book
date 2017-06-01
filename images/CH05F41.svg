@@ -7,7 +7,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="400px" height ="25px"/>
             <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="125" y="17">FFH</text>
                     <text x="175" y="17">7FH</text>
                     <text x="0" y="40" text-anchor="start">Interger +32767</text>
@@ -18,7 +18,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="400px" height ="25px"/>
             <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">42H</text>
                     <text x="75" y="17">17H</text>
                     <text x="125" y="17">39H</text>
@@ -31,7 +31,7 @@
         <g fill="none" stroke="black">
             <rect x="0" y="0" width="400px" height ="25px"/>
             <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
                     <text x="25" y="17">C2H</text>
                     <text x="75" y="17">17H</text>
                     <text x="125" y="17">39H</text>

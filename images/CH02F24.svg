@@ -13,7 +13,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
         <path d="M0,186 h62"/>
     </g>
     <g transform="translate(7,15)">
-        <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
             <text x="23" y="13" >8 Bytes</text>
             <text x="23" y="27" >Block A</text>
             <text x="23" y="75" >8 Bytes</text>
@@ -31,7 +31,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
         <path d="M62,0 v125"/>
         <path d="M0,62 h125"/>
     </g>
-    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
         <text x="31" y="35" >A</text>
         <text x="94" y="35" >B</text>
         <text x="31" y="97" >C</text>

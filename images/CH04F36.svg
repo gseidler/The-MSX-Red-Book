@@ -11,7 +11,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
         <path d="M0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400"/>
         <path d="M50,0 v550 m50,0 v-550 m50,0 v550 m50,0 v-550 m50,0 v550 m50,0 v-550 m50,0 v550"/>
     </g>
-    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="middle">
+    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
         <g transform="translate(25,20)">
             <text x="0" y="0" >7</text>
             <text x="0" y="20" >(07H)</text>
@@ -216,7 +216,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
 
         </g>
     </g>
-    <g font-family="SFMono-Regular" font-size="11" fill="black" stroke="none" text-anchor="start">
+    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="start">
         <g transform="translate(410,5)">
             <text x="0" y="25" >Row 0</text>
             <text x="0" y="75" >Row 1</text>
