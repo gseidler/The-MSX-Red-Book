@@ -6186,7 +6186,7 @@ Address... 5F08H
 
 This is the simple Variable search routine. There are four types of simple Variable each composed of a header followed by the Variable contents. The first byte of the header contains the type code and the next two bytes the Variable name. The contents of the Variable will be one of the three standard numeric forms or, for the string type, the length and address of the string. Each of the four types is shown below:
 
-<a name="figure46"></a>![][CH01F46]
+<a name="figure46"></a>![][CH05F46]
 
 **Figure 46:** Simple Variables
 
