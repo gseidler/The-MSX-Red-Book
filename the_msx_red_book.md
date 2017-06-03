@@ -866,9 +866,7 @@ Standard routine to switch in a page permanently from any slot. Unlike the [RDSL
 
 <a name="027eh"></a>
 
-```
-Address... 027EH
-```
+    Address... 027EH
 
 This routine is used by the memory switching standard routines to turn an address, in register pair HL, and a Slot ID, in register A, into a set of bit masks. As an example a Slot ID of FxxxSSPP and an address in Page 1 (4000H to 7FFFH) would return the following:
 
@@ -885,9 +883,7 @@ As the routine terminates bit 7 of the Slot ID is tested, to determine whether a
 
 <a name="02a3h"></a>
 
-```
-Address... 02A3H
-```
+    Address... 02A3H
 
 This routine is used by the memory switching standard routines to modify a Secondary Slot Register. The Slot ID is supplied in register A while registers D and E contain the bit masks shown in the previous routine.
 
@@ -1183,9 +1179,7 @@ Standard routine to copy a block into main memory from the VDP VRAM. The VRAM st
 
 <a name="071eh"></a>
 
-```
-Address... 071EH
-```
+    Address... 071EH
 
 This routine is used to copy a 2 KB character set into the VDP Character Pattern Table in any mode. The base address of the Character Pattern Table in VRAM is taken from [CGPBAS](#cgpbas). The starting address of the character set is taken from [CGPNT](#cgpnt). The [RDSLT](#rdslt) standard routine is used to read the character data so this may be situated in an extension ROM.
 
@@ -1205,9 +1199,7 @@ Standard routine to copy a block to VRAM from main memory. The VRAM starting add
 
 <a name="0777h"></a>
 
-```
-Address... 0777H
-```
+    Address... 0777H
 
 This routine will clear the screen in any VDP mode. In [40x24 Text Mode](#40x24_text_mode) and [32x24 Text Mode](#32x24_text_mode) the Name Table, whose base address is taken from [NAMBAS](#nambas), is first filled with ASCII spaces. The cursor is then set to the home position ([0A7FH](#0a7fh)) and [LINTTB](#linttb), the line termination table, re-initialized. Finally the function key display is restored, if it is enabled, via the [FNKSB](#fnksb) standard routine.
 
@@ -1389,9 +1381,7 @@ Standard routine to output a character to the screen in [40x24 Text Mode](#40x24
 
 <a name="08dfh"></a>
 
-```
-Address... 08DFH
-```
+    Address... 08DFH
 
 This routine is used by the [CHPUT](#chput) standard routine to decode a character and take the appropriate action. The [CNVCHR](#cnvchr) standard routine is first used to check for a graphic character, if the character is a header code (01H) then the routine terminates with no action. If the character is a converted graphic one then the control code decoding section is skipped. Otherwise [ESCCNT](#esccnt) is checked to see if a previous ESC character (1BH) has been received, if so control transfers to the ESC sequence processor ([098FH](#098fh)). Otherwise the character is checked to see if it is smaller than 20H, if so control transfers to the control code processor ([0914H](#0914h)). The character is then checked to see if it is DEL (7FH), if so control transfers to the delete routine (0AE3H).
 
@@ -1399,25 +1389,19 @@ Assuming the character is displayable the cursor coordinates are taken from [CSR
 
 <a name="0908h"></a>
 
-```
-Address... 0908H
-```
+    Address... 0908H
 
 This routine performs the LF operation for the [CHPUT](#chput) standard routine control code processor. The cursor row is incremented ([0A61H](#0a61h)) and, assuming the lowest row has not been exceeded, the routine terminates. Otherwise the screen is scrolled upwards and the lowest row erased (0A88H).
 
 <a name="0914h"></a>
 
-```
-Address... 0914H
-```
+    Address... 0914H
 
 This is the control code processor for the [CHPUT](#chput) standard routine. The table at [092FH](#092fh) is searched for a match with the code and control transferred to the associated address.
 
 <a name="092fh"></a>
 
-```
-Address... 092FH
-```
+    Address... 092FH
 
 This table contains the control codes, each with an associated address, recognized by the [CHPUT](#chput) standard routine:
 
@@ -1440,9 +1424,7 @@ This table contains the control codes, each with an associated address, recogniz
 
 <a name="0953h"></a>
 
-```
-Address... 0953H
-```
+    Address... 0953H
 
 This table contains the ESC control codes, each with an associated address, recognized by the [CHPUT](#chput) standard routine:
 
@@ -1468,41 +1450,31 @@ This table contains the ESC control codes, each with an associated address, reco
 
 <a name="0980h"></a>
 
-```
-Address... 0980H
-```
+    Address... 0980H
 
 This routine performs the ESC,"x" operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to 01H to indicate that the next character received is a parameter.
 
 <a name="0983h"></a>
 
-```
-Address... 0983H
-```
+    Address... 0983H
 
 This routine performs the ESC,"y" operation for the [CHPUT](#chput) standard routine control code decoder. [ESCCNT](#esccnt) is set to 02H to indicate that the next character received is a parameter.
 
 <a name="0986h"></a>
 
-```
-Address... 0986H
-```
+    Address... 0986H
 
 This routine performs the ESC",Y" operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to 04H to indicate that the next character received is a parameter.
 
 <a name="0989h"></a>
 
-```
-Address... 0989H
-```
+    Address... 0989H
 
 This routine performs the ESC operation for the [CHPUT](#chput) standard routine control code processor. [ESCCNT](#esccnt) is set to FFH to indicate that the next character received is the second control character.
 
 <a name="098fh"></a>
 
-```
-Address... 098FH
-```
+    Address... 098FH
 
 This is the [CHPUT](#chput) standard routine ESC sequence processor. If [ESCCNT](#esccnt) contains FFH then the character is the second control character and control transfers to the control code processor (0919H) to search the ESC code table at [0953H](#0953h).
 
@@ -1516,17 +1488,13 @@ If [ESCCNT](#esccnt) contains 03H then the character is the second parameter of 
 
 <a name="09dah"></a>
 
-```
-Address... 09DAH
-```
+    Address... 09DAH
 
 This routine is used, by the [CHGET](#chget) standard routine for example, to display the cursor character when it is normally disabled. If [CSRSW](#csrsw) is non-zero the routine simply terminates with no action, otherwise the cursor is displayed (09E6H).
 
 <a name="09e1h"></a>
 
-```
-Address... 09E1H
-```
+    Address... 09E1H
 
 This routine is used, by the [CHPUT](#chput) standard routine for example, to display the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character read from that location ([0BD8H](#0bd8h)) and saved in [CURSAV](#cursav).
 
@@ -1536,133 +1504,99 @@ This method of generating the cursor character, by using character code 255, can
 
 <a name="0a27h"></a>
 
-```
-Address... 0A27H
-```
+    Address... 0A27H
 
 This routine is used, by the [CHGET](#chget) standard routine for example, to remove the cursor character when it is normally disabled. If [CSRSW](#csrsw) is non-zero the routine simply terminates with no action, otherwise the cursor is removed (0A33H).
 
 <a name="0a2eh"></a>
 
-```
-Address... 0A2EH
-```
+    Address... 0A2EH
 
 This routine is used, by the [CHPUT](#chput) standard routine for example, .to remove the cursor character when it is normally enabled. If [CSRSW](#csrsw) is zero the routine simply terminates with no action. [SCRMOD](#scrmod) is checked and, if the screen is in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode), the routine terminates with no action. Otherwise the cursor coordinates are converted to a physical address in the VDP Name Table and the character held in [CURSAV](#cursav) written to that location ([0BE6H](#0be6h)).
 
 <a name="0a44h"></a>
 
-```
-Address... 0A44H
-```
+    Address... 0A44H
 
 This routine performs the ESC,"C" operation for the [CHPUT](#chput) standard routine control code processor. If the cursor column coordinate is already at the rightmost column, determined by [LINLEN](#linlen), then the routine terminates with no action. Otherwise the column coordinate is incremented and [CSRX](#csrx) updated.
 
 <a name="0a4ch"></a>
 
-```
-Address... 0A4CH
-```
+    Address... 0A4CH
 
 This routine performs the BS/LEFT operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is decremented and [CSRX](#csrx) updated. If the column coordinate has moved beyond the leftmost position it is set to the rightmost position, from [LINLEN](#linlen), and an UP operation performed.
 
 <a name="0a55h"></a>
 
-```
-Address... 0A55H
-```
+    Address... 0A55H
 
 This routine performs the ESC,"D" operation for the [CHPUT](#chput) standard routine control code processor. If the cursor column coordinate is already at the leftmost position then the routine terminates with no action. Otherwise the column coordinate is decremented and [CSRX](#csrx) updated.
 
 <a name="0a57h"></a>
 
-```
-Address... 0A57H
-```
+    Address... 0A57H
 
 This routine performs the ESC,"A" (UP) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the topmost position the routine terminates with no action. Otherwise the row coordinate is decremented and [CSRY](#csry) updated.
 
 <a name="0a5bh"></a>
 
-```
-Address... 0A5BH
-```
+    Address... 0A5BH
 
 This routine performs the RIGHT operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is incremented and [CSRX](#csrx) updated. If the column coordinate has moved beyond the rightmost position, determined by [LINLEN](#linlen), it is set to the leftmost position (01H) and a DOWN operation performed.
 
 <a name="0a61h"></a>
 
-```
-Address... 0A61H
-```
+    Address... 0A61H
 
 This routine performs the ESC,"B" (DOWN) operation for the [CHPUT](#chput) standard routine control code processor. If the cursor row coordinate is already at the lowest position, determined by [CRTCNT](#crtcnt) and [CNSDFG](#cnsdfg) ([0C32H](#0c32h)), then the routine terminates with no action. Otherwise the row coordinate is incremented and [CSRY](#csry) updated.
 
 <a name="0a71h"></a>
 
-```
-Address... 0A71H
-```
+    Address... 0A71H
 
 This routine performs the TAB operation for the [CHPUT](#chput) standard routine control code processor. ASCII spaces are output ([08DFH](#08dfh)) until [CSRX](#csrx) is a multiple of eight plus one (BIOS columns 1, 9, 17, 25, 33).
 
 <a name="0a7fh"></a>
 
-```
-Address... 0A7FH
-```
+    Address... 0A7FH
 
 This routine performs the ESC,"H" (HOME) operation for the [CHPUT](#chput) standard routine control code processor, [CSRX](#csrx) and [CSRY](#csry) are simply set to 1,1. The ROM BIOS cursor coordinate system, while functionally identical to that used by the BASIC Interpreter, numbers the screen rows from 1 to 24 and the columns from 1 to 32/40.
 
 <a name="0a81h"></a>
 
-```
-Address... 0A81H
-```
+    Address... 0A81H
 
 This routine performs the CR operation for the [CHPUT](#chput) standard routine control code processor, [CSRX](#csrx) is simply set to 01H .
 
 <a name="0a85h"></a>
 
-```
-Address... 0A85H
-```
+    Address... 0A85H
 
 This routine performs the ESC,"M" function for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased ([0AECH](#0aech)). The row count is first used to scroll up the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll up the relevant section of the screen a row at a time. Starting at the row below the current row, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer ([0BAAH](#0baah)) then copied back to the Name Table one row higher ([0BC3H](#0bc3h)). Finally the lowest row on the screen is erased ([0AECH](#0aech)).
 
 <a name="0ab4h"></a>
 
-```
-Address... 0AB4H
-```
+    Address... 0AB4H
 
 This routine performs the ESC,"L" operation for the [CHPUT](#chput) standard routine control code processor. A CR operation is first performed to set the cursor column coordinate to the leftmost position. The number of rows from the current row to the bottom of the screen is then determined, if this is zero the current row is simply erased ([0AECH](#0aech)). The row count is first used to scroll down the relevant section of [LINTTB](#linttb), the line termination table, by one byte. It is then used to scroll down the relevant section of the screen a row at a time. Starting at the next to last row of the screen, each line is copied from the VDP Name Table into the [LINWRK](#linwrk) buffer ([0BAAH](#0baah)), then copied back to the Name Table one row lower ([0BC3H](#0bc3h)). Finally the current row is erased ([0AECH](#0aech)).
 
-```
-Address... 0AE3H
-```
+    Address... 0AE3H
 
 This routine is used to perform the DEL operation for the [CHPUT](#chput) standard routine control code processor. A LEFT operation is first performed. If this cannot be completed, because the cursor is already at the home position, then the routine terminates with no action. Otherwise a space is written to the VDP Name Table at the cursor's physical location ([0BE6H](#0be6h)).
 
 <a name="0aech"></a>
 
-```
-Address... 0AECH
-```
+    Address... 0AECH
 
 This routine performs the ESC,"l" operation for the [CHPUT](#chput) standard routine control code processor. The cursor column coordinate is set to 01H and control drops into the ESC,"K" routine.
 
 <a name="0aeeh"></a>
 
-```
-Address... 0AEEH
-```
+    Address... 0AEEH
 
 This routine performs the ESC,"K" operation for the [CHPUT](#chput) standard routine control code processor. The row's entry in [LINTTB](#linttb), the line termination table, is first made non-zero to indicate that the logical line is not extended ([0C29H](#0c29h)). The cursor coordinates are converted to a physical address (0BF2H) in the VDP Name Table and the VDP set up for writes via the [SETWRT](#setwrt) standard routine. Spaces are then written directly to the VDP [Data Port](#data_port) until the rightmost column, determined by [LINLEN](#linlen), is reached.
 
-```
-Address... 0B05H
-```
+    Address... 0B05H
 
 This routine performs the ESC,"J" operation for the [CHPUT](#chput) standard routine control code processor. An ESC,"K" operation is performed on successive rows, starting with the current one, until the bottom of the screen is reached.
 
@@ -1706,57 +1640,43 @@ Register pair HL is then set to point to either the unshifted or shifted functio
 
 <a name="0b9ch"></a>
 
-```
-Address... 0B9CH
-```
+    Address... 0B9CH
 
 This routine is used by the function key display related standard routines. The contents of register A are placed in [CNSDFG](#cnsdfg) then [SCRMOD](#scrmod) tested and Flag NC returned if the screen is in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode).
 
 <a name="0ba5h"></a>
 
-```
-Address... 0BA5H
-```
+    Address... 0BA5H
 
 This routine copies eight bytes from the VDP VRAM into the [LINWRK](#linwrk) buffer, the VRAM physical address is supplied in register pair HL.
 
 <a name="0baah"></a>
 
-```
-Address... 0BAAH
-```
+    Address... 0BAAH
 
 This routine copies a complete row of characters, with the length determined by [LINLEN](#linlen), from the VDP VRAM into the [LINWRK](#linwrk) buffer. The cursor row coordinate is supplied in register L.
 
 <a name="0bbeh"></a>
 
-```
-Address... 0BBEH
-```
+    Address... 0BBEH
 
 This routine copies eight bytes from the [LINWRK](#linwrk) buffer into the VDP VRAM, the VRAM physical address is supplied in register pair HL.
 
 <a name="0bc3h"></a>
 
-```
-Address... 0BC3H
-```
+    Address... 0BC3H
 
 This routine copies a complete row of characters, with the length determined by [LINLEN](#linlen), from the [LINWRK](#linwrk) buffer into the VDP VRAM. The cursor row coordinate is supplied in register L.
 
 <a name="0bd8h"></a>
 
-```
-Address... 0BD8H
-```
+    Address... 0BD8H
 
 This routine reads a single byte from the VDP VRAM into register C. The column coordinate is supplied in register H, the row coordinate in register L.
 
 <a name="0be6h"></a>
 
-```
-Address... 0BE6H
-```
+    Address... 0BE6H
 
 This routine converts a pair of screen coordinates, the column in register H and the row in register L, into a physical address in the VDP Name Table. This address is returned in register pair HL.
 
@@ -1778,25 +1698,19 @@ This program is designed for the `ROW` and `COL` coordinate system used by the R
 
 <a name="0c1dh"></a>
 
-```
-Address... 0C1DH
-```
+    Address... 0C1DH
 
 This routine calculates the address of a row's entry in [LINTTB](#linttb), the line termination table. The row coordinate is supplied in register L and the address returned in register pair DE.
 
 <a name="0c29h"></a>
 
-```
-Address... 0C29H
-```
+    Address... 0C29H
 
 This routine makes a row's entry in [LINTTB](#linttb) non-zero when entered at [0C29H](#0c29h) and zero when entered at 0C2AH. The row coordinate is supplied in register L.
 
 <a name="0c32h"></a>
 
-```
-Address... 0C32H
-```
+    Address... 0C32H
 
 This routine returns the number of rows on the screen in register A. It will normally return twenty-four if the function key display is disabled and twenty-three if it is enabled. Note that the screen size is determined by [CRTCNT](#crtcnt) and may be modified with a BASIC statement, `POKE &HF3B1H,14:SCREEN 0` for example.
 
@@ -1830,9 +1744,7 @@ A complete scan of the keyboard matrix is then performed to identify new key dep
 
 <a name="0d12h"></a>
 
-```
-Address... 0D12H
-```
+    Address... 0D12H
 
 This routine performs a complete scan of all eleven rows of the keyboard matrix for the interrupt handler. Each of the eleven rows is read in via the PPI and placed in ascending order in [NEWKEY](#newkey). [ENSTOP](#enstop) is then checked to see if warm starts are enabled. If its contents are non-zero and the keys CODE, GRAPH, CTRL and SHIFT are pressed control transfers to the BASIC Interpreter (409BH) via the [CALBAS](#calbas) standard routine. This facility is useful as even a machine code program can be terminated as long as the interrupt handler is running. The contents of [NEWKEY](#newkey) are compared with the previous scan contained in [OLDKEY](#oldkey). If any change at all has occurred [REPCNT](#repcnt) is loaded with the initial auto-repeat delay (780 ms). Each row 1, reading from [NEWKEY](#newkey) is then compared with the previous one, held in [OLDKEY](#oldkey), to produce an active transition byte and [OLDKEY](#oldkey) is updated with the new reading. The active transition byte is normally zero but contains a 1 in each position where a transition from unpressed to pressed has occurred. If the row contains any transitions these are decoded and placed in [KEYBUF](#keybuf) as key codes ([0D89H](#0d89h)). When all eleven rows have been completed the routine checks whether there are any characters in [KEYBUF](#keybuf), by subtracting [GETPNT](#getpnt) from [PUTPNT](#putpnt), and terminates.
 
@@ -1850,9 +1762,7 @@ Standard routine to check if any keyboard characters are ready. If the screen is
 
 <a name="0d89h"></a>
 
-```
-Address... 0D89H
-```
+    Address... 0D89H
 
 This routine converts each active bit in a keyboard row transition byte into a key code. A bit is first converted into a key number determined by its position in the keyboard matrix:
 
@@ -1864,9 +1774,7 @@ The key number is then converted into a key code and placed in [KEYBUF](#keybuf)
 
 <a name="0da5h"></a>
 
-```
-Address... 0DA5H
-```
+    Address... 0DA5H
 
 This table contains the key codes of key numbers 00H to 2FH for various combinations of the control keys. A zero entry in the table means that no key code will be produced when that key is pressed:
 
@@ -1920,41 +1828,31 @@ CODE   92H  00H  B0H  9AH  99H  00H  00H  00H   Row  3
 
 <a name="0ec5h"></a>
 
-```
-Address... 0EC5H
-```
+    Address... 0EC5H
 
 Control transfers to this routine, from [0FC3H](#0fc3h), to complete decoding of the five function keys. The relevant entry in [FNKFLG](#fnkflg) is first checked to determine whether the key is associated with an "`ON KEY GOSUB`" statement. If so, and provided that [CURLIN](#curlin) shows the BASIC Interpreter to be in program mode, the relevant entry in [TRPTBL](#trptbl) is updated ([0EF1H](#0ef1h)) and the routine terminates. If the key is not tied to an "`ON KEY GOSUB`" statement, or if the Interpreter is in direct mode, the string of characters associated with the function key is returned instead. The key number is multiplied by sixteen, as each string is sixteen characters long, and added to the starting address of the function key strings in the Workspace Area. Sequential characters are then taken from the string and placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) until the zero byte terminator is reached.
 
 <a name="0ef1h"></a>
 
-```
-Address... 0EF1H
-```
+    Address... 0EF1H
 
 This routine is used to update a device's entry in [TRPTBL](#trptbl) when it has produced a BASIC program interrupt. On entry register pair HL points to the device's status byte in the table. Bit 0 of the status byte is checked first, if the device is not "`ON`" then the routine terminates with no action. Bit 2, the event flag, is then checked. If this is already set then the routine terminates, otherwise it is set to indicate that an event has occurred. Bit 1, the "`STOP`" flag, is then checked. If the device is stopped then the routine terminates with no further action. Otherwise [ONGSBF](#ongsbf) is incremented to signal to the Interpreter Runloop that the event should now be processed.
 
 <a name="0f06h"></a>
 
-```
-Address... 0F06H
-```
+    Address... 0F06H
 
 This section of the key decoder processes the HOME key only. The state of the SHIFT key is determined via row 6 of [NEWKEY](#newkey) and the key code for HOME (0BH) or CLS (0CH) placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) accordingly.
 
 <a name="0f10h"></a>
 
-```
-Address... 0F10H
-```
+    Address... 0F10H
 
 This section of the keyboard decoder processes key numbers 30H to 57H apart from the CAP, F1 to F5, STOP and HOME keys. The key number is simply used to look up the key code in the table at [1033H](#1033h) and this is then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)).
 
 <a name="0f1fh"></a>
 
-```
-Address... 0F1FH
-```
+    Address... 0F1FH
 
 This section of the keyboard decoder processes the DEAD key found on European MSX machines. On UK machines the key in row 2, column 5 always generates the pound key code (9CH) shown in the table at 0DA5H. On European machines this table will have the key code FFH in the same locations. This key code only serves as a flag to indicate that the next key pressed, if it is a vowel, should be modified to produce an accented graphics character.
 
@@ -1962,9 +1860,7 @@ The state of the SHIFT and CODE keys is determined via row 6 of [NEWKEY](#newkey
 
 <a name="0f36h"></a>
 
-```
-Address... 0F36H
-```
+    Address... 0F36H
 
 This section of the keyboard decoder processes the CAP key. The current state of [CAPST](#capst) is inverted and control drops into the [CHGCAP](#chgcap) standard routine.
 
@@ -1982,17 +1878,13 @@ Standard routine to turn the Caps Lock LED on or off as determined by the conten
 
 <a name="0f46h"></a>
 
-```
-Address... 0F46H
-```
+    Address... 0F46H
 
 This section of the keyboard decoder processes the STOP key. The state of the CTRL key is determined via row 6 of [NEWKEY](#newkey) and the key code for STOP (04H) or CTRL/STOP (03H) produced as appropriate. If the CTRL/STOP code is produced it is copied to [INTFLG](#intflg), for use by the [ISCNTC](#iscntc) standard routine, and then placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the STOP code is produced it is also copied to [INTFLG](#intflg) but is not placed in [KEYBUF](#keybuf), instead only a click is generated (0F64H). This means that an application program cannot read the STOP key code via the ROM BIOS standard routines.
 
 <a name="0f55h"></a>
 
-```
-Address... 0F55H
-```
+    Address... 0F55H
 
 This section of the keyboard decoder places a key code in [KEYBUF](#keybuf) and generates an audible click. The correct address in the keyboard buffer is first taken from [PUTPNT](#putpnt) and the code placed there. The address is then incremented ([105BH](#105bh)). If it has wrapped round and caught up with [GETPNT](#getpnt) then the routine terminates with no further action as the keyboard buffer is full. Otherwise [PUTPNT](#putpnt) is updated with the new address.
 
@@ -2012,33 +1904,25 @@ Standard routine to set or reset the Key Click output via the [PPI Mode Port](#p
 
 <a name="0f83h"></a>
 
-```
-Address... 0F83H
-```
+    Address... 0F83H
 
 This section of the keyboard decoder processes key numbers 00H to 2FH. The state of the SHIFT, GRAPH and CODE keys is determined via row 6 of [NEWKEY](#newkey) and combined with the key number to form a look-up address into the table at [0DA5H](#0da5h). The key code is then taken from the table. If it is zero the routine terminates with no further action, if it is FFH control transfers to the DEAD key processor ([0F1FH](#0f1fh)). If the code is in the range 40H to 5FH or 60H to 7FH and the CTRL key is pressed then the corresponding control code is placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)). If the code is in the range 01H to 1FH then a graphic header code (01H) is first placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) followed by the code with 40H added. If the code is in the range 61H to 7BH and [CAPST](#capst) indicates that caps lock is on then it is converted to upper case by subtracting 20H. Assuming that [KANAST](#kanast) contains zero, as it always will on UK machines, then the key code is placed in [KEYBUF](#keybuf) ([0F55H](#0f55h)) and the routine terminates. On European MSX machines, with a DEAD key instead of a pound key, then the key codes corresponding to the vowels a, e, i, o, u may be further modified into graphics codes.
 
 <a name="0fc3h"></a>
 
-```
-Address... 0FC3H
-```
+    Address... 0FC3H
 
 This section of the keyboard decoder processes the five function keys. The state of the SHIFT key is examined via row 6 of [NEWKEY](#newkey) and five added to the key number if it is pressed. Control then transfers to [0EC5H](#0ec5h) to complete processing.
 
 <a name="1021h"></a>
 
-```
-Address... 1021H
-```
+    Address... 1021H
 
 This routine searches the table at [1B97H](#1b97h) to determine which group of keys the key number supplied in register C belongs to. The associated address is then taken from the table and control transferred to that section of the keyboard decoder. Note that the table itself is actually patched into the middle of the [OUTDO](#outdo) standard routine as a result of the modifications made to the Japanese ROM.
 
 <a name="1033h"></a>
 
-```
-Address... 1033H
-```
+    Address... 1033H
 
 This table contains the key codes of key numbers 30H to 57H other than the special keys CAP, F1 to F5, STOP and HOME. A zero entry in the table means that no key code will be produced when that key is pressed:
 
@@ -2056,25 +1940,19 @@ This table contains the key codes of key numbers 30H to 57H other than the speci
 
 <a name="105bh"></a>
 
-```
-Address... 105BH
-```
+    Address... 105BH
 
 This routine simply zeroes [KANAST](#kanast) and then transfers control to [10C2H](#10c2h).
 
 <a name="1061h"></a>
 
-```
-Address... 1061H
-```
+    Address... 1061H
 
 This table contains the graphics characters which replace the vowels a, e, i, o, u on European machines.
 
 <a name="10c2h"></a>
 
-```
-Address... 10C2H
-```
+    Address... 10C2H
 
 This routine increments the keyboard buffer pointer, either [PUTPNT](#putpnt) or [GETPNT](#getpnt), supplied in register pair HL. If the pointer then exceeds the end of the keyboard buffer it is wrapped back to the beginning.
 
@@ -2140,9 +2018,7 @@ Standard routine to produce a beep via the PSG. Channel A is set to produce a to
 
 <a name="113bh"></a>
 
-```
-Address... 113BH
-```
+    Address... 113BH
 
 This routine is used by the interrupt handler to service a music queue. As there are three of these, each feeding a PSG channel, the queue to be serviced is specified by supplying its number in register A: 0=[VOICAQ](#voicaq), 1=[VOICBQ](#voicbq) and 2=[VOICCQ](#voiccq).
 
@@ -2172,9 +2048,7 @@ If an envelope block is found, or if bit 6 of an amplitude block is set, then a 
 
 <a name="11b0h"></a>
 
-```
-Address... 11B0H
-```
+    Address... 11B0H
 
 This routine is used when an end of data mark (FFH) is found in one of the three music queues. An amplitude value of zero is written to PSG Register [8](#register_8) [9](#register_9) or [10](#register_10), depending on the queue number, to shut the channel down. The channel's bit in [MUSICF](#musicf) is then reset and control drops into the [STRTMS](#strtms) standard routine.
 
@@ -2192,9 +2066,7 @@ Standard routine used by the "`PLAY`" statement handler to initiate music dequeu
 
 <a name="11e2h"></a>
 
-```
-Address... 11E2H
-```
+    Address... 11E2H
 
 This routine loads register A with the current queue number, from [QUEUEN](#queuen), and then reads a byte from that queue ([14ADH](#14adh)).
 
@@ -2214,17 +2086,13 @@ Standard routine to read the position of a joystick or the four cursor keys. If 
 
 <a name="120ch"></a>
 
-```
-Address... 120CH
-```
+    Address... 120CH
 
 This routine reads the joystick connector specified by the contents of register A: 0=Connector 1, 1=Connector 2. The current contents of PSG [Register 15](#register_15) are read in then written back with the Joystick Select bit appropriately set. PSG [Register 14](#register_14) is then read into register A (110CH) and the routine terminates.
 
 <a name="1226h"></a>
 
-```
-Address... 1226H
-```
+    Address... 1226H
 
 This routine reads row 8 of the keyboard matrix. The current contents of [PPI Port C](ppi_port_c) are read in then written back with the four Keyboard Row Select bits set for row 8. The column inputs are then read into register A from [PPI Port B](ppi_port_b).
 
@@ -2321,9 +2189,7 @@ Standard routine to initialize the ten function key strings to their power-up va
 
 <a name="13a9h"></a>
 
-```
-Address... 13A9H
-```
+    Address... 13A9H
 
 This area contains the power-up strings for the ten function keys. Each string is sixteen characters long, unused positions contain zeroes:
 
@@ -2470,15 +2336,11 @@ Standard routine to place a data byte in one of the three music queues. The queu
 
 <a name="14adh"></a>
 
-```
-Address... 14ADH
-```
+    Address... 14ADH
 
 This routine is used by the interrupt handler to read a byte from one of the three music queues. The queue number is supplied in register A, the data byte is returned in register A and the routine returns Flag Z if the queue is empty. The queue's get and put positions are first taken from [QUETAB](#quetab) ([14FAH](#14fah)). If the putback flag is active then the data byte is taken from [QUEBAK](#quebak) and the routine terminates (14D1H), this facility is unused in the current versions of the MSX ROM. The put position is then compared with the get position, if they are equal the routine terminates as the queue is empty. Otherwise the queue's address is taken from [QUETAB](#quetab) and the get position added to it. The data byte is read from this location in the queue, the get position is incremented and the routine terminates.
 
-```
-Address... 14DAH
-```
+    Address... 14DAH
 
 This routine is used by the [GICINI](#gicini) standard routine to initialize a queue's control block in [QUETAB](#quetab). The control block is first located in [QUETAB](#quetab) ([1504H](#1504h)) and the put, get and putback bytes zeroed. The size byte is set from register B and the queue address from register pair DE.
 
@@ -2496,17 +2358,13 @@ Standard routine to return the number of free bytes left in a music queue. The q
 
 <a name="14fah"></a>
 
-```
-Address... 14FAH
-```
+    Address... 14FAH
 
 This routine returns a queue's control parameters from [QUETAB](#quetab), the queue number is supplied in register A. The control block is first located in [QUETAB](#quetab) ([1504H](#1504h)), the put position is then placed in register B, the get position in register C and the putback flag in register A.
 
 <a name="1504h"></a>
 
-```
-Address... 1504H
-```
+    Address... 1504H
 
 This routine locates a queue's control block in [QUETAB](#quetab). The queue number is supplied in register A and the control block address returned in register pair HL. The queue number is simply multiplied by six, as there are six bytes per block, and added to the address of [QUETAB](#quetab) as held in [QUEUES](#queues).
 
@@ -2532,9 +2390,7 @@ When the pattern is complete, or the bottom of the screen has been reached, [GRP
 
 <a name="157eh"></a>
 
-```
-Address... 157EH
-```
+    Address... 157EH
 
 This routine performs the CR operation for the [GRPPRT](#grpprt) standard routine, this code functions as a combined CR,LF. [GRPACX](#grpacx) is zeroed and eight or thirty-two, depending on the screen mode, added to [GRPACY](#grpacy). If [GRPACY](#grpacy) then exceeds 191, the bottom of the screen, it is set to zero.
 
@@ -2552,9 +2408,7 @@ Modifies.. AF
 
 Standard routine to clip a pair of graphics coordinates if necessary. The BASIC Interpreter can produce coordinates in the range -32768 to +32767 even though this far exceeds the actual screen size. This routine modifies excessive coordinate values to fit within the physically realizable range. If the X coordinate is greater than 255 it is set to 255, if the Y coordinate is greater than 191 it is set to 191. If either coordinate is negative (greater than 7FFFH) it is set to zero. Finally if the screen is in [Multicolour Mode](#multicolour_mode) both coordinates are divided by four as required by the [MAPXYC](#mapxyc) standard routine.
 
-```
-Address... 15D9H
-```
+    Address... 15D9H
 
 This routine is used to check the current screen mode, it returns Flag Z if the screen is in [Graphics Mode](#graphics_mode).
 
@@ -2672,9 +2526,7 @@ In [Multicolour Mode](#multicolour_mode) the byte pointed to by [CLOC](#cloc) is
 
 <a name="16ach"></a>
 
-```
-Address... 16ACH
-```
+    Address... 16ACH
 
 This routine moves the current pixel physical address one position right. If the right hand edge of the screen is exceeded it returns with Flag C and the physical address is unchanged. In [Graphics Mode](#graphics_mode) [CMASK](#cmask) is first shifted one bit right, if the pixel still remains within the byte the routine terminates. If [CLOC](#cloc) is at the rightmost character cell (LSB=F8H to FFH) then the routine terminates with Flag C (175AH). Otherwise [CMASK](#cmask) is set to 80H, the leftmost pixel, and 0008H added to [CLOC](#cloc).
 
@@ -2696,9 +2548,7 @@ In [Multicolour Mode](#multicolour_mode) control transfers to a separate routine
 
 <a name="16d8h"></a>
 
-```
-Address... 16D8H
-```
+    Address... 16D8H
 
 This routine moves the current pixel physical address one position left. If the left hand edge of the screen is exceeded it returns Flag C and the physical address is unchanged. In [Graphics Mode](#graphics_mode) [CMASK](#cmask) is first shifted one bit left, if the pixel still remains within the byte the routine terminates. If [CLOC](#cloc) is at the leftmost character cell (LSB=00H to 07H) then the routine terminates with Flag C (175AH). Otherwise [CMASK](#cmask) is set to 01H, the rightmost pixel, and 0008H subtracted from [CLOC](#cloc).
 
@@ -2776,41 +2626,31 @@ In [Multicolour Mode](#multicolour_mode) control transfers to a separate routine
 
 <a name="1779h"></a>
 
-```
-Address... 1779H
-```
+    Address... 1779H
 
 This is the [Multicolour Mode](#multicolour_mode) version of the routine at [16ACH](#16ach). It is identical to the [Graphics Mode](#graphics_mode) version except that [CMASK](#cmask) is shifted four bit positions right and becomes F0H if a cell boundary is crossed.
 
 <a name="178bh"></a>
 
-```
-Address... 178BH
-```
+    Address... 178BH
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [RIGHTC](#rightc) standard routine. It is identical to the [Graphics Mode](#graphics_mode) version except that [CMASK](#cmask) is shifted four bit positions right and becomes F0H if a cell boundary is crossed.
 
 <a name="179ch"></a>
 
-```
-Address... 179CH
-```
+    Address... 179CH
 
 This is the [Multicolour Mode](#multicolour_mode) version of the routine at [16D8H](#16d8h). It is identical to the [Graphics Mode](#graphics_mode) version except that [CMASK](#cmask) is shifted four bit positions left and becomes 0FH if a cell boundary is crossed.
 
 <a name="17ach"></a>
 
-```
-Address... 17ACH
-```
+    Address... 17ACH
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [LEFTC](#leftc) standard routine. It is identical to the [Graphics Mode](#graphics_mode) version except that [CMASK](#cmask) is shifted four bit positions left and becomes 0FH if a cell boundary is crossed.
 
 <a name="17c6h"></a>
 
-```
-Address... 17C6H
-```
+    Address... 17C6H
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [TDOWNC](#tdownc) standard routine. It is identical to the [Graphics Mode](#graphics_mode) version except that the bottom boundary address is 0500H instead of 1700H. There is a bug in this routine which will cause it to behave unpredictably if [MLTCGP](#mltcgp), the Character Pattern Table base address, is changed from its normal value of zero. There should be an `EX DE,HL` instruction inserted at address 17CEH.
 
@@ -2829,17 +2669,13 @@ If the Character Pattern Table base is increased the routine will think it has r
 
 <a name="17dch"></a>
 
-```
-Address... 17DCH
-```
+    Address... 17DCH
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [DOWNC](#downc) standard routine, it is identical to the [Graphics Mode](#graphics_mode) version.
 
 <a name="17e3h"></a>
 
-```
-Address... 17E3H
-```
+    Address... 17E3H
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [TUPC](#tupc) standard routine. It is identical to the [Graphics Mode](#graphics_mode) version except that is has a bug as above, this time there should be an `EX DE,HL` instruction at address 17EBH.
 
@@ -2847,9 +2683,7 @@ If the Character Pattern Table base address is increased the routine will think 
 
 <a name="17f8h"></a>
 
-```
-Address... 17F8H
-```
+    Address... 17F8H
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [UPC](#upc) standard routine, it is identical to the [Graphics Mode](#graphics_mode) version.
 
@@ -2871,9 +2705,7 @@ In [Multicolour Mode](#multicolour_mode) control transfers to a separate routine
 
 <a name="186ch"></a>
 
-```
-Address... 186CH
-```
+    Address... 186CH
 
 This routine sets up to eight pixels within a cell to a specified colour in [Graphics Mode](#graphicsmod). [ATRBYT](#atrbyt) contains the colour code, register pair HL the address of the relevant byte in the Character Pattern Table and register A a bit mask, 11100000 for example, where every 1 specifies a bit to be set.
 
@@ -2883,9 +2715,7 @@ If [ATRBYT](#atrbyt) does not match either of the existing colours in the Colour
 
 <a name="18bbh"></a>
 
-```
-Address... 18BBH
-```
+    Address... 18BBH
 
 This is the [Multicolour Mode](#multicolour_mode) version of the [NSETCX](#nsetcx) standard routine. The [SETC](#setc) and [RIGHTC](#rightc) standard routines are called until the fill count is exhausted. Speed of operation is not so important in [Multicolour Mode](#multicolour_mode) because of the lower screen resolution and the consequent reduction in the number of operations required.
 
@@ -2939,9 +2769,7 @@ Standard routine to search leftwards from the current pixel physical address unt
 
 <a name="19c7h"></a>
 
-```
-Address... 19C7H
-```
+    Address... 19C7H
 
 This routine is used by the [SCANL](#scanl) and [SCANR](#scanr) standard routines to check the current pixel's colour against the boundary colour in [BDRATR](#bdratr).
 
@@ -3016,33 +2844,25 @@ It is important not to leave too long an interval between bytes when writing dat
 
 <a name="1a39h"></a>
 
-```
-Address... 1A39H
-```
+    Address... 1A39H
 
 This routine writes a single LO cycle with a length of approximately 816 µs to the cassette. The length of each half of the cycle is taken from [LOW](#low) and control transfers to the general cycle generator ([1A50H](#1a50h)).
 
 <a name="1a40h"></a>
 
-```
-Address... 1A40H
-```
+    Address... 1A40H
 
 This routine writes two HI cycles to the cassette. The first cycle is generated ([1A4DH](#1a4dh)) followed by a 17 µs delay and then the second cycle ([1A4DH](#1a4dh)).
 
 <a name="1a4dh"></a>
 
-```
-Address... 1A4DH
-```
+    Address... 1A4DH
 
 This routine writes a single HI cycle with a length of approximately 396 µs to the cassette. The length of each half of the cycle is taken from [HIGH](#high) and control drops into the general cycle generator.
 
 <a name="1a50h"></a>
 
-```
-Address... 1A50H
-```
+    Address... 1A50H
 
 This routine writes a single cycle to the cassette. The length of the cycle's first half is supplied in register L and its second half in register H. The first length is counted down and then the Cas Out bit set via the [PPI Mode Port](#ppi_mode_port). The second length is counted down and the Cas Out bit reset.
 
@@ -3078,9 +2898,7 @@ Each of the eight data bits is then read by counting the number of transitions w
 
 <a name="1b03h"></a>
 
-```
-Address... 1B03H
-```
+    Address... 1B03H
 
 This routine is used by the [TAPIN](#tapin) standard routine to count the number of cassette transitions within a fixed period of time. The window duration is contained in [WINWID](#winwid) and is approximately 1.5 times the length of a HI cycle as shown below:
 
@@ -3092,17 +2910,13 @@ The Cas Input bit is continuously sampled via PSG [Register 14](#register_14) an
 
 <a name="1b1fh"></a>
 
-```
-Address... 1B1FH
-```
+    Address... 1B1FH
 
 This routine measures the time to the next cassette input transition. The Cassette Input bit is continuously sampled via PSG [Register 14](#register_14) until it changes from the state supplied in register E. The state flag is then inverted and the duration count returned in register C, each unit increment represents a period of 11.45 µs.
 
 <a name="1b34h"></a>
 
-```
-Address... 1B34H
-```
+    Address... 1B34H
 
 This routine measures the length of a complete cassette cycle from negative transition to negative transition. The Cassette Input bit is sampled via PSG [Register 14](#register_14) until it goes to zero. The transition flag in register E is set to zero and the time to the positive transition measured (1B23H). The time to the negative transition is then measured (1B25H) and the total returned in register C.
 
@@ -3134,9 +2948,7 @@ If [NTMSXP](#ntmsxp) is zero, meaning an MSX-specific printer is connected, the 
 
 <a name="1b97h"></a>
 
-```
-Address... 1B97H
-```
+    Address... 1B97H
 
 This twenty byte table is used by the keyboard decoder to find the correct routine for a given key number:
 
@@ -3157,17 +2969,13 @@ This twenty byte table is used by the keyboard decoder to find the correct routi
 
 <a name="1babh"></a>
 
-```
-Address... 1BABH
-```
+    Address... 1BABH
 
 This routine is used by the [OUTDLP](#outdlp) standard routine to pass a character to the printer. It is sent via the [LPTOUT](#lptout) standard routine, if this returns Flag C control transfers to the "`Device I/O error`" generator ([73B2H](#73b2h)) via the [CALBAS](#calbas) standard routine.
 
 <a name="1bbfh"></a>
 
-```
-Address... 1BBFH
-```
+    Address... 1BBFH
 
 The following 2 KB contains the power-up character set. The first eight bytes contain the pattern for character code 00H, the second eight bytes the pattern for character code 01H and so on to character code FFH.
 
@@ -3213,17 +3021,13 @@ Each keyboard character read via the [CHGET](#chget) standard routine is checked
 
 <a name="23ffh"></a>
 
-```
-Address... 23FFH
-```
+    Address... 23FFH
 
 This routine processes all characters for the [INLIN](#inlin) standard routine except the special editing keys. If the character is a TAB code (09H) spaces are issued ([23FFH](#23ffh)) until [CSRX](#csrx) is a multiple of eight plus one (columns 1, 9, 17, 25, 33). If the character is a graphic header code (01H) it is simply echoed to the [OUTDO](#outdo) standard routine. All other control codes smaller than 20H are echoed to the [OUTDO](#outdo) standard routine after which [INSFLG](#insflg) and [CSTYLE](#cstyle) are zeroed. For the displayable characters [INSFLG](#insflg) is first checked and a space inserted ([24F2H](#24f2h)) if applicable before the character is echoed to the [OUTDO](#outdo) standard routine.
 
 <a name="2439h"></a>
 
-```
-Address... 2439H
-```
+    Address... 2439H
 
 This table contains the special editing keys recognized by the [INLIN](#inlin) standard routine together with the relevant addresses:
 
@@ -3245,33 +3049,25 @@ This table contains the special editing keys recognized by the [INLIN](#inlin) s
 
 <a name="245ah"></a>
 
-```
-Address... 245AH
-```
+    Address... 245AH
 
 This routine performs the CR operation for the [INLIN](#inlin) standard routine. The starting coordinates of the logical line are found ([266CH](#266ch)) and the cursor removed from the screen ([0A2EH](#0a2eh)). Up to 254 characters are then read from the VDP VRAM ([0BD8H](#0bd8h)) and placed in [BUF](#buf). Any null codes (00H) are ignored, any characters smaller than 20H are replaced by a graphic header code (01H) and the character itself with 40H added. As the end of each physical row is reached [LINTTB](#linttb) is checked ([0C1DH](#0c1dh)) to see whether the logical line extends to the next physical row. Trailing spaces are then stripped from [BUF](#buf) and a zero byte added as an end of text marker. The cursor is restored to the screen ([09E1H](#09e1h)) and its coordinates set to the last physical row of the logical line via the [POSIT](#posit) standard routine. A LF code is issued to the [OUTDO](#outdo) standard routine, [INSFLG](#insflg) is zeroed and the routine terminates with a CR code (0DH) in register A and Flag NZ,C. This CR code will be echoed to the screen by the [INLIN](#inlin) standard routine mainloop just before it terminates.
 
 <a name="24c5h"></a>
 
-```
-Address... 24C5H
-```
+    Address... 24C5H
 
 This routine performs the CTRL-STOP operation for the [INLIN](#inlin) standard routine. The last physical row of the logical line is found by examining [LINTTB](#linttb) ([0C1DH](#0c1dh)), [CSTYLE](#cstyle) is zeroed, a zero byte is placed at the start of [BUF](#buf) and all music variables are cleared via the [GICINI](#gicini) standard routine. [TRPTBL](#trptbl) is then examined (0454H) to see if an "`ON STOP`" statement is active, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. [BASROM](#basrom) is then checked to see whether a protected ROM is running, if so the cursor is reset (24AFH) and the routine terminates with Flag NZ,C. Otherwise the cursor is reset (24B2H) and the routine terminates with Flag Z,C.
 
 <a name="24e5h"></a>
 
-```
-Address... 24E5H
-```
+    Address... 24E5H
 
 This routine performs the INS operation for the [INLIN](#inlin) standard routine. The current state of [INSFLG](#insflg) is inverted and control terminates via the [CSTYLE](#cstyle) setting routine (242CH).
 
 <a name="24f2h"></a>
 
-```
-Address... 24F2H
-```
+    Address... 24F2H
 
 This routine inserts a space character for the default key section of the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the current cursor coordinates taken from [CSRX](#csrx) and [CSRY](#csry). The character at this position is read from the VDP VRAM ([0BD8H](#0bd8h)) and replaced with a space ([0BE6H](#0be6h)). Successive characters are then copied one column position to the right until the end of the physical row is reached.
 
@@ -3279,73 +3075,55 @@ At this point [LINTTB](#linttb) is examined ([0C1DH](#0c1dh)) to determine wheth
 
 <a name="2550h"></a>
 
-```
-Address... 2550H
-```
+    Address... 2550H
 
 This routine performs the DEL operation for the [INLIN](#inlin) standard routine. If the current cursor position is at the rightmost column and the logical line is not extended no action is taken other than to write a space to the VDP VRAM (2595H). Otherwise a RIGHT code (1CH) is issued to the [OUTDO](#outdo) standard routine and control drops into the BS routine.
 
 <a name="2561h"></a>
 
-```
-Address... 2561H
-```
+    Address... 2561H
 
 This routine performs the BS operation for the [INLIN](#inlin) standard routine. The cursor is first removed ([0A2EH](#0a2eh)) and the cursor column coordinate decremented unless it is at the leftmost position and the previous row is not extended. Characters are then read from the VDP VRAM ([0BD8H](#0bd8h)) and written back one position to the left ([0BE6H](#0be6h)) until the end of the logical line is reached. At this point a space is written to the VDP VRAM ([0BE6H](#0be6h)) and the cursor character is restored ([09E1H](#09e1h)).
 
 <a name="25aeh"></a>
 
-```
-Address... 25AEH
-```
+    Address... 25AEH
 
 This routine performs the CTRL-U operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the start of the logical line located ([266CH](#266ch)) and placed in [CSRX](#csrx) and [CSRY](#csry). The entire logical line is then cleared (25BEH).
 
 <a name="25b9h"></a>
 
-```
-Address... 25B9H
-```
+    Address... 25B9H
 
 This routine performs the CTRL-E operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the remainder of the physical row cleared ([0AEEH](#0aeeh)). This process is repeated for successive physical rows until the end of the logical line is found in [LINTBB](#lintbb) ([0C1DH](#0c1dh)). The cursor is then restored ([09E1H](#09e1h)), [INSFLG](#insflg) zeroed and [CSTLYE](#cstlye) reset to a block cursor (242DH).
 
 <a name="25d7h"></a>
 
-```
-Address... 25D7H
-```
+    Address... 25D7H
 
 This routine performs the CTRL-N operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and the last physical row of the logical line found by examination of [LINTTB](#linttb) ([0C1DH](#0c1dh)). Starting at the rightmost column of this physical row characters are read from the VDP VRAM ([0BD8H](#0bd8h)) until a non-space character is found. The cursor coordinates are then set one column to the right of this position ([0A5BH](#0a5bh)) and the routine terminates by restoring the cursor (25CDH).
 
 <a name="25f8h"></a>
 
-```
-Address... 25F8H
-```
+    Address... 25F8H
 
 This routine performs the CTRL-F operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and moved successively right ([2624H](#2624h)) until a non-alphanumeric character is found. The cursor is then moved successively right ([2624H](#2624h)) until an alphanumeric character is found. The routine terminates by restoring the cursor (25CDH).
 
 <a name="260eh"></a>
 
-```
-Address... 260EH
-```
+    Address... 260EH
 
 This routine performs the CTRL-B operation for the [INLIN](#inlin) standard routine. The cursor is removed ([0A2EH](#0a2eh)) and moved successively left ([2634H](#2634h)) until an alphanumeric character is found. The cursor is then moved successively left ([2634H](#2634h)) until a non-alphanumeric character is found and then moved one position right ([0A5BH](#0a5bh)). The routine terminates by restoring the cursor (25CDH).
 
 <a name="2624h"></a>
 
-```
-Address... 2624H
-```
+    Address... 2624H
 
 This routine moves the cursor one position right ([0A5BH](#0a5bh)), loads register D with the rightmost column number, register E with the bottom row number and then tests for an alphanumeric character at the cursor position (263DH).
 
 <a name="2634h"></a>
 
-```
-Address... 2634H
-```
+    Address... 2634H
 
 This routine moves the cursor one position left ([0A4CH](#0a4ch)), loads register D with the leftmost column number and register E with the top row number. The current cursor coordinates are compared with these values and the routine terminates Flag Z if the cursor is at this position. Otherwise the character at this position is read from the VDP VRAM ([0BD8H](#0bd8h)) and checked to see if it is alphanumeric. If so the routine terminates Flag NZ,C otherwise it terminates Flag NZ,NC.
 
@@ -3353,9 +3131,7 @@ The alphanumeric characters are the digits "0" to "9" and the letters "A" to "Z"
 
 <a name="266ch"></a>
 
-```
-Address... 266CH
-```
+    Address... 266CH
 
 This routine finds the start of a logical line and returns its screen coordinates in register pair HL. Each physical row above the current one is checked via the [LINTTB](#linttb) table ([0C1DH](#0c1dh)) until a non-extended row is found. The row immediately below this on the screen is the start of the logical line and its row number is placed in register L. This is then compared with [FSTPOS](#fstpos), which contains the row number when the [INLIN](#inlin) standard routine was first entered, to see if the cursor is still on the same line. If so the column coordinate in register H is set to its initial position from [FSTPOS](#fstpos). Otherwise register H is set to the leftmost position to return the whole line.
 
@@ -3386,25 +3162,19 @@ The analysis of numeric or string operands within a statement is performed by th
 
 One point to note when examining the Interpreter in detail is that it contains a lot of trick code. The writers seem particularly fond of jumping into the middle of instructions to provide multiple entry points to a routine. As an example take the instruction:
 
-```
-3E D1       Normal: LD   A,0D1H
-```
+    3E D1       Normal: LD   A,0D1H
 
 When encountered in the usual way this will of course load the accumulator with the value D1H. However if it is entered at "Normal" then it will be executed as a `POP DE` instruction. The Interpreter has many similarly obscure sections.
 
 <a name="268ch"></a>
 
-```
-Address... 268CH
-```
+    Address... 268CH
 
 This routine is used by the Expression Evaluator to subtract two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). The second operand's mantissa sign is inverted and control drops into the addition routine.
 
 <a name="269ah"></a>
 
-```
-Address... 269AH
-```
+    Address... 269AH
 
 This routine is used by the Expression Evaluator to add two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the second operand is zero the routine terminates with no action, if the first operand is zero the second operand is copied to [DAC](#dac) ([2F05H](#2f05h)) and the routine terminates. The two exponents are compared, if they differ by more than 10^15 the routine terminates with the larger operand as the result. Otherwise the difference between the two exponents is used to align the mantissae by shifting the smaller one rightwards ([27A3H](#27a3h)), for example:
 
@@ -3417,55 +3187,41 @@ If the two mantissa signs are equal the mantissae are then added ([2759H](#2759h
 
 <a name="2759h"></a>
 
-```
-Address... 2759H
-```
+    Address... 2759H
 
 This routine adds the two double precision mantissae contained in [DAC](#dac) and [ARG](#arg) and returns the result in [DAC](#dac). Addition commences at the least significant positions, [DAC](#dac)+7 and [ARG](#arg)+7, and proceeds two digits at a time for the seven bytes.
 
 <a name="276bh"></a>
 
-```
-Address... 276BH
-```
+    Address... 276BH
 
 This routine subtracts the two double precision mantissae contained in [DAC](#dac) and [ARG](#arg) and returns the result in [DAC](#dac). Subtraction commences at the guard bytes, [DAC](#dac)+8 and [ARG](#arg)+8, and proceeds two digits at a time for the eight bytes. If the result underflows it is corrected by subtracting it from zero and inverting the mantissa sign, for example:
 
-```
-0.17-0.85 = 0.32 = -0.68
-```
+    0.17-0.85 = 0.32 = -0.68
 
 </a>
 
 <a name="2797h"></a>
 
-```
-Address... 2797H
-```
+    Address... 2797H
 
 This routine shifts the double precision mantissa contained in [DAC](#dac) one digit left.
 
 <a name="27a3h"></a>
 
-```
-Address... 27A3H
-```
+    Address... 27A3H
 
 This routine shifts a double precision mantissa right. The number of digits to shift is supplied in register A, the address of the mantissa's most significant byte is supplied in register pair HL. The digit count is first divided by two to separate the byte and digit counts. The required number of whole bytes are then shifted right and the most significant bytes zeroed. If an odd number of digits was specified the mantissa is then shifted a further one digit right.
 
 <a name="27e6h"></a>
 
-```
-Address... 27E6H
-```
+    Address... 27E6H
 
 This routine is used by the Expression Evaluator to multiply two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If either operand is zero the routine terminates with a zero result ([2E7DH](#2e7dh)). Otherwise the two exponents are added to produce the result exponent. If this is smaller than 10^-63 the routine terminates with a zero result, if it is greater than 10^63 an "`Overflow error`" is generated ([4067H](#4067h)). The two mantissa signs are then processed to yield the sign of the result, if they are the same the result is positive, if they differ it is negative.
 
 Even though the mantissae are in BCD format they are multiplied using the normal binary add and shift method. To accomplish this the first operand is successively multiplied by two ([288AH](#288ah)) to produce the constants X\*80, X\*40, X\*20, X\*10, X\*8, X\*4, X\*2, and X in the [HOLD8](#hold8) buffer. The second operand remains in [ARG](#arg) and [DAC](#dac) is zeroed to function as the product accumulator. Multiplication proceeds by taking successive pairs of digits from the second operand starting with the least significant pair. For each 1 bit in the digit pair the appropriate multiple of the first operand is added to the product. As an example the single multiplication 1823\*96 would produce:
 
-```
-1823*10010110=(1823*80)+(1823*10)+(1823*4)+(1823*2)
-```
+    1823*10010110=(1823*80)+(1823*10)+(1823*4)+(1823*2)
 
 As each digit pair is completed the product is shifted two digits right. When all seven digit pairs have been processed the routine terminates by renormalizing and rounding up the product (26FAH).
 
@@ -3473,17 +3229,13 @@ The time required for a multiplication depends largely upon the number of 1 bits
 
 <a name="288ah"></a>
 
-```
-Address... 288AH
-```
+    Address... 288AH
 
 This routine doubles a double precision mantissa three successive times to produce the products X\*2, X\*4 and X\*8. The address of the mantissa's least significant byte is supplied in register pair DE. The products are stored at successively lower addresses commencing immediately below the operand.
 
 <a name="289fh"></a>
 
-```
-Address... 289FH
-```
+    Address... 289FH
 
 This routine is used by the Expression Evaluator to divide two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). If the first operand is zero the routine terminates with a zero result if the second operand is zero a "`Division by zero`" error is generated ([4058H](#4058h)). Otherwise the two exponents are subtracted to produce the result exponent and the two mantissa signs processed to yield the sign of the result. If they are the same the result is positive, if they differ it is negative.
 
@@ -3491,17 +3243,13 @@ The mantissae are divided using the normal long division method. The second oper
 
 <a name="2993h"></a>
 
-```
-Address... 2993H
-```
+    Address... 2993H
 
 This routine is used by the Factor Evaluator to apply the "`COS`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied ([2C3BH](#2c3bh)) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. The operand then has 0.25 (90 degrees) subtracted ([2C32H](#2c32h)), its mantissa sign is inverted (2E8DH) and control drops into the "`SIN`" routine.
 
 <a name="29ach"></a>
 
-```
-Address... 29ACH
-```
+    Address... 29ACH
 
 This routine is used by the Factor Evaluator to apply the "`SIN`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied ([2C3BH](#2c3bh)) by 1/(2\*PI) so that unity corresponds to a complete 360 degree cycle. As the function is periodic only the fractional part of the operand is now required. This is extracted by pushing the operand ([2CCCH](#2ccch)) obtaining the integer part ([30CFH](#30cfh)) and copying it to [ARG](#arg) ([2C4DH](#2c4dh)), popping the whole operand to [DAC](#dac) ([2CE1H](#2ce1h)) and then subtracting the integer part ([268CH](#268ch)).
 
@@ -3509,33 +3257,25 @@ The first digit of the mantissa is then examined to determine the operand's quad
 
 <a name="29fbh"></a>
 
-```
-Address... 29FBH
-```
+    Address... 29FBH
 
 This routine is used by the Factor Evaluator to apply the "`TAN`" function to a double precision operand contained in [DAC](#dac). The function is computed using the trigonometric identity TAN(X) = SIN(X)/COS(X).
 
 <a name="2a14h"></a>
 
-```
-Address... 2A14H
-```
+    Address... 2A14H
 
 This routine is used by the Factor Evaluator to apply the "`ATN`" function to a double precision operand contained in [DAC](#dac). The function is computed by polynomial approximation ([2C88H](#2c88h)) using the list of coefficients at 2E30H. These are the first eight terms in the Taylor series X-(X^3/3)+(X^5/5)-(X^7/7) ... with the coefficients modified slightly to telescope the series.
 
 <a name="2a72h"></a>
 
-```
-Address... 2A72H
-```
+    Address... 2A72H
 
 This routine is used by the Factor Evaluator to apply the "`LOG`" function to a double precision operand contained in [DAC](#dac). The function is computed by polynomial approximation using the list of coefficients at 2DA5H.
 
 <a name="2affh"></a>
 
-```
-Address... 2AFFH
-```
+    Address... 2AFFH
 
 This routine is used by the Factor Evaluator to apply the "`SQR`" function to a double precision operand contained in [DAC](#dac). The function is computed using the Newton-Raphson process, an equivalent BASIC program is:
 
@@ -3553,124 +3293,92 @@ The above program uses a fixed initial guess. While this is accurate over a limi
 
 <a name="2b4ah"></a>
 
-```
-Address... 2B4AH
-```
+    Address... 2B4AH
 
 This routine is used by the Factor Evaluator to apply the "`EXP`" function to a double precision operand contained in [DAC](#dac). The operand is first multiplied by 0.4342944819, which is LOG(e) to Base 10, so that the problem becomes computing 10^X rather than e^X. This results in considerable simplification as the integer part can be dealt with easily. The function is then computed by polynomial approximation using the list of coefficients at 2D6BH.
 
 <a name="2bdfh"></a>
 
-```
-Address... 2BDFH
-```
+    Address... 2BDFH
 
 This routine is used by the Factor Evaluator to apply the "`RND`" function to a double precision operand contained in [DAC](#dac). If the operand is zero the current random number is copied to [DAC](#dac) from [RNDX](#rndx) and the routine terminates. If the operand is negative it is copied to [RNDX](#rndx) to set the current random number. The new random number is produced by copying [RNDX](#rndx) to [HOLD](#hold), the constant at 2CF9H to [ARG](#arg), the constant at 2CF1H to [DAC](#dac) and then multiplying (282EH). The fourteen least significant digits of the double length product are copied to [RNDX](#rndx) to form the mantissa of the new random number. The exponent byte in [DAC](#dac) is set to 10^0 to return a value in the range 0 to 1.
 
 <a name="2c24h"></a>
 
-```
-Address... 2C24H
-```
+    Address... 2C24H
 
 This routine is used by the "`NEW`", "`CLEAR`" and "`RUN`" statement handlers to initialize [RNDX](#rndx) with the constant at 2D01H.
 
 <a name="2c2ch"></a>
 
-```
-Address... 2C2CH
-```
+    Address... 2C2CH
 
 This routine adds the constant whose address is supplied in register pair HL to the double precision operand contained in [DAC](#dac).
 
 <a name="2c32h"></a>
 
-```
-Address... 2C32H
-```
+    Address... 2C32H
 
 This routine subtracts the constant whose address is supplied in register pair HL from the double precision operand contained in [DAC](#dac).
 
 <a name="2c3bh"></a>
 
-```
-Address... 2C3BH
-```
+    Address... 2C3BH
 
 This routine multiplies the double precision operand contained in [DAC](#dac) by the constant whose address is supplied in register pair HL.
 
 <a name="2c41h"></a>
 
-```
-Address... 2C41H
-```
+    Address... 2C41H
 
 This routine divides the double precision operand contained in [DAC](#dac) by the constant whose address is supplied in register pair HL.
 
 <a name="2c47h"></a>
 
-```
-Address... 2C47H
-```
+    Address... 2C47H
 
 This routine performs the relation operation on the double precision operand contained in [DAC](#dac) and the constant whose address is supplied in register pair HL.
 
 <a name="2c4dh"></a>
 
-```
-Address... 2C4DH
-```
+    Address... 2C4DH
 This routine copies an eight byte double precision operand from [DAC](#dac) to [ARG](#arg).
 
 <a name="2c59h"></a>
 
-```
-Address... 2C59H
-```
+    Address... 2C59H
 
 This routine copies an eight byte double precision operand from [ARG](#arg) to [DAC](#dac).
 
 <a name="2c6fh"></a>
 
-```
-Address... 2C6FH
-```
+    Address... 2C6FH
 
 This routine exchanges the eight bytes in [DAC](#dac) with the eight bytes currently on the bottom of the Z80 stack.
 
 <a name="2c80h"></a>
 
-```
-Address... 2C80H
-```
+    Address... 2C80H
 
 This routine inverts the mantissa sign of the operand contained in [DAC](#dac) (2E8DH). The same address is then pushed onto the stack to restore the sign when the caller terminates.
 
 <a name="2c88h"></a>
 
-```
-Address... 2C88H
-```
+    Address... 2C88H
 
 This routine generates an odd series based on the double precision operand contained in [DAC](#dac). The series is of the form:
 
-```
-X^1*(Kn)+X^3*(Kn-1)+x^5*(Kn-2)+X^5*(Kn-3) ...
-```
+    X^1*(Kn)+X^3*(Kn-1)+x^5*(Kn-2)+X^5*(Kn-3) ...
 
 The address of the coefficient list is supplied in register pair HL. The first byte of the list contains the coefficient count, the double precision coefficients follow with K1 first and Kn last. The even series is generated ([2C9AH](#2c9ah)) and multiplied ([27E6H](#27e6h)) by the original operand.
 
 <a name="2c9ah"></a>
 
-```
-Address... 2C9AH
-```
+    Address... 2C9AH
 
 This routine generates an even series based on the double precision operand contained in [DAC](#dac). The series is of the form:
 
-```
-X^0*(Kn)+x^2*(Kn-1)+x^4*(Kn-2)+x^6*(Kn-3) ...
-```
+    X^0*(Kn)+x^2*(Kn-1)+x^4*(Kn-2)+x^6*(Kn-3) ...
 
 The address of the coefficient list is supplied in register pair HL. The first byte of the list contains the coefficient count, the double precision coefficients follow with K1 first and Kn last. The method used to compute the polynomial is known as Horner's method. It only requires one multiplication and one addition per term, the BASIC equivalent is:
 
@@ -3699,41 +3407,31 @@ The polynomial is processed from the final coefficient through to the first coef
 
 <a name="2cc7h"></a>
 
-```
-Address... 2CC7H
-```
+    Address... 2CC7H
 
 This routine pushes an eight byte double precision operand from [ARG](#arg) onto the Z80 stack.
 
 <a name="2ccch"></a>
 
-```
-Address... 2CCCH
-```
+    Address... 2CCCH
 
 This routine pushes an eight byte double precision operand from [DAC](#dac) onto the Z80 stack.
 
 <a name="2cdch"></a>
 
-```
-Address... 2CDCH
-```
+    Address... 2CDCH
 
 This routine pops an eight byte double precision operand from the Z80 stack into [ARG](#arg).
 
 <a name="2ce1h"></a>
 
-```
-Address... 2CE1H
-```
+    Address... 2CE1H
 
 This routine pops an eight byte double precision operand from the Z80 stack into [DAC](#dac).
 
 <a name="2cf1h"></a>
 
-```
-Address... 2CF1H
-```
+    Address... 2CF1H
 
 This table contains the double precision constants used by the math routines. The first three constants have zero in the exponent position as they are in a special intermediate form used by the random number generator.
 
@@ -3771,9 +3469,7 @@ This table contains the double precision constants used by the math routines. Th
 
 <a name="2e71h"></a>
 
-```
-Address... 2E71H
-```
+    Address... 2E71H
 
 This routine returns the mantissa sign of a Floating Point operand contained in [DAC](#dac). The exponent byte is tested and the result returned in register A and the flags:
 
@@ -3787,25 +3483,19 @@ Negative ... A=FFH, Flag NZ,C
 
 <a name="2e7dh"></a>
 
-```
-Address... 2E7DH
-```
+    Address... 2E7DH
 
 This routine simply zeroes the exponent byte in [DAC](#dac).
 
 <a name="2e82h"></a>
 
-```
-Address... 2E82H
-```
+    Address... 2E82H
 
 This routine is used by the Factor Evaluator to apply the "`ABS`" function to an operand contained in [DAC](#dac). The operand's sign is first checked ([2EA1H](#2ea1h)), if it is positive the routine simply terminates. The operand's type is then checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is an integer it is negated ([322BH](#322bh)). If it is a double precision or single precision operand the mantissa sign bit in [DAC](#dac) is inverted.
 
 <a name="2e97h"></a>
 
-```
-Address... 2E97H
-```
+    Address... 2E97H
 
 This routine is used by the Factor Evaluator to apply the "`SGN`" function to an operand contained in [DAC](#dac). The operand's sign is checked ([2EA1H](#2ea1h)), extended into register pair HL and then placed in [DAC](#dac) as an integer:
 
@@ -3819,89 +3509,67 @@ Negative ... FFFFH
 
 <a name="2ea1h"></a>
 
-```
-Address... 2EA1H
-```
+    Address... 2EA1H
 
 This routine returns the sign of an operand contained in [DAC](#dac). The operands type is first checked via the [GETYPR](#getypr) standard routine. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is a single precision or double precision operand the mantissa sign is examined ([2E71H](#2e71h)). If it is an integer its value is taken from [DAC](#dac)+2 and translated into the flags shown at [2E71H](#2e71h).
 
 <a name="2eb1h"></a>
 
-```
-Address... 2EB1H
-```
+    Address... 2EB1H
 
 This routine pushes a four byte single precision operand from [DAC](#dac) onto the Z80 stack.
 
 <a name="2ec1h"></a>
 
-```
-Address... 2EC1H
-```
+    Address... 2EC1H
 
 This routine copies the contents of registers C, B, E and D to [DAC](#dac).
 
 <a name="2ecch"></a>
 
-```
-Address... 2ECCH
-```
+    Address... 2ECCH
 
 This routine copies the contents of [DAC](#dac) to registers C, B, E and D.
 
 <a name="2ed6h"></a>
 
-```
-Address... 2ED6H
-```
+    Address... 2ED6H
 
 This routine loads registers C, B, E and D from upwardly sequential locations starting at the address supplied in register pair HL.
 
 <a name="2edfh"></a>
 
-```
-Address... 2EDFH
-```
+    Address... 2EDFH
 
 This routine loads registers E, D, C and B from upwardly sequential locations starting at the address supplied in register pair HL.
 
 <a name="2ee8h"></a>
 
-```
-Address... 2EE8H
-```
+    Address... 2EE8H
 
 This routine copies a single precision operand from [DAC](#dac) to the address supplied in register pair HL.
 
 <a name="2eefh"></a>
 
-```
-Address... 2EEFH
-```
+    Address... 2EEFH
 
 This routine copies any operand from the address supplied in register pair HL to [ARG](#arg). The length of the operand is contained in [VALTYP](#valtyp): 2=Integer, 3=String, 4=Single Precision, 8=Double Precision.
 
 <a name="2f05h"></a>
 
-```
-Address... 2F05H
-```
+    Address... 2F05H
 
 This routine copies any operand from [ARG](#arg) to [DAC](#dac). The length of the operand is contained in [VALTYP](#valtyp): 2=Integer, 3=String, 4=Single Precision, 8=Double Precision.
 
 <a name="2f0dh"></a>
 
-```
-Address... 2F0DH
-```
+    Address... 2F0DH
 
 This routine copies any operand from [DAC](#dac) to [ARG](#arg). The length of the operand is contained in [VALTYP](#valtyp): 2=Integer, 3=String, 4=Single Precision, 8=Double Precision.
 
 <a name="2f21h"></a>
 
-```
-Address... 2F21H
-```
+    Address... 2F21H
 
 This routine is used by the Expression Evaluator to find the relation (<>=) between two single precision operands. The first operand is contained in registers C, B, E and D and the second in [DAC](#dac). The result is returned in register A and the flags:
 
@@ -3915,89 +3583,67 @@ It should be noted that for relational operators the Expression Evaluator regard
 
 <a name="2f4dh"></a>
 
-```
-Address... 2F4DH
-```
+    Address... 2F4DH
 
 This routine is used by the Expression Evaluator to find the relation (<>=) between two integer operands. The first operand is contained in register pair DE and the second in register pair HL. The results are as for the single precision version ([2F21H](#2f21h)).
 
 <a name="2f83h"></a>
 
-```
-Address... 2F83H
-```
+    Address... 2F83H
 
 This routine is used by the Expression Evaluator to find the relation (<>=) between two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg). The results are as for the single precision version ([2F21H](#2f21h)).
 
 <a name="2f8ah"></a>
 
-```
-Address... 2F8AH
-```
+    Address... 2F8AH
 
 This routine is used by the Factor Evaluator to apply the "`CINT`" function to an operand contained in [DAC](#dac). The operand type is first checked via the [GETYPR](#getypr) standard routine, if it is already integer the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is a single precision or double precision operand it is converted to a signed binary integer in register pair DE ([305DH](#305dh)) and then placed in [DAC](#dac) as an integer. Out of range values result in an "`Overflow`" error ([4067H](#4067h)).
 
 <a name="2fa2h"></a>
 
-```
-Address... 2FA2H
-```
+    Address... 2FA2H
 
 This routine checks whether [DAC](#dac) contains the single precision operand -32768, if so it replaces it with the integer equivalent 8000H. This step is required during numeric input conversion ([3299H](#3299h)) because of the asymmetric integer number range.
 
 <a name="2fb2h"></a>
 
-```
-Address... 2FB2H
-```
+    Address... 2FB2H
 
 This routine is used by the Factor Evaluator to apply the "`CSNG`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already single precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is double precision [VALTYP](#valtyp) is changed (3053H) and the mantissa rounded up from the seventh digit (2741H). If the operand is an integer it is converted from binary to a maximum of five BCD digits by successive divisions using the constants 10000, 1000, 100, 10, 1. These are placed in [DAC](#dac) to form the single precision mantissa. The exponent is equal to the number of significant digits in the mantissa. For example if there are five the exponent would be 10^5.
 
 <a name="3030h"></a>
 
-```
-Address... 3030H
-```
+    Address... 3030H
 
 This table contains the five constants used by the "`CSNG`" routine: -10000, -1000, -100, -10, -1
 
 <a name="303ah"></a>
 
-```
-Address... 303AH
-```
+    Address... 303AH
 
 This routine is used by the Factor Evaluator to apply the "`CDBL`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already double precision the routine simply terminates. If it is a string a "`Type mismatch`" error is generated ([406DH](#406dh)). If it is an integer it is first converted to single precision (2FC8H), the eight least significant digits are then zeroed and [VALTYP](#valtyp) set to 8.
 
 <a name="3058h"></a>
 
-```
-Address... 3058H
-```
+    Address... 3058H
 
 This routine checks that the current operand is a string type, if not a "`Type mismatch`" error is generated ([406DH](#406dh)).
 
 <a name="305dh"></a>
 
-```
-Address... 305DH
-```
+    Address... 305DH
 
 This routine is used by the "`CINT`" routine ([2F8AH](#2f8ah)) to convert a BCD single precision or double precision operand into a signed binary integer in register pair DE, it returns Flag C if an overflow has occurred. Successive digits are taken from the mantissa and added to the product starting with the most significant one. After each addition the product is multiplied by ten. The number of digits to process is determined by the exponent, for example five digits would be taken with an exponent of 10^5. Finally the mantissa sign is checked and the product negated (3221H) if necessary.
 
 <a name="30beh"></a>
 
-```
-Address... 30BEH
-```
+    Address... 30BEH
 
 This routine is used by the Factor Evaluator to apply the "`FIX`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is an integer the routine simply terminates. The mantissa sign is then checked ([2E71H](#2e71h)), if it is positive control transfers to the "`INT`" routine ([30CFH](#30cfh)). Otherwise the sign is inverted to positive, the "`INT`" function is performed ([30CFH](#30cfh)) and the sign restored to negative.
 
 <a name="30cfh"></a>
 
-```
-Address... 30CFH
-```
+    Address... 30CFH
 
 This routine is used by the Factor Evaluator to apply the "`INT`" function to an operand contained in [DAC](#dac). The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is an integer the routine simply terminates. The number of fractional digits is determined by subtracting the exponent from the type's digit count, 6 for single precision, 14 for double precision.
 
@@ -4005,119 +3651,89 @@ If the mantissa sign is positive these fractional digits are simply zeroed. If t
 
 <a name="314ah"></a>
 
-```
-Address... 314AH
-```
+    Address... 314AH
 
 This routine multiplies the unsigned binary integers in register pairs BC and DE, the result is returned in register pair DE. The standard shift and add method is used, the product is successively multiplied by two and register pair BC added to it for every 1 bit in register pair DE. The routine is used by the Variable search routine ([5EA4H](#5ea4h)) to compute an element's position within an Array, a "`Subscript out of range`" error is generated (601DH) if an overflow occurs.
 
 <a name="3167h"></a>
 
-```
-Address... 3167H
-```
+    Address... 3167H
 
 This routine is used by the Expression Evaluator to subtract two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The second operand is negated (3221H) and control drops into the addition routine.
 
 <a name="3172h"></a>
 
-```
-Address... 3172H
-```
+    Address... 3172H
 
 This routine is used by the Expression Evaluator to add two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The signed binary operands are normally just added and placed in [DAC](#dac). However, if an overflow has occurred both operands are converted to single precision (2FCBH) and control transfers to the single precision adder ([324EH](#324eh)). An overflow has occurred when both operands are of the same sign and the result is of the opposite sign, for example:
 
-```
-30000+15000=-20536
-```
+    30000+15000=-20536
 
 </a>
 
 <a name="3193h"></a>
 
-```
-Address... 3193H
-```
+    Address... 3193H
 
 This routine is used by the Expression Evaluator to multiply two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The two operand signs are saved temporarily and both operands made positive ([3215H](#3215h)). Multiplication proceeds using the standard binary shift and add method with register pair HL as the product accumulator, register pair BC containing the first operand and register pair DE the second. If the product exceeds 7FFFH at any time during multiplication both operands are converted to single precision (2FCBH) and control transfers to the single precision multiplier ([325CH](#325ch)). Otherwise the initial signs are restored and, if they differ, the product negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="31e6h"></a>
 
-```
-Address... 31E6H
-```
+    Address... 31E6H
 
 This routine is used by the Expression Evaluator to integer divide (\) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). If the second operand is zero a "`Division by zero`" error is generated ([4058H](#4058h)), otherwise the two operand signs are saved and both operands made positive ([3215H](#3215h)). Division proceeds using the standard binary shift and subtract method with register pair HL containing the remainder, register pair BC the second operand and register pair DE the first operand and the product. When division is complete the initial signs are restored and, if they differ, the product is negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="3215h"></a>
 
-```
-Address... 3215H
-```
+    Address... 3215H
 
 This routine is used to make two signed binary integers, in register pairs HL and DE, positive. Both the initial operand signs are returned as a flag in bit 7 of register B: 0=Same, 1=Different. Each operand is then examined and, if it is negative, made positive by subtracting it from zero.
 
 <a name="322bh"></a>
 
-```
-Address... 322BH
-```
+    Address... 322BH
 
 This routine is used by the "`ABS`" function to make a negative integer contained in [DAC](#dac) positive. The operand is taken from [DAC](#dac), negated and then placed back in [DAC](#dac) (3221H). If the operand's value is 8000H it is converted to single precision (2FCCH) as there is no integer of value +32768.
 
 <a name="323ah"></a>
 
-```
-Address... 323AH
-```
+    Address... 323AH
 
 This routine is used by the Expression Evaluator to "`MOD`" two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The sign of the first operand is saved and the two operands divided ([31E6H](#31e6h)). As the remainder is returned doubled by the division process register pair DE is shifted one place right to restore it. The sign of the first operand is then restored and, if it is negative, the remainder is negated before being placed in [DAC](#dac) as an integer (321DH).
 
 <a name="324eh"></a>
 
-```
-Address... 324EH
-```
+    Address... 324EH
 
 This routine is used by the Expression Evaluator to add two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), the second operand is converted to double precision (3042H) and control transfers to the double precision adder ([269AH](#269ah)).
 
 <a name="3257h"></a>
 
-```
-Address... 3257H
-```
+    Address... 3257H
 
 This routine is used by the Expression Evaluator to subtract two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The second operand is negated (2E8DH) and control transfers to the single precision adder ([324EH](#324eh)).
 
 <a name="325ch"></a>
 
-```
-Address... 325CH
-```
+    Address... 325CH
 
 This routine is used by the Expression Evaluator to multiply two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), the second operand is converted to double precision (3042H) and control transfers to the double precision multiplier ([27E6H](#27e6h)).
 
 <a name="3265h"></a>
 
-```
-Address... 3265H
-```
+    Address... 3265H
 
 This routine is used by the Expression Evaluator to divide two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first and second operands are exchanged so that the first is in [DAC](#dac) and the second in the registers. The second operand is then copied to [ARG](#arg) ([3280H](#3280h)), the first operand is converted to double precision (3042H) and control transfers to the double precision divider ([289FH](#289fh)).
 
 <a name="3280h"></a>
 
-```
-Address... 3280H
-```
+    Address... 3280H
 
 This routine copies the single precision operand contained in registers C, B, E and D to [ARG](#arg) and then zeroes the four least significant bytes.
 
 <a name="3299h"></a>
 
-```
-Address... 3299H
-```
+    Address... 3299H
 
 This routine converts a number in textual form to one of the standard internal numeric types, it is used during tokenization and by the "`VAL`", "`INPUT`" and "`READ`" Statement handlers. On entry register pair HL points to the first character of the text string to be converted. On exit register pair HL points to the character following the string, the numeric operand is in [DAC](#dac) and the type code in [VALTYP](#valtyp). Examples of the three types are:
 
@@ -4137,25 +3753,19 @@ The leading sign character is restored and the product negated if required (2E86
 
 <a name="340ah"></a>
 
-```
-Address... 340AH
-```
+    Address... 340AH
 
 This routine is used by the error handler to display the message " in " ([6678H](#6678h)) followed by the line number supplied in register pair HL ([3412H](#3412h)).
 
 <a name="3412h"></a>
 
-```
-Address... 3412H
-```
+    Address... 3412H
 
 This routine displays the unsigned binary integer supplied in register pair HL. The operand is placed in [DAC](#dac) as an integer (2F99H), converted to text (3441H) and then displayed (6677H).
 
 <a name="3425h"></a>
 
-```
-Address... 3425H
-```
+    Address... 3425H
 
 This routine converts the numeric operand contained in [DAC](#dac) to textual form in [FBUFFR](#fbuffr). The address of the first character of the resulting text is returned in register pair HL, the text is terminated by a zero byte. The operand is first converted to double precision ([375FH](#375fh)). The BCD digits of the mantissa are then unpacked, converted to ASCII and placed in [FBUFFR](#fbuffr) (36B3H). The position of the decimal point is determined by the exponent, for example:
 
@@ -4180,133 +3790,99 @@ The entry point to the routine at 3441H is used to convert unsigned integers, no
 
 <a name="3710h"></a>
 
-```
-Address... 3710H
-```
+    Address... 3710H
 
 This table contains the five constants used by the numeric output routine: 10000, 1000, 100, 10, 1.
 
 <a name="371ah"></a>
 
-```
-Address... 371AH
-```
+    Address... 371AH
 
 This routine is used by the "`BIN`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (1) and control transfers to the general conversion routine (3724H).
 
 <a name="371eh"></a>
 
-```
-Address... 371EH
-```
+    Address... 371EH
 
 This routine is used by the "`OCT`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (3) and control transfers to the general conversion routine (3724H).
 
 <a name="3722h"></a>
 
-```
-Address... 3722H
-```
+    Address... 3722H
 
 This routine is used by the "`HEX`$" function to convert a numeric operand contained in [DAC](#dac) to textual form. Register B is loaded with the group size (4) and the operand converted to a binary integer in register pair HL ([5439H](#5439h)). Successive groups of 1, 3 or 4 bits are shifted rightwards out of the operand, converted to ASCII digits and placed in [FBUFFR](#fbuffr). When the operand is all zeroes the routine terminates with the address of the first text character in register pair HL, the string is terminated with a zero byte.
 
 <a name="3752h"></a>
 
-```
-Address... 3752H
-```
+    Address... 3752H
 
 This routine is used during numeric output to return an operand's digit count in register B and the address of its least significant byte in register pair HL. For single precision B=6 and HL=[DAC](#dac)+3, for double precision B=14 and HL=[DAC](#dac)+7.
 
 <a name="375fh"></a>
 
-```
-Address... 375FH
-```
+    Address... 375FH
 
 This routine is used during numeric output to convert the numeric operand in [DAC](#dac) to double precision ([303AH](#303ah)).
 
 <a name="377bh"></a>
 
-```
-Address... 377BH
-```
+    Address... 377BH
 
 This routine is used during numeric output to shift the mantissa in [DAC](#dac) rightwards (27DBH), the inverse of the digit count is supplied in register A. The result is then rounded up from the fifteenth digit (2741H).
 
 <a name="37a2h"></a>
 
-```
-Address... 37A2H
-```
+    Address... 37A2H
 
 This routine is used during numeric output to return the inverse of the fractional digit count in a floating point operand. This is computed by subtracting the exponent from the operand's digit count (6 or 14).
 
 <a name="37b4h"></a>
 
-```
-Address... 37B4H
-```
+    Address... 37B4H
 
 This routine is used during numeric output to locate the last non-zero digit of the mantissa contained in [DAC](#dac). Its address is returned in register pair HL.
 
 <a name="37c8h"></a>
 
-```
-Address... 37C8H
-```
+    Address... 37C8H
 
 This routine is used by the Expression Evaluator to exponentiate (^) two single precision operands. The first operand is contained in registers C, B, E, D and the second in [DAC](#dac), the result is returned in [DAC](#dac). The first operand is copied to [ARG](#arg) ([3280H](#3280h)), pushed onto the stack ([2CC7H](#2cc7h)) and exchanged with [DAC](#dac) ([2C6FH](#2c6fh)). The second operand is then popped into [ARG](#arg) and control drops into the double precision exponentiation routine.
 
 <a name="37d7h"></a>
 
-```
-Address... 37D7H
-```
+    Address... 37D7H
 
 This routine is used by the Expression Evaluator to exponentiate (^) two double precision operands. The first operand is contained in [DAC](#dac) and the second in [ARG](#arg), the result is returned in [DAC](#dac). The result is usually computed using:
 
-```
-X^P=EXP(P*LOG(X))
-```
+    X^P=EXP(P*LOG(X))
 
 An alternative, much faster, method is possible if the power operand is an integer. This is tested for by extracting the integer part of the operand and comparing for equality with the original value ([391AH](#391ah)). A positive result to this test means that the faster method can be used, this is described below.
 
 <a name="383fh"></a>
 
-```
-Address... 383FH
-```
+    Address... 383FH
 
 This routine is used by the Expression Evaluator to exponentiate (^) two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). The routine operates by breaking the problem down into simple multiplications:
 
-```
-6^13=6^1101=(6^8)*(6^4)*(6^1)
-```
+    6^13=6^1101=(6^8)*(6^4)*(6^1)
 
 As the power operand is in binary form a simple right shift is sufficient to determine whether a particular intermediate product needs to be included in the result. The intermediate products themselves are obtained by cumulative multiplication of the operand each time the computation loop is traversed. If the product overflows at any time it is converted to single precision. Upon completion the power operand is checked, if it is negative the product is reciprocated as X^-P=1/X^P.
 
 <a name="390dh"></a>
 
-```
-Address... 390DH
-```
+    Address... 390DH
 
 This routine is used during exponentiation to multiply two integers ([3193H](#3193h)), it returns Flag NZ if the result has overflowed to single precision.
 
 <a name="391ah"></a>
 
-```
-Address... 391AH
-```
+    Address... 391AH
 
 This routine is used during exponentiation to check whether a double precision power operand consists only of an integer part, if so it returns Flag NC.
 
 <a name="392eh"></a>
 
-```
-Address... 392EH
-```
+    Address... 392EH
 
 This table of addresses is used by the Interpreter Runloop to find the handler for a statement token. Although not part of the table the associated keywords are included below:
 
@@ -4345,9 +3921,7 @@ This table of addresses is used by the Interpreter Runloop to find the handler f
 
 <a name="39deh"></a>
 
-```
-Address... 39DEH
-```
+    Address... 39DEH
 
 This table of addresses is used by the Factor Evaluator to find the handler for a function token. Although not part of the table the associated keywords are included with the addresses shown below:
 
@@ -4372,9 +3946,7 @@ This table of addresses is used by the Factor Evaluator to find the handler for 
 
 <a name="3a3eh"></a>
 
-```
-Address... 3A3EH
-```
+    Address... 3A3EH
 
 This table of addresses is used during program tokenization as an index into the BASIC keyword table ([3A72H](#3a72h)). Each of the twenty six entries defines the starting address of one of the keyword sub-blocks. The first entry points to the keywords beginning with the letter "A", the second to those beginning with the letter "B" and so on.
 
@@ -4392,9 +3964,7 @@ This table of addresses is used during program tokenization as an index into the
 
 <a name="3a72h"></a>
 
-```
-Address... 3A72H
-```
+    Address... 3A72H
 
 This table contains the BASIC keywords and tokens. Each of the twenty-six blocks within the table contains all the keywords beginning with a particular letter, it is terminated with a zero byte. Each keyword is stored in plain text with bit 7 set to mark the last character, this is followed immediately by the associated token. The first character of the keyword need not be stored as this is implied by its position in the table' The keywords and tokens are listed below in full, note that the "J", "Q", "Y" and "Z" blocks are empty:
 
@@ -4446,9 +4016,7 @@ DSKI$  EAH  LSET   B8H  RESTORE 8CH
 
 <a name="3d26h"></a>
 
-```
-Address... 3D26H
-```
+    Address... 3D26H
 
 This twenty-one byte table is used by the Interpreter during program tokenization. It contains the ten single character keywords and their tokens:
 
@@ -4461,9 +4029,7 @@ This twenty-one byte table is used by the Interpreter during program tokenizatio
 
 <a name="3d3bh"></a>
 
-```
-Address... 3D3BH
-```
+    Address... 3D3BH
 
 This table is used by the Expression Evaluator to determine the precedence level for a given infix operator, the higher the table value the greater the operator's precedence. Not included are the precedences for the relational operators (64H), the "`NOT`" operator (5AH) and the negation operator (7DH), these are defined directly by the Expression and Factor Evaluators.
 
@@ -4480,9 +4046,7 @@ This table is used by the Expression Evaluator to determine the precedence level
 
 <a name="3d47h"></a>
 
-```
-Address... 3D47H
-```
+    Address... 3D47H
 
 This table is used to convert the result of a user defined function to the same type as the Variable used in the function definition. It contains the addresses of the type conversion routines:
 
@@ -4498,9 +4062,7 @@ This table is used to convert the result of a user defined function to the same 
 
 <a name="3d51h"></a>
 
-```
-Address... 3D51H
-```
+    Address... 3D51H
 
 This table of addresses is used by the Expression Evaluator to find the handler for a particular infix math operator when both operands are double precision:
 
@@ -4517,9 +4079,7 @@ This table of addresses is used by the Expression Evaluator to find the handler 
 
 <a name="3d5dh"></a>
 
-```
-Address... 3D5DH
-```
+    Address... 3D5DH
 
 This table of addresses is used by the Expression Evaluator to find the handler for a particular infix math operator when both operands are single precision:
 
@@ -4536,9 +4096,7 @@ This table of addresses is used by the Expression Evaluator to find the handler 
 
 <a name="3d69h"></a>
 
-```
-Address... 3D69H
-```
+    Address... 3D69H
 
 This table of addresses is used by the Expression Evaluator to find the handler for a particular infix math operator when both operands are integer:
 
@@ -4555,9 +4113,7 @@ This table of addresses is used by the Expression Evaluator to find the handler 
 
 <a name="3d75h"></a>
 
-```
-Address... 3D75H
-```
+    Address... 3D75H
 
 This table contains the Interpreter error messages, each one is stored in plain text with a zero byte terminator. The associated error codes are shown below for reference only, they do not form part of the table:
 
@@ -4586,81 +4142,61 @@ This table contains the Interpreter error messages, each one is stored in plain 
 
 <a name="3fd2h"></a>
 
-```
-Address... 3FD2H
-```
+    Address... 3FD2H
 
 This is the plain text message "` in `" terminated by a zero byte.
 
 <a name="3fd7h"></a>
 
-```
-Address... 3FD7H
-```
+    Address... 3FD7H
 
 This is the plain text message "`Ok`", CR, LF terminated by a zero byte.
 
 <a name="3fdch"></a>
 
-```
-Address... 3FDCH
-```
+    Address... 3FDCH
 
 This is the plain text message "`Break`" terminated by a zero byte.
 
 <a name="3fe2h"></a>
 
-```
-Address... 3FE2H
-```
+    Address... 3FE2H
 
 This routine searches the Z80 stack for the "`FOR`" loop parameter block whose loop Variable address is supplied in register pair DE. The search is started four bytes above the current Z80 SP to allow for the caller's return address and the Runloop return address. If no "`FOR`" token (82H) exists the routine terminates Flag NZ, if one is found the loop Variable address is taken from the parameter block and checked. The routine terminates Flag Z upon a successful match with register pair HL pointing to the type byte of the parameter block. Otherwise the search moves up twenty-two bytes to the start of the next parameter block.
 
 <a name="4001h"></a>
 
-```
-Address... 4001H
-```
+    Address... 4001H
 
 This routine is used by the Factor Evaluator to apply the "`INP`" function to an operand contained in [DAC](#dac). The port number is checked ([5439H](#5439h)), the port read and the result placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="400bh"></a>
 
-```
-Address... 400BH
-```
+    Address... 400BH
 
 This routine first evaluates an operand in the range -32768 to +65535 ([542FH](#542fh)) and places it in register pair BC. After checking for a comma, via the [SYNCHR](#synchr) standard routine, it evaluates a second operand in the range 0 to 255 (521CH) and places this in register A.
 
 <a name="4016h"></a>
 
-```
-Address... 4016H
-```
+    Address... 4016H
 
 This is the "`OUT`" statement handler. The port number and data byte are evaluated ([400BH](#400bh)) and the data byte written to the relevant Z80 port.
 
 <a name="401ch"></a>
 
-```
-Address... 401CH
-```
+    Address... 401CH
 
 This is the "`WAIT`" statement handler. The port number and "`AND`" operands are first evaluated ([400BH](#400bh)) followed by the optional "`XOR`" operand (521CH). The port is then repeatedly read and the operands applied, XOR then AND, until a non-zero result is obtained. Contrary to the information given in some MSX manuals the loop can be broken by the CTRL-STOP key as the [CKCNTC](#ckcntc) standard routine is called from inside it.
 
 <a name="4039h"></a>
 
-```
-Address... 4039H
-```
+    Address... 4039H
 
 This routine is used by the Runloop when it encounters the end of the program text while in program mode. [ONEFLAG](#oneflag) is checked to see whether it still contains an active error code. If so a "`No RESUME`" error is generated, otherwise program termination continues normally (6401H). The idea behind this routine is to catch any "`ON ERROR`" handlers without a "`RESUME`" statement at the end.
 
 <a name="404fh"></a>
 
-```
-Address... 404FH
-```
+    Address... 404FH
 
 This routine is used by the "`READ`" statement handler when an error is found in a "`DATA`" statement. The line number contained in [DATLIN](#datlin) is copied to [CURLIN](#curlin) so the error handler will flag the "`DATA`" line as the illegal statement rather than the program line. Control then drops into the "`Syntax error`" generator.
 
@@ -4674,9 +4210,7 @@ This routine is used by the "`READ`" statement handler when an error is found in
 <a name="406ah"></a>
 <a name="406dh"></a>
 
-```
-Address... 4055H
-```
+    Address... 4055H
 
 This is a group of nine error generators, register E is loaded with the relevant error code and control drops into the error handler:
 
@@ -4696,9 +4230,7 @@ This is a group of nine error generators, register E is loaded with the relevant
 
 <a name="406fh"></a>
 
-```
-Address... 406FH
-```
+    Address... 406FH
 
 This is the Interpreter error handler, all error generators transfer to here with an error code in register E. [VLZADR](#vlzadr) is first checked to see if the "`VAL`" statement handler has changed the program text, if so the original character is restored from [VLZDAT](#vlzdat). The current line number is then copied from [CURLIN](#curlin) to [ERRLIN](#errlin) and [DOT](#dot) and the Z80 stack is restored from [SAVSTK](#savstk) (62F0H). The error code is placed in [ERRFLG](#errflg), for use by the "`ERR`" function, and the current program text position copied from [SAVTXT](#savtxt) to [ERRTXT](#errtxt) for use by the "`RESUME`" statement handler. The error line number and program text position are also copied to [OLDLIN](#oldlin) and [OLDTXT](#oldtxt) for use by the "`CONT`" statement handler. [ONELIN](#onelin) is then checked to see if a previous "`ON ERROR`" statement has been executed. If so, and providing no error code is already active, control transfers to the Runloop (4620H) to execute the BASIC error recovery statements.
 
@@ -4706,17 +4238,13 @@ Otherwise the error code is used to count through the error message table at [3D
 
 <a name="411fh"></a>
 
-```
-Address... 411FH
-```
+    Address... 411FH
 
 This is the re-entry point to the Interpreter Mainloop for a terminating program. The screen is forced to text mode via the [TOTEXT](#totext) standard routine, the printer is cleared ([7304H](#7304h)) and I/O buffer 0 closed (6D7BH). A CR,LF is then issued to the screen ([7323H](#7323h)), the message "`OK`" is displayed ([6678H](#6678h)) and control drops into the Mainloop.
 
 <a name="4134h"></a>
 
-```
-Address... 4134H
-```
+    Address... 4134H
 
 This is the Interpreter Mainloop. [CURLIN](#curlin) is first set to FFFFH to indicate direct mode and [AUTFLG](#autflg) checked to see if "`AUTO`" mode is on. If so the next line number is taken from [AUTLIN](#autlin) and displayed ([3412H](#3412h)). The Program Text Area is then searched to see if this line already exists ([4295H](#4295h)) and either an asterisk or space displayed accordingly.
 
@@ -4730,9 +4258,7 @@ The Program Text Area links are then recalculated (4257H), the Variable Storage 
 
 <a name="4253h"></a>
 
-```
-Address... 4253H
-```
+    Address... 4253H
 
 This routine recalculates the Program Text Area links after a program modification. The first two bytes of each program line contain the starting address of the following line, this is called the link. Although the link increases the amount of storage required per program line it greatly reduces the time required by the Interpreter to locate a given line.
 
@@ -4748,25 +4274,19 @@ Each link is recalculated simply by scanning through the line until the end of l
 
 <a name="4279h"></a>
 
-```
-Address... 4279H
-```
+    Address... 4279H
 
 This routine is used by the "`LIST`" statement handler to collect up to two line number operands from the program text. If the first line number is present it is converted to an unsigned integer in register pair DE ([475FH](#475fh)), if not a default value of 0000H is returned. If the second line number is present it must be preceded by a "-" token (F2H) and is returned on the Z80 stack, if not a default value of 65530 is returned. Control then drops into the program text search routine to find the first referenced program line.
 
 <a name="4295h"></a>
 
-```
-Address... 4295H
-```
+    Address... 4295H
 
 This routine searches the Program Text Area for the program line whose line number is supplied in register pair DE. Starting at the address contained in [TXTTAB](#txttab) each program line is examined for a match. If an equal line number is found the routine terminates with Flag Z,C and register pair BC pointing to the start of the program line. If a higher line number is found the routine terminates Flag NZ,NC and if the end link is reached the routine terminates Flag Z,NC.
 
 <a name="42b2h"></a>
 
-```
-Address... 42B2H
-```
+    Address... 42B2H
 
 This routine is used by the Interpreter Mainloop to tokenize a line of text. On entry register pair HL points to the first text character in [BUF](#buf). On exit the tokenized line is in [KBUF](#kbuf), register pair BC holds its length and register pair HL points to its start.
 
@@ -4797,9 +4317,7 @@ During tokenization only the normal type (0EH) is generated, when a program actu
 
 <a name="43b5h"></a>
 
-```
-Address... 43B5H
-```
+    Address... 43B5H
 
 This table of tokens is used during tokenization to check for the keywords which take line number operands. The keywords themselves are listed below:
 
@@ -4817,9 +4335,7 @@ ELSE       GOSUB
 
 <a name="4524h"></a>
 
-```
-Address... 4524H
-```
+    Address... 4524H
 
 This is the "`FOR`" statement handler. The loop Variable is first located and assigned its initial value by the "`LET`" handler ([4880H](#4880h)), the address of the loop Variable is returned in register pair DE. The end of the statement is found ([485BH](#485bh)) and its address placed in [ENDFOR](#endfor). The Z80 stack is then searched (3FE6H) for any parameter blocks using the same loop Variable. For each one found the current [ENDFOR](#endfor) address is compared with that of the parameter block, if there is a match that section of the stack is discarded. This is done in case there are any incomplete loops as a result of a "`GOTO`" back to the "`FOR`" statement from inside the loop.
 
@@ -4842,9 +4358,7 @@ It should be noted that the type of arithmetic operation performed by the "`NEXT
 
 <a name="4601h"></a>
 
-```
-Address... 4601H
-```
+    Address... 4601H
 
 This is the Runloop, each statement handler returns here upon completion so the Interpreter can proceed to the next statement. The current Z80 SP is copied to [SAVSTK](#savstk) for error recovery purposes and the CTRL-STOP key checked via the [ISCNTC](#iscntc) standard routine. Any pending interrupts are processed ([6389H](#6389h)) and the current program text position, held in register pair HL throughout the Interpreter, is copied to [SAVTXT](#savtxt).
 
@@ -4852,9 +4366,7 @@ The current program character is then examined, if this is a statement separator
 
 <a name="4640h"></a>
 
-```
-Address... 4640H
-```
+    Address... 4640H
 
 This is the Runloop execution point. A return to the start of the Runloop ([4601H](#4601h)) is pushed onto the Z80 stack and the first character taken from the new statement via the [CHRGTR](#chrgtr) standard routine. If it is an underline character (5FH) control transfers to the "`CALL`" statement handler (55A7H). If it is smaller than 81H, the smallest statement token, control transfers to the "`LET`" handler ([4880H](#4880h)). If it is larger than D8H, the largest statement token, it is checked to see if it is one of the function tokens allowed as a statement ([51ADH](#51adh)). Otherwise the handler address is taken from the table at [392EH](#392eh) and pushed onto the stack. Control then drops into the [CHRGTR](#chrgtr) standard routine to fetch the next program character before control transfers to the statement handler.
 
@@ -4872,73 +4384,55 @@ Standard routine to fetch the next character from the program text. Register pai
 
 <a name="46e8h"></a>
 
-```
-Address... 46E8H
-```
+    Address... 46E8H
 
 This routine is used by the Factor Evaluator and during detokenization to recover a numeric operand when one of the prefix tokens is returned by the [CHRGTR](#chrgtr) standard routine. The prefix token is first taken from [CONSAV](#consav), if it is anything but a line number or pointer token the operand is copied from [CONLO](#conlo) to [DAC](#dac) and the type code copied from [CONTYP](#contyp) to [VALTYP](#valtyp). If it is a line number it is converted to single precision and placed in [DAC](#dac) (3236H). If it is a pointer the original line number is recovered from the referenced program line, converted to single precision and placed in [DAC](#dac) (3236H).
 
 <a name="4718h"></a>
 
-```
-Address... 4718H
-```
+    Address... 4718H
 
 This is the "`DEFSTR`" statement handler. Register E is loaded with the string type code (03H) and control drops into the general type definition routine.
 
 <a name="471bh"></a>
 
-```
-Address... 471BH
-```
+    Address... 471BH
 
 This is the "`DEFINT`" statement handler. Register E is loaded with the integer type code (02H) and control drops into the general type definition routine.
 
 <a name="471eh"></a>
 
-```
-Address... 471EH
-```
+    Address... 471EH
 
 This is the "`DEFSNG`" statement handler. Register E is loaded with the single precision type code (04H) and control drops into the general type definition routine.
 
 <a name="4721h"></a>
 
-```
-Address... 4721H
-```
+    Address... 4721H
 
 This is the "`DEFDBL`" statement handler. Register E is loaded with the double precision type code (08H) and the first range definition character checked ([64A7H](#64a7h)). If this is not upper case alphabetic a "`Syntax error`" is generated ([4055H](#4055h)). If a "-" token (F2H) follows the second range definition character is taken and checked ([64A7H](#64a7h)), the difference between the two determines the number of entries in [DEFTBL](#deftbl) that are filled with the type code.
 
 <a name="4755h"></a>
 
-```
-Address... 4755H
-```
+    Address... 4755H
 
 This routine evaluates an operand and converts it to an integer in register pair DE (520FH). If the operand is negative an "`Illegal function call`" error is generated.
 
 <a name="475fh"></a>
 
-```
-Address... 475FH
-```
+    Address... 475FH
 
 This routine is used by the statement handlers shown in the table at [43B5H](#43b5h) to collect a single line number operand from the program text and convert it to an unsigned integer in register pair DE. If the first character in the text is a "." (2EH) the routine terminates with the contents of [DOT](#dot). If it is one of the line number tokens (0DH or 0EH) the routine terminates with the contents of [CONLO](#conlo). Otherwise successive digits are taken and added to the product, with appropriate multiplications by ten, until a non-numeric character is found.
 
 <a name="479eh"></a>
 
-```
-Address... 479EH
-```
+    Address... 479EH
 
 This is the "`RUN`" statement handler. If no line number operand is present in the program text the system is cleared ([629AH](#629ah)) and control returns to the Runloop with register pair HL pointing to the start of the Program Storage Area. If a line number operand is present the system is cleared (62A1H) and control transfers to the "`GOTO`" statement handler (47E7H). Otherwise a following filename is assumed, for example `RUN "CAS:FILE"`, and control transfers to the "`LOAD`" statement handler ([6B5BH](#6b5bh));
 
 <a name="47b2h"></a>
 
-```
-Address... 47B2H
-```
+    Address... 47B2H
 
 This is the "`GOSUB`" statement handler. After checking that stack space is available ([625EH](#625eh)) the line number operand is collected and placed in register pair DE (4769H). The seven byte parameter block is then pushed onto the stack and control transfers to the "`GOTO`" handler (47EBH). The parameter block is made up of the following:
 
@@ -4953,33 +4447,25 @@ The parameter block remains on the stack until a "`RETURN`" statement is execute
 
 <a name="47cfh"></a>
 
-```
-Address... 47CFH
-```
+    Address... 47CFH
 
 This routine is used by the Runloop interrupt processor ([6389H](#6389h)) to create a "`GOSUB`" type parameter block on the Z80 stack. An interrupt block is identical to a normal block except that the two zero bytes shown above are replaced by the address of the device's entry in [TRPTBL](#trptbl). This address will be used by the "`RETURN`" statement handler to update the device's interrupt status once a subroutine has terminated. After pushing the parameter block control transfers to the Runloop to execute the program line whose address is supplied in register pair DE.
 
 <a name="47e8h"></a>
 
-```
-Address... 47E8H
-```
+    Address... 47E8H
 
 This is the "`GOTO`" statement handler. The line number operand is collected (4769H) and placed in register pair HL. If it is a pointer control transfers immediately to the Runloop to begin execution at the new program text position. Otherwise the line number is compared with the current line number to determine the starting position for the program text search. If it is greater the search starts from the end of this line (4298H), if it is smaller it starts from the beginning of the Program Text Area ([4295H](#4295h)). If the referenced line cannot be found an "`Undefined line number`" error is generated ([481CH](#481ch)). Otherwise the line number operand is replaced by the referenced program line's address and its token changed to the pointer type (5583H). Control then transfers to the Runloop to execute the referenced program line.
 
 <a name="481ch"></a>
 
-```
-Address... 481CH
-```
+    Address... 481CH
 
 This is the "`Undefined line number`" error generator.
 
 <a name="4821h"></a>
 
-```
-Address... 4821H
-```
+    Address... 4821H
 
 This is the "`RETURN`" statement handler. A dummy loop Variable address is placed in register pair DE and the Z80 stack searched ([3FE2H](#3fe2h)) to find the first parameter block not belonging to a "`FOR`" loop, this section of stack is then discarded. If no "`GOSUB`" token (8DH) is found at this point a "`RETURN without GOSUB`" error is generated.
 
@@ -4987,89 +4473,67 @@ The next two bytes are then taken from the block, if they are non-zero the block
 
 <a name="485bh"></a>
 
-```
-Address... 485BH
-```
+    Address... 485BH
 
 This is the "`DATA`" statement handler. The program text is skipped over until a statement separator (3AH) or end of line character (00H) is found. This routine is also the "`REM`" and "`ELSE`" statement handler via the entry point at 485DH, in this case only the end of line character acts as a terminator.
 
 <a name="4880h"></a>
 
-```
-Address... 4880H
-```
+    Address... 4880H
 
 This is the "`LET`" statement handler. The Variable is first located ([5EA4H](#5ea4h)), its address saved in [TEMP](#temp) and the operand evaluated ([4C64H](#4c64h)). If necessary the operand's type is then changed to match that of the Variable (517AH). Assuming the operand is one of the three numeric types it is simply copied from [DAC](#dac) to the Variable in the Variable Storage Area (2EF3H). If the operand is a string type the address of the string body is taken from the descriptor and checked. If it is in [KBUF](#kbuf), as would be the case for an explicit string in a direct statement, the body is first copied to the String Storage Area and a new descriptor created (6611H). The descriptor is then freed from [TEMPST](#tempst) (67EEH) and copied to the Variable in the Variable Storage Area (2EF3H).
 
 <a name="48e4h"></a>
 
-```
-Address... 48E4H
-```
+    Address... 48E4H
 
 This is the "`ON ERROR`", "`ON DEVICE GOSUB`" and "`ON EXPRESSION`" statement handler. If the next program text character is not an "`ERROR`" token (A6H) control transfers to the "`ON DEVICE GOSUB`" and "`ON EXPRESSION`" handler ([490DH](#490dh)). The program text is checked to ensure that a "`GOTO`" token (89H) follows and then the line number operand collected (4769H). The program text is searched to obtain the address of the referenced line (4293H) and this is placed in [ONELIN](#onelin). If the line number operand is non-zero the routine then terminates. If the line number operand is zero [ONEFLG](#oneflg) is checked to see if an error situation already exists (implying that the statement is inside a BASIC error recovery routine). If so control transfers to the error handler (4096H) to force an immediate error, otherwise the routine terminates normally.
 
 <a name="490dh"></a>
 
-```
-Address... 490DH
-```
+    Address... 490DH
 
 This is the "`ON DEVICE GOSUB`" and "`ON EXPRESSION`" statement handler. If the next program text character is not a device token ([7810H](#7810h)) control transfers to the "`ON EXPRESSION`" handler ([4943H](#4943h)). After checking the program text for a "`GOSUB`" token (8DH) each of the line number operands required for a particular device is collected in turn (4769H). Assuming a given line number operand is non-zero the program text is searched to find the address of the referenced line (4293H) and this is placed in the device's entry in [TRPTBL](#trptbl) ([785CH](#785ch)). The routine terminates when no more line number operands are found.
 
 <a name="4943h"></a>
 
-```
-Address... 4943H
-```
+    Address... 4943H
 
 This is the "`ON EXPRESSION`" statement handler. The operand is evaluated (521CH) and the following "`GOSUB`" token (8DH) or "`GOTO`" token (89H) placed in register A. The operand is then used to count along the program text until register pair HL points to the required line number operand. Control then transfers back to the Runloop execution point (4646H) to decode the "`GOSUB`" or "`GOTO`" token.
 
 <a name="495dh"></a>
 
-```
-Address... 495DH
-```
+    Address... 495DH
 
 This is the "`RESUME`" statement handler. [ONEFLG](#oneflg) is first checked to make sure that an error condition already exists, if not a "`RESUME without error`" is generated ([4064H](#4064h)). If a non- zero line number operand follows control transfers to the "`GOTO`" handler (47EBH). If a "`NEXT`" token (83H) follows the position of the error is restored from [ERRTXT](#errtxt) and [ERRLIN](#errlin), the start of the next statement is found ([485BH](#485bh)) and the routine terminates. If there is no line number operand or if it is zero the position of the error is found from [ERRTXT](#errtxt) and [ERRLIN](#errlin) and the routine terminates.
 
 <a name="49aah"></a>
 
-```
-Address... 49AAH
-```
+    Address... 49AAH
 
 This is the "`ERROR`" statement handler. The operand is evaluated and placed in register E (521CH). If it is zero an "`Illegal function call`" error is generated (475AH), otherwise control transfers to the error handler ([406FH](#406fh)).
 
 <a name="49b5h"></a>
 
-```
-Address... 49B5H
-```
+    Address... 49B5H
 
 This is the "`AUTO`" Statement handler. The optional start and increment line number operands, both with a default value of ten, are collected ([475FH](#475fh)) and placed in [AUTLIN](#autlin) and [AUTINC](#autinc). After making [AUTFLG](#autflg) non-zero the Runloop return is destroyed and control transfers directly to the Mainloop ([4134H](#4134h)).
 
 <a name="49e5h"></a>
 
-```
-Address... 49E5H
-```
+    Address... 49E5H
 
 This is the "`IF`" statement handler. The operand is evaluated ([4C64H](#4c64h)) and, after checking for a "`GOTO`" token (89H) or "`THEN`" token (DAH), its sign is tested ([2EA1H](#2ea1h)). If the operand is non- zero (true) the following text is executed either by an immediate transfer to the Runloop (4646H) or, for a line number operand, the "`GOTO`" handler ([47E8H](#47e8h)). If the operand is zero (false) the statement text is scanned ([485BH](#485bh)) until an "`ELSE`" token (A1H) is found not balanced by an "`IF`" token (8BH) and execution re-commences.
 
 <a name="4a1dh"></a>
 
-```
-Address... 4A1DH
-```
+    Address... 4A1DH
 
 This is the "`LPRINT`" statement handler. [PRTFLG](#prtflg) is set to 01H, to direct output to the printer, and control transfers to the "`PRINT`" handler (4A29H).
 
 <a name="4a24h"></a>
 
-```
-Address... 4A24H
-```
+    Address... 4A24H
 
 This is the "`PRINT`" statement handler. The program text is first checked for a trailing buffer number and, if necessary, [PTRFIL](#ptrfil) set to direct output to the required I/O buffer ([6D57H](#6d57h)). If no more program text exists a CR,LF is issued (7328H) and the routine terminates ([4AFFH](#4affh)). Otherwise successive characters are taken from the program text and analyzed. If a "`USING`" token (E4H) is found control transfers to the "`PRINT USING`" handler ([60B1H](#60b1h)). If a ";" character is found control just transfers back to the start to fetch the next item (4A2EH). If a comma is found sufficient spaces are issued to bring the current print position, from [TTYPOS](#ttypos), [LPTPOS](#lptpos) or an I/O buffer FCB, to an integral multiple of fourteen. If output is directed to the screen and the print position is equal to or greater than the contents of [CLMLST](#clmlst) or if output is directed to the printer and it is equal to or greater than 238 then a CR,LF is issued instead (7328H). If a "`SPC(`" token (DFH) is found the operand is evaluated ([521BH](#521bh)) and the required number of spaces are output. If a "`TAB(`" token (DBH) is found the operand is evaluated ([521BH](#521bh)) and sufficient spaces issued to bring the current print position, from [TTYPOS](#ttypos), [LPTPOS](#lptpos) or an I/O buffer FCB, to the required point.
 
@@ -5077,17 +4541,13 @@ If none of these characters is found the program text contains a data item which
 
 <a name="4affh"></a>
 
-```
-Address... 4AFFH
-```
+    Address... 4AFFH
 
 This routine zeroes [PRTFLG](#prtflg) and [PTRFIL](#ptrfil) to return the Interpreter's output to the screen.
 
 <a name="4b0eh"></a>
 
-```
-Address... 4B0EH
-```
+    Address... 4B0EH
 
 This is the "`LINE INPUT`", "`LINE INPUT#`" and "`LINE`" statement handler. If the following program text character is anything other than an "`INPUT`" token (85H) control transfers to the "`LINE`" statement handler ([58A7H](#58a7h)). If the following program text character is a "#" (23H) control transfers to the "`LINE INPUT#`" statement handler ([6D8FH](#6d8fh)).
 
@@ -5095,41 +4555,31 @@ Any following prompt string is evaluated and displayed (4B7BH) and the Variable 
 
 <a name="4b3ah"></a>
 
-```
-Address... 4B3AH
-```
+    Address... 4B3AH
 
 This is the plain text message "`?Redo from start`", CR, LF terminated by a zero byte.
 
 <a name="4b4dh"></a>
 
-```
-Address... 4B4DH
-```
+    Address... 4B4DH
 
 This routine is used by the "`READ/INPUT`" statement handler if it has failed to convert a data item to numeric form. If in "`READ`" mode ([FLGINP](#flginp) is non-zero) a "`Syntax error`" is generated ([404FH](#404fh)). Otherwise the message "`?Redo from start`" is displayed ([6678H](#6678h)) and control returns to the statement handler.
 
 <a name="4b62h"></a><a name="input#"></a>
 
-```
-Address... 4B62H
-```
+    Address... 4B62H
 
 This is the "`INPUT#`" Statement handler. The buffer number is evaluated and [PTRFIL](#ptrfil) set to direct input from the required I/O buffer (6D55H), control then transfers to the combined "`READ/INPUT`" statement handler (4B9BH).
 
 <a name="4b6ch"></a><a name="input"></a>
 
-```
-Address... 4B6CH
-```
+    Address... 4B6CH
 
 This is the "`INPUT`" statement handler. If the next program text character is a "#" control transfers to the "`INPUT#`" statement handler ([4B62H](#4b62h)). Otherwise the screen is forced to text mode, via the [TOTXT](#totxt) standard routine, and any prompt string analyzed ([6636H](#6636h)) and displayed (667BH). A question mark is then displayed and a line of text collected from the console via the [QINLIN](#qinlin) standard routine. If this returns Flag C (CTRL-STOP) control transfers to the "`STOP`" handler (63FEH). If the first character in [BUF](#buf) is zero (null input) the handler terminates by skipping to the end of the statement (485AH), otherwise control drops into the combined "`READ/INPUT`" handler.
 
 <a name="4b9fh"></a><a name="read"></a>
 
-```
-Address... 4B9FH
-```
+    Address... 4B9FH
 
 This is the "`READ`" statement handler, a large section is also used by the "`INPUT`" and "`INPUT#`" statements so the structure is rather awkward. Each Variable found in the program text is located in turn ([5EA4H](#5ea4h)), for each one the corresponding data item is obtained and assigned to the Variable by the "`LET`" handler (4893H). When in "`READ`" mode the data items are taken from the program text using the initial contents of [DATPTR](#datptr) ([4C40H](#4c40h)). When in "`INPUT`" or "`INPUT#`" mode the data items are taken from the text buffer [BUF](#buf).
 
@@ -5137,33 +4587,25 @@ If the data items are exhausted in "`READ`" mode an "`Out of DATA`" error is gen
 
 <a name="4c2fh"></a>
 
-```
-Address... 4C2FH
-```
+    Address... 4C2FH
 
 The is the plain text message "`?Extra ignored`", CR, LF terminated by a zero byte.
 
 <a name="4c40h"></a>
 
-```
-Address... 4C40H
-```
+    Address... 4C40H
 
 This routine is used by the "`READ`" handler to locate the next "`DATA`" statement in the program text, the address to start from is supplied in register pair HL. Each program statement is examined until a "`DATA`" token (84H) is found whereupon the routine terminates (4BD1H). If the end link is reached an "`Out of DATA`" error is generated. As the search proceeds the line number of each program line is placed in [DATLIN](#datlin) for use by the error handler.
 
 <a name="4c5fh"></a>
 
-```
-Address... 4C5FH
-```
+    Address... 4C5FH
 
 This routine checks that the next character in the program text is the "=" token (EFH) and then drops into the Expression Evaluator. When entered at 4C62H it checks for "(".
 
 <a name="4c64h"></a>
 
-```
-Address... 4C64H
-```
+    Address... 4C64H
 
 This is the Expression Evaluator. On entry register pair HL points to the first character of the expression to be evaluated. On exit register pair HL points to the character following the expression, the result is in [DAC](#dac) and the type code in [VALTYP](#valtyp). For a string result the address of the string descriptor is returned at [DAC](#dac)+2. The descriptor itself comprising a single byte for the string length and two bytes for its address, will be in [TEMPST](#tempst) or inside a string Variable.
 
@@ -5187,25 +4629,19 @@ Evaluation terminates when the next operator has a precedence equal to or lower 
 
 <a name="4d22h"></a>
 
-```
-Address... 4D22H
-```
+    Address... 4D22H
 
 This routine is used by the Expression Evaluator to apply an infix math operator (+-\*/ ) to a pair of numeric operands. There are separate routines for the relational operators ([4F57H](#4f57h)) and the logical operators ([4F78H](#4f78h)). The first operand, its type code, and the operator token are supplied on the Z80 stack, the second operand and its type code are supplied in [DAC](#dac) and [VALTYP](#valtyp). The types of both operands are first compared, if they differ the lowest precision operand is converted to match the higher. The operands are then moved to the positions required by the math routines. For integers the first operand is placed in register pair DE and the second in register pair HL. For single precision the first operand is placed in registers C, B, E, D and the second in [DAC](#dac). For double precision the first operand is placed in [DAC](#dac) and the second in [ARG](#arg). The operator token is then used to obtain the required address from the table at 3D51H, 3D5DH or 3D69H, depending upon the operand type, and control transfers to the relevant math routine.
 
 <a name="4db8h"></a>
 
-```
-Address... 4DB8H
-```
+    Address... 4DB8H
 
 This routine is used by the Expression Evaluator to divide two integer operands. The first operand is contained in register pair DE and the second in register pair HL, the result is returned in [DAC](#dac). Both operands are converted to single precision (2FCBH) and control transfers to the single precision division routine ([3265H](#3265h)).
 
 <a name="4dc7h"></a>
 
-```
-Address... 4DC7H
-```
+    Address... 4DC7H
 
 This is the Factor Evaluator. On entry register pair HL points to the character before the factor to be evaluated. On exit register pair HL points to the character following the factor, the result is in [DAC](#dac) and the type code in [VALTYP](#valtyp). A factor may be one of the following:
 
@@ -5237,81 +4673,61 @@ DSKI$ .. 7C3EH   FN ....... 5040H
 
 <a name="4dfdh"></a>
 
-```
-Address... 4DFDH
-```
+    Address... 4DFDH
 
 This routine is used by the Factor Evaluator to apply the "`ERR`" function. The contents of [ERRFLG](#errflg) are placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="4e0bh"></a>
 
-```
-Address... 4E0BH
-```
+    Address... 4E0BH
 
 This routine is used by the Factor Evaluator to apply the "`ERL`" function. The contents of [ERRLIN](#errlin) are copied to [DAC](#dac) as a single precision number (3236H).
 
 <a name="4e41h"></a>
 
-```
-Address... 4E41H
-```
+    Address... 4E41H
 
 This routine is used by the Factor Evaluator to apply the "`VARPTR`" function. If the function token is followed by a "#" the buffer number is evaluated ([521BH](#521bh)), the I/O buffer FCB located ([6A6DH](#6a6dh)) and its address placed in [DAC](#dac) as an integer (2F99H). Otherwise the Variable is located (5F5DH) and its address placed in [DAC](#dac) as an integer (2F99H).
 
 <a name="4e8dh"></a>
 
-```
-Address... 4E8DH
-```
+    Address... 4E8DH
 
 This routine is used by the Factor Evaluator to apply the monadic "-" operator. Register D is set to a precedence value of 7DH, the factor evaluated (4C67H) and then negated (2E86H).
 
 <a name="4e9bh"></a>
 
-```
-Address... 4E9BH
-```
+    Address... 4E9BH
 
 This routine is used by the Factor Evaluator to return the current value of a Variable. The Variable is first located ([5EA4H](#5ea4h)). If it is a string Variable its address is placed in [DAC](#dac) to point to the descriptor. Otherwise the contents of the Variable are copied to [DAC](#dac) (2F08).
 
 <a name="4ea9h"></a>
 
-```
-Address... 4EA9H
-```
+    Address... 4EA9H
 
 This routine returns the single character pointed to by register pair HL in register A, if it is a lower case alphabetic it converts it to upper case.
 
 <a name="4eb8h"></a>
 
-```
-Address... 4EB8H
-```
+    Address... 4EB8H
 
 This routine is used by the Factor Evaluator and the numeric input routine ([3299H](#3299h)) to convert an ampersand ("&") Prefixed number from textual form to an integer in [DAC](#dac). As each legal character is found the product is multiplied by 2, 8 or 16, depending upon the character which initially followed the ampersand, and the new digit added to it. If the product overflows an "`Overflow`" error is generated ([4067H](#4067h)). The routine terminates when an unacceptable character is found.
 
 <a name="4efch"></a>
 
-```
-Address... 4EFCH
-```
+    Address... 4EFCH
 
 This routine is used by the Factor Evaluator to process the FFH prefixed function tokens. If the token is either "`LEFT$`", "`RIGHT$`" or "`MID$`" the string operand is evaluated (4C62H), the address of its descriptor pushed onto the Z80 stack and the following numeric operand also evaluated (521CH) and stacked. Otherwise the function's parenthesized operand is evaluated (4E87H) and, for "`SQR`", "`RND`", "`SIN`", "`LOG`", "`EXP`", "`COS`", "`TAN`" or "`ATN`" only, converted to double precision ([303AH](#303ah)). The function token is then used to obtain the required address from the table at 39DEH and control transfers to the function handler.
 
 <a name="4f47h"></a>
 
-```
-Address... 4F47H
-```
+    Address... 4F47H
 
 This routine is used by the numeric input conversion routine ([3299H](#3299h)) to test for a "+" or "-" character or token. It returns register D=0 for positive and register D=FFH for negative.
 
 <a name="4f57h"></a>
 
-```
-Address... 4F57H
-```
+    Address... 4F57H
 
 This routine is used by the Expression Evaluator to apply a relational operator (<>= or combinations) to a pair of operands. If the operands are numeric the Expression Evaluator first uses the math operator routine ([4D22H](#4d22h)) to apply the general relation operation to the operands. If the operands are strings the string comparison routine ([65C8H](#65c8h)) is used first. When control arrives here the relation result is in register A and the Z80 Flags:
 
@@ -5325,41 +4741,31 @@ The Expression Evaluator also supplies a bit mask defining the original operator
 
 <a name="4f63h"></a>
 
-```
-Address... 4F63H
-```
+    Address... 4F63H
 
 This routine is used by the Factor Evaluator to apply the monadic "`NOT`" operator. Register D is set to an initial precedence level of 5AH and the expression evaluated (4C67H) and converted to an integer ([2F8AH](#2f8ah)). It is then inverted and restored to [DAC](#dac).
 
 <a name="4f78h"></a>
 
-```
-Address... 4F78H
-```
+    Address... 4F78H
 
 This routine is used by the Expression Evaluator to apply a logical operator ("`OR`", "`AND`", "`XOR`", "`EQV`" and "`IMP`") or the "`MOD`" and "\" operators to a pair of numeric operands. The first operand, which has already been converted to an integer, is supplied on the Z80 stack and the second is supplied in [DAC](#dac). The operator token (actually its precedence level) is supplied in register B. After converting the second operand to an integer ([2F8AH](#2f8ah)) the operator is examined. There are separate routines for "`MOD`" ([323AH](#323ah)) and "\" ([31E6H](#31e6h)) but the logical operators are processed locally using the corresponding Z80 logical instructions on register pairs DE and HL. The result is stored in [DAC](#dac) as an integer (2F99H).
 
 <a name="4fc7h"></a>
 
-```
-Address... 4FC7H
-```
+    Address... 4FC7H
 
 This routine is used by the Factor Evaluator to apply the "`LPOS`" function to an operand contained in [DAC](#dac). The contents of [LPTPOS](#lptpos) are placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="4fcch"></a>
 
-```
-Address... 4FCCH
-```
+    Address... 4FCCH
 
 This routine is used by the Factor Evaluator to apply the "`POS`" function to an operand contained in [DAC](#dac). The contents of [TTYPOS](#ttypos) are placed in [DAC](#dac) as an integer (2F99).
 
 <a name="4fd5h"></a>
 
-```
-Address... 4FD5H
-```
+    Address... 4FD5H
 
 This routine is used by the Factor Evaluator to apply the "`USR`" function. The user number is collected directly from the program text, it cannot be an expression, and the associated address taken from [USRTAB](#usrtab) (4FF4H). The following parenthesized operand is then evaluated (4E87H) and left in [DAC](#dac) as the passed parameter. If it is a string type its storage is freed (67D3H). The current program text position is pushed onto the Z80 stack followed by a return to 3297H, the routine at this address will restore the program text position after the user function has terminated. Control then transfers to the user address with register pair HL pointing to the first byte of [DAC](#dac) and the type code, from [VALTYP](#valtyp), in register A. Additionally, for a string parameter, the descriptor address is taken from [DAC](#dac) and placed in register pair DE.
 
@@ -5391,25 +4797,19 @@ A point worth noting is that a "`CLEAR`" operation is not strictly necessary bef
 
 <a name="500eh"></a><a name="defusr"></a>
 
-```
-Address... 500EH
-```
+    Address... 500EH
 
 This is the "`DEFUSR`" statement handler. The user number is collected directly from the program text, it cannot be an expression, and the associated entry in [USRTAB](#usrtab) located (4FF4H). The address operand is then evaluated ([542FH](#542fh)) and placed in [USRTAB](#usrtab).
 
 <a name="501dh"></a><a name="def fn"></a>
 
-```
-Address... 501DH
-```
+    Address... 501DH
 
 This is the "`DEF FN`" and "`DEFUSR`" statement handler. If the following character is a "`USR`" token (DDH) control transfers to the "`DEFUSR`" statement handler ([500EH](#500eh)), otherwise the program text is checked for a trailing "`FN`" token (DEH). The function name Variable is located ([51A1H](#51a1h)) and, after checking that the Interpreter is in program mode ([5193H](#5193h)), the current program text position is placed there. Each of the Variables in the formal parameter list is then located in succession ([5EA4H](#5ea4h)), this is simply to ensure that they are created. The routine terminates by skipping over the remainder of the statement ([485BH](#485bh)) as the function body is not required at this time.
 
 <a name="5040h"></a>
 
-```
-Address... 5040H
-```
+    Address... 5040H
 
 This routine is used by the Factor Evaluator to apply the "`FN`" function. The function name Variable is first located ([51A1H](#51a1h)) to obtain the address of the function definition in the program text. Each formal Variable from the function definition is located in turn ([5EA4H](#5ea4h)) and its address pushed onto the Z80 stack. As each one is found the corresponding actual parameter is evaluated ([4C64H](#4c64h)) and pushed onto the stack with it. If necessary the type of the actual parameter is converted to match that of the formal parameter (517AH)'
 
@@ -5421,81 +4821,61 @@ It is worth noting that a user defined function is slower than an inline express
 
 <a name="5189h"></a>
 
-```
-Address... 5189H
-```
+    Address... 5189H
 
 This routine moves a block of memory from the address pointed to by register pair DE to that pointed to by register pair HL, register pair BC defines the length.
 
 <a name="5193h"></a>
 
-```
-Address... 5193H
-```
+    Address... 5193H
 
 This routine generate an "`Illegal direct`" error if [CURLIN](#curlin) shows the Interpreter to be in direct mode.
 
 <a name="51a1h"></a>
 
-```
-Address... 51A1H
-```
+    Address... 51A1H
 
 This routine checks the program text for an "`FN`" token (DEH) and then creates the function name Variable (5EA9H). These are distinguished from ordinary Variables by having bit 7 set in the first character of the Variable's name.
 
 <a name="51adh"></a>
 
-```
-Address... 51ADH
-```
+    Address... 51ADH
 
 Control transfers to this routine from the Runloop execution point ([4640H](#4640h)) if a token greater than D8H is found at the start of a statement. If the token is not an FFH prefixed function token a "`Syntax error`" is generated ([4055H](#4055h)). If the function token is one of those which double as statements control transfers to the relevant handler, otherwise a "`Syntax error`" is generated. The statements in question are "`MID$`" ([696EH](#696eh)), "`STRIG`" ([77BFH](#77bfh)) and "`INTERVAL`" ([77B1H](#77b1h)). There is actually no separate token for "`INTERVAL`", the "`INT`" token (85H) suffices with the remaining characters being checked by the statement handler.
 
 <a name="51c9h"></a><a name="width"></a>
 
-```
-Address... 51C9H
-```
+    Address... 51C9H
 
 This is the "`WIDTH`" statement handler. The operand is evaluated (521CH) and its magnitude checked. If it is zero or greater than thirty-two or forty, depending upon the screen mode held in [OLDSCR](#oldscr) an "`Illegal function call`" error is generated (475AH). If it is the same as the current contents of [LINLEN](#linlen) the routine terminates with no further action. Otherwise the current screen is cleared with a FORMFEED control code (0CH) via the [OUTDO](#outdo) standard routine in case the screen is to be made smaller. The operand is then placed in [LINLEN](#linlen) and either [LINL32](#linl32) or [LINL40](#linl40), depending upon the screen mode held in [OLDSCR](#oldscr), and the screen cleared again in case it has been made larger. Because the line length variable to be changed is selected by [OLDSCR](#oldscr), rather than [SCRMOD](#scrmod), the width can still be changed even if the screen is currently in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode). In this case the change is effective when a return is made to the Interpreter Mainloop or an "`INPUT`" statement is executed.
 
 <a name="520eh"></a>
 
-```
-Address... 520EH
-```
+    Address... 520EH
 
 This routine evaluates the next expression in the program text ([4C64H](#4c64h)), converts it to an integer ([2F8AH](#2f8ah)) and places the result in register pair DE. The magnitude and sign of the MSB are then tested and the routine terminates.
 
 <a name="521bh"></a>
 
-```
-Address... 521BH
-```
+    Address... 521BH
 
 This routine evaluates the next operand in the program text ([4C64H](#4c64h)) and converts it to an integer (5212H). If the operand is greater than 255 an "`Illegal function call`" error is generated (475AH).
 
 <a name="5229h"></a><a name="llist"></a>
 
-```
-Address... 5229H
-```
+    Address... 5229H
 
 This is the "`LLIST`" statement handler. [PRTFLG](#prtflg) is set to 01H, to direct output to the printer, and control drops into the "`LIST`" statement handler.
 
 <a name="522eh"></a><a name="list"></a>
 
-```
-Address... 522EH
-```
+    Address... 522EH
 
 This is the "`LIST`" statement handler. The optional start and termination line number operands are collected and the starting position found in the program text ([4279H](#4279h)). Successive program lines are listed until the end link is found, the CTRL-STOP key is pressed or the termination line number is reached, control then transfers directly to the Mainloop "`OK`" point ([411FH](#411fh)). Each program line is listed by displaying its line number ([3412H](#3412h)), detokenizing ([5284H](#5284h)) and displaying (527BH) the line itself and then issuing a CR,LF (7328H).
 
 <a name="5284h"></a>
 
-```
-Address... 5284H
-```
+    Address... 5284H
 
 This routine is used by the "`LIST`" statement handler to convert a tokenized program line to textual form. On entry register pair HL points to the first character of the tokenized line. On exit the line of text is in [BUF](#buf) and is terminated by a zero byte.
 
@@ -5505,49 +4885,37 @@ If one of the numeric tokens is found its value and type are first copied from [
 
 <a name="53e2h"></a><a name="delete"></a>
 
-```
-Address... 53E2H
-```
+    Address... 53E2H
 
 This is the "`DELETE`" statement handler. The optional start and termination line number operands are collected and the starting position found in the program text ([4279H](#4279h)). If any pointers exist in the program text they are converted back to line numbers (54EAH). The terminating program line is found by a search of the program text ([4295H](#4295h)), if this address is smaller than that of the starting program line an "`Illegal function call`" error is generated (475AH), otherwise the message "`OK`" is displayed ([6678H](#6678h)). The block of memory from the end of the terminating line to the start of the Variable Storage Area is copied down to the beginning of the starting line and [VARTAB](#vartab), [ARYTAB](#arytab) and [STREND](#strend) are reset to the new (lower) end of the program text. Control then transfers directly to the end of the Mainloop (4237H) to reset the remaining pointers and to relink the Program Text Area. Note that, because control does not return to the normal "`OK`" point, the screen will not be returned to text mode. If the screen is in [Graphics Mode](#graphics_mode) or [Multicolour mode](#multicolour_mode) when a "`DELETE`" is executed, which is admittedly rather unlikely, the system will crash.
 
 <a name="541ch"></a>
 
-```
-Address... 541CH
-```
+    Address... 541CH
 
 This routine is used by the Factor Evaluator to apply the "`PEEK`" function to an operand contained in [DAC](#dac). The address operand is checked ([5439H](#5439h)) then the byte read from memory and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="5423h"></a><a name="poke"></a>
 
-```
-Address... 5423H
-```
+    Address... 5423H
 
 This is the "`POKE`" statement handler. The address operand is evaluated ([542FH](#542fh)) then the data operand evaluated (521CH) and written to memory.
 
 <a name="542fh"></a>
 
-```
-Address... 542FH
-```
+    Address... 542FH
 
 This routine evaluates the next operand in the program text ([4C64H](#4c64h)) and places it in register pair DE as an integer ([5439H](#5439h)).
 
 <a name="5439h"></a>
 
-```
-Address... 5439H
-```
+    Address... 5439H
 
 This routine converts the numeric operand contained in [DAC](#dac) into an integer in register pair HL. The operand must be in the range -32768 to +65535 and is normally an address as required by "`POKE`", "`PEEK`", "`BLOAD`", etc. The operand's type is first checked via the [GETYPR](#getypr) standard routine, if it is already an integer it is simply placed in register pair HL ([2F8AH](#2f8ah)). Assuming the operand is single precision or double precision its sign is checked, if it is negative it is converted to integer ([2F8AH](#2f8ah)). Otherwise it is converted to single precision ([2FB2H](#2fb2h)) and its magnitude checked ([2F21H](#2f21h)). If it is greater than 32767 and smaller than 65536 then -65536 is added ([324EH](#324eh)) before it is converted to integer ([2F8AH](#2f8ah)).
 
 <a name="5468h"></a><a name="renum"></a>
 
-```
-Address... 5468H
-```
+    Address... 5468H
 
 This is the "`RENUM`" statement handler. If a new initial line number operand exists it is collected ([475FH](#475fh)), otherwise a default value of ten of taken. If an old initial line number operand exists it is collected ([475FH](#475fh)), otherwise a default value of zero is taken. If an increment line number operand exists it is collected (4769H), otherwise a default value of ten is taken.
 
@@ -5557,17 +4925,13 @@ A dummy renumbering run of the program text is first carried out to check than n
 
 <a name="54f6h"></a>
 
-```
-Address... 54F6H
-```
+    Address... 54F6H
 
 When entered at 54F6H this routine converts every line number operand in the program text to a pointer. When entered at 54F7H it performs the reverse operation and converts every pointer in the program text back to a line number operand. Starting at the beginning of the Program Text Area each line is examined for a pointer token (0DH) or a line number operand token (0EH) depending upon the mode. In pointer to line number operand mode the pointer is replaced by the line number from the referenced program line and the token changed to 0EH. In line number operand to pointer mode the program text is searched ([4295H](#4295h)) to find the relevant line, its address replaces the line number operand and the token is changed to 0DH. If the search is unsuccessful a message of the form "`Undefined line NNNN in NNNN`" is displayed ([6678H](#6678h)) and the conversion process continues. A special check is made for the "`ON ERROR GOTO 0`" statement, to prevent the generation of a spurious error message, but no check is made for the similar "`RESUME 0`" statement. In this case an error message will be displayed, this should be ignored.
 
 <a name="555ah"></a>
 
-```
-Address... 555AH
-```
+    Address... 555AH
 
 This is the plain text message "`Undefined line `" terminated by a zero byte.
 
@@ -5613,9 +4977,7 @@ Double Precision ... A=05H, Flag P,NZ,NC
 
 <a name="55a8h"></a><a name="call"></a>
 
-```
-Address... 55A8H
-```
+    Address... 55A8H
 
 This is the "`CALL`" statement handler. The extended statement name, which is an unquoted string up to fifteen characters long terminated by a "(", ":" or end of line character (00H), is first copied from the program text to [PROCNM](#procnm), any unused bytes are zero filled. Bit 5 of each entry in [SLTATR](#sltatr) is then examined for an extension ROM with a statement handler. If a suitable ROM is found its position in [SLTATR](#sltatr) is converted to a Slot ID in register A and a ROM base address in register H ([7E2AH](#7e2ah)). The statement handler address is read from ROM locations four and five ([7E1AH](#7e1ah)) and placed in register pair IX. The Slot ID is placed in the high byte of register pair IY and the ROM statement handler called via the [CALSLT](#calslt) standard routine.
 
@@ -5623,9 +4985,7 @@ The ROM will examine the statement name and return Flag C if it does not recogni
 
 <a name="55f8h"></a>
 
-```
-Address... 55F8H
-```
+    Address... 55F8H
 
 This routine is used by the device name parser ([6F15H](#6f15h)) when it cannot recognize a device name found in the program text. Upon entry register pair HL points to the first character of the name and register B holds its length. The name is first copied to [PROCNM](#procnm) and terminated by a zero byte. Bit 6 of each entry in [SLTATR](#sltatr) is then examined for an extension ROM with a device handler. If a suitable ROM is found its position in [SLTATR](#sltatr) is converted to a Slot ID in register A and a ROM base address in register H ([7E2AH](#7e2ah)). The device handler address is read from ROM locations six and seven ([7E1AH](#7e1ah)) and placed in register pair IX. The Slot ID is placed in the high byte of register pair IY, the unknown device code (FFH) in register A and the ROM device handler called via the [CALSLT](#calslt) standard routine.
 
@@ -5639,25 +4999,19 @@ The global device code is used by the Interpreter until the time comes for the R
 
 <a name="564ah"></a>
 
-```
-Address... 564AH
-```
+    Address... 564AH
 
 This routine is used by the function dispatcher ([6F8FH](#6f8fh)) when it encounters a device code not belonging to one of the standard devices. The device code is first converted to a [SLTATR](#sltatr) position and then to a Slot ID in register A and ROM base address in register H (7E2DH). The ROM device handler address is read from ROM locations six and seven ([7E1AH](#7e1ah)) and placed in register pair IX. The Slot ID is placed in the high byte of register pair IY, the ROM's internal device code in DEVICE and the ROM device handler called via the [CALSLT](#calslt) standard routine.
 
 <a name="566ch"></a>
 
-```
-Address... 566CH
-```
+    Address... 566CH
 
 This entry point to the macro language parser is used by the "`DRAW`" statement handler, a later entry point ([56A2H](#56a2h)) is used by the "`PLAY`" statement handler. The command string is evaluated ([4C64H](#4c64h)) and its storage freed ([67D0H](#67d0h)). After pushing a zero termination block onto the Z80 stack the length and address of the string body are placed in [MCLLEN](#mcllen) and [MCLPTR](#mclptr) and control drops into the parser mainloop.
 
 <a name="56a2h"></a>
 
-```
-Address... 56A2H
-```
+    Address... 56A2H
 
 This is the macro language parser mainloop, it is used to process the command string associated with a "`DRAW`" or "`PLAY`" statement' On entry the string length is in [MCLLEN](#mcllen), the string address is in [MCLPTR](#mclptr) and the address of the relevant command table is in [MCLTAB](#mcltab). The command tables contain the legal command letters, together with the associated command handler addresses, for each statement. The "`DRAW`" table is at 5D83H and the "`PLAY`" table at 752EH.
 
@@ -5667,57 +5021,43 @@ Assuming a command character exists the current command table is searched to che
 
 <a name="56eeh"></a>
 
-```
-Address... 56EEH
-```
+    Address... 56EEH
 
 This routine is used by the macro language parser to fetch the next character from the command string. If [MCLLEN](#mcllen) is zero the routine terminates with Flag Z, there are no characters left. Otherwise the next character is taken from the address contained in [MCLPTR](#mclptr) and returned in register A, if the character is lower case it is converted to upper case. [MCLPTR](#mclptr) is then incremented and [MCLLEN](#mcllen) decrement Ed.
 
 <a name="570bh"></a>
 
-```
-Address... 570BH
-```
+    Address... 570BH
 
 This routine is used by the macro language parser to return an unwanted character to the command string. [MCLLEN](#mcllen) is incremented and [MCLPTR](#mclptr) decremented.
 
 <a name="5719h"></a>
 
-```
-Address... 5719H
-```
+    Address... 5719H
 
 This routine is used by the macro language parser to collect a numeric parameter from the command string. The result is a signed integer and is returned in register pair DE, it cannot be an expression. The first character is taken and examined, if it is a "+" it is ignored and the next character taken ([5719H](#5719h)). If it is a "-" a return is set up to the negation routine (5795H) and the next character taken ([5719H](#5719h)). If it is an "=" the value of the following Variable is returned ([577AH](#577ah)). Otherwise successive characters are taken and a binary product accumulated until a non-numeric character is found.
 
 <a name="575ah"></a>
 
-```
-Address... 575AH
-```
+    Address... 575AH
 
 This routine is used by the macro language parser "=" and "X" handlers. The Variable name is copied to [BUF](#buf) until the ";" delimiter is found, if this takes more than thirty-nine characters to find an "`Illegal function call`" error is generated (475AH). Otherwise control transfers to the Factor Evaluator Variable handler ([4E9BH](#4e9bh)) and the Variable contents are returned in [DAC](#dac).
 
 <a name="577ah"></a>
 
-```
-Address... 577AH
-```
+    Address... 577AH
 
 This routine is used by the macro language parser to process the "=" character in a command parameter. The Variable's value is obtained ([575AH](#575ah)), converted to an integer ([2F8AH](#2f8ah)) and placed in register pair DE.
 
 <a name="5782h"></a>
 
-```
-Address... 5782H
-```
+    Address... 5782H
 
 This routine is used by the macro language parser to process the "X" command. The Variable is processed ([575AH](#575ah)) and, after checking that stack space is available ([625EH](#625eh)), the current contents of [MCLLEN](#mcllen) and [MCLPTR](#mclptr) are stacked. Control then transfers to the parser entry point (5679H) to obtain the Variable's descriptor and process the new command string.
 
 <a name="579ch"></a>
 
-```
-Address... 579CH
-```
+    Address... 579CH
 
 This routine is used by various graphics statements to evaluate a coordinate pair in the program text. The coordinates must be parenthesized with a comma separating the component operands. If the coordinate pair is preceded by a "`STEP`" token (DCH) each component value is added to the corresponding component of the current graphics coordinates in [GRPACX](#grpacx) and [GRPACY](#grpacy), otherwise the absolute values are returned. The X coordinate is returned in [GRPACX](#grpacx), [GXPOS](#gxpos) and register pair BC. The Y coordinate is returned in [GRPACY](#grpacy), [GYPOS](#gypos) and register pair DE.
 
@@ -5725,97 +5065,73 @@ There are two entry points to the routine, the one which is used depends on whet
 
 <a name="57e5h"></a><a name="preset"></a>
 
-```
-Address... 57E5H
-```
+    Address... 57E5H
 
 This is the "`PRESET`" statement handler. The current background colour is taken from [BAKCLR](#bakclr) and control drops into the "`PSET`" handler.
 
 <a name="57eah"></a><a name="pset"></a>
 
-```
-Address... 57EAH
-```
+    Address... 57EAH
 
 This is the "`PSET`" statement handler. After the coordinate pair has been evaluated (57ABH) the current foreground colour is taken from [FORCLR](#forclr) and used as the default when setting the ink colour ([5850H](#5850h)). The current graphics coordinates are converted to a physical address, via the [SCALXY](#scalxy) and [MAPXYC](#mapxyc) standard routines, and the colour of the current pixel set via the [SETC](#setc) standard routine.
 
 <a name="5803h"></a>
 
-```
-Address... 5803H
-```
+    Address... 5803H
 
 This routine is used by the Factor Evaluator to apply the "`POINT`" function. The current contents of [CLOC](#cloc), [CMASK](#cmask), [GYPOS](#gypos), [GXPOS](#gxpos), [GRPACY](#grpacy) and [GRPACX](#grpacx) are stacked and the coordinate pair operand evaluated (57ABH). The colour of the new pixel is read via the [SCALXY](#scalxy), [MAPXYC](#mapxyc) and [READC](#readc) standard routines and placed in [DAC](#dac) as an integer (2F99H), the old coordinate values are then popped and restored. Note that a value of -1 is returned if the point coordinates are outside the screen.
 
 <a name="5850h"></a>
 
-```
-Address... 5850H
-```
+    Address... 5850H
 
 This graphics routine is used to evaluate an optional colour operand in the program text and to make it the current ink colour. After checking the screen mode ([59BCH](#59bch)) the colour operand is evaluated (521CH) and placed in [ATRBYT](#atrbyt). If no operand exists the colour code supplied in register A is placed in [ATRBYT](#atrbyt) instead.
 
 <a name="5871h"></a>
 
-```
-Address... 5871H
-```
+    Address... 5871H
 
 This graphics routine returns the difference between the contents of [GXPOS](#gxpos) and register pair BC in register pair HL. If the result is negative ([GXPOS](#gxpos)\<BC) it is negated to produce the absolute magnitude and Flag C is returned.
 
 <a name="5883h"></a>
 
-```
-Address... 5883H
-```
+    Address... 5883H
 
 This graphics routine returns the difference between the contents of [GYPOS](#gypos) and register pair DE in register pair HL. If the result is negative ([GYPOS](#gypos)\<DE) it is negated to produce the absolute magnitude and Flag C is returned.
 
 <a name="588eh"></a>
 
-```
-Address... 588EH
-```
+    Address... 588EH
 
 This graphics routine swaps the contents of [GYPOS](#gypos) and register pair DE.
 
 <a name="5898h"></a>
 
-```
-Address... 5898H
-```
+    Address... 5898H
 
 This graphics routine first swaps the contents of [GYPOS](#gypos) and register pair DE ([588EH](#588eh)) then swaps the contents of [GXPOS](#gxpos) and register pair BC. When entered at 589BH only the second operation is performed.
 
 <a name="58a7h"></a><a name="line"></a>
 
-```
-Address... 58A7H
-```
+    Address... 58A7H
 
 This is the "`LINE`" statement handler. The first coordinate pair (X1,Y1) is evaluated ([579CH](#579ch)) and placed in register pairs BC,DE. After checking for the "-" token (F2H) the second coordinate pair (X2,Y2) is evaluated (57ABH) and left in [GRPACX](#grpacx), [GRPACY](#grpacy) and [GXPOS](#gxpos), [GYPOS](#gypos). After setting the ink colour (584DH) the program text is checked for a following "B" or "BF" option and either the box ([5912H](#5912h)), boxfill ([58BFH](#58bfh)) or linedraw ([58FCH](#58fch)) operation performed. None of these operations affects the current graphics coordinates in [GRPACX](#grpacx) and [GRPACY](#grpacy), these are left at X2,Y2.
 
 <a name="58bfh"></a>
 
-```
-Address... 58BFH
-```
+    Address... 58BFH
 
 This routine performs the boxfill operation. Given that the supplied coordinate pairs define diagonally opposed points of the box two quantities must be derived from them. The horizontal size of the box is obtained from the difference between X1 and X2, this gives the number of pixels to set per row. The vertical size is obtained from the difference between Y1 and Y2 giving the number of rows required. Starting at the physical address of X1,Y1, and moving successively lower via the [DOWNC](#downc) standard routine, the required number of pixel rows are filled in by repeated use of the [NSETCX](#nsetcx) standard routine.
 
 <a name="58fch"></a>
 
-```
-Address... 58FCH
-```
+    Address... 58FCH
 
 This routine performs the linedraw operation. After drawing the line ([593CH](#593ch)) [GXPOS](#gxpos) and [GYPOS](#gypos) are reset to X2,Y2 from [GRPACX](#grpacx) and [GRPACY](#grpacy).
 
 <a name="5912h"></a>
 
-```
-Address... 5912H
-```
+    Address... 5912H
 
 This routine performs the box operation. The box is produced by drawing a line ([58FCH](#58fch)) between each of the four corner points. The coordinates of each corner are derived from the initial operands by interchanging the relevant component of the pair. The drawing sequence is:
 
@@ -5828,9 +5144,7 @@ This routine performs the box operation. The box is produced by drawing a line (
 
 <a name="593ch"></a>
 
-```
-Address... 593CH
-```
+    Address... 593CH
 
 This routine draws a line between the points X1,Y1, supplied in register pairs BC and DE and X2,Y2, supplied in [GXPOS](#gxpos) and [GYPOS](#gypos). The operation of the drawing mainloop (5993H) is best illustrated by an example, say LINE(0,0)-(10,4). To reach the end point of the line from its start ten horizontal steps (X2- X1) and four downward steps (Y2-Y1) must be taken altogether. The best approximation to a straight line therefore requires two and a half horizontal steps for every downward step (X2-X1/Y2-Y1). While this is impossible in practice, as only integral steps can be taken, the correct ratio can be achieved on average.
 
@@ -5862,33 +5176,25 @@ An interesting point is that the reference counter, held in CTR in the above pro
 
 <a name="59b4h"></a>
 
-```
-Address... 59B4H
-```
+    Address... 59B4H
 
 This graphics routine shifts the contents of register pair DE one bit to the right.
 
 <a name="59bch"></a>
 
-```
-Address... 59BCH
-```
+    Address... 59BCH
 
 This routine generates an "`Illegal function call`" error (475AH) if the screen is not in [Graphics Mode](#graphics_mode) or [Multicolour Mode](#multicolour_mode).
 
 <a name="59c5h"></a><a name="paint"></a>
 
-```
-Address... 59C5H
-```
+    Address... 59C5H
 
 This is the "`PAINT`" statement handler. The starting coordinate pair is evaluated ([579CH](#579ch)), the ink colour set (584DH) and the optional boundary colour operand evaluated (521CH) and placed in [BDRATR](#bdratr). The starting coordinate pair is checked to ensure that it is within the screen ([5E91H](#5e91h)) and is made the current pixel physical address by the [MAPXYC](#mapxyc) standard routine. The distance to the right hand boundary is then measured ([5ADCH](#5adch)) and, if it is zero, the handler terminates. Otherwise the distance to the left hand boundary is measured ([5AEDH](#5aedh)) and the sum of the two placed in register pair DE as the zone width. The current position is then stacked twice (5ACEH), first with a termination flag (00H) and then with a down direction flag (40H). Control then transfers to the paint mainloop ([5A26H](#5a26h)) with an up direction flag (C0H) in register B.
 
 <a name="5a26h"></a>
 
-```
-Address... 5A26H
-```
+    Address... 5A26H
 
 This is the paint mainloop. The zone width is held in register pair DE, the paint direction, up or down, in register B and the current pixel physical address is that of the pixel adjacent to the left hand boundary. A vertical step is taken to the next line, via the [TUPC](#tupc) or [TDOWNC](#tdownc) standard routines, and the distance to the right hand boundary measured ([5ADCH](#5adch)). The distance to the left hand boundary is then measured and the line between the boundaries filled in ([5AEDH](#5aedh)). If no change is found in the position of either boundary control transfers to the start of the mainloop to continue painting in the same direction. If a change is found an inflection has occurred and the appropriate action must be taken.
 
@@ -5906,9 +5212,7 @@ A LH incursion is dealt with automatically during the search for the right hand 
 
 <a name="5ac2h"></a>
 
-```
-Address... 5AC2H
-```
+    Address... 5AC2H
 
 This routine is used by the "`PAINT`" statement handler to save the current paint position and direction on the Z80 stack. The six byte parameter block is made up of the following:
 
@@ -5923,41 +5227,31 @@ After the parameters have been stacked a check is made that sufficient stack spa
 
 <a name="5adch"></a>
 
-```
-Address... 5ADCH
-```
+    Address... 5ADCH
 
 This routine is used by the "`PAINT`" statement handler to locate the right hand boundary. The zone width of the previous line is passed to the [SCANR](#scanr) standard routine in register pair DE, this determines the maximum number of boundary colour pixels that may initially be skipped over. The returned skip count remainder is placed in [SKPCNT](#skpcnt) and the number of non-boundary colour pixels traversed in [MOVCNT](#movcnt).
 
 <a name="5aedh"></a>
 
-```
-Address... 5AEDH
-```
+    Address... 5AEDH
 
 This routine is used by the "`PAINT`" statement handler to locate the left hand boundary. The end point of the right hand boundary search is temporarily saved and the starting point taken from [CSAVEA](#csavea) and [CSAVEM](#csavem) and made the current pixel physical address. The left hand boundary is then located via the [SCANL](#scanl) standard routine, which also fills in the entire zone, and the right hand end point recovered and placed in [CSAVEA](#csavea) and [CSAVEM](#csavem).
 
 <a name="5b0bh"></a>
 
-```
-Address... 5B0BH
-```
+    Address... 5B0BH
 
 This routine is used by the "`CIRCLE`" statement handler to negate the contents of register pair DE.
 
 <a name="5b11h"></a><a name="circle"></a>
 
-```
-Address... 5B11H
-```
+    Address... 5B11H
 
 This is the "`CIRCLE`" statement handler. After evaluating the centre coordinate pair ([579CH](#579ch)) the radius is evaluated (520FH), multiplied ([325CH](#325ch)) by SIN(PI/4) and placed in [CNPNTS](#cnpnts). The ink colour is set (584DH), the start angle evaluated ([5D17H](#5d17h)) and placed in [CSTCNT](#cstcnt) and the end angle evaluated ([5D17H](#5d17h)) and placed in [CENCNT](#cencnt). If the end angle is smaller than the start angle the two values are swapped and [CPLOTF](#cplotf) is made non-zero. The aspect ratio is evaluated ([4C64H](#4c64h)) and, if it is greater than one, its reciprocal is taken (3267H) and [CSCLXY](#csclxy) is made non-zero to indicate an X axis squash. The aspect ratio is multiplied ([325CH](#325ch)) by 256, converted to an integer ([2F8AH](#2f8ah)) and placed in [ASPECT](#aspect) as a single byte binary fraction. Register pairs HL and DE are set to the starting position on the circle perimeter (X=RADIUS,Y=0) and control drops into the circle mainloop.
 
 <a name="5bbdh"></a>
 
-```
-Address... 5BBDH
-```
+    Address... 5BBDH
 
 This is the circle mainloop. Because of the high degree of symmetry in a circle it is only necessary to compute the coordinates of the arc from zero to forty-five degrees. The other seven segments are produced by rotation and reflection of these points. The parametric equation for a unit circle, with T the angle from zero to PI/4, is:
 
@@ -6000,9 +5294,7 @@ The coordinate pairs generated by the mainloop are those of a "virtual" circle, 
 
 <a name="5c06h"></a>
 
-```
-Address... 5C06H
-```
+    Address... 5C06H
 
 This routine is used to by the circle mainloop to convert a coordinate pair, in register pairs HL and DE, into eight symmetric points on the screen. The Y coordinate is initially negated ([5B0BH](#5b0bh)), reflecting it about the X axis, and the first four points produced by successive clockwise rotations through ninety degrees (5C48H). The Y coordinate is then negated again ([5B0BH](#5b0bh)) and a further four points produced (5C48H).
 
@@ -6026,17 +5318,13 @@ In parallel with the computation of each circle coordinate the number of points 
 
 <a name="5cebh"></a>
 
-```
-Address... 5CEBH
-```
+    Address... 5CEBH
 
 This routine multiplies the coordinate value supplied in register pair DE by the aspect ratio contained in [ASPECT](#aspect), the result is returned in register pair DE. The standard binary shift and add method is used but the operation is performed as two single byte multiplications to avoid overflow problems.
 
 <a name="5d17h"></a>
 
-```
-Address... 5D17H
-```
+    Address... 5D17H
 
 This routine is used by the "`CIRCLE`" statement handler to convert an angle operand to the form required by the circle mainloop, the result is returned in register pair DE. While the method used is basically sound, and eliminates one trigonometric computation per angle, the results produced are inaccurate. This is demonstrated by the following example which draws a line to the true thirty degree point on a circle's perimeter:
 
@@ -6054,17 +5342,13 @@ Unfortunately the routine computes the number of points within a segment by line
 
 <a name="5d6eh"></a><a name="draw"></a>
 
-```
-Address... 5D6EH
-```
+    Address... 5D6EH
 
 This is the "`DRAW`" statement handler. Register pair DE is set to point to the command table at 5D83H and control transfers to the macro language parser ([566CH](#566ch)).
 
 <a name="5d83h"></a>
 
-```
-Address... 5D83H
-```
+    Address... 5D83H
 
 This table contains the valid command letters and associated addresses for the "`DRAW`" statement commands. Those commands which takes a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
 
@@ -6090,89 +5374,67 @@ This table contains the valid command letters and associated addresses for the "
 
 <a name="5db1h"></a>
 
-```
-Address... 5DB1H
-```
+    Address... 5DB1H
 
 This is the "`DRAW`" statement "`U`" command handler. The operation of the "`D`", "`L`", "`R`", "`E`", "`F`", "`G`" and "`H`" commands is very similar so no separate description of their handlers is given. The optional numeric parameter is supplied by the macro language parser in register pair DE. This initial parameter is modified by a given handler into a horizontal offset in register pair BC and a vertical offset in register pair DE. For example if leftward or upward movement is required the parameter is negated ([5B0BH](#5b0bh)), if diagonal movement is required the parameter is duplicated so that equal horizontal and vertical offsets are produced. Once the offsets have been prepared control transfers to the line drawing routine (5DFFH).
 
 <a name="5dd8h"></a>
 
-```
-Address... 5DD8H
-```
+    Address... 5DD8H
 
 This is the "`DRAW`" statement "`M`" command handler. The character following the command letter is examined then the two parameters collected from the command string ([5719H](#5719h)). If the initial character is "+" or "-" the parameters are regarded as offsets and are scaled ([5E66H](#5e66h)), rotated through successive ninety degree steps as determined by [DRWANG](#drwang) and then added to the current graphics coordinates (5CDCH) to determine the termination point. If [DRWFLG](#drwflg) shows the "`B`" mode to be inactive a line is then drawn (5CCDH) from the current graphics coordinates to the termination point. If [DRWFLG](#drwflg) shows the "`N`" mode to be inactive the termination coordinates are placed in [GRPACX](#grpacx) and [GRPACY](#grpacy) to become the new current graphics coordinates. Finally [DRWFLG](#drwflg) is zeroed, turning the "`B`" and "`N`" modes off, and the handler terminates.
 
 <a name="5e42h"></a>
 
-```
-Address... 5E42H
-```
+    Address... 5E42H
 
 This is the "`DRAW`" statement "`N`" command handler, [DRWFLG](#drwflg) is simply set to 40H.
 
 <a name="5e46h"></a>
 
-```
-Address... 5E46H
-```
+    Address... 5E46H
 
 This is the "`DRAW`" statement "`B`" command handler, [DRWFLG](#drwflg) is simply set to 80H.
 
 <a name="5e4eh"></a>
 
-```
-Address... 5E4EH
-```
+    Address... 5E4EH
 
 This is the "`DRAW`" statement "`A`" command handler. The parameter is checked for magnitude and placed in [DRWANG](#drwang).
 
 <a name="5e59h"></a>
 
-```
-Address... 5E59H
-```
+    Address... 5E59H
 
 This is the "`DRAW`" statement "`S`" command handler. The parameter is checked for magnitude and placed in [DRWSCL](#drwscl).
 
 <a name="5e66h"></a>
 
-```
-Address... 5E66H
-```
+    Address... 5E66H
 
 This routine is used by the "`DRAW`" statement "`U`", "`D`", "`L`", "`R`", "`E`", "`F`", "`G`", "`H`" and "`M`" (in offset mode) command handlers to scale the offset supplied in register pair DE by the contents of [DRWSCL](#drwscl). Unless [DRWSCL](#drwscl) is zero, in which case the routine simply terminates, the offset is multiplied using repeated addition and then divided by four ([59B4H](#59b4h)). To eliminate scaling an "`S0`" or "`S4`" command should be used.
 
 <a name="5e87h"></a>
 
-```
-Address... 5E87H
-```
+    Address... 5E87H
 
 This is the "`DRAW`" statement "`C`" command handler. The parameter is placed in [ATRBYT](#atrbyt) via the [SETATR](#setatr) standard routine. There is no check on the MSB of the parameter so illegal values such as "`C265`" will be accepted without an error message.
 
 <a name="5e91h"></a>
 
-```
-Address... 5E91H
-```
+    Address... 5E91H
 
 This routine is used by the "`PAINT`" statement handler to check, via the [SCALXY](#scalxy) standard routine, that the coordinates in register pairs BC and DE are within the screen. If not an "`Illegal function call`" error is generated (475AH).
 
 <a name="5e9fh"></a><a name="dim"></a>
 
-```
-Address... 5E9FH
-```
+    Address... 5E9FH
 
 This is the "`DIM`" statement handler. A return is set up to 5E9AH, so that multiple Arrays can be processed, [DIMFLG](#dimflg) is made non-zero and control drops into the Variable search routine.
 
 <a name="5ea4h"></a>
 
-```
-Address... 5EA4H
-```
+    Address... 5EA4H
 
 This is the Variable search routine. On entry register pair HL points to the first character of the Variable name in the program text. On exit register pair HL points to the character following the name and register pair DE to the first byte of the Variable contents in the Variable Storage Area. The first character of the name is taken from the program text, checked to ensure that it is upper case alphabetic ([64A7H](#64a7h)) and placed in register C. The optional second character, with a default value of zero, is placed in register B, this character may be alphabetic or numeric. Any further alphanumeric characters are then simply skipped over. If a type suffix character ("%", "$", "!" or "#") follows the name this is converted to the corresponding type code (2, 3, 4 or 8) and placed in [VALTYP](#valtyp). Otherwise the Variable's default type is taken from [DEFTBL](#deftbl) using the first letter of the name to locate the appropriate entry.
 
@@ -6180,9 +5442,7 @@ This is the Variable search routine. On entry register pair HL points to the fir
 
 <a name="5f08h"></a>
 
-```
-Address... 5F08H
-```
+    Address... 5F08H
 
 This is the simple Variable search routine. There are four types of simple Variable each composed of a header followed by the Variable contents. The first byte of the header contains the type code and the next two bytes the Variable name. The contents of the Variable will be one of the three standard numeric forms or, for the string type, the length and address of the string. Each of the four types is shown below:
 
@@ -6196,9 +5456,7 @@ There are two exceptions to this automatic creation of a new Variable. If the se
 
 <a name="5fbah"></a>
 
-```
-Address... 5FBAH
-```
+    Address... 5FBAH
 
 This is the Array search routine. There are four types of Array each composed of a header plus a number of elements. The first byte of the header contains the type code, the next two bytes the Array name and the next two the offset to the start of the following Array. This is followed by a single byte containing the dimensionality of the Array and the element count list. Each two byte element count contains the maximum number of elements per dimension. These are stored in reverse order with the first one corresponding to the last subscript. The contents of each Array element are identical to the contents of the corresponding simple Variable. The integer Array AB%(3,4) is shown below with each element identified by its subscripts, high memory is towards the top of the page:
 
@@ -6214,9 +5472,7 @@ This is the element address computation point of the Array search routine. The l
 
 <a name="60b1h"></a>
 
-```
-Address... 60B1H
-```
+    Address... 60B1H
 
 This is the "`PRINT USING`" statement handler. Control transfers here from the general "`PRINT`" statement handler after the applicable output device has been set up. Upon termination control passes back to the general "`PRINT`" statement exit point ([4AFFH](#4affh)) to restore the normal video output. The format string is evaluated (4C65H) and the address and length of the string body obtained from the descriptor. The program text pointer is then temporarily saved. Each character of the format string is examined until one of the possible template characters is found. If the character does not belong in a template it is simply output via the [OUTDO](#outdo) standard routine. Once the start of a template is found this is scanned along until a non-template character is found. Control then passes to the numeric output routine (6192H) or the string output routine (6211H).
 
@@ -6224,145 +5480,109 @@ In either case the program text pointer is restored to register pair HL and the 
 
 <a name="6250h"></a>
 
-```
-Address... 6250H
-```
+    Address... 6250H
 
 This routine is used by the Interpreter Mainloop and the Variable search routine to move a block of memory upwards. A check is first made to ensure that sufficient memory exists (6267H) and then the block of memory is moved. The top source address is supplied in register pair BC and the top destination address in register pair HL. Copying stops when the contents of register pair BC equal those of register pair DE.
 
 <a name="625eh"></a>
 
-```
-Address... 625EH
-```
+    Address... 625EH
 
 This routine is used to check that sufficient memory is available between the top of the Array Storage Area and the base of the Z80 stack. On entry register C contains the number of words the caller requires. If this would narrow the gap to less than two hundred bytes an "`Out of memory`" error is generated.
 
 <a name="6286h"></a>
 
-```
-Address... 6286H
-```
+    Address... 6286H
 
 This is the "`NEW`" statement handler. [TRCFLG](#trcflg), [AUTFLG](#autflg) and [PTRFLG](#ptrflg) are zeroed and the zero end link is placed at the start of the Program Text Area. [VARTAB](#vartab) is set to point to the byte following the end link and control drops into the run-clear routine.
 
 <a name="629ah"></a>
 
-```
-Address... 629AH
-```
+    Address... 629AH
 
 This routine is used by the "`NEW`", "`RUN`" and "`CLEAR`" statement handlers to initialize the Interpreter variables. All interrupts are cleared (636EH) and the default Variable types in [DEFTBL](#deftbl) set to double precision. [RNDX](#rndx) is reset ([2C24H](#2c24h)) and [ONEFLG](#oneflg), [ONELIN](#onelin) and [OLDTXT](#oldtxt) are zeroed. [MEMSIZ](#memsiz) is copied to [FRETOP](#fretop) to clear the String Storage Area and [DATPTR](#datptr) set to the start of the Program Text Area ([63C9H](#63c9h)). The contents of [VARTAB](#vartab) are copied into [ARYTAB](#arytab) and [STREND](#strend), to clear any Variables, all the I/O buffers are closed ([6C1CH](#6c1ch)) and [NLONLY](#nlonly) is reset. [SAVSTK](#savstk) and the Z80 SP are reset from [STKTOP](#stktop) and [TEMPPT](#temppt) is reset to the start of [TEMPST](#tempst) to clear any string descriptors. The printer is shut down ([7304H](#7304h)) and output restored to the screen ([4AFFH](#4affh)). Finally [PRMLEN](#prmlen), [NOFUNS](#nofuns), [PRMLN2](#prmln2), [FUNACT](#funact), [PRMSTK](#prmstk) and [SUBFLG](#subflg) are zeroed and the routine terminates.
 
 <a name="631bh"></a>
 
-```
-Address... 631BH
-```
+    Address... 631BH
 
 This routine is used by the "`DEVICE ON`" statement handlers to enable an interrupt source, the address of the relevant device's [TRPTBL](#trptbl). status byte is supplied in register pair HL. Interrupts are enabled by setting bit 0 of the status byte. Bits 1 and 2 are then examined and, if the device has been stopped and an interrupt has occurred, [ONGSBF](#ongsbf) is incremented (634FH) so that the Runloop will process it at the end of the statement. Finally bit 1 of the status byte is reset to release any existing stop condition.
 
 <a name="632eh"></a>
 
-```
-Address... 632EH
-```
+    Address... 632EH
 
 This routine is used by the "`DEVICE OFF`" statement handlers to disable an interrupt source, the address of the relevant device's [TRPTBL](#trptbl) status byte is supplied in register pair HL. Bits 0 and 2 are examined to determine whether an interrupt has occurred since the end of the last statement, if so [ONGSBF](#ongsbf) is decremented (6362H) to prevent the Runloop from picking it up. The status byte is then zeroed.
 
 <a name="6331h"></a>
 
-```
-Address... 6331H
-```
+    Address... 6331H
 
 This routine is used by the "`DEVICE STOP`" statement handlers to suspend processing of interrupts from an interrupt source, the address of the relevant device's [TRPTBL](#trptbl) status byte is supplied in register pair HL. Bits 0 and 2 are examined to determine whether an interrupt has occurred since the end of the last statement, if so [ONGSBF](#ongsbf) is decremented (6362H) to prevent the Runloop from picking it up. Bit 1 of the status byte is then set.
 
 <a name="633eh"></a>
 
-```
-Address... 633EH
-```
+    Address... 633EH
 
 This routine is used by the "`RETURN`" statement handler to release the temporary stop condition imposed during interrupt driven BASIC subroutines, the address of the relevant device's [TRPTBL](#trptbl) status byte is supplied in register pair HL. Bits 0, and 2 are examined to determine whether a stopped interrupt has occurred since the subroutine was first activated. If so [ONGSBF](#ongsbf) is incremented (634FH) so that the Runloop will pick it up at the end of the statement. Bit 1 of the status byte is then reset. It should be noted that any "`DEVICE STOP`" Statement within an interrupt driven subroutine will therefore be ineffective.
 
 <a name="6358h"></a>
 
-```
-Address... 6358H
-```
+    Address... 6358H
 
 This routine is used by the Runloop interrupt processor ([6389H](#6389h)) to clear an interrupt prior to activating the BASIC subroutine, the address of the relevant device's [TRPTBL](#trptbl) status byte is supplied in register pair HL. [ONGSBF](#ongsbf) is decremented and bit 2 of the status byte is reset.
 
 <a name="636eh"></a>
 
-```
-Address... 636EH
-```
+    Address... 636EH
 
 This routine is used by the run-clear routine ([629AH](#629ah)) to clear all interrupts. The seventy-eight bytes of [TRPTBL](#trptbl) and the ten bytes of [FNKFLG](#fnkflg) are zeroed.
 
 <a name="6389h"></a>
 
-```
-Address... 6389H
-```
+    Address... 6389H
 
 This is the Runloop interrupt processor. [ONEFLG](#oneflg) is first examined to determine whether an error condition currently exists. If so the routine terminates, no interrupts will be processed until the error clears. [CURLIN](#curlin) is then examined and, if the Interpreter is in direct mode, the routine terminates. Assuming all is well a search is made of the twenty-six status bytes in [TRPTBL](#trptbl) to find the first active interrupt. Note that devices near the start of the table will consequently have a higher priority than those lower down. When the first active status byte is found, that is one with bits 0 and 2 set, the associated address is taken from [TRPTBL](#trptbl) and placed in register pair DE. The interrupt is then cleared ([6358H](#6358h)) and the device stopped ([6331H](#6331h)) before control transfers to the "`GOSUB`" handler ([47CFH](#47cfh)).
 
 <a name="63c9h"></a>
 
-```
-Address... 63C9H
-```
+    Address... 63C9H
 
 This is the "`RESTORE`" statement handler. If no line number operand exists [DATPTR](#datptr) is set to the start of the Program Storage Area. Otherwise the operand is collected (4769H), the program text searched to find the relevant line ([4295H](#4295h)) and its address placed in [DATPTR](#datptr).
 
 <a name="63e3h"></a>
 
-```
-Address... 63E3H
-```
+    Address... 63E3H
 
 This is the "`STOP`" statement handler. If further text exists in the statement control transfers to the "`STOP ON/OFF/STOP`" statement handler ([77A5H](#77a5h)). Otherwise register A is set to 01H and control drops into the "`END`" statement handler.
 
 <a name="63eah"></a>
 
-```
-Address... 63EAH
-```
+    Address... 63EAH
 
 This is the "`END`" statement handler. It is also used, with differing entry points, by the "`STOP`" statement and for CTRL- STOP and end of text program termination. [ONEFLG](#oneflg) is first zeroed and then, for the "`END`" statement only, all I/O buffers are closed ([6C1CH](#6c1ch)). The current program text position is placed in [SAVTXT](#savtxt) and [OLDTXT](#oldtxt) and the current line number in [OLDLIN](#oldlin) for use by any subsequent "`CONT`" statement. The printer is shut down ([7304H](#7304h)), a CR LF issued to the screen ([7323H](#7323h)) and register pair HL set to point to the "`Break`" message at 3FDCH. For the "`END`" statement and end of text cases control then transfers to the Mainloop "`OK`" point (411EH). For the CTRL-STOP case control transfers to the end of the error handler (40FDH) to display the "`Break`" message.
 
 <a name="6424h"></a>
 
-```
-Address... 6424H
-```
+    Address... 6424H
 
 This is the "`CONT`" statement handler. Unless they are zero, in which case a "`Can't CONTINUE`" error is generated, the contents of [OLDTXT](#oldtxt) are placed in register pair HL and those of [OLDLIN](#oldlin) in [CURLIN](#curlin). Control then returns to the Runloop to execute at the old program text position. A program cannot be continued after CTRL-STOP has been used to break from WITHIN a statement, via the [CKCNTC](#ckcntc) standard routine, rather than from between statements.
 
 <a name="6438h"></a>
 
-```
-Address... 6438H
-```
+    Address... 6438H
 
 This is the "`TRON`" statement handler, [TRCFLG](#trcflg) is simply made non-zero.
 
 <a name="6439h"></a>
 
-```
-Address... 6439H
-```
+    Address... 6439H
 
 This is the "`TROFF`" statement handler, [TRCFLG](#trcflg) is simply made zero.
 
 <a name="643eh"></a>
 
-```
-Address... 643EH
-```
+    Address... 643EH
 
 This is the "`SWAP`" statement handler. The first Variable is located ([5EA4H](#5ea4h)) and its contents copied to [SWPTMP](#swptmp). The location of this Variable and of the end of the Variable Storage Area are temporarily saved. The second Variable is then located ([5EA4H](#5ea4h)) and its type compared with that of the first. If the types fail to match a "`Type mismatch`" error is generated ([406DH](#406dh)). The current end of the Variable Storage Area is then compared with the old end and an "`Illegal function call`" error generated (475AH) if they differ. Finally the contents of the second Variable are copied to the location of the first Variable (2EF3H) and the contents of [SWPTMP](#swptmp) to the location of the second Variable (2EF3H).
 
@@ -6370,25 +5590,19 @@ The checks performed by the handler mean that the second Variable, if it is simp
 
 <a name="6477h"></a>
 
-```
-Address... 6477H
-```
+    Address... 6477H
 
 This is the "`ERASE`" statement handler. [SUBFLG](#subflg) is first set to 01H, to control the Variable search routine, and the Array located ([5EA4H](#5ea4h)). All the following Arrays are moved downward and [STREND](#strend) set to its new, lower value. The program text is then checked and, if a comma follows, control transfers back to the start of the handler.
 
 <a name="64a7h"></a>
 
-```
-Address... 64A7H
-```
+    Address... 64A7H
 
 This routine checks whether the character whose address is supplied in register pair HL is upper case alphabetic, if so it returns Flag NC.
 
 <a name="64afh"></a>
 
-```
-Address... 64AFH
-```
+    Address... 64AFH
 
 This is the "`CLEAR`" statement handler. If no operands are present control transfers to the run-clear routine (62A1H) to remove all current Variables. Otherwise the string space operand is evaluated (4756H) followed by the optional top of memory operand ([542FH](#542fh)). The top of memory value is checked and an "`Illegal function call`" error generated (475AH) if it is less than 8000H or greater than F380H. The space required by the I/O buffers (267 bytes each) and the String Storage Area is subtracted from the top of memory value and an "`Out of memory`" error generated (6275H) if there is less than 160 bytes remaining to the base of the Variable Storage Area. Assuming all is well [HIMEM](#himem), [MEMSIZ](#memsiz) and [STKTOP](#stktop) are set to their new values and the remaining storage pointers reset via the run- clear routine (62A1H). The I/O buffer storage is re-allocated ([7E6BH](#7e6bh)) and the handler terminates.
 
@@ -6404,17 +5618,13 @@ Because there should be an extra DEC HL instruction at 64EBH the new values of [
 
 <a name="6520h"></a>
 
-```
-Address... 6520H
-```
+    Address... 6520H
 
 This routine computes the difference between the contents of register pairs HL and DE. It is a duplicate of the short section of code from 64ECH to 64F1H and is completely unused.
 
 <a name="6527h"></a>
 
-```
-Address... 6527H
-```
+    Address... 6527H
 
 This is the "`NEXT`" statement handler. Assuming further text is present in the statement the loop Variable is located ([5EA4H](#5ea4h)), otherwise a default address of zero is taken. The stack is then searched for the corresponding "`FOR`" parameter block ([3FE2H](#3fe2h)). If no parameter block is found, or if a "`GOSUB`" parameter block is found first, a "`NEXT without FOR`" error is generated ([405BH](#405bh)). Assuming the parameter block is found the intervening section of stack, together with any "`FOR`" blocks it may contain, is discarded. The loop Variable type is then taken from the parameter block and examined to determine the precision required during subsequent operations.
 
@@ -6422,9 +5632,7 @@ The STEP value is taken from the parameter block and added (3172H, 324EH or 2697
 
 <a name="65c8h"></a>
 
-```
-Address... 65C8H
-```
+    Address... 65C8H
 
 This routine is used by the Expression Evaluator to find the relation (<>=) between two string operands. The address of the first string descriptor is supplied on the Z80 stack and the address of the second in [DAC](#dac). The result is returned in register A and the flags as for the numeric relation routines:
 
@@ -6438,81 +5646,61 @@ Comparison commences at the first character of each string and continues until t
 
 <a name="65f5h"></a>
 
-```
-Address... 65F5H
-```
+    Address... 65F5H
 
 This routine is used by the Factor Evaluator to apply the "`OCT$`" function to an operand contained in [DAC](#dac). The number is first converted to textual form in [FBUFFR](#fbuffr) ([371EH](#371eh)) and then the result string is created (6607H).
 
 <a name="65fah"></a>
 
-```
-Address... 65FAH
-```
+    Address... 65FAH
 
 This routine is used by the Factor Evaluator to apply the "`HEX$`" function to an operand contained in [DAC](#dac). The number is first converted to textual form in [FBUFFR](#fbuffr) ([3722H](#3722h)) and then the result string is created (6607H).
 
 <a name="65ffh"></a>
 
-```
-Address... 65FFH
-```
+    Address... 65FFH
 
 This routine is used by the Factor Evaluator to apply the "`BIN$`" function to an operand contained in [DAC](#dac). The number is first converted to textual form in [FBUFFR](#fbuffr) ([371AH](#371ah)) and then the result string is created (6607H).
 
 <a name="6604h"></a>
 
-```
-Address... 6604H
-```
+    Address... 6604H
 
 This routine is used by the Factor Evaluator to apply the "`STR$`" function to an operand contained in [DAC](#dac). The number is first converted to textual form in [FBUFFR](#fbuffr) ([3425H](#3425h)) then analyzed to determine its length and address (6635H). After checking that sufficient space is available ([668EH](#668eh)) the string is copied to the String Storage Area (67C7H) and the result descriptor created ([6654H](#6654h)).
 
 <a name="6627h"></a>
 
-```
-Address... 6627H
-```
+    Address... 6627H
 
 This routine first checks that there is sufficient space in the String Storage Area for the string whose length is supplied in register A (668EH). The string length and the address where the string will be placed in the String Storage Area are then copied to [DSCTMP](#dsctmp).
 
 <a name="6636h"></a>
 
-```
-Address... 6636H
-```
+    Address... 6636H
 
 This routine is used by the Factor Evaluator to analyze the character string whose address is supplied in register pair HL. The character string is scanned until a terminating character (00H or ") is found. The length and starting address are then placed in [DSCTMP](#dsctmp) (662AH) and control drops into the descriptor creation routine.
 
 <a name="6654h"></a>
 
-```
-Address... 6654H
-```
+    Address... 6654H
 
 This routine is used by the string functions to create a result descriptor. The descriptor is copied from [DSCTMP](#dsctmp) to the next available position in [TEMPST](#tempst) and its address placed in [DAC](#dac). Unless [TEMPST](#tempst) is full, in which case a "`String formula too complex`" error is generated, [TEMPPT](#temppt) is increased by three bytes and the routine terminates.
 
 <a name="6678h"></a>
 
-```
-Address... 6678H
-```
+    Address... 6678H
 
 This routine displays the message, or string, whose address is supplied in register pair HL. The string is analyzed (6635H) and its storage freed (67D3H). Successive characters are then taken from the string and displayed, via the [OUTDO](#outdo) standard routine, until the string is exhausted.
 
 <a name="668eh"></a>
 
-```
-Address... 668EH
-```
+    Address... 668EH
 
 This routine checks that there is room in the String Storage Area to add the string whose length is supplied in register A. On exit register pair DE points to the starting address in the String Storage Area where the string should be placed. The length of the string is first subtracted from the current free location contained in [FRETOP](#fretop). This is then compared with [STKTOP](#stktop), the lowest allowable location for string storage, to determine whether there is space for the string. If so [FRETOP](#fretop) is updated with the new position and the routine terminates. If there is insufficient space for the string then garbage collection is initiated ([66B6H](#66b6h)) to try and eliminate any dead strings. If, after garbage collection, there is still not enough space an "`Out of string space`" error is generated.
 
 <a name="66b6h"></a>
 
-```
-Address... 66B6H
-```
+    Address... 66B6H
 
 This is the string garbage collector, its function is to eliminate any dead strings from the String Storage Area. The basic problem with string Variables, as opposed to numeric ones, is that their lengths vary. If string bodies were stored with their Variables in the Variable Storage Area even such apparently simple statements as A$=A$+"X" would require the movement of thousands of bytes of memory and slow execution speeds dramatically. The method used by the Interpreter to overcome this problem is to keep the string bodies separate from the Variables. Thus strings are kept in the String Storage Area and each Variable holds a three byte descriptor containing the length and address of the associated string. Whenever a string is assigned to a Variable it is simply added to the heap of existing strings in the String Storage Area and the Variable's descriptor changed. No attempt is made to eliminate any previous string belonging to the Variable, by restructuring the heap, as this would wipe out any throughput gains.
 
@@ -6538,137 +5726,103 @@ The second exception occurs when the Factor Evaluator finds a reference to a Var
 
 <a name="6787h"></a>
 
-```
-Address... 6787H
-```
+    Address... 6787H
 
 This routine is used by the Expression Evaluator to concatenate two string operands. Control transfers here when a "+" token is found following a string operand so the first action taken is to fetch the second string operand via the Factor Evaluator ([4DC7H](#4dc7h)). The lengths are then taken from both string descriptors and added together to check the length of the combined string. If this is greater than two hundred and fifty-five characters a "`String too long`" error is generated. After checking that space is available in the String Storage Area ([6627H](#6627h)) the storage of both operands is freed (67D6H). The first string is then copied to the String Storage Area (67BFH) and followed by the second one (67BFH). The result descriptor is created ([6654H](#6654h)) and control transfers back to the Expression Evaluator (4C73H)'
 
 <a name="67d0h"></a>
 
-```
-Address... 67D0H
-```
+    Address... 67D0H
 
 This routine frees any storage occupied by the string whose descriptor address is contained in [DAC](#dac). The address of the descriptor is taken from [DAC](#dac) and examined to determine whether it is that of the last descriptor in [TEMPST](#tempst) (67EEH), if not the routine terminates. Otherwise [TEMPPT](#temppt) is reduced by three bytes clearing this descriptor from [TEMPST](#tempst). The address of the string body is then taken from the descriptor and compared with [FRETOP](#fretop) to see if this is the lowest string in the String Storage Area, if not the routine terminates. Otherwise the length of the string is added to [FRETOP](#fretop), which is then updated with this new value, freeing the storage occupied by the string body.
 
 <a name="67ffh"></a>
 
-```
-Address... 67FFH
-```
+    Address... 67FFH
 
 This routine is used by the Factor Evaluator to apply the "`LEN`" function to an operand contained in [DAC](#dac). The operand's storage is freed ([67D0H](#67d0h)) and the string length taken from the descriptor and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="680bh"></a>
 
-```
-Address... 680BH
-```
+    Address... 680BH
 
 This routine is used by the Factor Evaluator to apply the "`ASC`" function to an operand contained in [DAC](#dac). The operand's storage is freed and the string length examined (6803H), if it is zero an "`Illegal function call`" error is generated (475AH). Otherwise the first character is. taken from the string and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="681bh"></a>
 
-```
-Address... 681BH
-```
+    Address... 681BH
 
 This routine is used by the Factor Evaluator to apply the "`CHR$`" function to an operand contained in [DAC](#dac). After checking that sufficient space is available (6625H) the operand is converted to a single byte integer (521FH). This character is then placed in the String Storage Area and the result descriptor created ([6654H](#6654h)).
 
 <a name="6829h"></a>
 
-```
-Address... 6829H
-```
+    Address... 6829H
 
 This routine is used by the Factor Evaluator to apply the "`STRING$`" function. After checking for the open parenthesis character the length operand is evaluated and placed in register E (521CH). The second operand is then evaluated ([4C64H](#4c64h)). If it is numeric it is converted to a single byte integer (521FH) and placed in register A. If it is a string the first character is taken from it and placed in register A (680FH). Control then drops into the "`SPACE$`" function to create the result string.
 
 <a name="6848h"></a>
 
-```
-Address... 6848H
-```
+    Address... 6848H
 
 This routine is used by the Factor Evaluator to apply the "`SPACE$`" function to an operand contained in [DAC](#dac). The operand is first converted to a single byte integer in register E (521FH). After checking that sufficient space is available ([6627H](#6627h)) the required number of spaces are copied to the String Storage Area and the result descriptor created ([6654H](#6654h)).
 
 <a name="6861h"></a>
 
-```
-Address... 6861H
-```
+    Address... 6861H
 
 This routine is used by the Factor Evaluator to apply the "`LEFT$`" function. The first operand's descriptor address and the integer second operand are supplied on the Z80 stack. The slice size is taken from the stack ([68E3H](#68e3h)) and compared to the source string length. If the source string length is less than the slice size it replaces it as the length to extract. After checking that sufficient space is available ([668EH](#668eh)) the required number of characters are copied from the start of the source string to the String Storage Area (67C7H). The source string's storage is then freed (67D7H) and the result descriptor created ([6654H](#6654h)).
 
 <a name="6891h"></a>
 
-```
-Address... 6891H
-```
+    Address... 6891H
 
 This routine is used by the Factor Evaluator to apply the "`RIGHT$`" function. The first operand's descriptor address and the integer second operand are supplied on the Z80 stack. The slice size is taken from the stack ([68E3H](#68e3h)) and subtracted from the source string length to determine the slice starting position. Control then transfers to the "`LEFT$`" routine to extract the slice (6865H).
 
 <a name="689ah"></a>
 
-```
-Address... 689AH
-```
+    Address... 689AH
 
 This routine is used by the Factor Evaluator to apply the "`MID$`" function. The first operand's descriptor address and the integer second operand are supplied on the Z80 stack. The starting position is taken from the stack (68E6H) and checked, if it is zero an "`Illegal function call`" error is generated (475AH). The optional slice size is then evaluated ([69E4H](#69e4h)) and control transfers to the "`LEFT$`" routine to extract the slice (6869H).
 
 <a name="68bbh"></a>
 
-```
-Address... 68BBH
-```
+    Address... 68BBH
 
 This routine is used by the Factor Evaluator to apply the "`VAL`" function to an operand contained in [DAC](#dac). The string length is taken from the descriptor (6803H) and checked, if it is zero it is placed in [DAC](#dac) as an integer (4FCFH). The length is then added to the starting address of the string body to give the location of the character immediately following it. This is temporarily replaced with a zero byte and the string is converted to numeric form in [DAC](#dac) ([3299H](#3299h)). The original character is then restored and the routine terminates. The temporary zero byte delimiter is necessary because strings are packed together in the String Storage Area, without it the numeric converter would run on into succeeding strings.
 
 <a name="68e3h"></a>
 
-```
-Address... 68E3H
-```
+    Address... 68E3H
 
 This routine is used by the "`LEFT$`", "`MID$`" and "`RIGHT$`" function handlers to check that the next program text character is ")" and then to pop an operand from the Z80 stack into register pair DE.
 
 <a name="68ebh"></a>
 
-```
-Address... 68EBH
-```
+    Address... 68EBH
 
 This routine is used by the Factor Evaluator to apply the "`INSTR`" function. The first operand, which may be the starting position or the source string, is evaluated (4C62H) and its type tested. If it is the source string a default starting position of one is taken. If it is the starting position operand its value is checked and the source string operand evaluated ([4C64H](#4c64h)). The pattern string is then evaluated ([4C64H](#4c64h)) and the storage of both operands freed ([67D0H](#67d0h)). The length of the pattern string is checked and, if zero, the starting position is placed in [DAC](#dac) (4FCFH). The pattern string is then checked against successive characters from the source string, commencing at the starting position, until a match is found or the source string is exhausted. With a successful search the character position of the substring is placed in [DAC](#dac) as an integer (4FCFH), otherwise a zero result is returned.
 
 <a name="696eh"></a>
 
-```
-Address... 696EH
-```
+    Address... 696EH
 
 This is the "`MID$`" statement handler. After checking for the open parenthesis character the destination Variable is located ([5EA4H](#5ea4h)) and checked to ensure that it is a string type ([3058H](#3058h)). The address of the string body is then taken from the Variable and examined to determine whether it is inside the Program Text Area, as would be the case for an explicitly stated string. If this is the case the string body is copied to the String Storage Area (6611H) and a new descriptor copied to the Variable (2EF3H). This is done to avoid modifying the program text. The starting position is then evaluated (521CH) and checked, if it is zero an "`Illegal function call`" error is generated (475AH). The optional slice length operand is evaluated ([69E4H](#69e4h)) followed by the replacement string (4C5FH) whose storage is then freed ([67D0H](#67d0h)). Characters are then copied from the replacement string to the destination string until either the slice length is completed or the replacement string is exhausted.
 
 <a name="69e4h"></a>
 
-```
-Address... 69E4H
-```
+    Address... 69E4H
 
 This routine is used by various string functions to evaluate an optional operand (521CH) and return the result in register E. If no operand is present a default value of 255 is returned.
 
 <a name="69f2h"></a>
 
-```
-Address... 69F2H
-```
+    Address... 69F2H
 
 This routine is used by the Factor Evaluator to apply the "`FRE`" function to an operand contained in [DAC](#dac). If the operand is numeric the single precision difference between the Z80 Stack Pointer and the contents of [STREND](#strend) is placed in [DAC](#dac) (4FC1H). If the operand is a string type its storage is freed (67D3H) and garbage collection initiated ([66B6H](#66b6h)). The single precision difference between the contents of [FRETOP](#fretop) and those of [STKTOP](#stktop) is then placed in [DAC](#dac) (4FC1H).
 
 <a name="6a0eh"></a>
 
-```
-Address... 6A0EH
-```
+    Address... 6A0EH
 
 This routine is used by the file I/O handlers to analyze a filespec such as "`A:FILENAME.BAS`". The filespec consists of three parts, the device, the filename and the type extension. On entry register pair HL points to the start of the filespec in the program text. On exit register D holds the device code, the filename is in positions zero to seven of [FILNAM](#filnam) and the type extension in positions eight to ten. Any unused positions are filled with spaces.
 
@@ -6676,209 +5830,157 @@ The filespec string is evaluated ([4C64H](#4c64h)) and its storage freed ([67D0H
 
 <a name="6a6dh"></a>
 
-```
-Address... 6A6DH
-```
+    Address... 6A6DH
 
 This routine is used by the file I/O handlers to locate the I/O buffer FCB whose number is supplied in register A. The buffer number is first checked against [MAXFIL](#maxfil) and a "`Bad file number`" error generated ([6E7DH](#6e7dh)) if it is too large. Otherwise the required address is taken from the file pointer block and placed in register pair HL and the buffer's mode taken from byte 0 of the FCB and placed in register A.
 
 <a name="6a9eh"></a>
 
-```
-Address... 6A9EH
-```
+    Address... 6A9EH
 
 This routine is used by the file I/O handlers to evaluate an I/O buffer number and to locate its FCB. Any "#" character is skipped ([4666H](#4666h)) and the buffer number evaluated (521CH). The FCB is located ([6A6DH](#6a6dh)) and a "`File not open`" error generated ([6E77H](#6e77h)) if the buffer mode byte is zero. Otherwise the FCB address is placed in [PTRFIL](#ptrfil) to redirect the Interpreter's output.
 
 <a name="6ab7h"></a>
 
-```
-Address... 6AB7H
-```
+    Address... 6AB7H
 
 This is the "`OPEN`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and any following mode converted to the corresponding mode byte, these are: "`FOR INPUT`" (01H), "`FOR OUTPUT`" (02H) and "`FOR APPEND`" (08H). If no mode is explicitly stated random mode (04H) is assumed. The "`AS`" characters are checked and the buffer number evaluated (521CH), if this is zero a "`Bad file number`" error is generated ([6E7DH](#6e7dh)). The FCB is then located ([6A6DH](#6a6dh)) and a "`File already open`" error generated ([6E6EH](#6e6eh)) if the buffer's mode byte is anything other than zero. The device code is placed in byte 4 of the FCB, the open function dispatched ([6F8FH](#6f8fh)) and the Interpreter's output reset to the screen ([4AFFH](#4affh)).
 
 <a name="6b24h"></a>
 
-```
-Address... 6B24H
-```
+    Address... 6B24H
 
 This routine is used by the file I/O handlers to close the I/O buffer whose number is supplied in register A. The FCB is located ([6A6DH](#6a6dh)) and, provided the buffer is in use, the close function dispatched ([6F8FH](#6f8fh)) and the buffer filled with zeroes ([6CEAH](#6ceah)). [PTRFIL](#ptrfil) and the FCB mode byte are then zeroed to reset the Interpreter's output to the screen.
 
 <a name="6b5bh"></a>
 
-```
-Address... 6B5BH
-```
+    Address... 6B5BH
 
 This is the "`LOAD`", "`MERGE`" and "`RUN filespec`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and then, for "`LOAD`" and "`RUN`" only, the program text examined to determine whether the auto-run "`R`" option is specified. I/O buffer 0 is opened for input (6AFAH) and the first byte of [FILNAM](#filnam) set to FFH if auto-run is required. For "`LOAD`" and "`RUN`" only any program text is then cleared via the "`NEW`" statement handler (6287H). As this will reset the Interpreter's output to the screen the buffer FCB is again located and placed in [PTRFIL](#ptrfil) (6AAAH). Control then transfers directly to the Interpreter Mainloop ([4134H](#4134h)) for the program text to be loaded as if typed from the keyboard. Note that no error checking of any sort is carried out on the data read.
 
 <a name="6ba3h"></a>
 
-```
-Address... 6BA3H
-```
+    Address... 6BA3H
 
 This is the "`SAVE`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and the program text examined to determine whether the ASCII "`A`" suffix is present. This is only relevant under Disk BASIC, it makes no difference on a standard MSX machine. I/O buffer 0 is opened for output (6AFAH) and control transfers to the "`LIST`" statement handler ([522EH](#522eh)) to output the program text. Note that no error checking information of any sort accompanies the text.
 
 <a name="6bdah"></a>
 
-```
-Address... 6BDAH
-```
+    Address... 6BDAH
 
 This routine is used by the file I/O handlers to return the device code for the currently active I/O buffer. The FCB address is taken from [PTRFIL](#ptrfil) then the device code taken from byte 4 of the FCB and placed in register A.
 
 <a name="6be7h"></a>
 
-```
-Address... 6BE7H
-```
+    Address... 6BE7H
 
 This routine is used by the file I/O handlers to perform an operation on a number of I/O buffers. The address of the relevant routine is supplied in register pair BC and the buffer count in register A. For example if register pair BC contained 6B24H and register A contained 03H buffers 3, 2, 1 and 0 would be closed. The routine has a slightly different function if it is entered with FLAG NZ. In this case the I/O buffer numbers are taken sequentially from the program text and evaluated (521CH) before the operation is performed, a typical case might be "#1,#2".
 
 <a name="6c14h"></a>
 
-```
-Address... 6C14H
-```
+    Address... 6C14H
 
 This is the "`CLOSE`" statement handler. Register pair BC is set to 6B24H, register A is loaded with the contents of [MAXFIL](#maxfil) and the required number of buffers closed ([6BE7H](#6be7h)).
 
 <a name="6c1ch"></a>
 
-```
-Address... 6C1CH
-```
+    Address... 6C1CH
 
 This routine is used by the file I/O handlers to close every I/O buffer. Register pair BC is set to 6B24H, register A is loaded with the contents of [MAXFIL](#maxfil) and all buffers closed ([6BE7H](#6be7h)).
 
 <a name="6c2ah"></a>
 
-```
-Address... 6C2AH
-```
+    Address... 6C2AH
 
 This is the "`LFILES`" statement handler. [PRTFLG](#prtflg) is made non- zero, to direct output to the printer, and control drops into the "`FILES`" statement handler.
 
 <a name="6c2fh"></a>
 
-```
-Address... 6C2FH
-```
+    Address... 6C2FH
 
 This is the "`FILES`" statement handler, an "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="6c35h"></a>
 
-```
-Address... 6C35H
-```
+    Address... 6C35H
 
 Control transfers here from the general "`PUT`" and "`GET`" handlers ([7758H](#7758h)) when the program text contains anything other than a "`SPRITE`" token. A "`Sequential I/O only`" error is generated ([6E86H](#6e86h)) on a standard MSX machine.
 
 <a name="6c48h"></a>
 
-```
-Address... 6C48H
-```
+    Address... 6C48H
 
 This routine is used by the file I/O handlers to sequentially output the character supplied in register A. The character is placed in register C and the sequential output function dispatched ([6F8FH](#6f8fh)).
 
 <a name="6c71h"></a>
 
-```
-Address... 6C71H
-```
+    Address... 6C71H
 
 This routine is used by the file I/O handlers to sequentially input a single character. The sequential input function is dispatched ([6F8FH](#6f8fh)) and the character returned in register A, FLAG C indicates an EOF (End Of File) condition.
 
 <a name="6c87h"></a>
 
-```
-Address... 6C87H
-```
+    Address... 6C87H
 
 This routine is used by the Factor Evaluator to apply the "`INPUT$`" function. The program text is checked for the "$" and "(" characters and the length operand evaluated (521CH). If an I/O buffer number is present it is evaluated, the FCB located ([6A9EH](#6a9eh)) and the mode byte examined. An "`Input past end`" error is generated ([6E83H](#6e83h)) if the buffer is not in input or random mode. After checking that sufficient space is available ([6627H](#6627h)) the required number of characters are sequentially input ([6C71H](#6c71h)), or collected via the [CHGET](#chget) standard routine, and copied to the String Storage Area. Finally the result descriptor is created ([6654H](#6654h)).
 
 <a name="6ceah"></a>
 
-```
-Address... 6CEAH
-```
+    Address... 6CEAH
 
 This routine is used by the file I/O handlers to fill the buffer whose FCB address is contained in [PTRFIL](#ptrfil) with two hundred and fifty-six zeroes.
 
 <a name="6cfbh"></a>
 
-```
-Address... 6CFBH
-```
+    Address... 6CFBH
 
 This routine is used by the file I/O handlers to return, in register pair HL, the starting address of the buffer whose FCB address is contained in [PTRFIL](#ptrfil). This just involves adding nine to the FCB address.
 
 <a name="6d03h"></a>
 
-```
-Address... 6D03H
-```
+    Address... 6D03H
 
 This routine is used by the Factor Evaluator to apply the "`LOC`" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the LOC function dispatched ([6F8FH](#6f8fh)). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d14h"></a>
 
-```
-Address... 6D14H
-```
+    Address... 6D14H
 
 This routine is used by the Factor Evaluator to apply the "`LOF`" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the LOF function dispatched ([6F8FH](#6f8fh)). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d25h"></a>
 
-```
-Address... 6D25H
-```
+    Address... 6D25H
 
 This routine is used by the Factor Evaluator to apply the "`EOF`" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the EOF function dispatched ([6F8FH](#6f8fh)).
 
 <a name="6d39h"></a>
 
-```
-Address... 6D39H
-```
+    Address... 6D39H
 
 This routine is used by the Factor Evaluator to apply the "`FPOS`" function to the I/O buffer whose number is contained in [DAC](#dac). The FCB is located (6A6AH) and the `FPOS` function dispatched ([6F8FH](#6f8fh)). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="6d48h"></a>
 
-```
-Address... 6D48H
-```
+    Address... 6D48H
 
 Control transfers to this routine when the Interpreter Mainloop encounters a direct statement, that is one with no line number. The [ISFLIO](#isflio) standard routine is first used to determine whether a "`LOAD`" statement is active. If input is coming from the keyboard control transfers to the Runloop execution point ([4640H](#4640h)) to execute the statement. If input is coming from the cassette buffer 0 is closed ([6B24H](#6b24h)) and a "`Direct statement in file`" error generated ([6E71H](#6e71h)). This could happen on a standard MSX machine either through a cassette error or by attempting to load a text file with no line numbers.
 
 <a name="6d57h"></a>
 
-```
-Address... 6D57H
-```
+    Address... 6D57H
 
 This routine is used by the "`INPUT`", "`LINE INPUT`" and "`PRINT`" statement handlers to check for the presence of a "#" character in the program text. If one is found the I/O buffer number is evaluated ([521BH](#521bh)), the FCB located and its address placed in [PTRFIL](#ptrfil) (6AAAH). The mode byte of the FCB is then compared with the mode number supplied by the statement handler in register C, if they do not match a "`Bad file number`" error is generated ([6E7DH](#6e7dh)). With "`PRINT`" the allowable modes are output, random and append. With "`INPUT`" and "`LINE INPUT`" the allowable modes are input and random. Note that on a standard MSX machine not all these modes are supported at lower levels. Some sort of error will consequently be generated at a later stage for illegal modes.
 
 <a name="6d83h"></a>
 
-```
-Address... 6D83H
-```
+    Address... 6D83H
 
 This routine is used by the "`INPUT`" statement handler to input a string from an I/O buffer. A return is first set up to the "`READ/INPUT`" statement handler (4BF1H). The characters which delimit the input string, comma and space for a numeric Variable and comma only for a string Variable, are placed in registers D and E and control transfers to the "`LINE INPUT`" routine (6DA3H).
 
 <a name="6d8fh"></a>
 
-```
-Address... 6D8FH
-```
+    Address... 6D8FH
 
 This is the "`LINE INPUT`" statement handler when input is from an I/O buffer. The buffer number is evaluated, the FCB located and the mode checked (6D55H). The Variable to assign to is then located ([5EA4H](#5ea4h)) and its type checked to ensure it is a string type ([3058H](#3058h)). A return is set up to the "`LET`" statement handler (487BH) to perform the assignment and the input string collected.
 
@@ -6899,9 +6001,7 @@ Once the input string has been accepted the terminating delimiter is examined to
 <a name="6e83h"></a>
 <a name="6e86h"></a>
 
-```
-Address... 6E6BH
-```
+    Address... 6E6BH
 
 This is a group of ten file I/O related error generators. Register E is loaded with the relevant error code and control transfers to the error handler ([406FH](#406fh)):
 
@@ -6922,41 +6022,31 @@ This is a group of ten file I/O related error generators. Register E is loaded w
 
 <a name="6e92h"></a>
 
-```
-Address... 6E92H
-```
+    Address... 6E92H
 
 This is the "`BSAVE`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and the start address evaluated ([6F0BH](#6f0bh)). The stop address is then evaluated ([6F0BH](#6f0bh)) and placed in [SAVEND](#savend) followed by the optional entry address ([6F0BH](#6f0bh)) which is placed in [SAVENT](#savent). If no entry address exists the start address is taken instead. The device code is checked to ensure that it is CAS, if not a "`Bad file name`" error is generated ([6E6BH](#6e6bh)), and the data written to cassette ([6FD7H](#6fd7h)). Note that no buffering is involved, data is written directly to the cassette, and no error checking information accompanies the data.
 
 <a name="6ec6h"></a>
 
-```
-Address... 6EC6H
-```
+    Address... 6EC6H
 
 This is the "`BLOAD`" statement handler. The filespec is analyzed ([6A0EH](#6a0eh)) and [RUNBNF](#runbnf) made non-zero if the auto-run "`R`" option is present in the program text. The optional load offset, with a default value of zero, is then evaluated ([6F0BH](#6f0bh)) and the device code checked to ensure that it is CAS, if not a "`Bad file name`" error is generated ([6E6BH](#6e6bh)). Data is then read directly from cassette ([7014H](#7014h)), as with "`BSAVE`" no buffering or error checking is involved.
 
 <a name="6ef4h"></a>
 
-```
-Address... 6EF4H
-```
+    Address... 6EF4H
 
 Control transfers to this routine when the "`BLOAD`" statement handler has completed loading data into memory. If [RUNBNF](#runbnf) is zero buffer 0 is closed ([6B24H](#6b24h)) and control returns to the Runloop. Otherwise buffer 0 is closed ([6B24H](#6b24h)), a return address of 6CF3H is set up (this routine just pops the program text pointer back into register pair HL and returns to the Runloop) and control transfers to the address contained in [SAVENT](#savent).
 
 <a name="6f0bh"></a>
 
-```
-Address... 6F0BH
-```
+    Address... 6F0BH
 
 This routine is used by the "`BLOAD`" and "`BSAVE`" handlers to evaluate an address operand, the result is returned in register pair DE. The operand is evaluated (4C64H) then converted to an integer ([5439H](#5439h)).
 
 <a name="6f15h"></a>
 
-```
-Address... 6F15H
-```
+    Address... 6F15H
 
 This routine is used by the filespec analyzer to parse a device name such as "`CAS:`". On entry register pair HL points to the start of the filespec string and register E contains its length. If no device name is present the default device code (CAS=FFH) is returned in register A with FLAG Z. If a legal device name is present its code is returned in register A with FLAG NZ.
 
@@ -6964,37 +6054,27 @@ The filespec is examined until a ":" character is found then the name compared w
 
 <a name="6f76h"></a>
 
-```
-Address... 6F76H
-```
+    Address... 6F76H
 
 This table is used by the device name parser, it contains the four device names and codes available on a standard MSX machine:
 
-```
-CAS ... FFH  LPT ... FEH  CRT ... FDH  GRP ... FCH
-```
+    CAS ... FFH  LPT ... FEH  CRT ... FDH  GRP ... FCH
 
 </a>
 
 <a name="6f87h"></a>
 
-```
-Address... 6F87H
-```
+    Address... 6F87H
 
 This table is used by the function dispatcher ([6F8FH](#6f8fh)), it contains the address of the function decoding table for each of the four standard MSX devices:
 
-```
-CAS ... 71C7H  LPT ... 72A6H  CRT ... 71A2H  GRP ... 7182H
-```
+    CAS ... 71C7H  LPT ... 72A6H  CRT ... 71A2H  GRP ... 7182H
 
 </a>
 
 <a name="6f8fh"></a>
 
-```
-Address... 6F8FH
-```
+    Address... 6F8FH
 
 This is the file I/O function dispatcher. In conjunction with the Interpreter's buffer structure it provides a consistent, device independent method of inputting or outputting data. The required function code is supplied in register A and the address of the buffer FCB in register pair HL.
 
@@ -7002,49 +6082,37 @@ The device code is taken from byte 4 of the FCB and examined to determine whethe
 
 <a name="6fb7h"></a>
 
-```
-Address... 6FB7H
-```
+    Address... 6FB7H
 
 This is the "`CSAVE`" statement handler. The filename is evaluated (7098H) followed by the optional baud rate operand ([7A2DH](#7a2dh)). The identification block is then written to cassette ([7125H](#7125h)) with a filetype byte of D3H. The contents of the Program Text Area are written directly to cassette as a single data block ([713EH](#713eh)). Note that no error checking information accompanies the data.
 
 <a name="6fd7h"></a>
 
-```
-Address... 6FD7H
-```
+    Address... 6FD7H
 
 Control transfers to this routine from the "`BSAVE`" statement handler to write a block of memory to cassette. The identification block is first written to cassette ([7125H](#7125h)) with a filetype byte of D0H. The motor is then turned on and a short header written to cassette ([72F8H](#72f8h)) The starting address is popped from the Z80 stack and written to cassette LSB first, MSB second ([7003H](#7003h)). The stop address is taken from [SAVEND](#savend) and written to cassette LSB first, MSB second ([7003H](#7003h)). The entry address is taken from [SAVENT](#savent) and written to cassette LSB first, MSB second ([7003H](#7003h)). The required area of memory is then written to cassette one byte at a time ([72DEH](#72deh)) and the cassette motor turned off via the [TAPOOF](#tapoof) standard routine. Note that no error checking information accompanies the data.
 
 <a name="7003h"></a>
 
-```
-Address... 7003H
-```
+    Address... 7003H
 
 This routine writes the contents of register pair HL to cassette with register L first ([72DEH](#72deh)) and register H second ([72DEH](#72deh)).
 
 <a name="700bh"></a>
 
-```
-Address... 700BH
-```
+    Address... 700BH
 
 This routine reads two bytes from cassette and places the first in register L ([72D4H](#72d4h)), the second in register H ([72D4H](#72d4h)).
 
 <a name="7014h"></a>
 
-```
-Address... 7014H
-```
+    Address... 7014H
 
 Control transfers to this routine from the "`BLOAD`" statement handler to load data from the cassette into memory. The cassette is read until an identification block with a file type of D0H and the correct filename is found ([70B8H](#70b8h)). The data block header is then located on the cassette ([72E9H](#72e9h)). The offset value is popped from the Z80 stack and added to the start address from the cassette ([700BH](#700bh)). The stop address is read from cassette ([700BH](#700bh)) and the offset added to this as well. The entry address is read from cassette ([700BH](#700bh)) and placed in [SAVENT](#savent) in case auto-run is required. Successive data bytes are then read from cassette ([72D4H](#72d4h)) and placed in memory, at the start address initially, until the stop address is reached. Finally the motor is turned off via the [TAPIOF](#tapiof) standard routine and control transfers to the "`BLOAD`" termination point ([6EF4H](#6ef4h)).
 
 <a name="703fh"></a>
 
-```
-Address... 703FH
-```
+    Address... 703FH
 
 This is the "`CLOAD`" and "`CLOAD?`" statement handler. The program text is first checked for a trailing "`PRINT`" token (91H) which is how the "`?`" character is tokenized. The filename is then evaluated ([708CH](#708ch)) and the cassette read until an identification block with a filetype of D3H and the correct filename is found ([70B8H](#70b8h)). For "`CLOAD`" a "`NEW`" operation is then performed (6287H) to erase the current program text. For "`CLOAD?`" all pointers in the Program Text Area are converted to line numbers (54EAH) to match the cassette data.
 
@@ -7052,17 +6120,13 @@ The data block header is located on the cassette and successive data bytes read 
 
 <a name="708ch"></a>
 
-```
-Address... 708CH
-```
+    Address... 708CH
 
 This routine is used by the "`CLOAD`" and "`CSAVE`" statement handlers to evaluate a filename in the program text. The two handlers use different entry points so that a null filename is allowed for "`CLOAD`" but not for "`CSAVE`". The filename string is evaluated ([4C64H](#4c64h)), its storage freed (680FH) and the first six characters copied to [FILNAM](#filnam). If the filename is longer than six characters the excess is ignored. If the filename is shorter than six characters then [FILNAM](#filnam) is padded with spaces.
 
 <a name="70b8h"></a>
 
-```
-Address... 70B8H
-```
+    Address... 70B8H
 
 This routine is used by the "`CLOAD`" and "`BLOAD`" statement handlers and for the dispatcher open function (when the device is CAS and the mode is input) to locate an identification block on the cassette. On entry the filename is in [FILNAM](#filnam) and the file type in register C, D3H for a tokenized BASIC (`CLOAD`) file, D0H for a binary (`BLOAD`) file and EAH for an ASCII (`LOAD` or data) file.
 
@@ -7070,57 +6134,43 @@ The cassette motor is turned on and the cassette read until a header is found ([
 
 <a name="70ffh"></a>
 
-```
-Address... 70FFH
-```
+    Address... 70FFH
 
 This is the plain text message "`Found:`" terminated by a zero byte.
 
 <a name="7106h"></a>
 
-```
-Address... 7106H
-```
+    Address... 7106H
 
 This is the plain text message "`Skip :`" terminated by a zero byte.
 
 <a name="710dh"></a>
 
-```
-Address... 710DH
-```
+    Address... 710DH
 
 Unless [CURLIN](#curlin) shows the Interpreter to be in program mode this routine first displays ([6678H](#6678h)) the message whose address is supplied in register pair HL, followed by the six characters contained in [FILNM2](#filnm2).
 
 <a name="7125h"></a>
 
-```
-Address... 7125H
-```
+    Address... 7125H
 
 This routine is used by the "`CSAVE`" and "`BSAVE`" statement handlers and for the dispatcher open function (when the device is CAS and the mode is output) to write an identification block to cassette. On entry the filename is in [FILNAM](#filnam) and the filetype in register A, D3H for a tokenized BASIC (`CSAVE`) file, D0H for a binary (`BSAVE`) file and EAH for an ASCII (`SAVE` or data) file. The cassette motor is turned on and a long header written to cassette ([72F8H](#72f8h)) The filetype byte is then written to cassette ([72DEH](#72deh)) ten times followed by the first six characters from [FILNAM](#filnam) ([72DEH](#72deh)). The cassette motor is turned off via the [TAPOOF](#tapoof) standard routine and the routine terminates.
 
 <a name="713eh"></a>
 
-```
-Address... 713EH
-```
+    Address... 713EH
 
 This routine is used by the "`CSAVE`" statement handler to write the Program Text Area to cassette as a single data block. All pointers in the program text are converted back to line numbers (54EAH) to make the text address independent. The cassette motor is turned on and a short header written to cassette ([72F8H](#72f8h)) The entire Program Text Area is then written to cassette a byte at a time ([72DEH](#72deh)) and followed with seven zero bytes ([72DEH](#72deh)) as a terminator. The cassette motor is then turned off via the [TAPOOF](#tapoof) standard routine and the routine terminates.
 
 <a name="715dh"></a>
 
-```
-Address... 715DH
-```
+    Address... 715DH
 
 This routine is used by the "`CLOAD`" and "`CLOAD?`" statement handlers to read a single data block into the Program Text Area or to compare it with the current contents. On entry register A contains a flag to distinguish between the two statements, 00H for "`CLOAD`" and FFH for "`CLOAD?`". The cassette motor is turned on and the first header located ([72E9H](#72e9h)). Successive characters are read from cassette ([72D4H](#72d4h)) and placed in the Program Text Area or compared with the current contents. If the current statement is "`CLOAD?`" the routine will terminate with FLAG NZ if the cassette character is not the same as the memory character. Otherwise data will be read until ten successive zeroes are found. This sequence of zeroes is composed of the last program line end of line character, the end link and the seven terminator zeroes added by "`CSAVE`". Note that the routine will probably terminate during this sequence, when used by "`CLOAD?`", as memory comparison is still in progress. This accounts for the rather peculiar coding of the "`CLOAD?`" handler terminating conditions.
 
 <a name="7182h"></a>
 
-```
-Address... 7182H
-```
+    Address... 7182H
 
 This table is used by the dispatcher when decoding function codes for the GRP device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
@@ -7141,17 +6191,13 @@ This table is used by the dispatcher when decoding function codes for the GRP de
 
 <a name="7196h"></a>
 
-```
-Address... 7196H
-```
+    Address... 7196H
 
 This is the dispatcher sequential output routine for the GRP device. [SCRMOD](#scrmod) is first checked and an "`Illegal function call`" error generated (475AH) if the screen is in either text mode. The character to output is taken from register C and control transfers to the [GRPPRT](#grpprt) standard routine.
 
 <a name="71a2h"></a>
 
-```
-Address... 71A2H
-```
+    Address... 71A2H
 
 This table is used by the device dispatcher when decoding function codes for the CRT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
@@ -7172,25 +6218,19 @@ This table is used by the device dispatcher when decoding function codes for the
 
 <a name="71b6h"></a>
 
-```
-Address... 71B6H
-```
+    Address... 71B6H
 
 This is the dispatcher open routine for the CRT, LPT and GRP devices. The required mode, in register E, is checked and a "`Bad file name`" error generated ([6E6BH](#6e6bh)) for input or append. The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates. Note that the Z80 RET instruction at the end of this routine (71C2H) is the dispatcher close routine for the CRT, LPT and GRP devices.
 
 <a name="71c3h"></a>
 
-```
-Address... 71C3H
-```
+    Address... 71C3H
 
 This is the dispatcher sequential output routine for the CRT device. The character to output is taken from register C and control transfers to the [CHPUT](#chput) standard routine.
 
 <a name="71c7h"></a>
 
-```
-Address... 71C7H
-```
+    Address... 71C7H
 
 This table is used by the dispatcher when decoding function codes for the CAS device. It contains the address of the handler for each of the function codes, several are error generators:
 
@@ -7211,81 +6251,61 @@ This table is used by the dispatcher when decoding function codes for the CAS de
 
 <a name="71dbh"></a>
 
-```
-Address... 71DBH
-```
+    Address... 71DBH
 
 This is the dispatcher open routine for the CAS device. The current I/O buffer position, held in byte 6 of the FCB, and [CASPRV](#casprv), which holds any putback character are both zeroed. The required mode, supplied in register E, is examined and a "`Bad file name`" error generated ([6E6BH](#6e6bh)) for append or random modes. For output mode the identification block is then written to cassette ([7125H](#7125h)) while for input mode the correct identification block is located on the cassette ([70B8H](#70b8h)). The FCB address is then placed in [PTRFIL](#ptrfil), the mode in byte 0 of the FCB and the routine terminates.
 
 <a name="7205h"></a>
 
-```
-Address... 7205H
-```
+    Address... 7205H
 
 This is the dispatcher close routine for the CAS device. Byte 0 of the FCB is examined and, if the mode is input, [CASPRV](#casprv) is zeroed and the routine terminates. Otherwise the remainder of the I/O buffer is filled with end of file characters (1AH) and the I/O buffer contents written to cassette (722FH). [CASPRV](#casprv) is then zeroed and the routine terminates.
 
 <a name="722ah"></a>
 
-```
-Address... 722AH
-```
+    Address... 722AH
 
 This is the dispatcher sequential output routine for the CAS device. The character to output is taken from register C and placed in the next free position in the I/O buffer ([728BH](#728bh)). Byte 6 of the FCB, the I/O buffer position, is then incremented. If the I/O buffer position has wrapped round to zero this means that there are two hundred and fifty-six characters in the I/O buffer and it has to be written to cassette. The cassette motor is turned on, a short header is written to cassette ([72F8H](#72f8h)) followed by the I/O buffer contents ([72DEH](#72deh)), and the motor is turned off via the [TAPOOF](#tapoof) standard routine.
 
 <a name="723fh"></a>
 
-```
-Address... 723FH
-```
+    Address... 723FH
 
 This is the dispatcher sequential input routine for the CAS device. [CASPRV](#casprv) is first checked ([72BEH](#72beh)) to determine whether it contains a character which has been putback, in which case its contents will be non-zero. If so the routine terminates with the character in register A. Otherwise the I/O buffer position is checked ([729BH](#729bh)) to determine whether it contains any characters. If the I/O buffer is empty the cassette motor is turned on and the header located ([72E9H](#72e9h)). Two hundred and fifty-six characters are then read in ([72D4H](#72d4h)), the cassette motor turned off via the [TAPION](#tapion) standard routine and the I/O buffer position reset to zero. The character is then taken from the current I/O buffer position and the position incremented. Finally the character is checked to see if it is the end of file character (1AH). If it is not the routine terminates with the character in register A and FLAG NC. Otherwise the end of file character is placed in [CASPRV](#casprv), so that succeeding sequential input requests will always return the end of file condition, and the routine terminates with FLAG C.
 
 <a name="726dh"></a>
 
-```
-Address... 726DH
-```
+    Address... 726DH
 
 This is the dispatcher eof routine for the CAS device. The next character is input ([723FH](#723fh)) and placed in [CASPRV](#casprv). It is then tested for the end of file code (1AH) and the result placed in [DAC](#dac) as an integer, zero for false, FFFFH for true.
 
 <a name="727ch"></a>
 
-```
-Address... 727CH
-```
+    Address... 727CH
 
 This is the dispatcher putback routine for the CAS device. The character is simply placed in [CASPRV](#casprv) to be picked up at the next sequential input request.
 
 <a name="7281h"></a>
 
-```
-Address... 7281H
-```
+    Address... 7281H
 
 This routine is used by the dispatcher close function to check if there are any characters in the I/O buffer and then zero the I/O buffer position byte in the FCB.
 
 <a name="728bh"></a>
 
-```
-Address... 728BH
-```
+    Address... 728BH
 
 This routine is used by the dispatcher sequential output function to place the character in register A in the I/O buffer at the current I/O buffer position, which is then incremented.
 
 <a name="729bh"></a>
 
-```
-Address... 729BH
-```
+    Address... 729BH
 
 This routine is used by the dispatcher sequential input function to collect the character at the current I/O buffer position, which is then incremented.
 
 <a name="72a6h"></a>
 
-```
-Address... 72A6H
-```
+    Address... 72A6H
 
 This table is used by the dispatcher when decoding function codes for the LPT device. It contains the address of the handler for each of the function codes, most are in fact error generators:
 
@@ -7306,145 +6326,109 @@ This table is used by the dispatcher when decoding function codes for the LPT de
 
 <a name="72bah"></a>
 
-```
-Address... 72BAH
-```
+    Address... 72BAH
 
 This is the dispatcher sequential output routine for the LPT device. The character to output is taken from register C and control transfers to the [OUTDLP](#outdlp) standard routine.
 
 <a name="72beh"></a>
 
-```
-Address... 72BEH
-```
+    Address... 72BEH
 
 This routine is used by the dispatcher sequential input function to check if a putback character exists in [CASPRV](#casprv), and if not to return Flag Z. Otherwise [CASPRV](#casprv) is zeroed and the character tested to see if it is the end of file character (1AH). If not it returns with the character in register A and FLAG NZ,NC. Otherwise the end of file character is placed back in [CASPRV](#casprv) and the routine returns with FLAG Z,C.
 
 <a name="72cdh"></a>
 
-```
-Address... 72CDH
-```
+    Address... 72CDH
 
 This routine is used by various dispatcher functions to check if the mode in register E is append, if so a "`Bad file name`" error is generated ([6E6BH](#6e6bh)).
 
 <a name="72d4h"></a>
 
-```
-Address... 72D4H
-```
+    Address... 72D4H
 
 This routine is used by various dispatcher functions to read a character from the cassette. The character is read via the [TAPIN](#tapin) standard routine and a "`Device I/O error`" generated ([73B2H](#73b2h)) if FLAG C is returned.
 
 <a name="72deh"></a>
 
-```
-Address... 72DEH
-```
+    Address... 72DEH
 
 This routine is used by various dispatcher functions to write a character to cassette. The character is written via the [TAPOUT](#tapout) standard routine and a "`Device I/O error`" generated ([73B2H](#73b2h)) if FLAG C is returned.
 
 <a name="72e9h"></a>
 
-```
-Address... 72E9H
-```
+    Address... 72E9H
 
 This routine is used by various dispatcher functions to turn the cassette motor on for input. The motor is turned on via the [TAPION](#tapion) standard routine and a "`Device I/O error`" generated ([73B2H](#73b2h)) if FLAG C is returned.
 
 <a name="72f8h"></a>
 
-```
-Address... 72F8H
-```
+    Address... 72F8H
 
 This routine is used by various dispatcher functions to turn the cassette motor on for output, control simply transfers to the [TAPOON](#tapoon) standard routine.
 
 <a name="7304h"></a>
 
-```
-Address... 7304H
-```
+    Address... 7304H
 
 This routine is used by the Interpreter Mainloop "`OK`" point, the "`END`" statement handler and the run-clear routine to shut down the printer. [PRTFLG](#prtflg) is first zeroed and then [LPTPOS](#lptpos) tested to see if any characters have been output but left hanging in the printer's line buffer. If so a CR,LF sequence is issued to flush the printer and [LPTPOS](#lptpos) zeroed.
 
 <a name="7323h"></a>
 
-```
-Address... 7323H
-```
+    Address... 7323H
 
 This routine issues a CR,LF sequence to the current output device via the [OUTDO](#outdo) standard routine. [LPTPOS](#lptpos) or [TTYPOS](#ttypos) is then zeroed depending upon whether the printer or the screen is active.
 
 <a name="7347h"></a>
 
-```
-Address... 7347H
-```
+    Address... 7347H
 
 This routine is used by the Factor Evaluator to apply the "`INKEY$`" function. The state of the keyboard buffer is examined via the [CHSNS](#chsns) standard routine. If the buffer is empty the address of a dummy null string descriptor is returned in [DAC](#dac). Otherwise the next character is read from the keyboard buffer via the [CHGET](#chget) standard routine. After checking that sufficient space is available (6625H) the character is copied to the String Storage Area and the result descriptor created (6821H).
 
 <a name="7367h"></a>
 
-```
-Address... 7367H
-```
+    Address... 7367H
 
 This routine is used by the "`LIST`" statement handler to output a character to the current output device via the [OUTDO](#outdo) standard routine. If the character is a LF code then a CR code is also issued.
 
 <a name="7374h"></a>
 
-```
-Address... 7374H
-```
+    Address... 7374H
 
 This routine is used by the Interpreter Mainloop to collect a line of text when input is from an I/O buffer rather than the keyboard, that is when a "`LOAD`" statement is active. Characters are sequentially input ([6C71H](#6c71h)) and placed in [BUF](#buf) until [BUF](#buf) fills up, a CR is detected or the end of file is reached. All characters are accepted apart from LF codes which are filtered out. If [BUF](#buf) fills up or a CR is detected the routine simply returns the line to the Mainloop. If the end of file is reached while some characters are in [BUF](#buf) the line is returned to the Mainloop. When end of file is reached with no characters in [BUF](#buf) then I/O buffer 0 is closed (6D7BH) and [FILNAM](#filnam) checked to determine whether auto-run is required. If not control returns to the Interpreter "`OK`" point (411EH). Otherwise the system is cleared ([629AH](#629ah)) and control transfers to the Runloop ([4601H](#4601h)) to execute the program.
 
 <a name="73b2h"></a>
 
-```
-Address... 73B2H
-```
+    Address... 73B2H
 
 This is the "`Device I/O error`" generator.
 
 <a name="73b7h"></a><a name="motor"></a>
 
-```
-Address... 73B7H
-```
+    Address... 73B7H
 
 This is the "`MOTOR`" statement handler. If no operand is present control transfers to the [STMOTR](#stmotr) standard routine with FFH in register A. If the "`OFF`" token (EBH) follows control transfers with 00H in register A. If the "`ON`" token (95H) follows control transfers with 01H in register A.
 
 <a name="73cah"></a><a name="sound"></a>
 
-```
-Address... 73CAH
-```
+    Address... 73CAH
 
 This is the "`SOUND`" statement handler. The register number operand, which must be less than fourteen, is evaluated (521CH) and placed in register A. The data operand is evaluated (521CH) and bit 7 set, bit 6 reset to avoid altering the PSG auxiliary I/O port modes' The data operand is placed in register E and control transfers to the [WRTPSG](#wrtpsg) standard routine.
 
 <a name="73e4h"></a>
 
-```
-Address... 73E4H
-```
+    Address... 73E4H
 
 This is a single ASCII space used by the "`PLAY`" statement handler to replace a null string operand with a one character blank string.
 
 <a name="73e5h"></a><a name="play"></a>
 
-```
-Address... 73E5H
-```
+    Address... 73E5H
 
 This is the "`PLAY`" statement handler. The address of the "`PLAY`" command table at 752EH is placed in [MCLTAB](#mcltab) for the macro language parser and [PRSCNT](#prscnt) zeroed. The first string operand, which is obligatory, is evaluated ([4C64H](#4c64h)), its storage freed ([67D0H](#67d0h)) and its length and address placed in [VCBA](#vcba) at bytes 2, 3 and 4. The channel's stack pointer is initialized to [VCBA](#vcba)+33 and placed in [VCBA](#vcba) at bytes 5 and 6' If further text is present in the statement this process is repeated for voices B and C until a maximum of three operands have been evaluated, after this a "`Syntax error`" is generated ([4055H](#4055h)). If there are less than three string operands present an end of queue mark (FFH) is placed in the queue ([7507H](#7507h)) of each unused voice. Register A is then zeroed, to select voice A, and control drops into the play mainloop.
 
 <a name="744dh"></a>
 
-```
-Address... 744DH
-```
+    Address... 744DH
 
 This is the play mainloop. The number of free bytes in the current queue is checked ([7521H](#7521h)) and, if less than eight bytes remain, the next voice is selected (74D6H) to avoid waiting for the queue to empty. The remaining length of the operand string is then taken from the current voice buffer and, if zero bytes remain to be parsed, the loop again skips to the next voice (74D6H). Otherwise the current string length and address are taken from the voice buffer and placed in [MCLLEN](#mcllen) and [MCLPTR](#mclptr) for the macro language parser. The old stack contents are copied from the voice buffer to the Z80 stack (6253H), [MCLFLG](#mclflg) is made non-zero and control transfers to the macro language parser ([56A2H](#56a2h)).
 
@@ -7464,54 +6448,46 @@ When control returns from the macro language parser register A is incremented to
 
 <a name="7507h"></a>
 
-```
-Address... 7507H
-```
+    Address... 7507H
 
 This routine is used by the "`PLAY`" statement handler to place an end of queue mark (FFH) in the current queue via the [PUTQ](#putq) standard routine. If the queue is full it waits until space becomes available.
 
 <a name="7521h"></a>
 
-```
-Address... 7521H
-```
+    Address... 7521H
 
 This routine is used by the "`PLAY`" statement handler to check how much space remains in the current queue via the [LFTQ](#lftq) standard routine. If less than eight bytes remain (the largest possible music data packet is seven bytes long) FLAG C is returned.
 
 <a name="752eh"></a>
 
-```
-Address... 752EH
-```
+    Address... 752EH
 
 This table contains the valid command letters and associated addresses for the "`PLAY`" statement commands. Those commands which take a parameter, and consequently have bit 7 set in the table, are shown with an asterisk:
 
 |CMD    |TO
 |-------|-----
-|A      |763EH
-|B      |763EH
-|C      |763EH
-|D      |763EH
-|E      |763EH
-|F      |763EH
-|G      |763EH
-|M\*    |759EH
-|V\*    |7586H
-|S\*    |75BEH
-|N\*    |7621H
-|O\*    |75EFH
-|R\*    |75FCH
-|T\*    |75E2H
-|L\*    |75C8H
-|X      |5782H
+|A      |[763EH](#763eh)
+|B      |[763EH](#763eh)
+|C      |[763EH](#763eh)
+|D      |[763EH](#763eh)
+|E      |[763EH](#763eh)
+|F      |[763EH](#763eh)
+|G      |[763EH](#763eh)
+|M\*    |[759EH](#759eh)
+|V\*    |[7586H](#7586h)
+|S\*    |[75BEH](#75beh)
+|N\*    |[7621H](#7621h)
+|O\*    |[75EFH](#75efh)
+|R\*    |[75FCH](#75fch)
+|T\*    |[75E2H](#75e2h)
+|L\*    |[75C8H](#75c8h)
+|X      |[5782H](#5782h)
 
 </a>
 
 <a name="755fh"></a>
 
-```
-Address... 755FH
-```
+    Address... 755FH
 
 This table is used by the "`PLAY`" statement "`A`" to "`G`" command handler to translate a note number from zero to fourteen to an offset into the tone divider table at 756EH. The note itself, rather than the note number, is shown below with each offset value:
 
@@ -7560,79 +6536,59 @@ This table contains the twelve PSG divider constants required to produce the ton
 
 <a name="7586h"></a>
 
-```
-Address... 7586H
-```
+    Address... 7586H
 
 This is the "`PLAY`" statement "`V`" command handler. The parameter, with a default value of eight, is placed in byte 18 of the current voice buffer without altering bit 6 of the existing contents. No music data is generated.
 
 <a name="759eh"></a>
 
-```
-Address... 759EH
-```
+    Address... 759EH
 
 This is the "`PLAY`" statement "`M`" command handler. The parameter, with a default value of two hundred and fifty-five, is compared with the existing modulation period contained in bytes 19 and 20 of the current voice buffer. If they are the same the routine terminates with no action. Otherwise the new modulation period is placed in the voice buffer and bit 6 set in byte 18 of the voice buffer to indicate that the new value must be incorporated into the next music data packet produced. No music data is generated.
 
 <a name="75beh"></a>
 
-```
-Address... 75BEH
-```
+    Address... 75BEH
 
 This is the "`PLAY`" statement "`S`" command handler. The parameter is placed in byte 18 of the current voice buffer and bit 4 of the same byte set to indicate that the new value must be incorporated into the next music data packet produced. No music data is generated. Because of the PSG characteristics the shape and volume parameters are mutually exclusive so the same byte of the voice buffers is used for both.
 
 <a name="75c8h"></a>
 
-```
-Address... 75C8H
-```
+    Address... 75C8H
 
 This is the "`PLAY`" statement "`L`" command handler. The parameter, with a default value of four, is placed in byte 16 of the current voice buffer where it is used in the computation of succeeding note durations. No music data is generated.
 
 <a name="75e2h"></a>
 
-```
-Address... 75E2H
-```
+    Address... 75E2H
 
 This is the "`PLAY`" statement "`T`" command handler. The parameter, with a default value of one hundred and twenty, is placed in byte 17 of the current voice buffer where it will be used in the computation of succeeding note durations. ho music data is generated.
 
 <a name="75efh"></a>
 
-```
-Address... 75EFH
-```
+    Address... 75EFH
 
 This is the "`PLAY`" statement "`O`" command handler. The parameter, with a default value of four, is placed in byte 15 of the current voice buffer where it is used in the computation of succeeding note frequencies. No music data is generated.
 
 <a name="75fch"></a>
 
-```
-Address... 75FCH
-```
+    Address... 75FCH
 
 This is the "`PLAY`" statement "`R`" command handler. The length parameter, with a default value of four, is left in register pair DE and a zero tone divider value placed in register pair HL. The existing volume value is taken from byte 18 of the current voice buffer, temporarily replaced with a zero value and control transferred to the note generator (769CH).
 
 <a name="7621h"></a>
 
-```
-Address... 7621H
-```
+    Address... 7621H
 
 This is the "`PLAY`" statement "`N`" command handler. The obligatory parameter is first examined, if it is zero a rest is generated (760BH). If it is greater than ninety-six an "`Illegal function call`" error is generated (475AH). Otherwise twelve is repeatedly subtracted from the note number until underflow to obtain an octave number from one to nine in register E and a note number from zero to eleven in register C. Control then transfers to the note generator (7673H).
 
 <a name="763eh"></a>
 
-```
-Address... 763EH
-```
+    Address... 763EH
 
 This is the "`PLAY`" statement "`A`" to "`G`" command handler. The note letter is first converted into a note number from zero to fourteen, this extended range being necessary because of the redundancy implicit in the notation. The table at 755FH is then used to obtain the offset into the tone divider table and the divider constant for the note placed in register pair DE. The octave value is taken from byte 15 of the current voice buffer and the divider constant halved until the correct octave is reached. The string operand is then examined directly ([56EEH](#56eeh)) to determine whether a trailing note length parameter exists. If so it is converted (572FH) and placed in register C. If no parameter exists the default length is taken from byte 16 of the current voice buffer. The duration of the note is then computed from:
 
-```
-Duration (Interrupt ticks) = 12,000/(LENGTH*TEMPO)
-```
+    Duration (Interrupt ticks) = 12,000/(LENGTH*TEMPO)
 
 With the normal length value (4) and tempo value (120) this gives a note duration of twenty-five interrupt ticks of 20 ms each or 0.5 seconds. The string operand is then examined ([56EEH](#56eeh)) for trailing "`.`" characters and, for each one, the duration multiplied by one and a half. Finally the resulting duration is checked and, if it is less than five interrupt ticks, it is replaced with a value of five. Thus the shortest note that can be generated on a UK machine is 0.10 seconds whatever the tempo or note length.
 
@@ -7642,89 +6598,67 @@ If the tone divider value is zero, indicating a rest, the contents of [SAVVOL](#
 
 <a name="7754h"></a>
 
-```
-Address... 7754H
-```
+    Address... 7754H
 
 This is the single precision constant 12,000 used in the computation of note duration.
 
 <a name="7758h"></a><a name="put"></a>
 
-```
-Address... 7758H
-```
+    Address... 7758H
 
 This is the "`PUT`" statement handler. Register B is set to 80H and control drops into the "`GET`" statement handler.
 
 <a name="775bh"></a><a name="get"></a>
 
-```
-Address... 775BH
-```
+    Address... 775BH
 
 This is the "`GET`" statement handler. Register B is zeroed, to distinguish "`GET`" from "`PUT`" and the next program token examined. Control then transfers to the "`PUT SPRITE`" statement handler ([7AAFH](#7aafh)) or the Disk BASIC "`GET/PUT`" statement handler ([6C35H](#6c35h)).
 
 <a name="7766h"></a><a name="locate"></a>
 
-```
-Address... 7766H
-```
+    Address... 7766H
 
 This is the "`LOCATE`" statement handler. If a column coordinate is present it is evaluated (521CH) and placed in register D, otherwise the current column is taken from [CSRX](#csrx). If a row coordinate is present it is evaluated (521CH) and placed in register E, otherwise the current row is taken from [CSRY](#csry). If a cursor switch operand exists it is evaluated (521CH) and register A loaded with 78H for a zero operand (OFF) and 79H for any non-zero operand (ON). The cursor is then switched by outputting ESC, 78H/79H, "`5`" via the [OUTDO](#outdo) standard routine. The row and column coordinates are placed in register pair HL and the cursor position set via the [POSIT](#posit) standard routine.
 
 <a name="77a5h"></a>
 
-```
-Address... 77A5H
-```
+    Address... 77A5H
 
 This is the "`STOP ON/OFF/STOP`" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77abh"></a>
 
-```
-Address... 77ABH
-```
+    Address... 77ABH
 
 This is the "`SPRITE ON/OFF/STOP`" statement handler. The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77b1h"></a>
 
-```
-Address... 77B1H
-```
+    Address... 77B1H
 
 This is the "`INTERVAL ON/OFF/STOP`" statement handler. As there is no specific "`INTERVAL`" token (control transfers here when an "`INT`" token is found) a check is first made on the program text for the characters "`E`" and "`R`" then the "`VAL`" token (94H). The address of the device's [TRPTBL](#trptbl) status byte is placed in register pair HL and control transfers to the "`ON/OFF/STOP`" routine (77CFH).
 
 <a name="77bfh"></a>
 
-```
-Address... 77BFH
-```
+    Address... 77BFH
 
 This is the "`STRIG ON/OFF/STOP`" statement handler. The trigger number, from zero to four, is evaluated ([7C08H](#7c08h)) and the address of the device's [TRPTBL](#trptbl) status byte placed in register pair HL. The "`ON/OFF/STOP`" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Control then transfers directly to the Runloop (4612H) to avoid testing for pending interrupts until the end of the next statement.
 
 <a name="77d4h"></a>
 
-```
-Address... 77D4H
-```
+    Address... 77D4H
 
 This is the "`KEY(n) ON/OFF/STOP`" statement handler. The key number, from one to ten, is evaluated (521CH) and the address of the devices' [TRPTBL](#trptbl) status byte placed in register pair HL. The "`ON/OFF/STOP`" token is examined and the [TRPTBL](#trptbl) status byte modified accordingly (77FEH). Bit 0 of the [TRPTBL](#trptbl) status byte, the ON bit, is then copied into the corresponding entry in [FNKFLG](#fnkflg) for use during the interrupt keyscan and control transfers directly to the Runloop (4612H).
 
 <a name="77feh"></a>
 
-```
-Address... 77FEH
-```
+    Address... 77FEH
 
 This routine checks for the presence of one of the interrupt switching tokens and transfers control to the appropriate routine: "`ON`" ([631BH](#631bh)), "`OFF`" (632BH) or "`STOP`" ([6331H](#6331h)). If no token is present a "`Syntax error`" is generated (4055H).
 
 <a name="7810h"></a>
 
-```
-Address... 7810H
-```
+    Address... 7810H
 
 This routine is used by the "`ON DEVICE GOSUB`" statement handler ([490DH](#490dh)) to check the program text for a device token. Unless none of the device tokens is present, in which case Flag C is returned, the device's [TRPTBL](#trptbl) entry number is returned in register B and the maximum allowable line number operand count in register C:
 
@@ -7740,135 +6674,101 @@ Additionally, for "`INTERVAL`" only, the interval operand is evaluated ([542FH](
 
 <a name="785ch"></a>
 
-```
-Address... 785CH
-```
+    Address... 785CH
 
 This routine is used by the "`ON DEVICE GOSUB`" statement handler ([490DH](#490dh)) to place the address of a program line in [TRPTBL](#trptbl). The [TRPTBL](#trptbl) entry number, supplied in register B, is multiplied by three and added to the table base to point to the relevant entry. The address, supplied in register pair DE, is then placed there LSB first, MSB second.
 
 <a name="786ch"></a><a name="key"></a>
 
-```
-Address... 786CH
-```
+    Address... 786CH
 
 This is the "`KEY`" statement handler. If the following character is anything other than the "`LIST`" token (93H) control transfers to the "`KEY n`" statement handler ([78AEH](#78aeh)). Each of the ten function key strings is then taken from [FNKSTR](#fnkstr) and displayed via the [OUTDO](#outdo) standard routine with a CR,LF (7328H) after each one. The DEL character (7FH) or any control character smaller than 20H is replaced with a space.
 
 <a name="78aeh"></a>
 
-```
-Address... 78AEH
-```
+    Address... 78AEH
 
 This is the "`KEY n`", "`KEY(n) ON/OFF/STOP`", "`KEY ON`" and "`KEY OFF`" statement handler. If the next program text character is "(" control transfers to the "`KEY(n) ON/OFF/STOP`" statement handler ([77D4H](#77d4h)). If it is an "`ON`" token (95H) control transfers to the [DSPFNK](#dspfnk) standard routine and if it is an "`OFF`" token (EBH) to the [ERAFNK](#erafnk) standard routine. Otherwise the function key number is evaluated (521CH) and the key's [FNKSTR](#fnkstr) address placed in register pair DE' The string operand is evaluated ([4C64H](#4c64h)) and its storage freed ([67D0H](#67d0h))' Up to fifteen characters are copied from the string to [FNKSTR](#fnkstr) and unused positions padded with zero bytes. If a zero byte is found in the operand string an "`Illegal function call`" error is generated (475AH). Control then transfers to the [FNKSB](#fnksb) standard routine to update the function key display if it is enabled.
 
 <a name="7900h"></a>
 
-```
-Address... 7900H
-```
+    Address... 7900H
 
 This routine is used by the Factor Evaluator to apply the "`TIME`" function. The contents of [JIFFY](#jiffy) are placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="790ah"></a>
 
-```
-Address... 790AH
-```
+    Address... 790AH
 
 This routine is used by the Factor Evaluator to apply the "`CSRLIN`" function. The contents of [CSRY](#csry) are decremented and placed in [DAC](#dac) as an integer (2E9AH).
 
 <a name="7911h"></a><a name="time"></a>
 
-```
-Address... 7911H
-```
+    Address... 7911H
 
 This is the "`TIME`" statement handler. The operand is evaluated (542FH) and placed in [JIFFY](#jiffy).
 
 <a name="791bh"></a>
 
-```
-Address... 791BH
-```
+    Address... 791BH
 
 This routine is used by the Factor Evaluator to apply the "`PLAY`" function. The numeric channel selection operand is evaluated ([7C08H](#7c08h)). If this is zero the contents of [MUSICF](#musicf) are placed in [DAC](#dac) as an integer of value zero or FFFFH. Otherwise the channel number is used to select the appropriate bit of [MUSICF](#musicf) and this is then converted to an integer as before.
 
 <a name="7940h"></a>
 
-```
-Address... 7940H
-```
+    Address... 7940H
 
 This routine is used by the Factor Evaluator to apply the "`STICK`" function to an operand contained in [DAC](#dac). The stick number is checked (521FH) and passed to the [GTSTCK](#gtstck) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH ) .
 
 <a name="794ch"></a>
 
-```
-Address... 794CH
-```
+    Address... 794CH
 
 This routine is used by the Factor Evaluator to apply the "`STRIG`" function to an operand contained in [DAC](#dac). The trigger number is checked (521FH) and passed to the [GTTRIG](#gttrig) standard routine in register A. The result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="795ah"></a>
 
-```
-Address... 795AH
-```
+    Address... 795AH
 
 This routine is used by the Factor Evaluator to apply the "`PDL`" function to an operand contained in [DAC](#dac). The paddle number is checked (521FH) and passed to the [GTPDL](#gtpdl) standard routine in register A. The result is placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7969h"></a>
 
-```
-Address... 7969H
-```
+    Address... 7969H
 
 This routine is used by the Factor Evaluator to apply the "`PAD`" function to an operand contained in [DAC](#dac). The pad number is checked (521F) and passed to the [GTPAD](#gtpad) standard routine in register A. The result is placed in [DAC](#dac) as an integer for pads 1, 2, 5 or 6. For pads 0, 3, 4 or 7 the result is placed in [DAC](#dac) as an integer of value zero or FFFFH.
 
 <a name="7980h"></a><a name="color"></a>
 
-```
-Address... 7980H
-```
+    Address... 7980H
 
 This is the "`COLOR`" statement handler. If a foreground colour operand exists it is evaluated (521CH) and placed in register E, otherwise the current foreground colour is taken from [FORCLR](#forclr). If a background colour operand exists it is evaluated (521CH) and placed in register D, otherwise the current background colour is taken from [BAKCLR](#bakclr). If a border colour operand exists it is evaluated (521CH) and placed in [BDRCLR](#bdrclr). The foreground colour is placed in [FORCLR](#forclr) and [ATRBYT](#atrbyt), the background colour in [BAKCLR](#bakclr) and control transfers to the [CHGCLR](#chgclr) standard routine to modify the VDP.
 
 <a name="79cch"></a><a name="screen"></a>
 
-```
-Address... 79CCH
-```
+    Address... 79CCH
 
 This is the "`SCREEN`" statement handler. If a mode operand exists it is evaluated (521CH) and passed to the [CHGMOD](#chgmod) standard routine in register A. If a sprite size operand exists it is evaluated (521CH) and placed in bits 0 and 1 of [RG1SAV](#rg1sav), the Workspace Area copy of VDP [Mode Register 1](#mode_register_1). The VDP sprite parameters are then cleared via the [CLRSPR](#clrspr) standard routine. If a key click operand exists it is evaluated (521CH) and placed in [CLIKSW](#cliksw), zero to disable the click and non-zero to enable it. If a baud rate operand exists it is evaluated and the baud rate set ([7A2DH](#7a2dh)). If a printer mode operand exists it is evaluated (521CH) and placed in [NTMSXP](#ntmsxp), zero for an MSX printer and non- zero for a general purpose printer.
 
 <a name="7a2dh"></a>
 
-```
-Address... 7A2DH
-```
+    Address... 7A2DH
 
 This routine is used to set the cassette baud rate. The operand is evaluated (521CH) and five bytes copied from [CS1200](#cs1200) or [CS2400](#cs2400) to [LOW](#low) as appropriate.
 
 <a name="7a48h"></a><a name="sprite"></a>
 
-```
-Address... 7A48H
-```
+    Address... 7A48H
 
 This is the "`SPRITE`" statement handler. If the next character is anything other than a "$" control transfers to the "`SPRITE ON/OFF/STOP`" statement handler ([77ABH](#77abh)). [SCRMOD](#scrmod) is then checked and an "`Illegal function call`" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained (7AA0H). The string operand is then evaluated ([4C5FH](#4c5fh)) and its storage freed ([67D0H](#67d0h)). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is compared with the string length and, if the string is shorter than the sprite, the Sprite Pattern Table entry is first filled with zeroes via the [FILVRM](#filvrm) standard routine. Characters are then copied from the string body to the Sprite Pattern Table via the [LDIRVM](#ldirvm) standard routine until the string is exhausted or the sprite is full. If the string is longer than the sprite size any excess characters are ignored.
 
-```
-Address... 7A84H
-```
+    Address... 7A84H
 
 This routine is used by the Factor Evaluator to apply the "`SPRITE$`" function. The sprite pattern number is evaluated and its location in the VRAM Sprite Pattern Table obtained ([7A9FH](#7a9fh)). The sprite size, obtained via the [GSPSIZ](#gspsiz) standard routine, is then placed in register pair BC to control the number of bytes copied. After checking that sufficient space is available in the String Storage Area ([6627H](#6627h)) the sprite pattern is copied from VRAM via the [LDIRMV](#ldirmv) standard routine and the result descriptor created ([6654H](#6654h)). Note that as no check is made on the screen mode during this function some interesting side effects can be found, see below.
 
 <a name="7a9fh"></a>
 
-```
-Address... 7A9FH
-```
+    Address... 7A9FH
 
 This routine is used by the "`SPRITE$`" statement and function to locate a sprite pattern in the VRAM Sprite Pattern Table. The pattern number operand is evaluated ([7C08H](#7c08h)) and passed to the [CALPAT](#calpat) standard routine in register A. The pattern address is placed in register pair DE and the routine terminates.
 
@@ -7895,9 +6795,7 @@ The above puts a real sprite in the top left of the screen and then uses an ille
 
 <a name="7aafh"></a><a name="put_sprite"></a>
 
-```
-Address... 7AAFH
-```
+    Address... 7AAFH
 
 This is the "`GET/PUT SPRITE`" statement handler, control is transferred here from the general "`GET/PUT`" statement handler ([775BH](#775bh)). Register B is first checked to make sure that the statement is "`PUT`" and an "`Illegal function call`" error generated (475AH) if otherwise. [SCRMOD](#scrmod) is then checked and an "`Illegal function call`" error generated (475AH) if the screen is in [40x24 Text Mode](#40x24_text_mode). The sprite number operand, from zero to thirty-one, is evaluated (521CH) and passed to the [CALATR](#calatr) standard routine to locate the four byte attribute block in the Sprite Attribute Table. If a coordinate operand exists it is evaluated and the X coordinate placed in register pair BC, the Y coordinate in register pair DE ([579CH](#579ch)).
 
@@ -7907,33 +6805,25 @@ If a colour operand is present it is evaluated (521CH), byte 3 of the attribute 
 
 <a name="7b37h"></a>
 
-```
-Address... 7B37H
-```
+    Address... 7B37H
 
 This is the "`VDP`" statement handler. The register number operand, from zero to seven, is evaluated ([7C08H](#7c08h)) followed by the data operand (521CH). The register number is placed in register C, the data value in register B and control transferred to the [WRTVDP](#wrtvdp) standard routine.
 
 <a name="7b47h"></a>
 
-```
-Address... 7B47H
-```
+    Address... 7B47H
 
 This routine is used by the Factor Evaluator to apply the "`VDP`" function. The register number operand, from zero to eight, is evaluated ([7C08H](#7c08h)) and added to [RG0SAV](#rg0sav) to locate the corresponding register image in the Workspace Area. The VDP register image is then read and placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7b5ah"></a><a name="base"></a>
 
-```
-Address... 7B5AH
-```
+    Address... 7B5AH
 
 This is the "`BASE`" statement handler. The VDP table number operand, from zero to nineteen, is evaluated ([7C08H](#7c08h)) followed by the base address operand ([4C64H](#4c64h)). After checking that the base address is less than 4000H ([7BFEH](#7bfeh)) the VDP table number is used to locate the associated entry in the masking table at 7BA3H. The base address is ANDed with the mask and an "`Illegal function call`" error generated (475AH) if any illegal bits are set. The VDP table number is then added to [TXTNAM](#txtnam) to locate the current base address in the Workspace Area and the new base address placed there. The VDP table number is divided by five to determine which of the four screen modes the table belongs to. If this is the same as the current screen mode the new base address is also written to the VDP ([7B99H](#7b99h)).
 
 <a name="7b99h"></a>
 
-```
-Address... 7B99H
-```
+    Address... 7B99H
 
 This routine is used by the "`BASE`" statement handler to update the VDP base addresses. The current screen mode, in register A, is examined and control transfers to the [SETTXT](#settxt), [SETT32](#sett32), [SETGRP](#setgrp) or [SETMLT](#setmlt) standard routine as appropriate. Note that this is not a full VDP initialization and that the four current table addresses ([NAMBAS](#nambas), [CGPBAS](#cgpbas), [PATBAS](#patbas) and [ATRBAS](#atrbas)) which are the ones actually used by the screen routines, are not updated. This can be demonstrated with the following, where the Interpreter carries on outputting to the old VRAM Name Table:
 
@@ -7949,9 +6839,7 @@ Note also that this routine contains a bug. While [SETTXT](#settxt) is correctly
 
 <a name="7ba3h"></a>
 
-```
-Address... 7BA3H
-```
+    Address... 7BA3H
 
 This masking table is used by the "`BASE`" statement handler to ensure that only legal VDP base addresses are accepted. The table number and corresponding Workspace Area variable are shown with each mask:
 
@@ -7982,201 +6870,151 @@ This masking table is used by the "`BASE`" statement handler to ensure that only
 
 <a name="7bcbh"></a>
 
-```
-Address... 7BCBH
-```
+    Address... 7BCBH
 
 This routine is used by the Factor Evaluator to apply the "`BASE`" function. The VDP table number operand, from zero to nineteen, is evaluated ([7C08H](#7c08h)) and added to [TXTNAM](#txtnam) to locate the required Workspace Area base address. This is then placed in [DAC](#dac) as a single precision number (3236H).
 
 <a name="7be2h"></a><a name="vpoke"></a>
 
-```
-Address... 7BE2H
-```
+    Address... 7BE2H
 
 This is the "`VPOKE`" statement handler. The VRAM address operand is evaluated ([4C64H](#4c64h)) and checked to ensure that it is less than 4000H ([7BFEH](#7bfeh)). The data operand is then evaluated (521CH) and passed to the [WRTVRM](#wrtvrm) standard routine in register A to write to the required address.
 
 <a name="7bf5h"></a>
 
-```
-Address... 7BF5H
-```
+    Address... 7BF5H
 
 This routine is used by the Factor Evaluator to apply the "`VPEEK`" function to an operand contained in [DAC](#dac). The VRAM address operand is checked to ensure it is less than 4000H ([7BFEH](#7bfeh)). VRAM is then read via the [RDVRM](#rdvrm) standard routine and the result placed in [DAC](#dac) as an integer (4FCFH).
 
 <a name="7bfeh"></a>
 
-```
-Address... 7BFEH
-```
+    Address... 7BFEH
 
 This routine converts a numeric operand in [DAC](#dac) to an integer ([2F8AH](#2f8ah)) and places it in register pair HL. If the operand is equal to or greater than 4000H, and thus outside the allowable VRAM range, an "`Illegal function call`" error is generated (475AH).
 
 <a name="7c08h"></a>
 
-```
-Address... 7C08H
-```
+    Address... 7C08H
 
 This routine evaluates (521CH) a parenthesized numeric operand and returns it as an integer in register A. If the operand is greater than the maximum allowable value initially supplied in register A an "`Illegal function call`" error is generated (475AH).
 
 <a name="7c16h"></a><a name="dsko$"></a>
 
-```
-Address... 7C16H
-```
+    Address... 7C16H
 
 This is the "`DSKO$`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c1bh"></a><a name="set"></a>
 
-```
-Address... 7C1BH
-```
+    Address... 7C1BH
 
 This is the "`SET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c20h"></a><a name="name"></a>
 
-```
-Address... 7C20H
-```
+    Address... 7C20H
 
 This is the "`NAME`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c25h"></a><a name="kill"></a>
 
-```
-Address... 7C25H
-```
+    Address... 7C25H
 
 This is the "`KILL`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c2ah"></a><a name="ipl"></a>
 
-```
-Address... 7C2AH
-```
+    Address... 7C2AH
 
 This is the "`IPL`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c2fh"></a><a name="copy"></a>
 
-```
-Address... 7C2FH
-```
+    Address... 7C2FH
 
 This is the "`COPY`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c34h"></a><a name="cmd"></a>
 
-```
-Address... 7C34H
-```
+    Address... 7C34H
 
 This is the "`CMD`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c39h"></a>
 
-```
-Address... 7C39H
-```
+    Address... 7C39H
 
 This routine is used by the Factor Evaluator to apply the "`DSKF`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c3eh"></a>
 
-```
-Address... 7C3EH
-```
+    Address... 7C3EH
 
 This routine is used by the Factor Evaluator to apply the "`DSKI$`" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c43h"></a>
 
-```
-Address... 7C43H
-```
+    Address... 7C43H
 
 This routine is used by the Factor Evaluator to apply the "`ATTR$`" function. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c48h"></a><a name="lset"></a>
 
-```
-Address... 7C48H
-```
+    Address... 7C48H
 
 This is the "`LSET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c4dh"></a><a name="rset"></a>
 
-```
-Address... 7C4DH
-```
+    Address... 7C4DH
 
 This is the "`RSET`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c52h"></a><a name="field"></a>
 
-```
-Address... 7C52H
-```
+    Address... 7C52H
 
 This is the "`FIELD`" statement handler. An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c57h"></a>
 
-```
-Address... 7C57H
-```
+    Address... 7C57H
 
 This routine is used by the Factor Evaluator to apply the "`MKI$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c5ch"></a>
 
-```
-Address... 7C5CH
-```
+    Address... 7C5CH
 
 This routine is used by the Factor Evaluator to apply the "`MKS$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c61h"></a>
 
-```
-Address... 7C61H
-```
+    Address... 7C61H
 
 This routine is used by the Factor Evaluator to apply the "`MKD$`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c66h"></a>
 
-```
-Address... 7C66H
-```
+    Address... 7C66H
 
 This routine is used by the Factor Evaluator to apply the "`CVI`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c6bh"></a>
 
-```
-Address... 7C6BH
-```
+    Address... 7C6BH
 
 This routine is used by the Factor Evaluator to apply the "`CVS`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c70h"></a>
 
-```
-Address... 7C70H
-```
+    Address... 7C70H
 
 This routine is used by the Factor Evaluator to apply the "`CVD`" function to an operand contained in [DAC](#dac). An "`Illegal function call`" error is generated (475AH) on a standard MSX machine.
 
 <a name="7c76h"></a>
 
-```
-Address... 7C76H
-```
+    Address... 7C76H
 
 This routine completes the power-up initialization. At this point the entire Workspace Area is zeroed and only [EXPTBL](#exptbl) and [SLTTBL](#slttbl) have been initialized. A temporary stack is set at F376H and all one hundred and twelve hooks (560 bytes) filled with Z80 RET opcodes (C9H). [HIMEM](#himem) is set to F380H and the lowest RAM location found ([7D5DH](#7d5dh)) and placed in [BOTTOM](#bottom). The one hundred and forty-four bytes of data commencing at 7F27H are copied to the Workspace Area from F380H to F40FH The function key strings are initialized via the [INIFNK](#inifnk) standard routine, [ENDBUF](#endbuf) and [NLONLY](#nlonly) are zeroed and a comma is placed in [BUFMIN](#bufmin) and a colon in [KBFMIN](#kbfmin). The address of the MSX ROM character set is taken from locations 0004H and 0005H and placed in [CGPNT](#cgpnt)+1 and [PRMPRV](#prmprv) is set to point to [PRMSTK](#prmstk). Dummy values are placed in [STKTOP](#stktop), [MEMSIZ](#memsiz) and [VARTAB](#vartab) (their correct values are not known yet), one I/O buffer is allocated ([7E6BH](#7e6bh)) and the Z80 SP set (62E5H). A zero byte is placed at the base of RAM, [TXTTAB](#txttab) is set to the following location and a "`NEW`" executed (6287H).
 
@@ -8186,25 +7024,19 @@ Finally the identification message "`MSX BASIC etc.`" is displayed ([7D29H](#7d2
 
 <a name="7d29h"></a>
 
-```
-Address... 7D29H
-```
+    Address... 7D29H
 
 This routine is used during power-up to enable the function key display, place the screen in [40x24 Text Mode](#40x24_text_mode) via the [INITXT](#initxt) standard routine, and display ([6678H](#6678h)) the identification message "`MSX BASIC etc.`". The amount of free memory is then computed by subtracting the contents of [VARTAB](#vartab) from the contents of [STKTOP](#stktop) and displayed ([3412H](#3412h)) followed by the "`Bytes free`" message.
 
 <a name="7d5dh"></a>
 
-```
-Address... 7D5DH
-```
+    Address... 7D5DH
 
 This routine is used during power-up to find the lowest RAM location. Starting at EF00H each byte is tested until one is found that cannot be written to or an address of 8000H is reached. The base address, rounded upwards to the nearest 256 byte boundary, is returned in register pair HL.
 
 <a name="7d75h"></a>
 
-```
-Address... 7D75H
-```
+    Address... 7D75H
 
 This routine is used during power-up to perform an extension ROM search. Pages 1 and 2 (4000H to BFFFH) of each slot are examined and the results placed in [SLTATR](#sltatr). An extension ROM has the two identification characters "`AB`" in the first two bytes to distinguish it from RAM. Information about its properties is also present in the first sixteen bytes as follows:
 
@@ -8218,17 +7050,13 @@ Each page in a given slot is examined by reading the first two bytes ([7E1AH](#7
 
 <a name="7e1ah"></a>
 
-```
-Address... 7E1AH
-```
+    Address... 7E1AH
 
 This routine is used to read two bytes from successive locations in an extension ROM. The initial address is supplied in register pair HL and the Slot ID in register C. The bytes are read via the [RDSLT](#rdslt) standard routine and returned in register pair DE. If both are zero FLAG Z is returned.
 
 <a name="7e2ah"></a>
 
-```
-Address... 7E2AH
-```
+    Address... 7E2AH
 
 This routine converts the [SLTATR](#sltatr) position supplied in register B into the corresponding Slot ID in register C and ROM base address in register H. The position is first modified so that it runs from 0 to 63 rather than from 64 to 1, so that the required information is present in the form:
 
@@ -8240,81 +7068,61 @@ Bits 0 and 1 are shifted into the highest two bits of register H to form the add
 
 <a name="7e4bh"></a><a name="maxfiles"></a>
 
-```
-Address... 7E4BH
-```
+    Address... 7E4BH
 
 This is the "`MAXFILES`" statement handler. As control transfers here when a "`MAX`" token (CDH) is detected the program text is first checked for a trailing "`FILES`" token (B7H). The buffer count operand, from zero to fifteen, is then evaluated (521CH) and any existing buffers closed ([6C1CH](#6c1ch)). The required number of I/O buffers are allocated ([7E6BH](#7e6bh)), the system is cleared (62A7H) and control transfers directly to the Runloop ([4601H](#4601h)).
 
 <a name="7e6bh"></a>
 
-```
-Address... 7E6BH
-```
+    Address... 7E6BH
 
 This is the I/O buffer allocation routine. It is used during power-up and by the "`MAXFILES`" and "`CLEAR`" statement handlers to allocate storage for the number of I/O buffers supplied in register A. Two hundred and sixty-seven bytes are subtracted from the contents of [HIMEM](#himem) for every buffer to produce a new [MEMSIZ](#memsiz) value. The size of the existing String Storage Area (initially two hundred bytes) is computed by subtracting the old contents of [STKTOP](#stktop) from the old contents of [MEMSIZ](#memsiz), this is then subtracted from the new [MEMSIZ](#memsiz) value to produce the new [STKTOP](#stktop) value. A further one hundred and forty bytes are subtracted for the Z80 stack and an "`Out of memory`" error generated (6275H) if this address is lower than the start of the Variable Storage Area. Otherwise the buffer count is placed in [MAXFIL](#maxfil) and [MEMSIZ](#memsiz) and [STKTOP](#stktop) set to their new values. The caller's return address is popped, the Z80 SP set to the new position and the return address pushed back onto the stack. [FILTAB](#filtab) is then set to the start of the I/O buffer pointer block and each pointer set to point to the associated FCB. Finally the address of I/O buffer 0, the Interpreter's "`LOAD`" and "`SAVE`" buffer, is placed in [NULBUF](#nulbuf) and the routine terminates.
 
 <a name="7ed8h"></a>
 
-```
-Address... 7ED8H
-```
+    Address... 7ED8H
 
 This is the plain text message "`MSX system`" terminated by a zero byte
 
 <a name="7ee4h"></a>
 
-```
-Address... 7EE4H
-```
+    Address... 7EE4H
 
 This is the plain text message "`version 1.0`" CR,LF terminated by a zero byte.
 
 <a name="7ef2h"></a>
 
-```
-Address... 7EF2H
-```
+    Address... 7EF2H
 
 This is the plain text message "`MSX BASIC`" terminated by a zero byte.
 
 <a name="7efdh"></a>
 
-```
-Address... 7EFDH
-```
+    Address... 7EFDH
 
 This is the plain text message "`Copyright 1983 by Microsoft`" CR,LF terminated by a zero byte.
 
 <a name="7f1bh"></a>
 
-```
-Address... 7F1BH
-```
+    Address... 7F1BH
 
 This is the plain text message "`Bytes free`" terminated by a zero byte.
 
 <a name="7f27h"></a>
 
-```
-Address... 7F27H
-```
+    Address... 7F27H
 
 This block of one hundred and forty-four data bytes is used to initialize the Workspace Area from F380H to F40FH.
 
 <a name="7fb7h"></a>
 
-```
-Address... 7FB7H
-```
+    Address... 7FB7H
 
 This seven byte patch fixes a bug in the external device parsing routine ([55F8H](#55f8h)). It checks for a zero length device name in register A and changes it to one if necessary.
 
 <a name="7fbeh"></a>
 
-```
-Address... 7FBEH
-```
+    Address... 7FBEH
 
 This section of the ROM is unused and filled with zero bytes.
 
@@ -8436,41 +7244,31 @@ These ten variables contain the "`USR`" function addresses. Their values are set
 
 <a name="f3aeh"></a><a name="linl40"></a>
 
-```
-F3AEH LINL40: DEFB 37
-```
+    F3AEH LINL40: DEFB 37
 
 This variable contains the [40x24 Text Mode](#40x24_text_mode) screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
 
 <a name="f3afh"></a><a name="linl32"></a>
 
-```
-F3AFH LINL32: DEFB 29
-```
+    F3AFH LINL32: DEFB 29
 
 This variable contains the [32x24 Text Mode](#32x24_text_mode) screen width. Its value is set at power-up and thereafter only altered by the "`WIDTH`" statement.
 
 <a name="f3b0h"></a><a name="linlen"></a>
 
-```
-F3B0H LINLEN: DEFB 37
-```
+    F3B0H LINLEN: DEFB 37
 
 This variable contains the current text mode screen width. Its value is set from [LINL40](#linl40) or [LINL32](#linl32) whenever the VDP is initialized to a text mode via the [INITXT](#initxt) or [INIT32](#init32) standard routines.
 
 <a name="f3b1h"></a><a name="crtcnt"></a>
 
-```
-F3B1H CRTCNT: DEFB 24
-```
+    F3B1H CRTCNT: DEFB 24
 
 This variable contains the number of rows on the screen. Its value is set at power-up and thereafter unaltered.
 
 <a name="f3b2h"></a><a name="clmlst"></a>
 
-```
-F3B2H CLMLST: DEFB 14
-```
+    F3B2H CLMLST: DEFB 14
 
 This variable contains the minimum number of columns that must still be available on a line for a data item to be "`PRINT`"ed, if less space is available a CR,LF is issued first. Its value is set at power-up and thereafter only altered by the "`WIDTH`" and "`SCREEN`" statements.
 
@@ -8540,33 +7338,25 @@ These five variables contain the [Multicolour Mode](#multicolour_mode) VDP base 
 
 <a name="f3dbh"></a><a name="cliksw"></a>
 
-```
-F3DBH CLIKSW: DEFB 01H
-```
+    F3DBH CLIKSW: DEFB 01H
 
 This variable controls the interrupt handler key click: 00H=Off, NZ=On. Its value is set at power-up and thereafter only altered by the "`SCREEN`" statement.
 
 <a name="f3dch"></a><a name="csry"></a>
 
-```
-F3DCH CSRY:   DEFB 01H
-```
+    F3DCH CSRY:   DEFB 01H
 
 This variable contains the row coordinate (from 1 to [CTRCNT](#ctrcnt)) of the text mode cursor.
 
 <a name="f3ddh"></a><a name="csrx"></a>
 
-```
-F3DDH CSRX:   DEFB 01H
-```
+    F3DDH CSRX:   DEFB 01H
 
 This variable contains the column coordinate (from 1 to [LINLEN](#linlen)) of the text mode cursor. Note that the BIOS cursor coordinates for the home position are 1,1 whatever the screen width.
 
 <a name="f3deh"></a><a name="cnsdfg"></a>
 
-```
-F3DEH CNSDFG: DEFB FFH
-```
+    F3DEH CNSDFG: DEFB FFH
 
 This variable contains the current state of the function key display: 00H=Off, NZ=On.
 
@@ -8594,41 +7384,31 @@ These eight variables mimic the state of the eight write-only [VDP Mode Register
 
 <a name="f3e7h"></a><a name="statfl"></a>
 
-```
-F3E7H STATFL: DEFB CAH
-```
+    F3E7H STATFL: DEFB CAH
 
 This variable is continuously updated by the interrupt handler with the contents of the [VDP Status Register](#vdp_status_register).
 
 <a name="f3e8h"></a><a name="trgflg"></a>
 
-```
-F3E8H TRGFLG: DEFB F1H
-```
+    F3E8H TRGFLG: DEFB F1H
 
 This variable is continuously updated by the interrupt handler with the state of the four joystick trigger inputs and the space key.
 
 <a name="f3e9h"></a><a name="forclr"></a>
 
-```
-F3E9H FORCLR: DEFB 0FH     ; White
-```
+    F3E9H FORCLR: DEFB 0FH     ; White
 
 This variable contains the current foreground colour. Its value is set at power-up and thereafter only altered by the "`COLOR`" statement. The foreground colour is used by the [CLRSPR](#clrspr) standard routine to set the sprite colour and by the [CHGCLR](#chgclr) standard routine to set the 1 pixel colour in the text modes. It also functions as the graphics ink colour as it is copied to [ATRBYT](#atrbyt) by the [GRPPRT](#grpprt) standard routine and used throughout the Interpreter as the default value for any optional colour operand.
 
 <a name="f3eah"></a><a name="bakclr"></a>
 
-```
-F3EAH BAKCLR: DEFB 04H     ; Dark blue
-```
+    F3EAH BAKCLR: DEFB 04H     ; Dark blue
 
 This variable contains the current background colour. Its value is set at power-up and thereafter only altered by the "`COLOR`" statement. The background colour is used by the [CLS](#cls) standard routine to clear the screen in the graphics modes and by the [CHGCLR](#chgclr) standard routine to set the 0 pixel colour in the text modes.
 
 <a name="f3ebh"></a><a name="bdrclr"></a>
 
-```
-F3EBH BDRCLR: DEFB 04H     ; Dark blue
-```
+    F3EBH BDRCLR: DEFB 04H     ; Dark blue
 
 This variable contains the current border colour. Its value is set at power-up and thereafter only altered by the "`COLOR`" statement. The border colour is used by the [CHGCLR](#chgclr) standard routine in [32x24 Text Mode](#32x24_text_mode), [Graphics Mode](#graphics_mode) and [Multicolour Mode](#multicolour_mode) to set the border colour.
 
@@ -8654,57 +7434,43 @@ These two bytes are filled in by the "`LINE`" statement handler to form a Z80 JP
 
 <a name="f3f2h"></a><a name="atrbyt"></a>
 
-```
-F3F2H ATRBYT: DEFB 0FH
-```
+    F3F2H ATRBYT: DEFB 0FH
 
 This variable contains the graphics ink colour used by the [SETC](#setc) and [NSETCX](#nsetcx) standard routines.
 
 <a name="f3f3h"></a><a name="queues"></a>
 
-```
-F3F3H QUEUES: DEFW F959H
-```
+    F3F3H QUEUES: DEFW F959H
 
 This variable contains the address of the control blocks for the three music queues. Its value is set at power-up and thereafter unaltered.
 
 <a name="f3f5h"></a><a name="frcnew"></a>
 
-```
-F3F5H FRCNEW: DEFB FFH
-```
+    F3F5H FRCNEW: DEFB FFH
 
 This variable contains a flag to distinguish the two statements in the "`CLOAD/CLOAD?`" statement handler: 00H=CLOAD, FFH=CLOAD?.
 
 <a name="f3f6h"></a><a name="scncnt"></a>
 
-```
-F3F6H SCNCNT: DEFB 01H
-```
+    F3F6H SCNCNT: DEFB 01H
 
 This variable is used as a counter by the interrupt handler to control the rate at which keyboard scans are performed.
 
 <a name="f3f7h"></a><a name="repcnt"></a>
 
-```
-F3F7H REPCNT: DEFB 01H
-```
+    F3F7H REPCNT: DEFB 01H
 
 This variable is used as a counter by the interrupt handler to control the key repeat rate.
 
 <a name="f3f8h"></a><a name="putpnt"></a>
 
-```
-F3F8H PUTPNT: DEFW FBF0H
-```
+    F3F8H PUTPNT: DEFW FBF0H
 
 This variable contains the address of the put position in [KEYBUF](#keybuf).
 
 <a name="f3fah"></a><a name="getpnt"></a>
 
-```
-F3FAH GETPNT: DEFW FBF0H
-```
+    F3FAH GETPNT: DEFW FBF0H
 
 This variable contains the address of the get position in [KEYBUF](#keybuf).
 
@@ -8758,17 +7524,13 @@ These five variables contain the current cassette parameters. Their values are s
 
 <a name="f40bh"></a><a name="aspct1"></a>
 
-```
-F40BH ASPCT1: DEFW 0100H
-```
+    F40BH ASPCT1: DEFW 0100H
 
 This variable contains the reciprocal of the default "`CIRCLE`" aspect ratio multiplied by 256. Its value is set at power-up and thereafter unaltered.
 
 <a name="f40dh"></a><a name="aspct2"></a>
 
-```
-F40DH ASPCT2: DEFW 01C0H
-```
+    F40DH ASPCT2: DEFW 01C0H
 
 This variable contains the default "`CIRCLE`" aspect ratio multiplied by 256. Its value is set at power-up and thereafter unaltered. The aspect ratio is present in two forms so that the "`CIRCLE`" statement handler can select the appropriate one immediately rather than needing to examine and possibly reciprocate it as is the case with an operand in the program text.
 
@@ -8790,41 +7552,31 @@ These five bytes form a dummy program line. Their values are set at power-up and
 
 <a name="f414h"></a><a name="errflg"></a>
 
-```
-F414H ERRFLG: DEFB 00H
-```
+    F414H ERRFLG: DEFB 00H
 
 This variable is used by the Interpreter error handler to save the error number.
 
 <a name="f415h"></a><a name="lptpos"></a>
 
-```
-F415H LPTPOS: DEFB 00H
-```
+    F415H LPTPOS: DEFB 00H
 
 This variable is used by the "`LPRINT`" statement handler to hold the current position of the printer head.
 
 <a name="f416h"></a><a name="prtflg"></a>
 
-```
-F416H PRTFLG: DEFB 00H
-```
+    F416H PRTFLG: DEFB 00H
 
 This variable determines whether the [OUTDO](#outdo) standard routine directs its output to the screen or to the printer: 00H=Screen, 01H=Printer.
 
 <a name="f417h"></a><a name="ntmsxp"></a>
 
-```
-F417H NTMSXP: DEFB 00H
-```
+    F417H NTMSXP: DEFB 00H
 
 This variable determines whether the [OUTDO](#outdo) standard routine will replace headered graphics characters directed to the printer with spaces: 00H=Graphics, NZ=Spaces. Its value is set at power-up and thereafter only altered by the "`SCREEN`" statement.
 
 <a name="f418h"></a><a name="rawprt"></a>
 
-```
-F418H RAWPRT: DEFB 00H
-```
+    F418H RAWPRT: DEFB 00H
 
 This variable determines whether the [OUTDO](#outdo) standard routine will modify control and headered graphics characters directed to the printer: 00H=Modify, NZ=Raw. Its value is set at power-up and thereafter unaltered.
 
@@ -8840,369 +7592,277 @@ These variables contain the address and value of any character temporarily remov
 
 <a name="f41ch"></a><a name="curlin"></a>
 
-```
-F41CH CURLIN: DEFW FFFFH
-```
+    F41CH CURLIN: DEFW FFFFH
 
 This variable contains the current Interpreter line number. A value of FFFFH denotes direct mode.
 
 <a name="f41eh"></a><a name="kbfmin"></a>
 
-```
-F41EH KBFMIN: DEFB ":"
-```
+    F41EH KBFMIN: DEFB ":"
 
 This byte provides a dummy prefix to the tokenized text contained in [KBUF](#kbuf). Its function is similar to that of [ENDPRG](#endprg) but is used for the situation where an error occurs within a direct statement.
 
 <a name="f41fh"></a><a name="kbuf"></a>
 
-```
-F41FH KBUF:   DEFS 318
-```
+    F41FH KBUF:   DEFS 318
 
 This buffer contains the tokenized form of the input line collected by the Interpreter Mainloop. When a direct statement is executed the contents of this buffer form the program text.
 
 <a name="f55dh"></a><a name="bufmin"></a>
 
-```
-F55DH BUFMIN: DEFB ","
-```
+    F55DH BUFMIN: DEFB ","
 
 This byte provides a dummy prefix to the text contained in [BUF](#buf). It is used to synchronize the "`INPUT`" statement handler as it starts to analyze the input text.
 
 <a name="f55eh"></a><a name="buf"></a>
 
-```
-F55EH BUF:    DEFS 259
-```
+    F55EH BUF:    DEFS 259
 
 This buffer contains the text collected from the console by the [INLIN](#inlin) standard routine.
 
 <a name="f661h"></a><a name="ttypos"></a>
 
-```
-F661H TTYPOS: DEFB 00H
-```
+    F661H TTYPOS: DEFB 00H
 
 This variable is used by the "`PRINT`" statement handler to hold the current screen position (Teletype!).
 
 <a name="f662h"></a><a name="dimflg"></a>
 
-```
-F662H DIMFLG: DEFB 00H
-```
+    F662H DIMFLG: DEFB 00H
 
 This variable is normally zero but is set by the "`DIM`" statement handler to control the operation of the variable search routine.
 
 <a name="f663h"></a><a name="valtyp"></a>
 
-```
-F663H VALTYP: DEFB 02H
-```
+    F663H VALTYP: DEFB 02H
 
 This variable contains the type code of the operand currently contained in [DAC](#dac): integer, 3=String, 4=Single Precision, 8=Double Precision.
 
 <a name="f664h"></a><a name="dores"></a>
 
-```
-F664H DORES:  DEFB 00H
-```
+    F664H DORES:  DEFB 00H
 
 This variable is normally zero but is set to prevent the tokenization of unquoted keywords following a "`DATA`" token.
 
 <a name="f665h"></a><a name="donum"></a>
 
-```
-F665H DONUM:  DEFB 00H
-```
+    F665H DONUM:  DEFB 00H
 
 This variable is normally zero but is set when a numeric constant follows one of the keywords `GOTO`, `GOSUB`, `THEN`, etc., and must be tokenized to the special line number operand form.
 
 <a name="f666h"></a><a name="contxt"></a>
 
-```
-F666H CONTXT: DEFW 0000H
-```
+    F666H CONTXT: DEFW 0000H
 
 This variable is used by the [CHRGTR](#chrgtr) standard routine to save the address of the character following a numeric constant in the program text.
 
 <a name="f668h"></a><a name="consav"></a>
 
-```
-F668H CONSAV: DEFB 00H
-```
+    F668H CONSAV: DEFB 00H
 
 This variable is used by the [CHRGTR](#chrgtr) standard routine to save the token of a numeric constant found in the program text.
 
 <a name="f669h"></a><a name="contyp"></a>
 
-```
-F669H CONTYP: DEFB 00H
-```
+    F669H CONTYP: DEFB 00H
 
 This variable is used by the [CHRGTR](#chrgtr) standard routine to save the type of a numeric constant found in the program text.
 
 <a name="f66ah"></a><a name="conlo"></a>
 
-```
-F66AH CONLO:  DEFS 8
-```
+    F66AH CONLO:  DEFS 8
 
 This buffer is used by the [CHRGTR](#chrgtr) standard routine to save the value of a numeric constant found in the program text.
 
 <a name="f672h"></a><a name="memsiz"></a>
 
-```
-F672H MEMSIZ: DEFW F168H
-```
+    F672H MEMSIZ: DEFW F168H
 
 This variable contains the address of the top of the String Storage Area. Its value is set at power-up and thereafter only altered by the "`CLEAR`" and "`MAXFILES`" statements.
 
 <a name="f674h"></a><a name="stktop"></a>
 
-```
-F674H STKTOP: DEFW F0A0H
-```
+    F674H STKTOP: DEFW F0A0H
 
 This variable contains the address of the top of the Z80 stack. Its value is set at power-up to [MEMSIZ](#memsiz)-200 and thereafter only altered by the "`CLEAR`" and "`MAXFILES`" statements.
 
 <a name="f676h"></a><a name="txttab"></a>
 
-```
-F676H TXTTAB: DEFW 8001H
-```
+    F676H TXTTAB: DEFW 8001H
 
 This variable contains the address of the first byte of the Program Text Area. Its value is set at power-up and thereafter unaltered.
 
 <a name="f678h"></a><a name="temppt"></a>
 
-```
-F678H TEMPPT: DEFW F67AH
-```
+    F678H TEMPPT: DEFW F67AH
 
 This variable contains the address of the next free location in [TEMPST](#tempst).
 
 <a name="f67ah"></a><a name="tempst"></a>
 
-```
-F67AH TEMPST: DEFS 30
-```
+    F67AH TEMPST: DEFS 30
 
 This buffer is used to store string descriptors. It functions as a stack with string producers pushing their results and string consumers popping them.
 
 <a name="f698h"></a><a name="dsctmp"></a>
 
-```
-F698H DSCTMP: DEFS 3
-```
+    F698H DSCTMP: DEFS 3
 
 This buffer is used by the string functions to hold a result descriptor while it is being constructed.
 
 <a name="f69bh"></a><a name="fretop"></a>
 
-```
-F69BH FRETOP: DEFW F168H
-```
+    F69BH FRETOP: DEFW F168H
 
 This variable contains the address of the next free location in the String Storage Area. When the area is empty [FRETOP](#fretop) is equal to [MEMSIZ](#memsiz).
 
 <a name="f69dh"></a><a name="temp3"></a>
 
-```
-F69DH TEMP3: DEFW 0000H
-```
+    F69DH TEMP3: DEFW 0000H
 
 This variable is used for temporary storage by various parts of the Interpreter.
 
 <a name="f69fh"></a><a name="temp8"></a>
 
-```
-F69FH TEMP8:  DEFW 0000H
-```
+    F69FH TEMP8:  DEFW 0000H
 
 This variable is used for temporary storage by various parts of the Interpreter.
 
 <a name="f6a1h"></a><a name="endfor"></a>
 
-```
-F6A1H ENDFOR: DEFW 0000H
-```
+    F6A1H ENDFOR: DEFW 0000H
 
 This variable is used by the "`FOR`" statement handler to hold the end of statement address during construction of a parameter block.
 
 <a name="f6a3h"></a><a name="datlin"></a>
 
-```
-F6A3H DATLIN: DEFW 0000H
-```
+    F6A3H DATLIN: DEFW 0000H
 
 This variable contains the line number of the current "`DATA`" item in the program text.
 
 <a name="f6a5h"></a><a name="subflg"></a>
 
-```
-F6A5H SUBFLG: DEFB 00H
-```
+    F6A5H SUBFLG: DEFB 00H
 
 This variable is normally zero but is set by the "`ERASE`", "`FOR`", "`FN`" and "`DEF FN`" handlers to control the processing of subscripts by the variable search routine.
 
 <a name="f6a6h"></a><a name="flginp"></a>
 
-```
-F6A6H FLGINP: DEFB 00H
-```
+    F6A6H FLGINP: DEFB 00H
 
 This variable contains a flag to distinguish the two statements in the "`READ/INPUT`" statement handler: 00H=INPUT, NZ=READ.
 
 <a name="f6a7h"></a><a name="temp"></a>
 
-```
-F6A7H TEMP:   DEFW 0000H
-```
+    F6A7H TEMP:   DEFW 0000H
 
 This variable is used for temporary storage by various parts of the Interpreter.
 
 <a name="f6a9h"></a><a name="ptrflg"></a>
 
-```
-F6A9H PTRFLG: DEFB 00H
-```
+    F6A9H PTRFLG: DEFB 00H
 
 This variable is normally zero but is set if any line number operands in the Program Text Area have been converted to pointers.
 
 <a name="f6aah"></a><a name="autflg"></a>
 
-```
-F6AAH AUTFLG: DEFB 00H
-```
+    F6AAH AUTFLG: DEFB 00H
 
 This variable is normally zero but is set when "`AUTO`" mode is turned on.
 
 <a name="f6abh"></a><a name="autlin"></a>
 
-```
-F6ABH AUTLIN: DEFW 0000H
-```
+    F6ABH AUTLIN: DEFW 0000H
 
 This variable contains the current "`AUTO`" line number.
 
 <a name="f6adh"></a><a name="autinc"></a>
 
-```
-F6ADH AUTINC: DEFW 0000H
-```
+    F6ADH AUTINC: DEFW 0000H
 
 This variable contains the current "`AUTO`" line number increment.
 
 <a name="f6afh"></a><a name="savtxt"></a>
 
-```
-F6AFH SAVTXT: DEFW 0000H
-```
+    F6AFH SAVTXT: DEFW 0000H
 
 This variable is updated by the Runloop at the start of every statement with the current location in the program text. It is used during error recovery to set [ERRTXT](#errtxt) for the "`RESUME`" statement handler and [OLDTXT](#oldtxt) for the "`CONT`" statement handler.
 
 <a name="f6b1h"></a><a name="savstk"></a>
 
-```
-F6B1H SAVSTK: DEFW F09EH
-```
+    F6B1H SAVSTK: DEFW F09EH
 
 This variable is updated by the Runloop at the start of every statement with the current Z80 SP for error recovery purposes.
 
 <a name="f6b3h"></a><a name="errlin"></a>
 
-```
-F6B3H ERRLIN: DEFW 0000H
-```
+    F6B3H ERRLIN: DEFW 0000H
 
 This variable is used by the error handler to hold the line number of the program line generating an error.
 
 <a name="f6b5h"></a><a name="dot"></a>
 
-```
-F6B5H DOT:    DEFW 0000H
-```
+    F6B5H DOT:    DEFW 0000H
 
 This variable is updated by the Mainloop and the error handler with the current line number for use with the "." parameter.
 
 <a name="f6b7h"></a><a name="errtxt"></a>
 
-```
-F6B7H ERRTXT: DEFW 0000H
-```
+    F6B7H ERRTXT: DEFW 0000H
 
 This variable is updated from [SAVTXT](#savtxt) by the error handler for use by the "`RESUME`" statement handler.
 
 <a name="f6b9h"></a><a name="onelin"></a>
 
-```
-F6B9H ONELIN: DEFW 0000H
-```
+    F6B9H ONELIN: DEFW 0000H
 
 This variable is set by the "`ON ERROR GOTO`" statement handler with the address of the program line to execute when an error occurs.
 
 <a name="f6bbh"></a><a name="oneflg"></a>
 
-```
-F6BBH ONEFLG: DEFB 00H
-```
+    F6BBH ONEFLG: DEFB 00H
 
 This variable is normally zero but is set by the error handler when control transfers to an "`ON ERROR GOTO`" statement. This is to prevent a loop developing if an error occurs inside the error recovery statements.
 
 <a name="f6bch"></a><a name="temp2"></a>
 
-```
-F6BCH TEMP2:  DEFW 0000H
-```
+    F6BCH TEMP2:  DEFW 0000H
 
 This variable is used for temporary storage by various parts of the Interpreter.
 
 <a name="f6beh"></a><a name="oldlin"></a>
 
-```
-F6BEH OLDLIN: DEFW 0000H
-```
+    F6BEH OLDLIN: DEFW 0000H
 
 This variable contains the line number of the terminating program line. It is set by the "`END`" and "`STOP`" statement handlers for use with the "`CONT`" statement.
 
 <a name="f6c0h"></a><a name="oldtxt"></a>
 
-```
-F6C0H OLDTXT: DEFW 0000H
-```
+    F6C0H OLDTXT: DEFW 0000H
 
 This variable contains the address of the terminating program statement.
 
 <a name="f6c2h"></a><a name="vartab"></a>
 
-```
-F6C2H VARTAB: DEFW 8003H
-```
+    F6C2H VARTAB: DEFW 8003H
 
 This variable contains the address of the first byte of the Variable Storage Area.
 
 <a name="f6c4h"></a><a name="arytab"></a>
 
-```
-F6C4H ARYTAB: DEFW 8003H
-```
+    F6C4H ARYTAB: DEFW 8003H
 
 This variable contains the address of the first byte of the Array Storage Area.
 
 <a name="f6c6h"></a><a name="strend"></a>
 
-```
-F6C6H STREND: DEFW 8003H
-```
+    F6C6H STREND: DEFW 8003H
 
 This variable contains the address of the byte following the Array Storage Area.
 
 <a name="f6c8h"></a><a name="datptr"></a>
 
-```
-F6C8H DATPTR: DEFW 8000H
-```
+    F6C8H DATPTR: DEFW 8000H
 
 This variable contains the address of the current "`DATA`" item in the program text.
 
@@ -9266,241 +7926,181 @@ These twenty-six variables contain the default type for each group of BASIC Vari
 
 <a name="f6e4h"></a><a name="prmstk"></a>
 
-```
-F6E4H PRMSTK: DEFW 0000H
-```
+    F6E4H PRMSTK: DEFW 0000H
 
 This variable contains the base address of the previous "`FN`" parameter block on the Z80 stack. It is used during string garbage collection to travel from block to block on the stack.
 
 <a name="f6e6h"></a><a name="prmlen"></a>
 
-```
-F6E6H PRMLEN: DEFW 0000H
-```
+    F6E6H PRMLEN: DEFW 0000H
 
 This variable contains the length of the current "`FN`" parameter block in [PARM1](#parm1).
 
 <a name="f6e8h"></a><a name="parm1"></a>
 
-```
-F6E8H PARM1 : DEFS 100
-```
+    F6E8H PARM1 : DEFS 100
 
 This buffer contains the local Variables belonging to the "`FN`" function currently being evaluated.
 
 <a name="f74ch"></a><a name="prmprv"></a>
 
-```
-F74CH PRMPRV: DEFW F6E4H
-```
+    F74CH PRMPRV: DEFW F6E4H
 
 This variable contains the address of the previous "`FN`" parameter block. It is actually a constant used to ensure that string garbage collection commences with the current parameter block before proceeding to those on the stack.
 
 <a name="f74eh"></a><a name="prmln2"></a>
 
-```
-F74EH PRMLN2: DEFW 0000H
-```
+    F74EH PRMLN2: DEFW 0000H
 
 This variable contains the length of the "`FN`" parameter block being constructed in [PARM2](#parm2)
 
 <a name="f750h"></a><a name="parm2"></a>
 
-```
-F750H PARM2:  DEFS 100
-```
+    F750H PARM2:  DEFS 100
 
 This buffer is used to construct the local Variables owned by the current "`FN`" function.
 
 <a name="f7b4h"></a><a name="prmflg"></a>
 
-```
-F7B4H PRMFLG: DEFB 00H
-```
+    F7B4H PRMFLG: DEFB 00H
 
 This variable is used during a Variable search to indicate whether local or global Variables are being examined.
 
 <a name="f7b5h"></a><a name="aryta2"></a>
 
-```
-F7B5H ARYTA2: DEFW 0000H
-```
+    F7B5H ARYTA2: DEFW 0000H
 
 This variable is used during a Variable search to hold the termination address of the storage area being examined.
 
 <a name="f7b7h"></a><a name="nofuns"></a>
 
-```
-F7B7H NOFUNS: DEFB 00H
-```
+    F7B7H NOFUNS: DEFB 00H
 
 This variable is normally zero but is set by the "`FN`" function handler to indicate to the variable search routine that local Variables are present.
 
 <a name="f7b8h"></a><a name="temp9"></a>
 
-```
-F7B8H TEMP9:  DEFW 0000H
-```
+    F7B8H TEMP9:  DEFW 0000H
 
 This variable is used for temporary storage by various parts of the Interpreter.
 
 <a name="f7bah"></a><a name="funact"></a>
 
-```
-F7BAH FUNACT: DEFW 0000H
-```
+    F7BAH FUNACT: DEFW 0000H
 
 This variable contains the number of currently active "`FN`" functions.
 
 <a name="f7bch"></a><a name="swptmp"></a>
 
-```
-F7BCH SWPTMP: DEFS 8
-```
+    F7BCH SWPTMP: DEFS 8
 
 This buffer is used to hold the first operand in a "`SWAP`" statement.
 
 <a name="f7c4h"></a><a name="trcflg"></a>
 
-```
-F7C4H TRCFLG: DEFB 00H
-```
+    F7C4H TRCFLG: DEFB 00H
 
 This variable is normally zero but is set by the "`TRON`" statement handler to turn on the trace facility.
 
 <a name="f7c5h"></a><a name="fbuffr"></a>
 
-```
-F7C5H FBUFFR: DEFS 43
-```
+    F7C5H FBUFFR: DEFS 43
 
 This buffer is used to hold the text produced during numeric output conversion.
 
 <a name="f7f0h"></a><a name="dectmp"></a>
 
-```
-F7F0H DECTMP: DEFW 0000H
-```
+    F7F0H DECTMP: DEFW 0000H
 
 This variable is used for temporary storage by the double precision division routine.
 
 <a name="f7f2h"></a><a name="dectm2"></a>
 
-```
-F7F2H DECTM2: DEFW 0000H
-```
+    F7F2H DECTM2: DEFW 0000H
 
 This variable is used for temporary storage by the double precision division routine.
 
 <a name="f7f4h"></a><a name="deccnt"></a>
 
-```
-F7F4H DECCNT: DEFB 00H
-```
+    F7F4H DECCNT: DEFB 00H
 
 This variable is used by the double precision division routine to hold the number of non-zero bytes in the mantissa of the second operand.
 
 <a name="f7f6h"></a><a name="dac"></a>
 
-```
-F7F6H DAC:    DEFS 16
-```
+    F7F6H DAC:    DEFS 16
 
 This buffer functions as the Interpreter's primary accumulator during expression evaluation.
 
 <a name="f806h"></a><a name="hold8"></a>
 
-```
-F806H HOLD8:  DEFS 65
-```
+    F806H HOLD8:  DEFS 65
 
 This buffer is used by the double precision multiplication routine to hold the multiples of the first operand.
 
 <a name="f847h"></a><a name="arg"></a>
 
-```
-F847H ARG:    DEFS 16
-```
+    F847H ARG:    DEFS 16
 
 This buffer functions as the Interpreter's secondary accumulator during expression evaluation.
 
 <a name="f857h"></a><a name="rndx"></a>
 
-```
-F857H RNDX:   DEFS 8
-```
+    F857H RNDX:   DEFS 8
 
 This buffer contains the current double precision random number.
 
 <a name="f85fh"></a><a name="maxfil"></a>
 
-```
-F85FH MAXFIL: DEFB 01H
-```
+    F85FH MAXFIL: DEFB 01H
 
 This variable contains the number of currently allocated user I/O buffers. Its value is set to 1 at power-up and thereafter only altered by the "`MAXFILES`" statement.
 
 <a name="f860h"></a><a name="filtab"></a>
 
-```
-F860H FILTAB: DEFW F16AH
-```
+    F860H FILTAB: DEFW F16AH
 
 This variable contains the address of the pointer table for the I/O buffer FCBs.
 
 <a name="f862h"></a><a name="nulbuf"></a>
 
-```
-F862H NULBUF: DEFW F177H
-```
+    F862H NULBUF: DEFW F177H
 
 This variable contains the address of the first byte of the data buffer belonging to I/O buffer 0.
 
 <a name="f864h"></a><a name="ptrfil"></a>
 
-```
-F864H PTRFIL: DEFW 0000H
-```
+    F864H PTRFIL: DEFW 0000H
 
 This variable contains the address of the currently active I/O buffer FCB.
 
 <a name="f866h"></a><a name="filnam"></a>
 
-```
-F866H FILNAM: DEFS 11
-```
+    F866H FILNAM: DEFS 11
 
 This buffer holds a user-specified filename. It is eleven characters long to allow for disc file specs such as "`FILENAME.BAS`".
 
 <a name="f871h"></a><a name="filnm2"></a>
 
-```
-F871H FILNM2: DEFS 11
-```
+    F871H FILNM2: DEFS 11
 
 This buffer holds a filename read from an I/O device for comparison with the contents of [FILNAM](#filnam).
 
 <a name="f87ch"></a><a name="nlonly"></a>
 
-```
-F87CH NLONLY: DEFB 00H
-```
+    F87CH NLONLY: DEFB 00H
 
 This variable is normally zero but is set during a program "`LOAD`". Bit 0 is used to prevent I/O buffer 0 being closed during loading and bit 7 to prevent the user I/O buffers being closed if auto-run is required.
 
 <a name="f87dh"></a><a name="savend"></a>
 
-```
-F87DH SAVEND: DEFW 0000H
-```
+    F87DH SAVEND: DEFW 0000H
 
 This variable is used by the "`BSAVE`" statement handler to hold the end address of the memory block to be saved.
 
 <a name="f87fh"></a><a name="fnkstr"></a>
 
-```
-F87FH FNKSTR: DEFS 160
-```
+    F87FH FNKSTR: DEFS 160
 
 This buffer contains the ten sixteen-character function key strings. Their values are set at power-up and thereafter only altered by the "`KEY`" statement.
 
@@ -9516,33 +8116,25 @@ These variables contain the location of the character set copied to the VDP by t
 
 <a name="f922h"></a><a name="nambas"></a>
 
-```
-F922H NAMBAS: DEFW 0000H
-```
+    F922H NAMBAS: DEFW 0000H
 
 This variable contains the current text mode VDP Name Table base address. Its value is set from [TXTNAM](#txtnam) or [T32NAM](#t32nam) whenever the VDP is initialized to a text mode via the [INITXT](#initxt) or [INIT32](#init32) standard routines.
 
 <a name="f924h"></a><a name="cgpbas"></a>
 
-```
-F924H CGPBAS: DEFW 0800H
-```
+    F924H CGPBAS: DEFW 0800H
 
 This variable contains the current text mode VDP Character Pattern Table base address. Its value is set from [TXTCGP](#txtcgp) or [T32CGP](#t32cgp) whenever the VDP is initialized to a text mode via the [INITXT](#initxt) or [INIT32](#init32) standard routines.
 
 <a name="f926h"></a><a name="patbas"></a>
 
-```
-F926H PATBAS: DEFW 3800H
-```
+    F926H PATBAS: DEFW 3800H
 
 This variable contains the current VDP Sprite Pattern Table base address. Its value is set from [T32PAT](#t32pat), [GRPPAT](#grppat) or [MLTPAT](#mltpat) whenever the VDP is initialized via the [INIT32](#init32), [INIGRP](#inigrp) or [INIMLT](#inimlt) standard routines.
 
 <a name="f928h"></a><a name="atrbas"></a>
 
-```
-F928H ATRBAS: DEFW 1B00H
-```
+    F928H ATRBAS: DEFW 1B00H
 
 This variable contains the current VDP Sprite Attribute Table base address. Its value is set from [T32ATR](#t32atr), [GRPATR](#grpatr) or [MLTATR](#mltatr) whenever the VDP is initialized via the [INIT32](#init32), [INIGRP](#inigrp) or [INIMLT](#inimlt) standard routines.
 
@@ -9558,217 +8150,163 @@ These variables contain the current pixel physical address used by the [RIGHTC](
 
 <a name="f92dh"></a><a name="mindel"></a>
 
-```
-F92DH MINDEL: DEFW 0000H
-```
+    F92DH MINDEL: DEFW 0000H
 
 This variable is used by the "`LINE`" statement handler to hold the minimum difference between the end points of the line.
 
 <a name="f92fh"></a><a name="maxdel"></a>
 
-```
-F92FH MAXDEL: DEFW 0000H
-```
+    F92FH MAXDEL: DEFW 0000H
 
 This variable is used by the "`LINE`" statement handler to hold the maximum difference between the end points of the line.
 
 <a name="f931h"></a><a name="aspect"></a>
 
-```
-F931H ASPECT: DEFW 0000H
-```
+    F931H ASPECT: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the current aspect ratio. This is stored as a single byte binary fraction so an aspect ratio of 0.75 would become 00C0H. The MSB is only required if the aspect ratio is exactly 1.00, that is 0100H.
 
 <a name="f933h"></a><a name="cencnt"></a>
 
-```
-F933H CENCNT: DEFW 0000H
-```
+    F933H CENCNT: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the point count of the end angle.
 
 <a name="f935h"></a><a name="clinef"></a>
 
-```
-F935H CLINEF: DEFB 00H
-```
+    F935H CLINEF: DEFB 00H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the two line flags. Bit 0 is set if a line is required from the start angle to the centre and bit 7 set if one is required from the end angle.
 
 <a name="f936h"></a><a name="cnpnts"></a>
 
-```
-F936H CNPNTS: DEFW 0000H
-```
+    F936H CNPNTS: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the number of points within a forty-five degree segment.
 
 <a name="f938h"></a><a name="cplotf"></a>
 
-```
-F938H CPLOTF: DEFB 00H
-```
+    F938H CPLOTF: DEFB 00H
 
 This variable is normally zero but is set by the "`CIRCLE`" statement handler if the end angle is smaller than the start angle. It is used to determine whether the pixels should be set "inside" the angles or "outside" them.
 
 <a name="f939h"></a><a name="cpcnt"></a>
 
-```
-F939H CPCNT:  DEFW 0000H
-```
+    F939H CPCNT:  DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the point count within the current forty-five degree segment, this is in fact the Y coordinate.
 
 <a name="f93bh"></a><a name="cpcnt8"></a>
 
-```
-F93BH CPCNT8: DEFW 0000H
-```
+    F93BH CPCNT8: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the total point count of the present position.
 
 <a name="f93dh"></a><a name="crcsum"></a>
 
-```
-F93DH CRCSUM: DEFW 0000H
-```
+    F93DH CRCSUM: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler as the point computation counter.
 
 <a name="f93fh"></a><a name="cstcnt"></a>
 
-```
-F93FH CSTCNT: DEFW 0000H
-```
+    F93FH CSTCNT: DEFW 0000H
 
 This variable is used by the "`CIRCLE`" statement handler to hold the point count of the start angle.
 
 <a name="f941h"></a><a name="csclxy"></a>
 
-```
-F941H CSCLXY: DEFB 00H
-```
+    F941H CSCLXY: DEFB 00H
 
 This variable is used by the "`CIRCLE`" statement handler as a flag to determine in which direction the elliptic squash is to be applied: 00H=Y, 01H=X.
 
 <a name="f942h"></a><a name="csavea"></a>
 
-```
-F942H CSAVEA: DEFW 0000H
-```
+    F942H CSAVEA: DEFW 0000H
 
 This variable is used for temporary storage by the [SCANR](#scanr) standard routine.
 
 <a name="f944h"></a><a name="csavem"></a>
 
-```
-F944H CSAVEM: DEFB 00h
-```
+    F944H CSAVEM: DEFB 00h
 
 This variable is used for temporary storage by the [SCANR](#scanr) standard routine.
 
 <a name="f945h"></a><a name="cxoff"></a>
 
-```
-F945H CXOFF:  DEFW 0000H
-```
+    F945H CXOFF:  DEFW 0000H
 
 This variable is used for temporary storage by the "`CIRCLE`" statement handler.
 
 <a name="f947h"></a><a name="cyoff"></a>
 
-```
-F947H CYOFF:  DEFW 0000H
-```
+    F947H CYOFF:  DEFW 0000H
 
 This variable is used for temporary storage by the "`CIRCLE`" statement handler.
 
 <a name="f949h"></a><a name="lohmsk"></a>
 
-```
-F949H LOHMSK: DEFB 00H
-```
+    F949H LOHMSK: DEFB 00H
 
 This variable is used by the "`PAINT`" statement handler to hold the leftmost position of a LH excursion.
 
 <a name="f94ah"></a><a name="lohdir"></a>
 
-```
-F94AH LOHDIR: DEFB 00H
-```
+    F94AH LOHDIR: DEFB 00H
 
 This variable is used by the "`PAINT`" statement handler to hold the new paint direction required by a LH excursion.
 
 <a name="f94bh"></a><a name="lohadr"></a>
 
-```
-F94BH LOHADR: DEFW 0000H
-```
+    F94BH LOHADR: DEFW 0000H
 
 This variable is used by the "`PAINT`" statement handler to hold the leftmost position of a LH excursion.
 
 <a name="f94dh"></a><a name="lohcnt"></a>
 
-```
-F94DH LOHCNT: DEFW 0000H
-```
+    F94DH LOHCNT: DEFW 0000H
 
 This variable is used by the "`PAINT`" statement handler to hold the size of a LH excursion.
 
 <a name="f94fh"></a><a name="skpcnt"></a>
 
-```
-F94FH SKPCNT: DEFW 0000H
-```
+    F94FH SKPCNT: DEFW 0000H
 
 This variable is used by the "`PAINT`" statement handler to hold the skip count returned by the [SCANR](#scanr) standard routine.
 
 <a name="f951h"></a><a name="movcnt"></a>
 
-```
-F951H MOVCNT: DEFW 0000H
-```
+    F951H MOVCNT: DEFW 0000H
 
 This variable is used by the "`PAINT`" statement handler to hold the movement count returned by the [SCANR](#scanr) standard routine.
 
 <a name="f953h"></a><a name="pdirec"></a>
 
-```
-F953H PDIREC: DEFB 00H
-```
+    F953H PDIREC: DEFB 00H
 
 This variable is used by the "`PAINT`" statement handler to hold the current paint direction: 40H=Down, C0H=Up, 00H=Terminate.
 
 <a name="f954h"></a><a name="lfprog"></a>
 
-```
-F954H LFPROG: DEFB 00H
-```
+    F954H LFPROG: DEFB 00H
 
 This variable is normally zero but is set by the "`PAINT`" statement handler if there has been any leftwards progress.
 
 <a name="f955h"></a><a name="rtprog"></a>
 
-```
-F955H RTPROG: DEFB 00H
-```
+    F955H RTPROG: DEFB 00H
 
 This variable is normally zero but is set by the "`PAINT`" statement handler if there has been any rightwards progress.
 
 <a name="f956h"></a><a name="mcltab"></a>
 
-```
-F956H MCLTAB: DEFW 0000H
-```
+    F956H MCLTAB: DEFW 0000H
 
 This variable contains the address of the command table to be used by the macro language parser. The "`DRAW`" table is at 5D83H and the "`PLAY`" table at 752EH.
 
 <a name="f958h"></a><a name="mclflg"></a>
 
-```
-F958H MCLFLG: DEFB 00H
-```
+    F958H MCLFLG: DEFB 00H
 
 This variable is zero if the macro language parser is being used by the "`DRAW`", statement handler and non-zero if it is being used by "`PLAY`".
 
@@ -9851,73 +8389,55 @@ These four buffers contain the three music queues and the RS232 queue, the latte
 
 <a name="fb35h"></a><a name="prscnt"></a>
 
-```
-FB35H PRSCNT: DEFB 00H
-```
+    FB35H PRSCNT: DEFB 00H
 
 This variable is used by the "`PLAY`" statement handler to count the number of completed operand strings. Bit 7 is also set after each of the three operands has been parsed to prevent repeated activation of the [STRTMS](#strtms) standard routine.
 
 <a name="fb36h"></a><a name="savsp"></a>
 
-```
-FB36H SAVSP: DEFW 0000H
-```
+    FB36H SAVSP: DEFW 0000H
 
 This variable is used by the "`PLAY`" statement handler to save the Z80 SP before control transfers to the macro language parser. Its value is compared with the SP on return to determine whether any data has been left on the stack because of a queue-full termination by the parser.
 
 <a name="fb38h"></a><a name="voicen"></a>
 
-```
-FB38H VOICEN: DEFB 00H
-```
+    FB38H VOICEN: DEFB 00H
 
 This variable contains the current voice number being processed by the "`PLAY`" statement handler. The values 0, 1 and 2 correspond to PSG channels A, B and C.
 
 <a name="fb39h"></a><a name="savvol"></a>
 
-```
-FB39H SAVVOL: DEFW 0000H
-```
+    FB39H SAVVOL: DEFW 0000H
 
 This variable is used by the "`PLAY`" statement "`R`" command handler to save the current volume setting while a zero-amplitude rest is generated.
 
 <a name="fb3bh"></a><a name="mcllen"></a>
 
-```
-FB3BH MCLLEN: DEFB 00H
-```
+    FB3BH MCLLEN: DEFB 00H
 
 This variable is used by the macro language parser to hold the length of the string operand being parsed.
 
 <a name="fb3ch"></a><a name="mclptr"></a>
 
-```
-FB3CH MCLPTR: DEFW 0000H
-```
+    FB3CH MCLPTR: DEFW 0000H
 
 This variable is used by the macro language parser to hold the address of the string operand being parsed.
 
 <a name="fb3eh"></a><a name="queuen"></a>
 
-```
-FB3EH QUEUEN: DEFB 00H
-```
+    FB3EH QUEUEN: DEFB 00H
 
 This variable is used by the interrupt handler to hold the number of the music queue currently being processed. The values 0, 1 and 2 correspond to PSG channels A, B and C.
 
 <a name="fb3fh"></a><a name="musicf"></a>
 
-```
-FB3FH MUSICF: DEFB 00H
-```
+    FB3FH MUSICF: DEFB 00H
 
 This variable contains three bit flags set by the [STRTMS](#strtms) standard routine to initiate processing of a music queue by the interrupt handler. Bits 0, 1 and 2 correspond to [VOICAQ](#voicaq), [VOICBQ](#voicbq) and [VOICCQ](#voiccq).
 
 <a name="fb40h"></a><a name="plycnt"></a>
 
-```
-FB40H PLYCNT: DEFB 00H
-```
+    FB40H PLYCNT: DEFB 00H
 
 This variable is used by the [STRTMS](#strtms) standard routine to hold the number of "`PLAY`" statement sequences currently held in the music queues. It is examined when all three end of queue marks have been found for one sequence to determine whether dequeueing should be restarted.
 
@@ -9953,145 +8473,109 @@ This thirty-seven byte buffer is used by the "`PLAY`" statement handler to hold 
 
 <a name="fb66h"></a><a name="vcbb"></a>
 
-```
-FB66H VCBB:   DEFS 37
-```
+    FB66H VCBB:   DEFS 37
 
 This buffer is used by the "`PLAY`" statement handler to hold the current parameters for voice B, its structure is the same as [VCBA](#vcba).
 
 <a name="fb8bh"></a><a name="vcbc"></a>
 
-```
-FB8BH VCBC:   DEFS 37
-```
+    FB8BH VCBC:   DEFS 37
 
 This buffer is used by the "`PLAY`" statement handler to hold the current parameters for voice C, its structure is the same as [VCBA](#vcba).
 
 <a name="fbb0h"></a><a name="enstop"></a>
 
-```
-FBB0H ENSTOP: DEFB 00H
-```
+    FBB0H ENSTOP: DEFB 00H
 
 This variable determines whether the interrupt handler will execute a warm start to the Interpreter upon detecting the keys CODE, GRAPH, CTRL and SHIFT depressed together: 00H=Disable, NZ=Enable.
 
 <a name="fbb1h"></a><a name="basrom"></a>
 
-```
-FBB1H BASROM: DEFB 00H
-```
+    FBB1H BASROM: DEFB 00H
 
 This variable determines whether the [ISCNTC](#iscntc) and [INLIN](#inlin) standard routines will respond to the CTRL-STOP key: 00H=Enable, NZ=Disable. It is used to prevent termination of a BASIC ROM located during the power-up ROM search.
 
 <a name="fbb2h"></a><a name="linttb"></a>
 
-```
-FBB2H LINTTB: DEFS 24
-```
+    FBB2H LINTTB: DEFS 24
 
 Each of these twenty-four variables is normally non-zero but is zeroed if the contents of the corresponding screen row have overflowed onto the next row. They are maintained by the BIOS but only actually used by the [INLIN](#inlin) standard routine (the screen editor) to discriminate between logical and physical lines.
 
 <a name="fbcah"></a><a name="fstpos"></a>
 
-```
-FBCAH FSTPOS: DEFW 0000H
-```
+    FBCAH FSTPOS: DEFW 0000H
 
 This variable is used to hold the cursor coordinates upon entry to the [INLIN](#inlin) standard routine. Its function is to restrict the extent of backtracking performed when the text is collected from the screen at termination.
 
 <a name="fbcch"></a><a name="cursav"></a>
 
-```
-FBCCH CURSAV: DEFB 00H
-```
+    FBCCH CURSAV: DEFB 00H
 
 This variable is used to hold the screen character replaced by the text cursor.
 
 <a name="fbcdh"></a><a name="fnkswi"></a>
 
-```
-FBCDH FNKSWI: DEFB 00H
-```
+    FBCDH FNKSWI: DEFB 00H
 
 This variable is used by the [CHSNS](#chsns) standard routine to determine whether the shifted or unshifted function keys are currently displayed: 00H=Shifted, 01H=Unshifted.
 
 <a name="fbceh"></a><a name="fnkflg"></a>
 
-```
-FBCEH FNKFLG: DEFS 10
-```
+    FBCEH FNKFLG: DEFS 10
 
 Each of these ten variables is normally zero but is set to 01H if the associated function key has been turned on by a "`KEY(n) ON`" statement. They are used by the interrupt handler to determine whether, in program mode only, it should return a character string or update the associated entry in [TRPTBL](#trptbl).
 
 <a name="fbd8h"></a><a name="ongsbf"></a>
 
-```
-FBD8H ONGSBF: DEFB 00H
-```
+    FBD8H ONGSBF: DEFB 00H
 
 This variable is normally zero but is incremented by the interrupt handler whenever a device has achieved the conditions necessary to generate a program interrupt. It is used by the Runloop to determine whether any program interrupts are pending without having to search [TRPTBL](#trptbl).
 
 <a name="fbd9h"></a><a name="clikfl"></a>
 
-```
-FBD9H CLIKFL: DEFB 00H
-```
+    FBD9H CLIKFL: DEFB 00H
 
 This variable is used internally by the interrupt handler to prevent spurious key clicks when returning multiple characters from a single key depression such as a function key.
 
 <a name="fbdah"></a><a name="oldkey"></a>
 
-```
-FBDAH OLDKEY: DEFS 11
-```
+    FBDAH OLDKEY: DEFS 11
 
 This buffer is used by the interrupt handler to hold the previous state of the keyboard matrix, each byte contains one row of keys starting with row 0.
 
 <a name="fbe5h"></a><a name="newkey"></a>
 
-```
-FBE5H NEWKEY: DEFS 11
-```
+    FBE5H NEWKEY: DEFS 11
 
 This buffer is used by the interrupt handler to hold the current state of the keyboard matrix. Key transitions are detected by comparison with the contents of [OLDKEY](#oldkey) after which [OLDKEY](#oldkey) is updated with the current state.
 
 <a name="fbf0h"></a><a name="keybuf"></a>
 
-```
-FBF0H KEYBUF: DEFS 40
-```
+    FBF0H KEYBUF: DEFS 40
 
 This buffer contains the decoded keyboard characters produced by the interrupt handler. Note that the buffer is organized as a circular queue driven by [GETPNT](#getpnt) and [PUTPNT](#putpnt) and consequently has no fixed starting point.
 
 <a name="fc18h"></a><a name="linwrk"></a>
 
-```
-FC18H LINWRK: DEFS 40
-```
+    FC18H LINWRK: DEFS 40
 
 This buffer is used by the BIOS to hold a complete line of screen characters.
 
 <a name="fc40h"></a><a name="patwrk"></a>
 
-```
-FC40H PATWRK: DEFS 8
-```
+    FC40H PATWRK: DEFS 8
 
 This buffer is used by the BIOS to hold an 8x8 pixel pattern.
 
 <a name="fc48h"></a><a name="bottom"></a>
 
-```
-FC48H BOTTOM: DEFW 8000H
-```
+    FC48H BOTTOM: DEFW 8000H
 
 This variable contains the address of the lowest RAM location used by the Interpreter. Its value is set at power-up and thereafter unaltered.
 
 <a name="fc4ah"></a><a name="himem"></a>
 
-```
-FC4AH HIMEM:  DEFW F380H
-```
+    FC4AH HIMEM:  DEFW F380H
 
 This variable contains the address of the byte following the highest RAM location used by the Interpreter. Its value is set at power-up and thereafter only altered by the "`CLEAR`" statement.
 
@@ -10155,249 +8639,187 @@ These twenty-six three byte variables hold the current state of the interrupt ge
 
 <a name="fc9ah"></a><a name="rtycnt"></a>
 
-```
-FC9AH RTYCNT: DEFB 00H
-```
+    FC9AH RTYCNT: DEFB 00H
 
 This variable is unused by the current MSX ROM.
 
 <a name="fc9bh"></a><a name="intflg"></a>
 
-```
-FC9BH INTFLG: DEFB 00H
-```
+    FC9BH INTFLG: DEFB 00H
 
 This variable is normally zero but is set to 03H or 04H if the CTRL-STOP or STOP keys are detected by the interrupt handler.
 
 <a name="fc9ch"></a><a name="pady"></a>
 
-```
-FC9CH PADY:   DEFB 00H
-```
+    FC9CH PADY:   DEFB 00H
 
 This variable contains the Y coordinate of the last point detected by a touchpad.
 
 <a name="fc9dh"></a><a name="padx"></a>
 
-```
-FC9DH PADX:   DEFB 00H
-```
+    FC9DH PADX:   DEFB 00H
 
 This variable contains the X coordinate of the last point detected by a touchpad.
 
 <a name="fc9eh"></a><a name="jiffy"></a>
 
-```
-FC9EH JIFFY:  DEFW 0000H
-```
+    FC9EH JIFFY:  DEFW 0000H
 
 This variable is continually incremented by the interrupt handler. Its value may be set or read by the "`TIME`" statement or function.
 
 <a name="fca0h"></a><a name="intval"></a>
 
-```
-FCA0H INTVAL: DEFW 0000H
-```
+    FCA0H INTVAL: DEFW 0000H
 
 This variable holds the interval duration set by the "`ON INTERVAL`" statement handler.
 
 <a name="fca2h"></a><a name="intcnt"></a>
 
-```
-FCA2H INTCNT: DEFW 0000H
-```
+    FCA2H INTCNT: DEFW 0000H
 
 This variable is continually decremented by the interrupt handler. When zero is reached its value is reset from [INTVAL](#intval) and, if applicable, a program interrupt generated. Note that this variable always counts irrespective of whether an "`INTERVAL ON`" statement is active.
 
 <a name="fca4h"></a><a name="lowlim"></a>
 
-```
-FCA4H LOWLIM: DEFB 31H
-```
+    FCA4H LOWLIM: DEFB 31H
 
 This variable is used to hold the minimum allowable start bit duration as determined by the [TAPION](#tapion) standard routine.
 
 <a name="fca5h"></a><a name="winwid"></a>
 
-```
-FCA5H WINWID: DEFB 22H
-```
+    FCA5H WINWID: DEFB 22H
 
 This variable is used to hold the LO/HI cycle discrimination duration as determined by the [TAPION](#tapion) standard routine.
 
 <a name="fca6h"></a><a name="grphed"></a>
 
-```
-FCA6H GRPHED: DEFB 00H
-```
+    FCA6H GRPHED: DEFB 00H
 
 This variable is normally zero but is set to 01H by the [CNVCHR](#cnvchr) standard routine upon detection of a graphic header code.
 
 <a name="fca7h"></a><a name="esccnt"></a>
 
-```
-FCA7H ESCCNT: DEFB 00H
-```
+    FCA7H ESCCNT: DEFB 00H
 
 This variable is used by the [CHPUT](#chput) standard routine ESC sequence processor to count escape parameters.
 
 <a name="fca8h"></a><a name="insflg"></a>
 
-```
-FCA8H INSFLG: DEFB 00H
-```
+    FCA8H INSFLG: DEFB 00H
 
 This variable is normally zero but is set to FFH by the [INLIN](#inlin) standard routine when insert mode is on.
 
 <a name="fca9h"></a><a name="csrsw"></a>
 
-```
-FCA9H CSRSW:  DEFB 00H
-```
+    FCA9H CSRSW:  DEFB 00H
 
 If this variable is zero the cursor is only displayed while the [CHGET](#chget) standard routine is waiting for a keyboard character. If it is non-zero the cursor is permanently displayed via the [CHPUT](#chput) standard routine.
 
 <a name="fcaah"></a><a name="cstyle"></a>
 
-```
-FCAAH CSTYLE: DEFB 00H
-```
+    FCAAH CSTYLE: DEFB 00H
 
 This variable determines the cursor style: 00H=Block, NZ=Underline.
 
 <a name="fcabh"></a><a name="capst"></a>
 
-```
-FCABH CAPST:  DEFB 00H
-```
+    FCABH CAPST:  DEFB 00H
 
 This variable is used by the interrupt handler to hold the current caps lock status: 00H=Off, NZ=On.
 
 <a name="fcach"></a><a name="kanast"></a>
 
-```
-FCACH KANAST: DEFB 00H
-```
+    FCACH KANAST: DEFB 00H
 
 This variable is used to hold the keyboard Kana lock status on Japanese machines and the DEAD key status on European machines.
 
 <a name="fcadh"></a><a name="kanamd"></a>
 
-```
-FCADH KANAMD: DEFB 00H
-```
+    FCADH KANAMD: DEFB 00H
 
 This variable holds a keyboard mode on Japanese machines only.
 
 <a name="fcaeh"></a><a name="flbmem"></a>
 
-```
-FCAEH FLBMEM: DEFB 00H
-```
+    FCAEH FLBMEM: DEFB 00H
 
 This variable is set by the file I/O error generators but is otherwise unused.
 
 <a name="fcafh"></a><a name="scrmod"></a>
 
-```
-FCAFH SCRMOD: DEFB 00H
-```
+    FCAFH SCRMOD: DEFB 00H
 
 This variable contains the current screen mode: 0=[40x24 Text Mode](#40x24_text_mode), 1=[32x24 Text Mode](#32x24_text_mode), 2=[Graphics Mode](#graphics_mode), 3=[Multicolour Mode](#multicolour_mode).
 
 <a name="fcb0h"></a><a name="oldscr"></a>
 
-```
-FCB0H OLDSCR: DEFB 00H
-```
+    FCB0H OLDSCR: DEFB 00H
 
 This variable holds the screen mode of the last text mode set.
 
 <a name="fcb1h"></a><a name="casprv"></a>
 
-```
-FCB1H CASPRV: DEFB 00H
-```
+    FCB1H CASPRV: DEFB 00H
 
 This variable is used to hold any character returned to an I/O buffer by the cassette putback function.
 
 <a name="fcb2h"></a><a name="bdratr"></a>
 
-```
-FCB2H BDRATR: DEFB 00H
-```
+    FCB2H BDRATR: DEFB 00H
 
 This variable contains the boundary colour for the "`PAINT`" statement handler. Its value is set by the [PNTINI](#pntini) standard routine and used by the [SCANR](#scanr) and [SCANL](#scanl) standard routines.
 
 <a name="fcb3h"></a><a name="gxpos"></a>
 
-```
-FCB3H GXPOS:  DEFW 0000H
-```
+    FCB3H GXPOS:  DEFW 0000H
 
 This variable is used for temporary storage of a graphics X coordinate.
 
 <a name="fcb5h"></a><a name="gypos"></a>
 
-```
-FCB5H GYPOS:  DEFW 0000H
-```
+    FCB5H GYPOS:  DEFW 0000H
 
 This variable is used for temporary storage of a graphics Y coordinate.
 
 <a name="fcb7h"></a><a name="grpacx"></a>
 
-```
-FCB7H GRPACX: DEFW 0000H
-```
+    FCB7H GRPACX: DEFW 0000H
 
 This variable contains the current graphics X coordinate for the [GRPPRT](#grpprt) standard routine.
 
 <a name="fcb9h"></a><a name="grpacy"></a>
 
-```
-FCB9H GRPACY: DEFW 0000H
-```
+    FCB9H GRPACY: DEFW 0000H
 
 This variable contains the current graphics Y coordinate for the [GRPPRT](#grpprt) standard routine.
 
 <a name="fcbbh"></a><a name="drwflg"></a>
 
-```
-FCBBH DRWFLG: DEFB 00H
-```
+    FCBBH DRWFLG: DEFB 00H
 
 Bits 6 and 7 of this variable are set by the "`DRAW`" statement "`N`" and "`B`" command handlers to turn the associated mode on.
 
 <a name="fcbch"></a><a name="drwscl"></a>
 
-```
-FCBCH DRWSCL: DEFB 00H
-```
+    FCBCH DRWSCL: DEFB 00H
 
 This variable is used by the "`DRAW`" statement "`S`" command handler to hold the current scale factor.
 
 <a name="fcbdh"></a><a name="drwang"></a>
 
-```
-FCBDH DRWANG: DEFB 00H
-```
+    FCBDH DRWANG: DEFB 00H
 
 This variable is used by the "`DRAW`" statement "`A`" command handler to hold the current angle.
 
 <a name="fcbeh"></a><a name="runbnf"></a>
 
-```
-FCBEH RUNBNF: DEFB 00H
-```
+    FCBEH RUNBNF: DEFB 00H
 
 This variable is normally zero but is set by the "`BLOAD`" statement handler when an auto-run "`R`" parameter is specified.
 
 <a name="fcbfh"></a><a name="savent"></a>
 
-```
-FCBFH SAVENT: DEFW 0000H
-```
+    FCBFH SAVENT: DEFW 0000H
 
 This variable contains the "`BSAVE`" and "`BLOAD`" entry address.
 
@@ -10480,25 +8902,19 @@ Note that the entries for page 0 (0000H to 3FFFH) and page 3 (C000H to FFFFH) wi
 
 <a name="fd09h"></a><a name="sltwrk"></a>
 
-```
-FD09H SLTWRK: DEFS 128
-```
+    FD09H SLTWRK: DEFS 128
 
 This buffer provides two bytes of local workspace for each of the sixty-four possible extension ROMs.
 
 <a name="fd89h"></a><a name="procnm"></a>
 
-```
-FD89H PROCNM: DEFS 16
-```
+    FD89H PROCNM: DEFS 16
 
 This buffer is used to hold a device or statement name for examination by an extension ROM.
 
 <a name="fd99h"></a><a name="device"></a>
 
-```
-FD99H DEVICE: DEFB 00H
-```
+    FD99H DEVICE: DEFB 00H
 
 This variable is used to pass a device code, from 0 to 3, to an extension ROM.
 
