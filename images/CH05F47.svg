@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="520" height="210">
+    <g transform="translate(10,10)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="200px" height ="125px"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="17">(0,4)</text>
+                    <text x="75" y="17">(1,4)</text>
+                    <text x="125" y="17">(2,4)</text>
+                    <text x="175" y="17">(3,4)</text>
+                    <text x="25" y="42">(0,3)</text>
+                    <text x="75" y="42">(1,3)</text>
+                    <text x="125" y="42">(2,3)</text>
+                    <text x="175" y="42">(3,3)</text>
+                    <text x="25" y="67">(0,2)</text>
+                    <text x="75" y="67">(1,2)</text>
+                    <text x="125" y="67">(2,2)</text>
+                    <text x="175" y="67">(3,2)</text>
+                    <text x="25" y="92">(0,1)</text>
+                    <text x="75" y="92">(1,1)</text>
+                    <text x="125" y="92">(2,1)</text>
+                    <text x="175" y="92">(3,1)</text>
+                    <text x="25" y="117">(0,0)</text>
+                    <text x="75" y="117">(1,0)</text>
+                    <text x="125" y="117">(2,0)</text>
+                    <text x="175" y="117">(3,0)</text>
+                </g>
+        </g>
+    </g>
+    <g transform="translate(10,150)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="500px" height ="50px"/>
+            <path d="M50,0 v50 M100,0 v50 M150,0 v50 M250,0 v50 M300,0 v50 M400,0 v50"/>
+                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+                    <text x="25" y="30">02H</text>
+                    <text x="75" y="30">"A"</text>
+                    <text x="125" y="30">"B"</text>
+                    <text x="200" y="17">Offset</text>
+                    <text x="175" y="42">2DH</text>
+                    <text x="225" y="42">00H</text>
+                    <text x="275" y="17">Dim</text>
+                    <text x="275" y="42">02H</text>
+                    <text x="350" y="17">Count</text>
+                    <text x="325" y="42">05H</text>
+                    <text x="375" y="42">00H</text>
+                    <text x="450" y="17">Count</text>
+                    <text x="425" y="42">04H</text>
+                    <text x="475" y="42">00H</text>
+                </g>
+        </g>
+    </g>
+</svg>

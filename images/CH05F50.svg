@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="355" height="595">
+    <g transform="translate(10,10)">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="start">
+            <text x="0" y="45">HIMEM=F380H</text>
+            <text x="0" y="170">NULBUF=F177H</text>
+            <text x="0" y="245">FILTAB=F16AH</text>
+            <text x="0" y="287">MEMSIZ=F168H</text>
+            <text x="0" y="303">FRETOP=F168H</text>
+            <text x="0" y="320">STKTOP=F0A0H</text>
+            <text x="0" y="395">STREND=8003H</text>
+            <text x="0" y="445">ARYTAB=8003H</text>
+            <text x="0" y="495">VARTAB=8003H</text>
+            <text x="0" y="545">TXTTAB=8001H</text>
+        </g>
+    </g>
+    <g transform="translate(245,10)">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+            <text x="0" y="30">Workspace Area</text>
+            <text x="0" y="80">I/O Buffer 1</text>
+            <text x="0" y="117">FCB 1</text>
+            <text x="0" y="155">I/O Buffer 0</text>
+            <text x="0" y="192">FCB 0</text>
+            <text x="0" y="217">F277H (FCB 1)</text>
+            <text x="0" y="242">F16EH (FCB 0)</text>
+            <text x="0" y="267">00H</text>
+            <text x="0" y="305">String Storage Area</text>
+            <text x="0" y="355">Z80 Stack</text>
+            <text x="0" y="430">Array Storage Area</text>
+            <text x="0" y="480">Variable Storage Area</text>
+            <text x="0" y="530">Program Text Area</text>
+            <text x="0" y="567">00H</text>
+        </g>
+    </g>
+    <g transform="translate(145,10)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="200px" height="375px"/>
+            <path d="M0,50 h200 M0,100 h200 M0,125 h200 M0,175 h200 M0,200 h200 M0,225 h200 M0,250 h200 M0,275 h200 M0,325 h200"/>
+            <rect x="0" y="400" width="200px" height="175"/>
+            <path d="M0,450 h200 M0,500 h200 M0,550 h200"/>
+        </g>
+    </g>
+    <g transform="translate(95,10)">
+        <g fill="none" stroke="black">
+            <path d="M0,541 h40 M0,491 h40 M0,441 h40 M0,391 h40 M0,316 h40 M0,299 h20 v-16 M0,283 h40 M0,241 h40 M0,166 h40 M0,41 h40"/>
+        </g>
+    </g>
+</svg>

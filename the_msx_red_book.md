@@ -6202,18 +6202,7 @@ Address... 5FBAH
 
 This is the Array search routine. There are four types of Array each composed of a header plus a number of elements. The first byte of the header contains the type code, the next two bytes the Array name and the next two the offset to the start of the following Array. This is followed by a single byte containing the dimensionality of the Array and the element count list. Each two byte element count contains the maximum number of elements per dimension. These are stored in reverse order with the first one corresponding to the last subscript. The contents of each Array element are identical to the contents of the corresponding simple Variable. The integer Array AB%(3,4) is shown below with each element identified by its subscripts, high memory is towards the top of the page:
 
-    +-----------------------+
-    ¦(0,4) (1,4) (2,4) (3,4)¦
-    ¦(0,3) (1,3) (2,3) (3,3)¦
-    ¦(0,2) (1,2) (2,2) (3,2)¦
-    ¦(0,1) (1,1) (2,1) (3,1)¦
-    ¦(0,0) (1,0) (2,0) (3,0)¦
-    +-----------------------+
-
-    +-----------------------------------------------------------+
-    ¦     ¦     ¦     ¦  Offset   ¦ Dim ¦   Count   ¦   Count   ¦
-    ¦ 02H ¦ "A" ¦ "B" ¦ 2DH   00H ¦ 02H ¦ 05H   00H ¦ 04H   00H ¦
-    +-----------------------------------------------------------+
+<a name="figure47"></a>![][CH05F47]
 
 **Figure 47:** Integer Array
 
@@ -8219,19 +8208,7 @@ Address... 7D75H
 
 This routine is used during power-up to perform an extension ROM search. Pages 1 and 2 (4000H to BFFFH) of each slot are examined and the results placed in [SLTATR](#sltatr). An extension ROM has the two identification characters "`AB`" in the first two bytes to distinguish it from RAM. Information about its properties is also present in the first sixteen bytes as follows:
 
-    +------------------------+
-    ¦ Reserved               ¦  Byte 10-15
-    ¦ BASIC Text Address MSB ¦  Byte 9
-    ¦ BASIC Text Address LSB ¦  Byte 8
-    ¦ DEVICE Address MSB     ¦  Byte 7
-    ¦ DEVICE Address LSB     ¦  Byte 6
-    ¦ STATEMENT Address MSB  ¦  Byte 5
-    ¦ STATEMENT Address LSB  ¦  Byte 4
-    ¦ INITIALIZE Address MSB ¦  Byte 3
-    ¦ INITIALIZE Address LSB ¦  Byte 2
-    ¦       42H (`B')        ¦  Byte 1
-    ¦       41H (`A')        ¦  Byte 0
-    +------------------------+
+<a name="figure48"></a>![][CH05F48]
 
 **Figure 48:** ROM Header
 
@@ -8255,10 +8232,7 @@ Address... 7E2AH
 
 This routine converts the [SLTATR](#sltatr) position supplied in register B into the corresponding Slot ID in register C and ROM base address in register H. The position is first modified so that it runs from 0 to 63 rather than from 64 to 1, so that the required information is present in the form:
 
-   7     6     5     4     3     2     1     0
-+-----------------------------------------------+
-¦  0  ¦  0  ¦  PSLOT #  ¦  SSLOT #  ¦   PAGE #  ¦
-+-----------------------------------------------+
+<a name="figure49"></a>![][CH05F49]
 
 **Figure 49**
 
@@ -8351,47 +8325,7 @@ This section of the ROM is unused and filled with zero bytes.
 
 A maximum of 32 KB of RAM is available to the BASIC Interpreter to hold the program text, the BASIC Variables, the Z80 stack, the I/O buffers and the internal workspace. A memory map of these areas in the power-up state is shown below:
 
-                      +-----------------------+
-                      ¦     Workspace Area    ¦
-    HIMEM=F380H-------¦                       ¦
-                      +-----------------------¦
-                      ¦     I/O Buffer 1      ¦
-                      +-----------------------¦
-                      ¦         FCB 1         ¦
-                      +-----------------------¦
-                      ¦     I/O Buffer 0      ¦
-    NULBUF=F177H------¦                       ¦
-                      +-----------------------¦
-                      ¦         FCB 0         ¦
-                      +-----------------------¦
-                      ¦     F277H (FCB 1)     ¦
-                      +-----------------------¦
-    FILTAB=F16AH------¦     F16EH (FCB 0)     ¦
-                      +-----------------------¦
-                      ¦          00H          ¦
-                      +-----------------------¦
-    MEMSIZ=F168H------¦                       ¦
-    FRETOP=F168H---+  ¦  String Storage Area  ¦
-                      ¦                       ¦
-    STKTOP=F0A0H------¦                       ¦
-                      +-----------------------¦
-                      ¦       Z80 Stack       ¦
-                      ¦                       ¦
-                      +-----------------------+
-
-    STREND=8003H------
-                      +-----------------------+
-                      ¦  Array Storage Area   ¦
-    ARYTAB=8003H------¦                       ¦
-                      +-----------------------¦
-                      ¦ Variable Storage Area ¦
-    VARTAB=8003H------¦                       ¦
-                      +-----------------------¦
-                      ¦   Program Text Area   ¦
-    TXTTAB=8001H------¦                       ¦
-                      +-----------------------¦
-                      ¦          00H          ¦
-                      +-----------------------+
+<a name="figure50"></a>![][CH05F50]
 
 **Figure 50:** Memory Map 8000H to FFFFH
 
@@ -8401,6 +8335,7 @@ The Variable and Array Storage Areas are composed of string or numeric Variables
 
 The Z80 stack is positioned immediately below the String Storage Area, the structure of the stack top is shown below:
 
+<a name="figure51"></a>![][CH05F51]
           STKTOP-------¦     ¦
                        +-----¦
                        ¦ 00H ¦
@@ -8418,6 +8353,7 @@ The String Storage Area is composed of the string bodies assigned to Variables o
 
 The region between the String Storage Area and [HIMEM](#himem) is used for I/O buffer storage. I/O buffer 0, the "`SAVE`" and "`LOAD`" buffer, is always present but the number of user buffers is determined by the "`MAXFILES`" statement. Each I/O buffer consists of a 9 byte FCB, whose address is contained in the table under FCB 0, followed by a 256 byte data buffer. The FCB contains the status of the I/O buffer as below:
 
+<a name="figure52"></a>![][CH05F52]
        0     1     2     3     4     5     6     7     8
     +-----------------------------------------------------+
     ¦ Mod ¦ 00H ¦ 00H ¦ 00H ¦ DEV ¦ 00H ¦ POS ¦ 00H ¦ PPS ¦
@@ -11858,3 +11794,9 @@ E2A3                CHRTAB: DEFS    2048                ; Patterns to EAA2H
 [CH05F44]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F44.svg
 [CH05F45]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F45.svg
 [CH05F46]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F46.svg
+[CH05F47]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F47.svg
+[CH05F48]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F48.svg
+[CH05F49]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F49.svg
+[CH05F50]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F50.svg
+[CH05F51]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F51.svg
+[CH05F52]: https://rawgit.com/oraculo666/the-msx-red-book/master/images/CH05F52.svg
