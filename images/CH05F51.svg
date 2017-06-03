@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="205" height="145">
+    <g transform="translate(90,10)">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="end">
+            <text x="0" y="20">STKTOP</text>
+            <text x="0" y="70">Mainloop SP</text>
+            <text x="0" y="120">Statement SP</text>
+        </g>
+    </g>
+    <g transform="translate(170,10)">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+            <text x="0" y="40">00H</text>
+            <text x="0" y="65">00H</text>
+            <text x="0" y="90">46H</text>
+            <text x="0" y="115">01H</text>
+        </g>
+    </g>
+    <g transform="translate(145,10)">
+        <g fill="none" stroke="black">
+            <path d="M0,0 v125 h50 v-125 M0,25 h50 M0,75 h50"/>
+        </g>
+    </g>
+    <g transform="translate(95,10)">
+        <g fill="none" stroke="black">
+            <path d="M0,116 h40 M0,66 h40 M0,16 h40"/>
+        </g>
+    </g>
+</svg>

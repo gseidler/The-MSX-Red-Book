@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    width="470" height="70">
+    <g transform="translate(10,10)">
+        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
+            <text x="25" y="10">0</text>
+            <text x="75" y="10">1</text>
+            <text x="125" y="10">2</text>
+            <text x="175" y="10">3</text>
+            <text x="225" y="10">4</text>
+            <text x="275" y="10">5</text>
+            <text x="325" y="10">6</text>
+            <text x="375" y="10">7</text>
+            <text x="425" y="10">8</text>
+            <text x="25" y="37">Mod</text>
+            <text x="75" y="37">00H</text>
+            <text x="125" y="37">00H</text>
+            <text x="175" y="37">00H</text>
+            <text x="225" y="37">DEV</text>
+            <text x="275" y="37">00H</text>
+            <text x="325" y="37">POS</text>
+            <text x="375" y="37">00H</text>
+            <text x="425" y="37">PPS</text>
+        </g>
+    </g>
+    <g transform="translate(10,30)">
+        <g fill="none" stroke="black">
+            <rect x="0" y="0" width="450px" height ="25px"/>
+            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25 M400,0 v25"/>
+        </g>
+    </g>
+</svg>

@@ -8336,14 +8336,6 @@ The Variable and Array Storage Areas are composed of string or numeric Variables
 The Z80 stack is positioned immediately below the String Storage Area, the structure of the stack top is shown below:
 
 <a name="figure51"></a>![][CH05F51]
-          STKTOP-------¦     ¦
-                       +-----¦
-                       ¦ 00H ¦
-     Mainloop SP-------¦ 00H ¦
-                       +-----¦
-                       ¦ 46H ¦
-    Statement SP-------¦ 01H ¦
-                       +-----+
 
 **Figure 51:** Z80 Stack Top
 
@@ -8354,10 +8346,7 @@ The String Storage Area is composed of the string bodies assigned to Variables o
 The region between the String Storage Area and [HIMEM](#himem) is used for I/O buffer storage. I/O buffer 0, the "`SAVE`" and "`LOAD`" buffer, is always present but the number of user buffers is determined by the "`MAXFILES`" statement. Each I/O buffer consists of a 9 byte FCB, whose address is contained in the table under FCB 0, followed by a 256 byte data buffer. The FCB contains the status of the I/O buffer as below:
 
 <a name="figure52"></a>![][CH05F52]
-       0     1     2     3     4     5     6     7     8
-    +-----------------------------------------------------+
-    ¦ Mod ¦ 00H ¦ 00H ¦ 00H ¦ DEV ¦ 00H ¦ POS ¦ 00H ¦ PPS ¦
-    +-----------------------------------------------------+
+
 **Figure 52:** File Control Block
 
 The MOD byte holds the buffer mode, the DEV byte the device code, the POS byte the current position in the buffer (0 to 255) and the PPS byte the "`PRINT`" position. The remainder of the FCB is unused on a standard MSX machine.
