@@ -176,7 +176,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
             <text x="0" y="400" >HOME</text>
             <text x="0" y="420" >(41H)</text>
             <text x="0" y="450" ></text>
-            <text x="0" y="470" >(4AH)</text>
+            <text x="0" y="470" >(49H)</text>
             <text x="0" y="500" >6</text>
             <text x="0" y="520" >(51H)</text>
         </g>
@@ -200,7 +200,7 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
             <text x="0" y="400" >SPACE</text>
             <text x="0" y="420" >(40H)</text>
             <text x="0" y="450" ></text>
-            <text x="0" y="470" >(4AH)</text>
+            <text x="0" y="470" >(48H)</text>
             <text x="0" y="500" >5</text>
             <text x="0" y="520" >(50H)</text>
         </g>
