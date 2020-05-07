@@ -33,8 +33,8 @@ xmlns:ev="http://www.w3.org/2001/xml-events">
     </g>
     <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
         <text x="31" y="35" >A</text>
-        <text x="94" y="35" >B</text>
-        <text x="31" y="97" >C</text>
+        <text x="94" y="35" >C</text>
+        <text x="31" y="97" >B</text>
         <text x="94" y="97" >D</text>
     </g>
 </g>
