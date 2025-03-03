@@ -15,7 +15,7 @@
     </g>
   </defs>
   <g font-size="11">
-    <g font-family="SFMono-Regular" text-anchor="middle" transform="translate(10 30)">
+    <g font-family="Lucida Console, Monaco, monospace" text-anchor="middle" transform="translate(10 30)">
       <use xlink:href="#a" x="45"/>
       <use xlink:href="#a" x="145"/>
       <use xlink:href="#a" x="245"/>
