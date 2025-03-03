@@ -1,50 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="480px" height="100px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<g transform="translate(10,10)">
-    <g transform="translate(10,50)" >
-        <g fill="none" stroke="black" >
-            <path d="M0,0 h20 v-40 h20 v40"/>
-            <path d="M40,0 h10 v-40 h10 v40 h10 v-40 h10 v40"/>
-            <path d="M80,0 h10 v-40 h10 v40 h10 v-40 h10 v40"/>
-            <path d="M120,0 h20 v-40 h20 v40"/>
-            <path d="M160,0 h20 v-40 h20 v40"/>
-            <path d="M200,0 h20 v-40 h20 v40"/>
-            <path d="M240,0 h20 v-40 h20 v40"/>
-            <path d="M280,0 h10 v-40 h10 v40 h10 v-40 h10 v40"/>
-            <path d="M320,0 h20 v-40 h20 v40"/>
-            <path d="M360,0 h10 v-40 h10 v40 h10 v-40 h10 v40"/>
-            <path d="M400,0 h10 v-40 h10 v40 h10 v-40 h10 v40"/>
-            <path d="M0,5 v10"/>
-            <path d="M40,5 v10"/>
-            <path d="M80,5 v5"/>
-            <path d="M120,5 v5"/>
-            <path d="M160,5 v5"/>
-            <path d="M200,5 v5"/>
-            <path d="M240,5 v5"/>
-            <path d="M280,5 v5"/>
-            <path d="M320,5 v5"/>
-            <path d="M360,5 v10"/>
-            <path d="M400,5 v5"/>
-            <path d="M440,5 v10"/>
-        </g>
-        <g font-family="Lucida Console, Monaco, monospace" font-size="10" fill="black" stroke="none" text-anchor="middle">
-            <text x="20" y="25">Start</text>
-            <text x="60" y="25">0</text>
-            <text x="100" y="25">1</text>
-            <text x="140" y="25">2</text>
-            <text x="180" y="25">3</text>
-            <text x="220" y="25">4</text>
-            <text x="260" y="25">5</text>
-            <text x="300" y="25">6</text>
-            <text x="340" y="25">7</text>
-            <text x="380" y="25">Stop</text>
-            <text x="420" y="25">Stop</text>
-        </g>
-    </g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="100" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <path fill="none" stroke="#000" d="M20 60h20V20h20v40m0 0h10V20h10v40h10V20h10v40m0 0h10V20h10v40h10V20h10v40m0 0h20V20h20v40m0 0h20V20h20v40m0 0h20V20h20v40m0 0h20V20h20v40m0 0h10V20h10v40h10V20h10v40m0 0h20V20h20v40m0 0h10V20h10v40h10V20h10v40m0 0h10V20h10v40h10V20h10v40M20 65v10m40-10v10m40-10v5m40-5v5m40-5v5m40-5v5m40-5v5m40-5v5m40-5v5m40-5v10m40-10v5m40-5v10"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="10" text-anchor="middle">
+    <text x="20" y="25" transform="translate(20 60)">Start</text>
+    <text x="60" y="25" transform="translate(20 60)">0</text>
+    <text x="100" y="25" transform="translate(20 60)">1</text>
+    <text x="140" y="25" transform="translate(20 60)">2</text>
+    <text x="180" y="25" transform="translate(20 60)">3</text>
+    <text x="220" y="25" transform="translate(20 60)">4</text>
+    <text x="260" y="25" transform="translate(20 60)">5</text>
+    <text x="300" y="25" transform="translate(20 60)">6</text>
+    <text x="340" y="25" transform="translate(20 60)">7</text>
+    <text x="380" y="25" transform="translate(20 60)">Stop</text>
+    <text x="420" y="25" transform="translate(20 60)">Stop</text>
+  </g>
 </svg>

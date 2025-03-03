@@ -1,24 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="420px" height="85px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<g transform="translate(10,10)">
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-        <text x="50" y="17" >Read</text>
-        <text x="175" y="17" >xxxxxxxx</text>
-        <text x="325" y="17" >00xxxxxx</text>
-        <text x="50" y="52" >Write</text>
-        <text x="175" y="52" >xxxxxxxx</text>
-        <text x="325" y="52" >01xxxxxx</text>
-    </g>
-    <g fill="none" stroke="black">
-        <rect x="0" y="0" width="400px" height="25px"/>
-        <path d="M100,0 v25 m150,0 v-25 m150,0 v25"/>
-        <rect x="0" y="35" width="400px" height="25px"/>
-        <path d="M100,35 v25 m150,0 v-25 m150,0 v25"/>
-    </g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="85" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text x="50" y="17" transform="translate(10 10)">Read</text>
+    <text x="175" y="17" transform="translate(10 10)">xxxxxxxx</text>
+    <text x="325" y="17" transform="translate(10 10)">00xxxxxx</text>
+    <text x="50" y="52" transform="translate(10 10)">Write</text>
+    <text x="175" y="52" transform="translate(10 10)">xxxxxxxx</text>
+    <text x="325" y="52" transform="translate(10 10)">01xxxxxx</text>
+  </g>
+  <path fill="none" stroke="#000" d="M10 10h400v25H10zm100 0v25m150 0V10m150 0v25M10 45h400v25H10zm100 0v25m150 0V45m150 0v25"/>
 </svg>

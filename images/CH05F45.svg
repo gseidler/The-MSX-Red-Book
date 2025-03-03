@@ -1,32 +1,24 @@
-<?xml version="1.0"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-    width="425" height="130">
-    <g transform="translate(10,10)">
-        <g fill="none" stroke="black">
-            <path d="M90,0 v90 h-90 v-45 h30 v-15 h15 v15 h30 v-45 h15 Z"/>
-            <path d="M105,0 v90 h90 v-45 h-30 v-15 h-15 v15 h-30 v-45 h-15 Z"/>
-            <path d="M210,0 h90 v90 h-15 v-45 h-30 v15 h-15 v-15 h-30 v-45 Z"/>
-            <path d="M315,0 v90 h15 v-45 h30 v15 h15 v-15 h30 v-45 h-90 Z"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="37" y="43">3</text>
-                    <text x="83" y="25">2</text>
-                    <text x="37" y="73">1</text>
-                    <text x="158" y="43">2</text>
-                    <text x="113" y="25">3</text>
-                    <text x="158" y="73">1</text>
-                    <text x="248" y="55">2</text>
-                    <text x="293" y="70">1</text>
-                    <text x="248" y="25">3</text>
-                    <text x="368" y="55">2</text>
-                    <text x="323" y="70">1</text>
-                    <text x="368" y="25">3</text>
-                    <text x="45" y="105">LH Incursion</text>
-                    <text x="150" y="105">RH Incursion</text>
-                    <text x="255" y="105">LH Excursion</text>
-                    <text x="360" y="105">RH Excursion</text>
-                </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="425" height="130">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g fill="none" stroke="#000">
+    <path d="M100 10v90H10V55h30V40h15v15h30V10h15Zm15 0v90h90V55h-30V40h-15v15h-30V10h-15Zm105 0h90v90h-15V55h-30v15h-15V55h-30V10Zm105 0v90h15V55h30v15h15V55h30V10h-90Z"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="37" y="43" transform="translate(10 10)">3</text>
+      <text x="83" y="25" transform="translate(10 10)">2</text>
+      <text x="37" y="73" transform="translate(10 10)">1</text>
+      <text x="158" y="43" transform="translate(10 10)">2</text>
+      <text x="113" y="25" transform="translate(10 10)">3</text>
+      <text x="158" y="73" transform="translate(10 10)">1</text>
+      <text x="248" y="55" transform="translate(10 10)">2</text>
+      <text x="293" y="70" transform="translate(10 10)">1</text>
+      <text x="248" y="25" transform="translate(10 10)">3</text>
+      <text x="368" y="55" transform="translate(10 10)">2</text>
+      <text x="323" y="70" transform="translate(10 10)">1</text>
+      <text x="368" y="25" transform="translate(10 10)">3</text>
+      <text x="45" y="105" transform="translate(10 10)">LH Incursion</text>
+      <text x="150" y="105" transform="translate(10 10)">RH Incursion</text>
+      <text x="255" y="105" transform="translate(10 10)">LH Excursion</text>
+      <text x="360" y="105" transform="translate(10 10)">RH Excursion</text>
     </g>
+  </g>
 </svg>

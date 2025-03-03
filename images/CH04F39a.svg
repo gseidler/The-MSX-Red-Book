@@ -1,30 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="160px" height="160px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<g transform="translate(10,10)">
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-        <text x="70" y="74" >0</text>
-        <text x="10" y="74" >7</text>
-        <text x="130" y="74" >3</text>
-        <text x="70" y="13" >1</text>
-        <text x="70" y="133" >5</text>
-        <text x="27" y="31" >8</text>
-        <text x="113" y="116" >4</text>
-        <text x="27" y="116" >6</text>
-        <text x="113" y="31" >2</text>
-    </g>
-    <g fill="none" stroke="black">
-        <path d="M70,20 v40 m0,20 v40"/>
-        <path d="M20,70 h40 m20,0 h40"/>
-        <path d="M20,70 h40 m20,0 h40"/>
-        <path d="M77,63 l30,-30"/>
-        <path d="M77,77 l30,30"/>
-        <path d="M63,77 l-30,30"/>
-        <path d="M63,63 l-30,-30"/>
-    </g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text x="70" y="74" transform="translate(10 10)">0</text>
+    <text x="10" y="74" transform="translate(10 10)">7</text>
+    <text x="130" y="74" transform="translate(10 10)">3</text>
+    <text x="70" y="13" transform="translate(10 10)">1</text>
+    <text x="70" y="133" transform="translate(10 10)">5</text>
+    <text x="27" y="31" transform="translate(10 10)">8</text>
+    <text x="113" y="116" transform="translate(10 10)">4</text>
+    <text x="27" y="116" transform="translate(10 10)">6</text>
+    <text x="113" y="31" transform="translate(10 10)">2</text>
+  </g>
+  <path fill="none" stroke="#000" d="M80 30v40m0 20v40M30 80h40m20 0h40M30 80h40m20 0h40m-43-7 30-30M87 87l30 30M73 87l-30 30m30-44L43 43"/>
 </svg>

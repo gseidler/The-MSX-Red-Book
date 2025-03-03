@@ -1,31 +1,15 @@
-<?xml version="1.0"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-    width="205" height="145">
-    <g transform="translate(90,10)">
-        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="end">
-            <text x="0" y="20">STKTOP</text>
-            <text x="0" y="70">Mainloop SP</text>
-            <text x="0" y="120">Statement SP</text>
-        </g>
-    </g>
-    <g transform="translate(170,10)">
-        <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-            <text x="0" y="40">00H</text>
-            <text x="0" y="65">00H</text>
-            <text x="0" y="90">46H</text>
-            <text x="0" y="115">01H</text>
-        </g>
-    </g>
-    <g transform="translate(145,10)">
-        <g fill="none" stroke="black">
-            <path d="M0,0 v125 h50 v-125 M0,25 h50 M0,75 h50"/>
-        </g>
-    </g>
-    <g transform="translate(95,10)">
-        <g fill="none" stroke="black">
-            <path d="M0,116 h40 M0,66 h40 M0,16 h40"/>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="205" height="145">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="end">
+    <text y="20" transform="translate(90 10)">STKTOP</text>
+    <text y="70" transform="translate(90 10)">Mainloop SP</text>
+    <text y="120" transform="translate(90 10)">Statement SP</text>
+  </g>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text y="40" transform="translate(170 10)">00H</text>
+    <text y="65" transform="translate(170 10)">00H</text>
+    <text y="90" transform="translate(170 10)">46H</text>
+    <text y="115" transform="translate(170 10)">01H</text>
+  </g>
+  <path fill="none" stroke="#000" d="M145 10v125h50V10m-50 25h50m-50 50h50M95 126h40M95 76h40M95 26h40"/>
 </svg>

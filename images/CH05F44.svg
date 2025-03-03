@@ -1,116 +1,97 @@
-<?xml version="1.0"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-    width="860" height="180">
-    <g transform="translate(10,10)">
-        <g fill="none" stroke="black">
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="100" y="17">SS0</text>
-                    <text x="300" y="17">SS1</text>
-                    <text x="500" y="17">SS2</text>
-                    <text x="700" y="17">SS3</text>
-                </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="180">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text x="100" y="17" transform="translate(10 10)">SS0</text>
+    <text x="300" y="17" transform="translate(10 10)">SS1</text>
+    <text x="500" y="17" transform="translate(10 10)">SS2</text>
+    <text x="700" y="17" transform="translate(10 10)">SS3</text>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 40h800v25H10zm200 0v25m200-25v25m200-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 40)">00</text>
+      <text x="75" y="17" transform="translate(10 40)">04</text>
+      <text x="125" y="17" transform="translate(10 40)">08</text>
+      <text x="175" y="17" transform="translate(10 40)">0C</text>
+      <text x="225" y="17" transform="translate(10 40)">10</text>
+      <text x="275" y="17" transform="translate(10 40)">14</text>
+      <text x="325" y="17" transform="translate(10 40)">18</text>
+      <text x="375" y="17" transform="translate(10 40)">1C</text>
+      <text x="425" y="17" transform="translate(10 40)">20</text>
+      <text x="475" y="17" transform="translate(10 40)">24</text>
+      <text x="525" y="17" transform="translate(10 40)">28</text>
+      <text x="575" y="17" transform="translate(10 40)">2C</text>
+      <text x="625" y="17" transform="translate(10 40)">30</text>
+      <text x="675" y="17" transform="translate(10 40)">34</text>
+      <text x="725" y="17" transform="translate(10 40)">38</text>
+      <text x="775" y="17" transform="translate(10 40)">3C</text>
+      <text x="825" y="17" transform="translate(10 40)">PS0</text>
     </g>
-    <g transform="translate(10,40)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="800px" height ="25px"/>
-            <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">00</text>
-                    <text x="75" y="17">04</text>
-                    <text x="125" y="17">08</text>
-                    <text x="175" y="17">0C</text>
-                    <text x="225" y="17">10</text>
-                    <text x="275" y="17">14</text>
-                    <text x="325" y="17">18</text>
-                    <text x="375" y="17">1C</text>
-                    <text x="425" y="17">20</text>
-                    <text x="475" y="17">24</text>
-                    <text x="525" y="17">28</text>
-                    <text x="575" y="17">2C</text>
-                    <text x="625" y="17">30</text>
-                    <text x="675" y="17">34</text>
-                    <text x="725" y="17">38</text>
-                    <text x="775" y="17">3C</text>
-                    <text x="825" y="17">PS0</text>
-                </g>
-        </g>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 75h800v25H10zm200 0v25m200-25v25m200-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 75)">40</text>
+      <text x="75" y="17" transform="translate(10 75)">44</text>
+      <text x="125" y="17" transform="translate(10 75)">48</text>
+      <text x="175" y="17" transform="translate(10 75)">4C</text>
+      <text x="225" y="17" transform="translate(10 75)">50</text>
+      <text x="275" y="17" transform="translate(10 75)">54</text>
+      <text x="325" y="17" transform="translate(10 75)">58</text>
+      <text x="375" y="17" transform="translate(10 75)">5C</text>
+      <text x="425" y="17" transform="translate(10 75)">60</text>
+      <text x="475" y="17" transform="translate(10 75)">64</text>
+      <text x="525" y="17" transform="translate(10 75)">68</text>
+      <text x="575" y="17" transform="translate(10 75)">6C</text>
+      <text x="625" y="17" transform="translate(10 75)">70</text>
+      <text x="675" y="17" transform="translate(10 75)">74</text>
+      <text x="725" y="17" transform="translate(10 75)">78</text>
+      <text x="775" y="17" transform="translate(10 75)">7C</text>
+      <text x="825" y="17" transform="translate(10 75)">PS1</text>
     </g>
-    <g transform="translate(10,75)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="800px" height ="25px"/>
-            <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">40</text>
-                    <text x="75" y="17">44</text>
-                    <text x="125" y="17">48</text>
-                    <text x="175" y="17">4C</text>
-                    <text x="225" y="17">50</text>
-                    <text x="275" y="17">54</text>
-                    <text x="325" y="17">58</text>
-                    <text x="375" y="17">5C</text>
-                    <text x="425" y="17">60</text>
-                    <text x="475" y="17">64</text>
-                    <text x="525" y="17">68</text>
-                    <text x="575" y="17">6C</text>
-                    <text x="625" y="17">70</text>
-                    <text x="675" y="17">74</text>
-                    <text x="725" y="17">78</text>
-                    <text x="775" y="17">7C</text>
-                    <text x="825" y="17">PS1</text>
-                </g>
-        </g>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 110h800v25H10zm200 0v25m200-25v25m200-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 110)">80</text>
+      <text x="75" y="17" transform="translate(10 110)">84</text>
+      <text x="125" y="17" transform="translate(10 110)">88</text>
+      <text x="175" y="17" transform="translate(10 110)">8C</text>
+      <text x="225" y="17" transform="translate(10 110)">90</text>
+      <text x="275" y="17" transform="translate(10 110)">94</text>
+      <text x="325" y="17" transform="translate(10 110)">98</text>
+      <text x="375" y="17" transform="translate(10 110)">9C</text>
+      <text x="425" y="17" transform="translate(10 110)">A0</text>
+      <text x="475" y="17" transform="translate(10 110)">A4</text>
+      <text x="525" y="17" transform="translate(10 110)">A8</text>
+      <text x="575" y="17" transform="translate(10 110)">AC</text>
+      <text x="625" y="17" transform="translate(10 110)">B0</text>
+      <text x="675" y="17" transform="translate(10 110)">B4</text>
+      <text x="725" y="17" transform="translate(10 110)">B8</text>
+      <text x="775" y="17" transform="translate(10 110)">BC</text>
+      <text x="825" y="17" transform="translate(10 110)">PS2</text>
     </g>
-    <g transform="translate(10,110)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="800px" height ="25px"/>
-            <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">80</text>
-                    <text x="75" y="17">84</text>
-                    <text x="125" y="17">88</text>
-                    <text x="175" y="17">8C</text>
-                    <text x="225" y="17">90</text>
-                    <text x="275" y="17">94</text>
-                    <text x="325" y="17">98</text>
-                    <text x="375" y="17">9C</text>
-                    <text x="425" y="17">A0</text>
-                    <text x="475" y="17">A4</text>
-                    <text x="525" y="17">A8</text>
-                    <text x="575" y="17">AC</text>
-                    <text x="625" y="17">B0</text>
-                    <text x="675" y="17">B4</text>
-                    <text x="725" y="17">B8</text>
-                    <text x="775" y="17">BC</text>
-                    <text x="825" y="17">PS2</text>
-                </g>
-        </g>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 145h800v25H10zm200 0v25m200-25v25m200-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 145)">C0</text>
+      <text x="75" y="17" transform="translate(10 145)">C4</text>
+      <text x="125" y="17" transform="translate(10 145)">C8</text>
+      <text x="175" y="17" transform="translate(10 145)">CC</text>
+      <text x="225" y="17" transform="translate(10 145)">D0</text>
+      <text x="275" y="17" transform="translate(10 145)">D4</text>
+      <text x="325" y="17" transform="translate(10 145)">D8</text>
+      <text x="375" y="17" transform="translate(10 145)">DC</text>
+      <text x="425" y="17" transform="translate(10 145)">E0</text>
+      <text x="475" y="17" transform="translate(10 145)">E4</text>
+      <text x="525" y="17" transform="translate(10 145)">E8</text>
+      <text x="575" y="17" transform="translate(10 145)">EC</text>
+      <text x="625" y="17" transform="translate(10 145)">F0</text>
+      <text x="675" y="17" transform="translate(10 145)">F4</text>
+      <text x="725" y="17" transform="translate(10 145)">F8</text>
+      <text x="775" y="17" transform="translate(10 145)">FC</text>
+      <text x="825" y="17" transform="translate(10 145)">PS3</text>
     </g>
-    <g transform="translate(10,145)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="800px" height ="25px"/>
-            <path d="M200,0 v25 M400,0 v25 M600,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">C0</text>
-                    <text x="75" y="17">C4</text>
-                    <text x="125" y="17">C8</text>
-                    <text x="175" y="17">CC</text>
-                    <text x="225" y="17">D0</text>
-                    <text x="275" y="17">D4</text>
-                    <text x="325" y="17">D8</text>
-                    <text x="375" y="17">DC</text>
-                    <text x="425" y="17">E0</text>
-                    <text x="475" y="17">E4</text>
-                    <text x="525" y="17">E8</text>
-                    <text x="575" y="17">EC</text>
-                    <text x="625" y="17">F0</text>
-                    <text x="675" y="17">F4</text>
-                    <text x="725" y="17">F8</text>
-                    <text x="775" y="17">FC</text>
-                    <text x="825" y="17">PS3</text>
-                </g>
-        </g>
-    </g>
+  </g>
 </svg>

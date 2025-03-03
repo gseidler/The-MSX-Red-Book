@@ -1,47 +1,35 @@
-<?xml version="1.0"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-    width="420" height="180">
-    <g transform="translate(10,10)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="400px" height ="25px"/>
-            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="125" y="17">FFH</text>
-                    <text x="175" y="17">7FH</text>
-                    <text x="0" y="40" text-anchor="start">Integer +32767</text>
-                </g>
-        </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="180">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g fill="none" stroke="#000">
+    <path d="M10 10h400v25H10zm50 0v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="125" y="17" transform="translate(10 10)">FFH</text>
+      <text x="175" y="17" transform="translate(10 10)">7FH</text>
+      <text y="40" text-anchor="start" transform="translate(10 10)">Integer +32767</text>
     </g>
-    <g transform="translate(10,70)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="400px" height ="25px"/>
-            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">42H</text>
-                    <text x="75" y="17">17H</text>
-                    <text x="125" y="17">39H</text>
-                    <text x="175" y="17">04H</text>
-                    <text x="0" y="40" text-anchor="start">Single Precision .173904*10ˆ2</text>
-                </g>
-        </g>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 70h400v25H10zm50 0v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 70)">42H</text>
+      <text x="75" y="17" transform="translate(10 70)">17H</text>
+      <text x="125" y="17" transform="translate(10 70)">39H</text>
+      <text x="175" y="17" transform="translate(10 70)">04H</text>
+      <text y="40" text-anchor="start" transform="translate(10 70)">Single Precision .173904*10ˆ2</text>
     </g>
-    <g transform="translate(10,130)">
-        <g fill="none" stroke="black">
-            <rect x="0" y="0" width="400px" height ="25px"/>
-            <path d="M50,0 v25 M100,0 v25 M150,0 v25 M200,0 v25 M250,0 v25 M300,0 v25 M350,0 v25"/>
-                <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-                    <text x="25" y="17">C2H</text>
-                    <text x="75" y="17">17H</text>
-                    <text x="125" y="17">39H</text>
-                    <text x="175" y="17">04H</text>
-                    <text x="225" y="17">62H</text>
-                    <text x="275" y="17">70H</text>
-                    <text x="325" y="17">93H</text>
-                    <text x="375" y="17">13H</text>
-                    <text x="0" y="40" text-anchor="start">Double Precision -.17390462709313*10ˆ2</text>
-                </g>
-        </g>
+  </g>
+  <g fill="none" stroke="#000">
+    <path d="M10 130h400v25H10zm50 0v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25m50-25v25"/>
+    <g fill="#000" stroke="none" font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+      <text x="25" y="17" transform="translate(10 130)">C2H</text>
+      <text x="75" y="17" transform="translate(10 130)">17H</text>
+      <text x="125" y="17" transform="translate(10 130)">39H</text>
+      <text x="175" y="17" transform="translate(10 130)">04H</text>
+      <text x="225" y="17" transform="translate(10 130)">62H</text>
+      <text x="275" y="17" transform="translate(10 130)">70H</text>
+      <text x="325" y="17" transform="translate(10 130)">93H</text>
+      <text x="375" y="17" transform="translate(10 130)">13H</text>
+      <text y="40" text-anchor="start" transform="translate(10 130)">Double Precision -.17390462709313*10ˆ2</text>
     </g>
+  </g>
 </svg>

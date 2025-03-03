@@ -1,28 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="420px" height="65px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<g transform="translate(10,10)">
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-        <text x="25" y="10" >7</text>
-        <text x="75" y="10" >6</text>
-        <text x="125" y="10" >5</text>
-        <text x="175" y="10" >4</text>
-        <text x="225" y="10" >3</text>
-        <text x="275" y="10" >2</text>
-        <text x="325" y="10" >1</text>
-        <text x="375" y="10" >0</text>
-        <text x="25" y="37" >0</text>
-        <text x="125" y="37" >Not Used</text>
-        <text x="275" y="37" >Bit Number</text>
-        <text x="375" y="37" >Set</text>
-    </g>
-    <g fill="none" stroke="black">
-        <rect x="0" y="20" width="400px" height="25px"/>
-        <path d="M50,20 v25 m150,0 v-25 m150,0 v25"/>
-    </g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="65" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text x="25" y="10" transform="translate(10 10)">7</text>
+    <text x="75" y="10" transform="translate(10 10)">6</text>
+    <text x="125" y="10" transform="translate(10 10)">5</text>
+    <text x="175" y="10" transform="translate(10 10)">4</text>
+    <text x="225" y="10" transform="translate(10 10)">3</text>
+    <text x="275" y="10" transform="translate(10 10)">2</text>
+    <text x="325" y="10" transform="translate(10 10)">1</text>
+    <text x="375" y="10" transform="translate(10 10)">0</text>
+    <text x="25" y="37" transform="translate(10 10)">0</text>
+    <text x="125" y="37" transform="translate(10 10)">Not Used</text>
+    <text x="275" y="37" transform="translate(10 10)">Bit Number</text>
+    <text x="375" y="37" transform="translate(10 10)">Set</text>
+  </g>
+  <path fill="none" stroke="#000" d="M10 30h400v25H10zm50 0v25m150 0V30m150 0v25"/>
 </svg>

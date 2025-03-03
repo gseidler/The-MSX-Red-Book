@@ -1,237 +1,201 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="470px" height="590px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<g transform="translate(10,10)">
-    <g fill="none" stroke="black">
-        <rect x="0" y="0" width="400px" height="550px"/>
-        <path d="M0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400 m0,50 h400 m0,50 h-400"/>
-        <path d="M50,0 v550 m50,0 v-550 m50,0 v550 m50,0 v-550 m50,0 v550 m50,0 v-550 m50,0 v550"/>
-    </g>
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-        <g transform="translate(25,20)">
-            <text x="0" y="0" >7</text>
-            <text x="0" y="20" >(07H)</text>
-            <text x="0" y="50" >;</text>
-            <text x="0" y="70" >(0FH)</text>
-            <text x="0" y="100" >B</text>
-            <text x="0" y="120" >(17H)</text>
-            <text x="0" y="150" >J</text>
-            <text x="0" y="170" >(1FH)</text>
-            <text x="0" y="200" >R</text>
-            <text x="0" y="220" >(27H)</text>
-            <text x="0" y="250" >Z</text>
-            <text x="0" y="270" >(2FH)</text>
-            <text x="0" y="300" >F3</text>
-            <text x="0" y="320" >(37H)</text>
-            <text x="0" y="350" >CR</text>
-            <text x="0" y="370" >(3FH)</text>
-            <text x="0" y="400" >RIGHT</text>
-            <text x="0" y="420" >(47H)</text>
-            <text x="0" y="450" >4</text>
-            <text x="0" y="470" >(4FH)</text>
-            <text x="0" y="500" >.</text>
-            <text x="0" y="520" >(57H)</text>
-        </g>
-        <g transform="translate(75,20)">
-            <text x="0" y="0" >6</text>
-            <text x="0" y="20" >(06H)</text>
-            <text x="0" y="50" >]</text>
-            <text x="0" y="70" >(0EH)</text>
-            <text x="0" y="100" >A</text>
-            <text x="0" y="120" >(16H)</text>
-            <text x="0" y="150" >I</text>
-            <text x="0" y="170" >(1EH)</text>
-            <text x="0" y="200" >Q</text>
-            <text x="0" y="220" >(26H)</text>
-            <text x="0" y="250" >Y</text>
-            <text x="0" y="270" >(2EH)</text>
-            <text x="0" y="300" >F2</text>
-            <text x="0" y="320" >(36H)</text>
-            <text x="0" y="350" >SEL</text>
-            <text x="0" y="370" >(3EH)</text>
-            <text x="0" y="400" >DOWN</text>
-            <text x="0" y="420" >(46H)</text>
-            <text x="0" y="450" >3</text>
-            <text x="0" y="470" >(4EH)</text>
-            <text x="0" y="500" >,</text>
-            <text x="0" y="520" >(56H)</text>
-        </g>
-        <g transform="translate(125,20)">
-            <text x="0" y="0" >5</text>
-            <text x="0" y="20" >(05H)</text>
-            <text x="0" y="50" >[</text>
-            <text x="0" y="70" >(0DH)</text>
-            <text x="0" y="100" >£</text>
-            <text x="0" y="120" >(15H)</text>
-            <text x="0" y="150" >H</text>
-            <text x="0" y="170" >(1DH)</text>
-            <text x="0" y="200" >P</text>
-            <text x="0" y="220" >(25H)</text>
-            <text x="0" y="250" >X</text>
-            <text x="0" y="270" >(2DH)</text>
-            <text x="0" y="300" >F1</text>
-            <text x="0" y="320" >(35H)</text>
-            <text x="0" y="350" >BS</text>
-            <text x="0" y="370" >(3DH)</text>
-            <text x="0" y="400" >UP</text>
-            <text x="0" y="420" >(45H)</text>
-            <text x="0" y="450" >2</text>
-            <text x="0" y="470" >(4DH)</text>
-            <text x="0" y="500" >-</text>
-            <text x="0" y="520" >(55H)</text>
-        </g>
-        <g transform="translate(175,20)">
-            <text x="0" y="0" >4</text>
-            <text x="0" y="20" >(04H)</text>
-            <text x="0" y="50" >\</text>
-            <text x="0" y="70" >(0CH)</text>
-            <text x="0" y="100" >/</text>
-            <text x="0" y="120" >(14H)</text>
-            <text x="0" y="150" >G</text>
-            <text x="0" y="170" >(1CH)</text>
-            <text x="0" y="200" >O</text>
-            <text x="0" y="220" >(24H)</text>
-            <text x="0" y="250" >W</text>
-            <text x="0" y="270" >(2CH)</text>
-            <text x="0" y="300" >CODE</text>
-            <text x="0" y="320" >(34H)</text>
-            <text x="0" y="350" >STOP</text>
-            <text x="0" y="370" >(3CH)</text>
-            <text x="0" y="400" >LEFT</text>
-            <text x="0" y="420" >(44H)</text>
-            <text x="0" y="450" >1</text>
-            <text x="0" y="470" >(4CH)</text>
-            <text x="0" y="500" >9</text>
-            <text x="0" y="520" >(54H)</text>
-        </g>
-        <g transform="translate(225,20)">
-            <text x="0" y="0" >3</text>
-            <text x="0" y="20" >(03H)</text>
-            <text x="0" y="50" >=</text>
-            <text x="0" y="70" >(0BH)</text>
-            <text x="0" y="100" >.</text>
-            <text x="0" y="120" >(13H)</text>
-            <text x="0" y="150" >F</text>
-            <text x="0" y="170" >(1BH)</text>
-            <text x="0" y="200" >N</text>
-            <text x="0" y="220" >(23H)</text>
-            <text x="0" y="250" >V</text>
-            <text x="0" y="270" >(2BH)</text>
-            <text x="0" y="300" >CAP</text>
-            <text x="0" y="320" >(33H)</text>
-            <text x="0" y="350" >TAB</text>
-            <text x="0" y="370" >(3BH)</text>
-            <text x="0" y="400" >DEL</text>
-            <text x="0" y="420" >(43H)</text>
-            <text x="0" y="450" >0</text>
-            <text x="0" y="470" >(4BH)</text>
-            <text x="0" y="500" >8</text>
-            <text x="0" y="520" >(53H)</text>
-        </g>
-        <g transform="translate(275,20)">
-            <text x="0" y="0" >2</text>
-            <text x="0" y="20" >(02H)</text>
-            <text x="0" y="50" >-</text>
-            <text x="0" y="70" >(0AH)</text>
-            <text x="0" y="100" >,</text>
-            <text x="0" y="120" >(12H)</text>
-            <text x="0" y="150" >E</text>
-            <text x="0" y="170" >(1AH)</text>
-            <text x="0" y="200" >M</text>
-            <text x="0" y="220" >(22H)</text>
-            <text x="0" y="250" >U</text>
-            <text x="0" y="270" >(2AH)</text>
-            <text x="0" y="300" >GRAPH</text>
-            <text x="0" y="320" >(32H)</text>
-            <text x="0" y="350" >ESC</text>
-            <text x="0" y="370" >(3AH)</text>
-            <text x="0" y="400" >INS</text>
-            <text x="0" y="420" >(42H)</text>
-            <text x="0" y="450" ></text>
-            <text x="0" y="470" >(4AH)</text>
-            <text x="0" y="500" >7</text>
-            <text x="0" y="520" >(52H)</text>
-        </g>
-        <g transform="translate(325,20)">
-            <text x="0" y="0" >1</text>
-            <text x="0" y="20" >(01H)</text>
-            <text x="0" y="50" >9</text>
-            <text x="0" y="70" >(09H)</text>
-            <text x="0" y="100" >`</text>
-            <text x="0" y="120" >(11H)</text>
-            <text x="0" y="150" >D</text>
-            <text x="0" y="170" >(19H)</text>
-            <text x="0" y="200" >L</text>
-            <text x="0" y="220" >(21H)</text>
-            <text x="0" y="250" >T</text>
-            <text x="0" y="270" >(29H)</text>
-            <text x="0" y="300" >CTRL</text>
-            <text x="0" y="320" >(31H)</text>
-            <text x="0" y="350" >F5</text>
-            <text x="0" y="370" >(39H)</text>
-            <text x="0" y="400" >HOME</text>
-            <text x="0" y="420" >(41H)</text>
-            <text x="0" y="450" ></text>
-            <text x="0" y="470" >(49H)</text>
-            <text x="0" y="500" >6</text>
-            <text x="0" y="520" >(51H)</text>
-        </g>
-        <g transform="translate(375,20)">
-            <text x="0" y="0" >0</text>
-            <text x="0" y="20" >(00H)</text>
-            <text x="0" y="50" >8</text>
-            <text x="0" y="70" >(08H)</text>
-            <text x="0" y="100" >'</text>
-            <text x="0" y="120" >(10H)</text>
-            <text x="0" y="150" >C</text>
-            <text x="0" y="170" >(18H)</text>
-            <text x="0" y="200" >K</text>
-            <text x="0" y="220" >(20H)</text>
-            <text x="0" y="250" >S</text>
-            <text x="0" y="270" >(28H)</text>
-            <text x="0" y="300" >SHIFT</text>
-            <text x="0" y="320" >(30H)</text>
-            <text x="0" y="350" >F4</text>
-            <text x="0" y="370" >(38H)</text>
-            <text x="0" y="400" >SPACE</text>
-            <text x="0" y="420" >(40H)</text>
-            <text x="0" y="450" ></text>
-            <text x="0" y="470" >(48H)</text>
-            <text x="0" y="500" >5</text>
-            <text x="0" y="520" >(50H)</text>
-        </g>
-        <g transform="translate(25,570)">
-            <text x="0" y="0" >7</text>
-            <text x="50" y="0" >6</text>
-            <text x="100" y="0" >5</text>
-            <text x="150" y="0" >4</text>
-            <text x="200" y="0" >3</text>
-            <text x="250" y="0" >2</text>
-            <text x="300" y="0" >1</text>
-            <text x="350" y="0" >0</text>
-
-        </g>
-    </g>
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="start">
-        <g transform="translate(410,5)">
-            <text x="0" y="25" >Row 0</text>
-            <text x="0" y="75" >Row 1</text>
-            <text x="0" y="125" >Row 2</text>
-            <text x="0" y="175" >Row 3</text>
-            <text x="0" y="225" >Row 4</text>
-            <text x="0" y="275" >Row 5</text>
-            <text x="0" y="325" >Row 6</text>
-            <text x="0" y="375" >Row 7</text>
-            <text x="0" y="425" >Row 8</text>
-            <text x="0" y="475" >Row 9</text>
-            <text x="0" y="525" >Row 10</text>
-            <text x="0" y="565" >Column</text>
-
-        </g>
-    </g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="590" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <path fill="none" stroke="#000" d="M10 10h400v550H10zm0 50h400m0 50H10m0 50h400m0 50H10m0 50h400m0 50H10m0 50h400m0 50H10m0 50h400m0 50H10M60 10v550m50 0V10m50 0v550m50 0V10m50 0v550m50 0V10m50 0v550"/>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11" text-anchor="middle">
+    <text transform="translate(35 30)">7</text>
+    <text y="20" transform="translate(35 30)">(07H)</text>
+    <text y="50" transform="translate(35 30)">;</text>
+    <text y="70" transform="translate(35 30)">(0FH)</text>
+    <text y="100" transform="translate(35 30)">B</text>
+    <text y="120" transform="translate(35 30)">(17H)</text>
+    <text y="150" transform="translate(35 30)">J</text>
+    <text y="170" transform="translate(35 30)">(1FH)</text>
+    <text y="200" transform="translate(35 30)">R</text>
+    <text y="220" transform="translate(35 30)">(27H)</text>
+    <text y="250" transform="translate(35 30)">Z</text>
+    <text y="270" transform="translate(35 30)">(2FH)</text>
+    <text y="300" transform="translate(35 30)">F3</text>
+    <text y="320" transform="translate(35 30)">(37H)</text>
+    <text y="350" transform="translate(35 30)">CR</text>
+    <text y="370" transform="translate(35 30)">(3FH)</text>
+    <text y="400" transform="translate(35 30)">RIGHT</text>
+    <text y="420" transform="translate(35 30)">(47H)</text>
+    <text y="450" transform="translate(35 30)">4</text>
+    <text y="470" transform="translate(35 30)">(4FH)</text>
+    <text y="500" transform="translate(35 30)">.</text>
+    <text y="520" transform="translate(35 30)">(57H)</text>
+    <text transform="translate(85 30)">6</text>
+    <text y="20" transform="translate(85 30)">(06H)</text>
+    <text y="50" transform="translate(85 30)">]</text>
+    <text y="70" transform="translate(85 30)">(0EH)</text>
+    <text y="100" transform="translate(85 30)">A</text>
+    <text y="120" transform="translate(85 30)">(16H)</text>
+    <text y="150" transform="translate(85 30)">I</text>
+    <text y="170" transform="translate(85 30)">(1EH)</text>
+    <text y="200" transform="translate(85 30)">Q</text>
+    <text y="220" transform="translate(85 30)">(26H)</text>
+    <text y="250" transform="translate(85 30)">Y</text>
+    <text y="270" transform="translate(85 30)">(2EH)</text>
+    <text y="300" transform="translate(85 30)">F2</text>
+    <text y="320" transform="translate(85 30)">(36H)</text>
+    <text y="350" transform="translate(85 30)">SEL</text>
+    <text y="370" transform="translate(85 30)">(3EH)</text>
+    <text y="400" transform="translate(85 30)">DOWN</text>
+    <text y="420" transform="translate(85 30)">(46H)</text>
+    <text y="450" transform="translate(85 30)">3</text>
+    <text y="470" transform="translate(85 30)">(4EH)</text>
+    <text y="500" transform="translate(85 30)">,</text>
+    <text y="520" transform="translate(85 30)">(56H)</text>
+    <text transform="translate(135 30)">5</text>
+    <text y="20" transform="translate(135 30)">(05H)</text>
+    <text y="50" transform="translate(135 30)">[</text>
+    <text y="70" transform="translate(135 30)">(0DH)</text>
+    <text y="100" transform="translate(135 30)">£</text>
+    <text y="120" transform="translate(135 30)">(15H)</text>
+    <text y="150" transform="translate(135 30)">H</text>
+    <text y="170" transform="translate(135 30)">(1DH)</text>
+    <text y="200" transform="translate(135 30)">P</text>
+    <text y="220" transform="translate(135 30)">(25H)</text>
+    <text y="250" transform="translate(135 30)">X</text>
+    <text y="270" transform="translate(135 30)">(2DH)</text>
+    <text y="300" transform="translate(135 30)">F1</text>
+    <text y="320" transform="translate(135 30)">(35H)</text>
+    <text y="350" transform="translate(135 30)">BS</text>
+    <text y="370" transform="translate(135 30)">(3DH)</text>
+    <text y="400" transform="translate(135 30)">UP</text>
+    <text y="420" transform="translate(135 30)">(45H)</text>
+    <text y="450" transform="translate(135 30)">2</text>
+    <text y="470" transform="translate(135 30)">(4DH)</text>
+    <text y="500" transform="translate(135 30)">-</text>
+    <text y="520" transform="translate(135 30)">(55H)</text>
+    <text transform="translate(185 30)">4</text>
+    <text y="20" transform="translate(185 30)">(04H)</text>
+    <text y="50" transform="translate(185 30)">\</text>
+    <text y="70" transform="translate(185 30)">(0CH)</text>
+    <text y="100" transform="translate(185 30)">/</text>
+    <text y="120" transform="translate(185 30)">(14H)</text>
+    <text y="150" transform="translate(185 30)">G</text>
+    <text y="170" transform="translate(185 30)">(1CH)</text>
+    <text y="200" transform="translate(185 30)">O</text>
+    <text y="220" transform="translate(185 30)">(24H)</text>
+    <text y="250" transform="translate(185 30)">W</text>
+    <text y="270" transform="translate(185 30)">(2CH)</text>
+    <text y="300" transform="translate(185 30)">CODE</text>
+    <text y="320" transform="translate(185 30)">(34H)</text>
+    <text y="350" transform="translate(185 30)">STOP</text>
+    <text y="370" transform="translate(185 30)">(3CH)</text>
+    <text y="400" transform="translate(185 30)">LEFT</text>
+    <text y="420" transform="translate(185 30)">(44H)</text>
+    <text y="450" transform="translate(185 30)">1</text>
+    <text y="470" transform="translate(185 30)">(4CH)</text>
+    <text y="500" transform="translate(185 30)">9</text>
+    <text y="520" transform="translate(185 30)">(54H)</text>
+    <text transform="translate(235 30)">3</text>
+    <text y="20" transform="translate(235 30)">(03H)</text>
+    <text y="50" transform="translate(235 30)">=</text>
+    <text y="70" transform="translate(235 30)">(0BH)</text>
+    <text y="100" transform="translate(235 30)">.</text>
+    <text y="120" transform="translate(235 30)">(13H)</text>
+    <text y="150" transform="translate(235 30)">F</text>
+    <text y="170" transform="translate(235 30)">(1BH)</text>
+    <text y="200" transform="translate(235 30)">N</text>
+    <text y="220" transform="translate(235 30)">(23H)</text>
+    <text y="250" transform="translate(235 30)">V</text>
+    <text y="270" transform="translate(235 30)">(2BH)</text>
+    <text y="300" transform="translate(235 30)">CAP</text>
+    <text y="320" transform="translate(235 30)">(33H)</text>
+    <text y="350" transform="translate(235 30)">TAB</text>
+    <text y="370" transform="translate(235 30)">(3BH)</text>
+    <text y="400" transform="translate(235 30)">DEL</text>
+    <text y="420" transform="translate(235 30)">(43H)</text>
+    <text y="450" transform="translate(235 30)">0</text>
+    <text y="470" transform="translate(235 30)">(4BH)</text>
+    <text y="500" transform="translate(235 30)">8</text>
+    <text y="520" transform="translate(235 30)">(53H)</text>
+    <text transform="translate(285 30)">2</text>
+    <text y="20" transform="translate(285 30)">(02H)</text>
+    <text y="50" transform="translate(285 30)">-</text>
+    <text y="70" transform="translate(285 30)">(0AH)</text>
+    <text y="100" transform="translate(285 30)">,</text>
+    <text y="120" transform="translate(285 30)">(12H)</text>
+    <text y="150" transform="translate(285 30)">E</text>
+    <text y="170" transform="translate(285 30)">(1AH)</text>
+    <text y="200" transform="translate(285 30)">M</text>
+    <text y="220" transform="translate(285 30)">(22H)</text>
+    <text y="250" transform="translate(285 30)">U</text>
+    <text y="270" transform="translate(285 30)">(2AH)</text>
+    <text y="300" transform="translate(285 30)">GRAPH</text>
+    <text y="320" transform="translate(285 30)">(32H)</text>
+    <text y="350" transform="translate(285 30)">ESC</text>
+    <text y="370" transform="translate(285 30)">(3AH)</text>
+    <text y="400" transform="translate(285 30)">INS</text>
+    <text y="420" transform="translate(285 30)">(42H)</text>
+    <text y="470" transform="translate(285 30)">(4AH)</text>
+    <text y="500" transform="translate(285 30)">7</text>
+    <text y="520" transform="translate(285 30)">(52H)</text>
+    <text transform="translate(335 30)">1</text>
+    <text y="20" transform="translate(335 30)">(01H)</text>
+    <text y="50" transform="translate(335 30)">9</text>
+    <text y="70" transform="translate(335 30)">(09H)</text>
+    <text y="100" transform="translate(335 30)">`</text>
+    <text y="120" transform="translate(335 30)">(11H)</text>
+    <text y="150" transform="translate(335 30)">D</text>
+    <text y="170" transform="translate(335 30)">(19H)</text>
+    <text y="200" transform="translate(335 30)">L</text>
+    <text y="220" transform="translate(335 30)">(21H)</text>
+    <text y="250" transform="translate(335 30)">T</text>
+    <text y="270" transform="translate(335 30)">(29H)</text>
+    <text y="300" transform="translate(335 30)">CTRL</text>
+    <text y="320" transform="translate(335 30)">(31H)</text>
+    <text y="350" transform="translate(335 30)">F5</text>
+    <text y="370" transform="translate(335 30)">(39H)</text>
+    <text y="400" transform="translate(335 30)">HOME</text>
+    <text y="420" transform="translate(335 30)">(41H)</text>
+    <text y="470" transform="translate(335 30)">(49H)</text>
+    <text y="500" transform="translate(335 30)">6</text>
+    <text y="520" transform="translate(335 30)">(51H)</text>
+    <text transform="translate(385 30)">0</text>
+    <text y="20" transform="translate(385 30)">(00H)</text>
+    <text y="50" transform="translate(385 30)">8</text>
+    <text y="70" transform="translate(385 30)">(08H)</text>
+    <text y="100" transform="translate(385 30)">&apos;</text>
+    <text y="120" transform="translate(385 30)">(10H)</text>
+    <text y="150" transform="translate(385 30)">C</text>
+    <text y="170" transform="translate(385 30)">(18H)</text>
+    <text y="200" transform="translate(385 30)">K</text>
+    <text y="220" transform="translate(385 30)">(20H)</text>
+    <text y="250" transform="translate(385 30)">S</text>
+    <text y="270" transform="translate(385 30)">(28H)</text>
+    <text y="300" transform="translate(385 30)">SHIFT</text>
+    <text y="320" transform="translate(385 30)">(30H)</text>
+    <text y="350" transform="translate(385 30)">F4</text>
+    <text y="370" transform="translate(385 30)">(38H)</text>
+    <text y="400" transform="translate(385 30)">SPACE</text>
+    <text y="420" transform="translate(385 30)">(40H)</text>
+    <text y="470" transform="translate(385 30)">(48H)</text>
+    <text y="500" transform="translate(385 30)">5</text>
+    <text y="520" transform="translate(385 30)">(50H)</text>
+    <text transform="translate(35 580)">7</text>
+    <text x="50" transform="translate(35 580)">6</text>
+    <text x="100" transform="translate(35 580)">5</text>
+    <text x="150" transform="translate(35 580)">4</text>
+    <text x="200" transform="translate(35 580)">3</text>
+    <text x="250" transform="translate(35 580)">2</text>
+    <text x="300" transform="translate(35 580)">1</text>
+    <text x="350" transform="translate(35 580)">0</text>
+  </g>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11">
+    <text y="25" transform="translate(420 15)">Row 0</text>
+    <text y="75" transform="translate(420 15)">Row 1</text>
+    <text y="125" transform="translate(420 15)">Row 2</text>
+    <text y="175" transform="translate(420 15)">Row 3</text>
+    <text y="225" transform="translate(420 15)">Row 4</text>
+    <text y="275" transform="translate(420 15)">Row 5</text>
+    <text y="325" transform="translate(420 15)">Row 6</text>
+    <text y="375" transform="translate(420 15)">Row 7</text>
+    <text y="425" transform="translate(420 15)">Row 8</text>
+    <text y="475" transform="translate(420 15)">Row 9</text>
+    <text y="525" transform="translate(420 15)">Row 10</text>
+    <text y="565" transform="translate(420 15)">Column</text>
+  </g>
 </svg>

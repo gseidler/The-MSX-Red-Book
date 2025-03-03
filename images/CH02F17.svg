@@ -1,103 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="480px" height="430px"
-version="1.1"
-baseProfile="full"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:xlink="http://www.w3.org/1999/xlink"
-xmlns:ev="http://www.w3.org/2001/xml-events">
-<defs>
-    <g id="sequence">
-        <text x="0" y="0" >0</text>
-        <text x="10" y="0" >1</text>
-        <text x="20" y="0" >2</text>
-        <text x="30" y="0" >3</text>
-        <text x="40" y="0" >4</text>
-        <text x="50" y="0" >5</text>
-        <text x="60" y="0" >6</text>
-        <text x="70" y="0" >7</text>
-        <text x="80" y="0" >8</text>
-        <text x="90" y="0" >9</text>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="480" height="430" baseProfile="full">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <defs>
+    <g id="a">
+      <text>0</text>
+      <text x="10">1</text>
+      <text x="20">2</text>
+      <text x="30">3</text>
+      <text x="40">4</text>
+      <text x="50">5</text>
+      <text x="60">6</text>
+      <text x="70">7</text>
+      <text x="80">8</text>
+      <text x="90">9</text>
     </g>
-</defs>
-<g transform="translate(10,30)">
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="middle">
-        <use xlink:href="#sequence" x="45" y="0"/>
-        <use xlink:href="#sequence" x="145" y="0"/>
-        <use xlink:href="#sequence" x="245" y="0"/>
-        <use xlink:href="#sequence" x="345" y="0"/>
-        <use xlink:href="#sequence" x="45" y="375"/>
-        <use xlink:href="#sequence" x="145" y="375"/>
-        <use xlink:href="#sequence" x="245" y="375"/>
-        <use xlink:href="#sequence" x="345" y="375"/>
-        <text x="45" y="-15" >0</text>
-        <text x="145" y="-15" >1</text>
-        <text x="245" y="-15" >2</text>
-        <text x="345" y="-15" >3</text>
-        <text x="45" y="390" >0</text>
-        <text x="145" y="390" >1</text>
-        <text x="245" y="390" >2</text>
-        <text x="345" y="390" >3</text>
+  </defs>
+  <g font-family="Lucida Console, Monaco, monospace" font-size="11">
+    <g text-anchor="middle" transform="translate(10 30)">
+      <use xlink:href="#a" x="45"/>
+      <use xlink:href="#a" x="145"/>
+      <use xlink:href="#a" x="245"/>
+      <use xlink:href="#a" x="345"/>
+      <use xlink:href="#a" x="45" y="375"/>
+      <use xlink:href="#a" x="145" y="375"/>
+      <use xlink:href="#a" x="245" y="375"/>
+      <use xlink:href="#a" x="345" y="375"/>
+      <text x="45" y="-15">0</text>
+      <text x="145" y="-15">1</text>
+      <text x="245" y="-15">2</text>
+      <text x="345" y="-15">3</text>
+      <text x="45" y="390">0</text>
+      <text x="145" y="390">1</text>
+      <text x="245" y="390">2</text>
+      <text x="345" y="390">3</text>
     </g>
-    <g font-family="Lucida Console, Monaco, monospace" font-size="11" fill="black" stroke="none" text-anchor="end">
-        <g transform="translate(35,15)">
-            <text x="0" y="0" >0000H</text>
-            <text x="0" y="15" >0028H</text>
-            <text x="0" y="30" >0050H</text>
-            <text x="0" y="45" >0078H</text>
-            <text x="0" y="60" >00A0H</text>
-            <text x="0" y="75" >00C8H</text>
-            <text x="0" y="90" >00F0H</text>
-            <text x="0" y="105" >0118H</text>
-            <text x="0" y="120" >0140H</text>
-            <text x="0" y="135" >0168H</text>
-            <text x="0" y="150" >0190H</text>
-            <text x="0" y="165" >01B8H</text>
-            <text x="0" y="180" >01E0H</text>
-            <text x="0" y="195" >0208H</text>
-            <text x="0" y="210" >0230H</text>
-            <text x="0" y="225" >0258H</text>
-            <text x="0" y="240" >0280H</text>
-            <text x="0" y="255" >02A8H</text>
-            <text x="0" y="270" >02D0H</text>
-            <text x="0" y="285" >02F8H</text>
-            <text x="0" y="300" >0320H</text>
-            <text x="0" y="315" >0348H</text>
-            <text x="0" y="330" >0370H</text>
-            <text x="0" y="345" >0398H</text>
-        </g>
-        <g transform="translate(458,15)">
-            <text x="0" y="0" >0</text>
-            <text x="0" y="15" >1</text>
-            <text x="0" y="30" >2</text>
-            <text x="0" y="45" >3</text>
-            <text x="0" y="60" >4</text>
-            <text x="0" y="75" >5</text>
-            <text x="0" y="90" >6</text>
-            <text x="0" y="105" >7</text>
-            <text x="0" y="120" >8</text>
-            <text x="0" y="135" >9</text>
-            <text x="0" y="150" >10</text>
-            <text x="0" y="165" >11</text>
-            <text x="0" y="180" >12</text>
-            <text x="0" y="195" >13</text>
-            <text x="0" y="210" >14</text>
-            <text x="0" y="225" >15</text>
-            <text x="0" y="240" >16</text>
-            <text x="0" y="255" >17</text>
-            <text x="0" y="270" >18</text>
-            <text x="0" y="285" >19</text>
-            <text x="0" y="300" >20</text>
-            <text x="0" y="315" >21</text>
-            <text x="0" y="330" >22</text>
-            <text x="0" y="345" >23</text>
-        </g>
-        <g transform="translate(40,3)">
-            <g fill="none" stroke="black">
-                <rect x="0" y="0" width="400px" height="360px"/>
-                <path d="M10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360 m10,0 v-360 m10,0 v360"/>
-                <path d="M0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400 m0,15 h-400 m0,15 h400"/>
-            </g>
-        </g>
+    <g text-anchor="end">
+      <text transform="translate(45 45)">0000H</text>
+      <text y="15" transform="translate(45 45)">0028H</text>
+      <text y="30" transform="translate(45 45)">0050H</text>
+      <text y="45" transform="translate(45 45)">0078H</text>
+      <text y="60" transform="translate(45 45)">00A0H</text>
+      <text y="75" transform="translate(45 45)">00C8H</text>
+      <text y="90" transform="translate(45 45)">00F0H</text>
+      <text y="105" transform="translate(45 45)">0118H</text>
+      <text y="120" transform="translate(45 45)">0140H</text>
+      <text y="135" transform="translate(45 45)">0168H</text>
+      <text y="150" transform="translate(45 45)">0190H</text>
+      <text y="165" transform="translate(45 45)">01B8H</text>
+      <text y="180" transform="translate(45 45)">01E0H</text>
+      <text y="195" transform="translate(45 45)">0208H</text>
+      <text y="210" transform="translate(45 45)">0230H</text>
+      <text y="225" transform="translate(45 45)">0258H</text>
+      <text y="240" transform="translate(45 45)">0280H</text>
+      <text y="255" transform="translate(45 45)">02A8H</text>
+      <text y="270" transform="translate(45 45)">02D0H</text>
+      <text y="285" transform="translate(45 45)">02F8H</text>
+      <text y="300" transform="translate(45 45)">0320H</text>
+      <text y="315" transform="translate(45 45)">0348H</text>
+      <text y="330" transform="translate(45 45)">0370H</text>
+      <text y="345" transform="translate(45 45)">0398H</text>
+      <text transform="translate(468 45)">0</text>
+      <text y="15" transform="translate(468 45)">1</text>
+      <text y="30" transform="translate(468 45)">2</text>
+      <text y="45" transform="translate(468 45)">3</text>
+      <text y="60" transform="translate(468 45)">4</text>
+      <text y="75" transform="translate(468 45)">5</text>
+      <text y="90" transform="translate(468 45)">6</text>
+      <text y="105" transform="translate(468 45)">7</text>
+      <text y="120" transform="translate(468 45)">8</text>
+      <text y="135" transform="translate(468 45)">9</text>
+      <text y="150" transform="translate(468 45)">10</text>
+      <text y="165" transform="translate(468 45)">11</text>
+      <text y="180" transform="translate(468 45)">12</text>
+      <text y="195" transform="translate(468 45)">13</text>
+      <text y="210" transform="translate(468 45)">14</text>
+      <text y="225" transform="translate(468 45)">15</text>
+      <text y="240" transform="translate(468 45)">16</text>
+      <text y="255" transform="translate(468 45)">17</text>
+      <text y="270" transform="translate(468 45)">18</text>
+      <text y="285" transform="translate(468 45)">19</text>
+      <text y="300" transform="translate(468 45)">20</text>
+      <text y="315" transform="translate(468 45)">21</text>
+      <text y="330" transform="translate(468 45)">22</text>
+      <text y="345" transform="translate(468 45)">23</text>
+      <path fill="none" stroke="#000" d="M50 33h400v360H50zm10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360m10 0V33m10 0v360M50 48h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400m0 15H50m0 15h400"/>
     </g>
-</g>
+  </g>
 </svg>
