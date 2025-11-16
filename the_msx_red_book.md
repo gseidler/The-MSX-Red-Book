@@ -3886,7 +3886,7 @@ This routine is used during exponentiation to check whether a double precision p
 
 This table of addresses is used by the Interpreter Runloop to find the handler for a statement token. Although not part of the table the associated keywords are included below:
 
-|TO     |STATEMENT  |TO     |SATEMENT   |TO     |STMT   |
+|TO     |STATEMENT  |TO     |STATEMENT  |TO     |STMT   |
 |-------|-----------|-------|-----------|-------|-------|
 |63EAH  |END        |00C3H  |CLS        |5B11H  |CIRCLE |
 |4524H  |FOR        |51C9H  |WIDTH      |7980H  |COLOR  |
@@ -9843,7 +9843,7 @@ This program allows the MSX character patterns to be modified. When the program 
 
 The program has two levels of operation, command and edit, with the RETURN key being used to toggle between them. In command mode the four arrow keys are used to select the character for editing. This is marked by a large cursor an is also displayed in magnified form on the right hand side of the screen. The "Q" key will quit the program and return to BASIC. The "A" key is used to adopt the character set, that is, to make it the system character set. When the character set is adopted it is copied to the highest part of memory (EB80H to F37FH) and its Slot ID and address placed in [CGPNT](#cgpnt).
 
-In edit mode the four arrow keys are used to select the dot for editing, this is marked by a small cursor. The SPACE key will erase the current dot and the "." key set it. As the patter is modified the character menu on the left hand side of the screen is updated.
+In edit mode the four arrow keys are used to select the dot for editing, this is marked by a small cursor. The SPACE key will erase the current dot and the "." key set it. As the pattern is modified the character menu on the left hand side of the screen is updated.
 
 The character set in the CHRTAB may be saved on the cassette using a "BSAVE" statement and later re-loaded with a "BLOAD" statement. The ADOPT subroutine should be saved with the patterns and executed upon re-loading so that the system adopts the new character set. Alternatively the character set alone can be saved and its Slot ID and address placed in [CGPNT](#cgpnt) upon re-loading using BASIC statements. Note that altering the character patterns does not affect the operation of the MSX system un the slightest.
 
